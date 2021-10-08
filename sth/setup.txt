@@ -1,2 +1,5 @@
-##cd -> app backend
+##cd -> admin-app
+npm install express --save
+
+##cd -> app-back-end
 npm install express --save
