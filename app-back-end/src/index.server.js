@@ -4,7 +4,9 @@ const app = express();
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth.js");
 const adminRoutes = require("./routes/admin/auth");
+const profilesRoutes = require("./routes/profiles.js");
 const cors = require("cors");
+const path = require('path')
 
 //env var
 env.config();
@@ -25,9 +27,11 @@ app.use(
   })
 );
 app.use(cors());
+app.use(express.static(path.join(__dirname, "./uploads")));
 
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
+app.use("/api", profilesRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
