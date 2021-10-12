@@ -7,6 +7,8 @@ const adminRoutes = require("./routes/admin/auth");
 const profilesRoutes = require("./routes/profiles.js");
 const cors = require("cors");
 const path = require('path')
+const tripRoutes = require("./routes/trip")
+const ticketRoutes = require("./routes/ticket")
 
 //env var
 env.config();
@@ -32,6 +34,8 @@ app.use(express.static(path.join(__dirname, "./uploads")));
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
 app.use("/api", profilesRoutes);
+app.use("/api/trip", tripRoutes);
+app.use("/api/ticket", ticketRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
