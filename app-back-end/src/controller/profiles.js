@@ -6,6 +6,40 @@ const { model } = require("mongoose");
 
 env.config();
 
+exports.userProfile = async (req, res) => {
+    try {
+        let { username } = req.params;
+        let user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+        // let profile = await Profile.findOne({ account: user._id });
+        // return res.status(200).json({
+        //     profile,
+        //     success: true,
+        //     //User: user.getUserInfo(),
+        // });
+        let profile = await Profile.findOne({ account: user._id }).populate(
+            "account",
+            "firstName lastName username email",
+            User
+        );
+        return res.status(200).json({
+            success: true,
+            profile,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
+    }
+}
+
 exports.UpdateProfile = async (req, res) => {
     try {
         let { dob, gender } = req.body;
