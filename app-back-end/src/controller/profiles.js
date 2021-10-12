@@ -1,7 +1,36 @@
 const Profile = require("../models/profile");
+const User = require("../models/user.js");
 const env = require("dotenv");
+const e = require("express");
+const { model } = require("mongoose");
 
 env.config();
+
+exports.myProfile = async (req, res) => {
+    try {
+        let profile = await Profile.findOne({ account: req.user._id }).populate(
+            "account",
+            "firstName lastName username email",
+            User
+        );
+        if (!profile) {
+            return res.status(404).json({
+                success: false,
+                message: "Your profile is not available",
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            profile,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Unable to get profile",
+        });
+    }
+};
 
 
 exports.profiles = async (req, res) => {
