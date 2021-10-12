@@ -6,6 +6,29 @@ const { model } = require("mongoose");
 
 env.config();
 
+exports.UpdateProfile = async (req, res) => {
+    try {
+        let { dob, gender } = req.body;
+        let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+        let profile = await Profile.findOneAndUpdate(
+            { account: req.user._id },
+            { dob, gender, avatar: path },
+            { new: true }
+        );
+        return res.status(200).json({
+            success: true,
+            message: "Your profile is now update",
+            profile,
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Unable to get profile",
+        });
+    }
+};
+
 exports.myProfile = async (req, res) => {
     try {
         let profile = await Profile.findOne({ account: req.user._id }).populate(
