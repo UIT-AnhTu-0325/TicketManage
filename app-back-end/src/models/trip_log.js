@@ -1,25 +1,25 @@
 const mongoose = require("mongoose");
 
-const TripSchema = new mongoose.Schema(
+const TripLogSchema = new mongoose.Schema(
     {
-        idVehicle: {
+        idTrip: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Vehicle',
+            ref: 'Trip',
             required: true
         },
-        idRoute:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Route',
+        time: {
+            type: Date,
             required: true
         },
-        status: {
+        event: {
             type: String,
             required: true
         }
+
     },
     {
         timestamps: true
     }
 );
 
-module.exports = mongoose.model("Trip", TripSchema);
+module.exports = mongoose.model("TripLog", TripLogSchema);

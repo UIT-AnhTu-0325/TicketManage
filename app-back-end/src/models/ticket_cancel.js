@@ -1,15 +1,18 @@
 const mongoose = require("mongoose");
 
-const TripSchema = new mongoose.Schema(
+const TicketCancelSchema = new mongoose.Schema(
     {
-        idVehicle: {
+        idTicket: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Vehicle',
+            ref: 'Ticket',
             required: true
         },
-        idRoute:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Route',
+        reason: {
+            type: String,
+            required: true
+        },
+        time: {
+            type: Date,
             required: true
         },
         status: {
@@ -22,4 +25,4 @@ const TripSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("Trip", TripSchema);
+module.exports = mongoose.model("TicketCancel", TicketCancelSchema);

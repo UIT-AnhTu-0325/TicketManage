@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 
 const TicketSchema = new mongoose.Schema({
     idTrip : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Trip',
         required: true
     },
     idCustomer : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
         required: true
     },
     seatNumber : {
