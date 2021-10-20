@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { HomePage } from "./containers/HomPage";
-import { TicketFounded } from './containers/TiketFounded';
+import { TicketPage } from './containers/TiketPage';
 
 // css Import
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +15,7 @@ function App() {
       <Router>
         <Switch> 
           <Route path="/" exact component={HomePage} ></Route>
-          <Route path="/ticket" exact component={TicketFounded} ></Route>
+          <Route path="/ticket" exact component={TicketPage} ></Route>
          
         </Switch>
       </Router>
