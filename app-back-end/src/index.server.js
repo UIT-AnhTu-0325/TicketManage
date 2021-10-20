@@ -4,7 +4,9 @@ const app = express();
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth.js");
 const adminRoutes = require("./routes/admin/auth");
+const profilesRoutes = require("./routes/profiles.js");
 const cors = require("cors");
+const path = require('path')
 
 const tripRoutes = require("./routes/trip")
 const ticketRoutes = require("./routes/ticket")
@@ -40,9 +42,11 @@ app.use(
   })
 );
 app.use(cors());
+app.use(express.static(path.join(__dirname, "./uploads")));
 
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
+app.use("/api", profilesRoutes);
 app.use("/api/trip", tripRoutes);
 app.use("/api/ticket", ticketRoutes);
 app.use("/api/customer", customerRoutes);

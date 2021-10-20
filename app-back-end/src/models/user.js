@@ -66,4 +66,8 @@ userSchema.methods = {
   },
 };
 
+userSchema.method.getUserInfo = function () {
+  return pick(this, ["_id", "username", "email", "firstName", "lastName"]);
+};
+
 module.exports = mongoose.model("User", userSchema);

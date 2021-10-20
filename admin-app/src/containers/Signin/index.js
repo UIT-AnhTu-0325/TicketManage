@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { Container, Row, Col } from "react-bootstrap";
-import { isUserLoggedIn, login } from "../../actions";
+import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 
@@ -18,11 +18,7 @@ export const Signin = (props) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!auth.authenticate) {
-      dispatch(isUserLoggedIn());
-    }
-  }, []);
+
 
   const userLogin = (e) => {
     e.preventDefault();
