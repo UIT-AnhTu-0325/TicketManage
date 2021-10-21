@@ -8,7 +8,7 @@ import React from 'react'
 export const TicketFounded = (props) => {
   return(
     <div>
-         <LayoutCustomer></LayoutCustomer>
+        
     </div>
    )
 
