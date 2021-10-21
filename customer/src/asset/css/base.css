@@ -8,6 +8,8 @@
     --primary-color3:#eb4c4c;
     --primary-color5:#F13F21;
     --primary-color4:#55BCC8;
+
+    --brown-color: rgb(177, 177, 177);
 }
 
 *{
@@ -68,6 +70,9 @@ p {
     display: flex;
     align-items: center;
 }
+.wrapper-dialog{
+    position: relative;
+}
 
 .input{
     background-color: var(--white-color);
@@ -97,6 +102,7 @@ p {
     align-items: center;
     justify-content: center;
 }
+
 .custom-checkbox-cicle::after{
     font-family: "Font Awesome 6 Free" ;
     font-weight: 900 ;
@@ -106,9 +112,40 @@ p {
     color: var(--primary-color);
     display: none;
 }
+
+
 .custom-checkbox-cicle:checked:after{
     display: block;
 
+}
+
+
+.custom-checkbox-rectangle{
+    appearance: none;
+    height: 32px;
+    width: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+}
+.custom-checkbox-rectangle:after{
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f00c";
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    display: none;
+}
+.custom-checkbox-rectangle:checked:after{
+    display: block;
+}
+.custom-checkbox-rectangle:checked{
+    background-color: var(--white-color);
+    border-color: var(--primary-color);
 }
 
 /* radio input */

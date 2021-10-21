@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import travelImg from '../../asset/img/travel.png'
+import { DatePicker } from '../DatePicker'
+
+// Css
+import '../../asset/css/main-ticket.css'
 
 
 /**
@@ -9,11 +13,22 @@ import travelImg from '../../asset/img/travel.png'
 
 export const MainSearch = (props) => {
 
+    const [showModal, setShowModal] = useState(false);
 
+    const openModal = () =>{
+        setShowModal(true);
+    }
+    const closePicker = ()=>{
+        if(showModal)
+        {
+            setShowModal(false)
+        }
+    }
   
   return(
      <div>
-        <div className="content">
+        <div className="content" onClick={closePicker}>
+      
             <div className="content__main-func">
                  <div className="content__main-func__wrapper">
                     <div className="main-func__selection">
@@ -46,7 +61,18 @@ export const MainSearch = (props) => {
                        <div className="main-func__date__choose input">
                            <i className='bx bx-calendar-event' ></i>
                            <input type="text" placeholder="27/9/2021" />
-                           <i className='btn-choose-down bx bxs-chevron-down' ></i>
+
+                           <div className="wrapper-dialog">
+                            <i className='btn-choose-down bx bxs-chevron-down' onClick={openModal} >
+                            </i >
+                            <div onClick={(e)=>{
+                                e.stopPropagation();
+                            }}>
+                                {showModal ?  <DatePicker /> : null  }
+                            </div>
+                                
+                           </div>
+                          
                        </div>
                     </div>
                     <div className="main-func__btn-search mybtn">
