@@ -160,6 +160,7 @@
 }
 .main-func__date__choose .btn-choose-down{
     margin-right: 0;
+    position: relative;
     cursor: pointer;
 }
 
@@ -477,14 +478,23 @@
 .custom-icon, .custom-default-icon{
     margin-right: 14px;
 }
-.func-bar .btn{
+.func-bar .mybtn{
     margin-left: 15px;
     width: 120px;
+    
+    
 }
+
 .mybtn button{
     padding: 12px;
 }
 .mybtn a{
     font-size: 1.6rem;
+}
+.mybtn:hover a{
+    color: var(--white-color);
+}
+.fun-bar__btn-search .link-in-btn.in-func-bar{
+    font-size: 1.6rem !important;
 }
 
