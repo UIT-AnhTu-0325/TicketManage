@@ -10,10 +10,10 @@ import '../../asset/css/base.css'
 
 /**
 * @author
-* @function TicketPage
+* @function RoutePage
 **/
 
-export const TicketPage = (props) => {
+export const RoutePage = (props) => {
   return(
     <div>
          <LayoutCustomer></LayoutCustomer>
