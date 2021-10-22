@@ -1,0 +1,30 @@
+.input-box{
+   margin: 5px 10px;
+}
+
+.input__title{
+    font-size: 1.6rem;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+.input-box input{
+    width: 100%;
+    background-color: var(--white-color);
+    border: 2px solid var(--primary-color-light-brown);
+    border-radius: 8px;
+    padding: 6px 12px;
+    outline: none;
+}
+.input-box input:hover{
+    border: 2px solid var(--primary-color-opacity);
+}
+input[type="number"]{
+    -webkit-appearance: none;
+     margin: 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+    margin: 0;
+}

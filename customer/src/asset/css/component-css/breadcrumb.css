@@ -1,0 +1,18 @@
+
+.page1{
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 500;
+}
+.breadcrumb1{
+    position: relative;
+    margin: 15px 0 0 180px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+ 
+.breadcrumb1 i{
+    margin: 0 10px;
+    font-size: 1.3rem;
+}

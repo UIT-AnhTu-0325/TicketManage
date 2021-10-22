@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import { HeaderLogin } from '../HeaderComponents/HeaderLogin';
+import { HeaderLogined } from '../HeaderComponents/HeaderLogined';
 import {ModalLogin} from '../Modal/ModalLogin/index'
 /**
 * @author
@@ -27,12 +29,8 @@ export const HeaderCustomer = ({props}) => {
                     </ul>
                 </div>
     
-                <div className="header__login  js-btn-login">
-                    <div className="mybtn" onClick={openModal}>
-                        <i className='btn-icon bx bx-user'></i>
-                        <span>Đăng nhập</span>
-                    </div>
-                </div>
+                {/* <HeaderLogin open={openModal} ></HeaderLogin> */}
+                <HeaderLogined ></HeaderLogined>
             </div>
     </div>
     {showModal ?  <ModalLogin close={openModal} /> : null }
