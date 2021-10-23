@@ -12,6 +12,10 @@ const TripSchema = new mongoose.Schema(
             ref: 'Route',
             required: true
         },
+        startDate: {
+            type: Date,
+            required: true
+        },
         status: {
             type: String,
             required: true

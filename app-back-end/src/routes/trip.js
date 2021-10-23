@@ -1,13 +1,15 @@
-const {create, getById, getAll, update, deleteById} = require("../controller/trip")
+const {create, getById, getAll, update, deleteById, fetchAll} = require("../controller/trip")
 const router = require("express").Router();
 
 router.post("/", create);
 
-router.get("/:id", getById);
+router.get("/id=:id", getById);
 
-router.get("/", getAll);
+router.get("/", getAll); 
 
-router.put("/:id", update);
+router.get("/fetch", fetchAll);
+
+router.put("/:id", update); 
 
 router.delete("/:id", deleteById);
 

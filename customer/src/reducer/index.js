@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import trip from './trip'
-import ticket from './ticket'
+import trips from './trip'
+import tickets from './ticket'
 import routes from './route';
 
-export const reducers = combineReducers({ trip, ticket, routes});
+export const reducers = combineReducers({ trips, tickets, routes});

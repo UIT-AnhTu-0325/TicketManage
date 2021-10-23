@@ -35,7 +35,15 @@ p {
     font-size: 1.6rem;
 }
 
+.ticket__result{
+    display: grid;
+    justify-content: center;
 
+}
+
+.ticket__result h2 {
+    margin-top: 50px;
+}
 .grid{
     width: 1200px;
     max-width: 100%;
@@ -203,4 +211,16 @@ p {
 .custom-icon{
     color:var(--primary-color);
     font-size: 2rem;
+}
+
+
+.price {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.price p{
+    color: #1d99d3;
+    margin-top: 10px;
 }

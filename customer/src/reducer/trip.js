@@ -1,13 +1,15 @@
-import {GET_ALL, GET_BY_ID, CREATE} from "../constant/actionType";
+import { TRIP_GET_ALL,  TRIP_GET_BY_ID,  TRIP_CREATE,  TRIP_FETCH} from "../constant/actionType";
 
 export default (trips = [], action) => {
     switch (action.type) {
-        case GET_ALL: 
+        case TRIP_GET_ALL: 
             return action.payload;
-        case GET_BY_ID:
+        case TRIP_GET_BY_ID:
             return action.payload;
-        case CREATE:
+        case TRIP_CREATE:
             return [...trips, action.payload];
+        case TRIP_FETCH:
+            return action.payload;
         default:
             return trips;
     }

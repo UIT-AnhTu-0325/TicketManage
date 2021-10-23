@@ -16,7 +16,7 @@ const RouteSchema = new mongoose.Schema(
             required: true
         },
         startTime: {
-            type: Date,
+            type: Number,
             required: true
         },
         totalTime: {
