@@ -1,4 +1,4 @@
-const {create, getById, getAll, update, deleteById} = require("../controller/ticket")
+const {create, getById, getAll, update, deleteById} = require("../controller/drive")
 const router = require("express").Router();
 
 router.post("/", create);

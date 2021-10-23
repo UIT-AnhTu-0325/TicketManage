@@ -1,9 +1,9 @@
-const Ticket = require("../models/ticket");
+const Vehicle = require("../models/vehicle");
 
 exports.getAll = async (req, res) => {
     try {
-        const tickets = await Ticket.find();
-        res.status(200).json(tickets);
+        const vehicles = await Vehicle.find();
+        res.status(200).json(vehicles);
     } catch (err) {
         res.status(500).json({error:err});
     }
@@ -11,18 +11,18 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const ticket = await Ticket.findById(req.params.id);
-        res.status(200).json(ticket);
+        const vehicle = await Vehicle.findById(req.params.id);
+        res.status(200).json(vehicle);
     } catch (err) {
         res.status(500).json({error:err});
     }
 }
 
 exports.create = async (req, res) => {
-    const newTicket = new Ticket(req.body);
+    const newVehicle = new Vehicle(req.body);
     
     try {
-        const saved = await newTicket.save();
+        const saved = await newVehicle.save();
         res.status(200).json(saved);
     } catch (err) {
         res.status(500).json(err);
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const updated = await Ticket.findByIdAndUpdate(
+        const updated = await Vehicle.findByIdAndUpdate(
           req.params.id,
           {
             $set: req.body,
@@ -46,7 +46,7 @@ exports.update = async (req, res) => {
 
 exports.deleteById = async (req, res) => {
     try {
-        await Ticket.findByIdAndDelete(req.params.id);
+        await Vehicle.findByIdAndDelete(req.params.id);
         res.status(200).json("Has been deleted");
       } catch (err) {
         res.status(500).json(err);

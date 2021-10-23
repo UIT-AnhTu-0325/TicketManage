@@ -5,7 +5,8 @@ import busImg from '../../../asset/img/bus.png'
 * @function TicketDetail
 **/
 
-export const TicketDetail = (props) => {
+export const TicketDetail = ({info}) => {
+
   return(
     <>
         <div className="ticket-detail">
@@ -13,10 +14,10 @@ export const TicketDetail = (props) => {
             <div className="ticket-detail__short-info">
                 <div className="short-info__heading">
                     <div className="short-info__name">
-                        Xe Phương Trang
+                        {info.enterprise.name}
                     </div>
                     <div className="short-info__price">
-                        499.000 VNĐ
+                        Giá vé: {info.ticket.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
                     </div>
                     <div className="short-info__mark">
                        <i class='bx bx-bookmark' ></i>
@@ -24,7 +25,16 @@ export const TicketDetail = (props) => {
                 </div>
                 
                 <div className="short-info__desc">
-                    Giường nằm 40 chỗ
+                Giờ khởi hành: {info.route.startTime.toFixed(2).toString().replace('.',':')}
+                </div>
+                <div className="short-info__desc">
+                Thời gian di chuyển: {info.route.totalTime / 3600} giờ
+                </div>
+                <div className="short-info__desc">
+                    Loại: {info.ticket.type}
+                </div>
+                <div className="short-info__desc">
+                    Số vé: {info.ticket.quantity}
                 </div>
                 <div className="short-info__option">
                     <div className="option__quick-see">
