@@ -22,10 +22,16 @@ export const Enterprise = (props) => {
   }, []);
 
   const handleClose = () => {
-    const form = new FormData();
+    // const form = new FormData();
 
-    form.append("name", enterpriseName);
-    form.append("address", enterpriseAddress);
+    // form.append("name", enterpriseName);
+    // form.append("address", enterpriseAddress);
+
+    const form = {
+      name: enterpriseAddress,
+      address: enterpriseName,
+    };
+
     dispatch(addEnterprise(form));
 
     // const ent = {

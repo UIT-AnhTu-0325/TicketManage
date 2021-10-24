@@ -24,7 +24,10 @@ export const getAllEnterprises = () => {
 
 export const addEnterprise = (form) => {
   return async (dispatch) => {
-    const res = await axios.post("enterprise/create", form);
+    const res = await axios.post(`/enterprise/create`, {
+      ...form,
+    });
+    console.log(form);
     console.log(res);
   };
 };

@@ -19,8 +19,11 @@ exports.getById = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const newEnterprise = new Enterprise(req.body);
-
+  const newEnterprise = new Enterprise({
+    name: req.body.name,
+    address: req.body.address,
+  });
+  console.log(req.body);
   try {
     const saved = await newEnterprise.save();
     res.status(200).json(saved);
