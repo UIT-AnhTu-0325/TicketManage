@@ -12,6 +12,8 @@ export const Input = (props) => {
         {props.label}
       </label>
       <input
+        value={props.value}
+        onChange={props.onChange}
         type={props.type}
         class="form-control"
         placeholder={props.placeholder}
