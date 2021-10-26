@@ -259,14 +259,17 @@
 }
 
 /* Bus Founded */
-.ticket-detail{
-    display: flex;
-    margin-top: 20px;
+.ticket-detail__wrapper{
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 20px;
     margin-left: 20px;
     width: 800px;
     margin-bottom: 50px;
+}
+.ticket-detail{
+    display: flex;
+    margin-top: 20px;
+   
 }
 .ticket-detail img{
     flex: 1;
@@ -318,6 +321,7 @@
 }
 
 .option__quick-see{
+    position: relative;
     display: flex;
     align-items: center;
     color: var(--primary-color);
@@ -327,13 +331,229 @@
     margin: 10px;
     margin-right: 20px;
     cursor: pointer;
+    overflow: hidden;
+}
+@keyframes changeStatusOpenQuick {
+    from{
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+    to{
+        opacity: 1;
+        transform: rotate(180deg);
+    }
+}
+@keyframes changeStatusOpenQuick1 {
+    from{
+        opacity: 0;
+        transform: rotate(180deg);
+    }
+    to{
+        opacity: 1;
+        transform: rotate(0deg);
+    }
 }
 .option__quick-see i{
     margin-left: 8px;
     margin-top: 3px;
+    animation: changeStatusOpenQuick1 0.5s ease;
+    transform: rotate(0deg);
+}
+.option__quick-see.active i{
+    display: block;
+    animation: changeStatusOpenQuick 0.5s ease;
+    transform: rotate(180deg);
+
 }
 
 .option__choose-this{
    padding: 10px 18px;
    border-radius: 15px;
 }
+
+/* Quick See */
+.quick-see__content{
+    margin-top: 10px;
+    background-color: var(--white-color);
+    width: 100%;
+    min-width: 300px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-bottom: 10px;
+    display: none;
+}
+.quick-see__content.active{
+    display: block;
+}
+.quick-see__tab{
+    display: flex;
+   
+}
+
+/* line only */
+.quick-see__tab__indicator{
+    position: relative;
+    width: 100px;
+    height: 5px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 15px;
+    transition: all 0.5s ease-in-out;
+}
+.indi1{
+    margin-left: 48px;
+    width: 60px;
+}
+.indi2{
+    margin-left: 158px;
+    width: 50px;
+}
+.indi3{
+    margin-left: 260px;
+    width: 85px;
+}
+.indi4{
+    margin-left: 400px;
+    width: 55px;
+}
+.indi5{
+    margin-left: 510px;
+    width: 65px;
+}
+.indi6{
+    margin-left: 10px;
+    width: 50px;
+}
+
+
+/* end: indicator */
+
+
+.quick-see__line::after{
+    content: "";
+    display: block;
+    border-bottom: 2px solid var(--border-shadow-color);
+    width: 100%;
+}
+.quick-see__tab .tab{
+    margin-top: 20px;
+    margin-left: 45px;
+    cursor: pointer;
+}
+
+.quick-see__tab .tab.active{
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* quick see main */
+.quick-see__main{
+    min-height: 300px;
+}
+
+.quick-see__main__wrapper{
+    
+}
+
+.quick-see__main .quick-see__tab {
+    display: none;
+}
+
+.quick-see__main .quick-see__tab.active {
+    display: block;
+    animation: moveLeft 0.3s ease;
+}
+@keyframes moveLeft {
+    from{   
+        transform: translateY(200px);
+        opacity: 0.5;
+
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Ticket__detail utilities */
+
+.ticket-utilities{
+    padding: 0 10px 0 30px;
+}
+.ultility .ultility__header {
+    width: 100%;
+    text-align: left;
+    margin: 35px 20px 10px;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1.7rem;
+}
+
+.ultility .main{
+    display: flex;
+    flex-wrap: wrap;
+}
+.ultility .main .session-item{
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    min-width: 350px;
+}
+.ultility .main .services__item{
+    font-size: 1.5rem;
+        margin-left: 10px;
+        margin-top: 5px;
+}
+.ultility .main .services__item input{
+    margin-right: 20px;
+}
+.session-item .session-icon{
+    margin-right: 30px;
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+.session-item .session-content .session-title{
+    font-size: 1.6rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 6px;
+}
+.session-item .session-content .session-desc{
+    font-size: 1.4rem;
+}
+
+/* end: Ticket__detail utilities */
+
+
+
+
+.policy-item{
+    margin-left: 25px;
+    margin-top: 20px;
+    list-style-type: none;
+
+}
+.policy-item__title{
+    margin-top: 30px;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--primary-color);
+
+}
+.policy-item__detail li{
+    list-style-type: inherit;
+    margin-top: 15px;
+}
+/* policy  */
+
+/* end : policy */
+
+
+/* Ratting */
+.ticket-rating{
+    text-align: center;
+    margin-top: 20px;
+}
+/* End: rating */
+

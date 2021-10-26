@@ -29,8 +29,8 @@ export const HeaderCustomer = ({props}) => {
                     </ul>
                 </div>
     
-                {/* <HeaderLogin open={openModal} ></HeaderLogin> */}
-                <HeaderLogined ></HeaderLogined>
+                <HeaderLogin open={openModal} ></HeaderLogin>
+                {/* <HeaderLogined ></HeaderLogined> */}
             </div>
     </div>
     {showModal ?  <ModalLogin close={openModal} /> : null }

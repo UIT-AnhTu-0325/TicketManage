@@ -1,0 +1,77 @@
+/* Ticket PickUpPoint */
+.pickup-dropoff{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+.pickup-dropoff .note__title{
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.dropoff-point p.note__desc{
+    margin-bottom: 50px;
+}
+.pickup-dropoff__main{
+    display: flex;
+    margin-top: 25px;
+}
+
+.pickup-point , .dropoff-point{
+    min-width: 300px;
+}
+.pickup-dropoff__point{
+    margin: 15px 0;
+    font-weight: 500;
+}
+
+.pickup-dropoff__main ul{
+    list-style-type: none;
+    margin-left: -20px;
+
+}
+.pickup-dropoff__main ul li{
+    margin-bottom: 8px;
+}
+.pickup-dropoff__main ul .content-time{
+    margin-right: 15px;
+    font-weight: 500;
+} 
+/* end: Ticket PickUpPoint *//* Ticket PickUpPoint */
+.pickup-dropoff{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+.pickup-dropoff .note__title{
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.dropoff-point p.note__desc{
+    margin-bottom: 50px;
+}
+.pickup-dropoff__main{
+    display: flex;
+    margin-top: 25px;
+}
+
+.pickup-point , .dropoff-point{
+    min-width: 300px;
+}
+.pickup-dropoff__point{
+    margin: 15px 0;
+    font-weight: 500;
+}
+
+.pickup-dropoff__main ul{
+    list-style-type: none;
+    margin-left: -20px;
+
+}
+.pickup-dropoff__main ul li{
+    margin-bottom: 8px;
+}
+.pickup-dropoff__main ul .content-time{
+    margin-right: 15px;
+    font-weight: 500;
+} 
+/* end: Ticket PickUpPoint */
