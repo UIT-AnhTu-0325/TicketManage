@@ -28,8 +28,8 @@ export const Enterprise = (props) => {
     // form.append("address", enterpriseAddress);
 
     const form = {
-      name: enterpriseAddress,
-      address: enterpriseName,
+      name: enterpriseName,
+      address: enterpriseAddress,
     };
 
     dispatch(addEnterprise(form));
