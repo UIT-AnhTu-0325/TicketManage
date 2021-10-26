@@ -153,12 +153,13 @@
     padding: 5px;
     margin: 10px;
     min-width: 90px;
-    border-radius: 15px;
+    border-radius: 5px;
     text-align: center;
     cursor: pointer;
     background-color: var(--white-color);
     color: var(--text-color);
     box-shadow: 0 2px 0px rgba(0, 55, 10, 0.1);
+    width: 100px;
 }
 
 .time__item.active{

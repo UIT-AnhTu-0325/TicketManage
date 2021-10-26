@@ -2,14 +2,11 @@ const mongoose = require("mongoose");
 
 const TicketSchema = new mongoose.Schema({
     idTrip : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Trip',
         required: true
     },
-    idCustomer : {
-        type : String,
-        required: true
-    },
-    seatNumber : {
+    quantity : {
         type : Number,
         required: true
     },
@@ -21,18 +18,6 @@ const TicketSchema = new mongoose.Schema({
         type : Number,
         required: true
     },
-    service : {
-        type : String,
-        required: true
-    },
-    statusTicket : {
-        type : String,
-        required: true
-    },
-    statusPrice : {
-        type : String,
-        required: true
-    }
 },{timestamps: true});
 
 module.exports = mongoose.model("Ticket", TicketSchema);

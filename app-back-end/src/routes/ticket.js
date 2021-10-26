@@ -1,11 +1,14 @@
-const Ticket = require("../models/ticket");
-const {addTicket, getById, getAll} = require("../controller/ticket")
+const {create, getById, getAll, update, deleteById} = require("../controller/ticket")
 const router = require("express").Router();
 
-router.get("/", addTicket);
+router.post("/", create);
 
 router.get("/:id", getById);
 
-router.post("/", getAll);
+router.get("/", getAll);
+
+router.put("/:id", update);
+
+router.delete("/:id", deleteById);
 
 module.exports = router;
