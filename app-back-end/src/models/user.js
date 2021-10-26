@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
     },
     contactNumber: {
       type: String,
-      //required: true,
+      required: true,
     },
     role: {
       type: String,

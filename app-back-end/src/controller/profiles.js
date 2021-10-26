@@ -1,7 +1,6 @@
 const Profile = require("../models/profile");
 const User = require("../models/user.js");
 const env = require("dotenv");
-const e = require("express");
 const { model } = require("mongoose");
 
 env.config();
@@ -24,7 +23,7 @@ exports.userProfile = async (req, res) => {
         // });
         let profile = await Profile.findOne({ account: user._id }).populate(
             "account",
-            "firstName lastName username email",
+            "firstName lastName username email contactNumber fullName",
             User
         );
         return res.status(200).json({
@@ -40,19 +39,52 @@ exports.userProfile = async (req, res) => {
     }
 }
 
+// exports.UpdateProfile = async (req, res) => {
+//     try {
+//         let { dob, gender } = req.body;
+//         let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+//         let profile = await Profile.findOneAndUpdate(
+//             { account: req.user._id },
+//             { dob, gender, avatar: path },
+//             { new: true }
+//         );
+//         return res.status(200).json({
+//             success: true,
+//             message: "Your profile is now update",
+//             profile,
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(400).json({
+//             success: false,
+//             message: "Unable to get profile",
+//         });
+//     }
+// };
+
 exports.UpdateProfile = async (req, res) => {
     try {
-        let { dob, gender } = req.body;
-        let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
-        let profile = await Profile.findOneAndUpdate(
-            { account: req.user._id },
-            { dob, gender, avatar: path },
-            { new: true }
-        );
+        const user = await User.findById(req.user._id)
+
+        if (user) {
+            user.firstName = req.body.firstName || user.firstName;
+            user.lastName = req.body.lastName || user.lastName;
+            user.email = req.body.email || user.email;
+            user.contactNumber = req.body.contactNumber || user.contactNumber;
+        }
+
+        const updateUser = await user.save()
+
         return res.status(200).json({
             success: true,
             message: "Your profile is now update",
-            profile,
+            user
+            // _id: updateUser._id,
+            // firstName: updateUser.firstName,
+            // lastName: updateUser.lastName,
+            // email: updateUser.email,
+            // contactNumber: updateUser.contactNumber,
+            // //oken: generateToken(updateUser._id)
         })
     } catch (error) {
         console.log(error);
@@ -67,7 +99,7 @@ exports.myProfile = async (req, res) => {
     try {
         let profile = await Profile.findOne({ account: req.user._id }).populate(
             "account",
-            "firstName lastName username email",
+            "firstName lastName username email contactNumber fullName",
             User
         );
         if (!profile) {
@@ -92,6 +124,7 @@ exports.myProfile = async (req, res) => {
 
 exports.profiles = async (req, res) => {
     try {
+        console.log(req.body);
         let { dob, gender } = req.body;
         //let path = process.env.APP_DOMAIN + (req.file.path).split("uploads/")[1];
         let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
@@ -116,10 +149,11 @@ exports.profiles = async (req, res) => {
             }
         });
     } catch (error) {
-        //console.log(error);
+        console.log(error);
         return res.status(400).json({
             success: false,
             message: "Unable to create your profile",
         })
+
     }
 };

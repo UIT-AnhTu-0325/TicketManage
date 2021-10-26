@@ -14,13 +14,14 @@ exports.signup = (req, res) => {
           message: "Username already registered",
         });
 
-      const { firstName, lastName, email, password, username } = req.body;
+      const { firstName, lastName, email, password, username, contactNumber } = req.body;
       const _user = new User({
         firstName,
         lastName,
         email,
         password,
         username,
+        contactNumber
       });
 
       _user.save((error, data) => {
@@ -47,7 +48,7 @@ exports.signin = (req, res) => {
         const token = jwt.sign({ _id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "1h",
         });
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, role, fullName, contactNumber } = user;
         res.status(200).json({
           token,
           user: {
@@ -57,6 +58,7 @@ exports.signin = (req, res) => {
             email,
             role,
             fullName,
+            contactNumber
           },
         });
       } else {
