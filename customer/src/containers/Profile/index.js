@@ -51,7 +51,7 @@ export const ProfileSetting = (props) => {
             document.getElementById("phoneId").textContent = myProfile.profile.account.contactNumber;
             document.getElementById("emailId").textContent = myProfile.profile.account.email;
 
-            setFirstName(myProfile.profile.account.lastName + " " + myProfile.profile.account.firstName)
+            setFirstName(myProfile.profile.account.firstName)
             setContactNumber(myProfile.profile.account.contactNumber)
             setEmail(myProfile.profile.account.email)
             // setPic(userInfo.pic)
@@ -156,47 +156,43 @@ export const ProfileSetting = (props) => {
                     </div>
                     <div className="profile__main-setting">
                         <form onSubmit={update}>
-                            <p>Email đăng nhập</p>
-                            <div className="input-wrapper-auth">
-                                <input
+                            <div className={tabState === 1 ? "content-setting-info active" : "content-setting-info"}>
+
+                                <div className="avatar">
+                                    <div className="avatar__wrapper">
+                                        <img src={userImg} alt="" />
+                                        <i class="fas fa-pen-square"></i>
+                                    </div>
+                                </div>
+                                <InputBox
+                                    type="text"
+                                    title="Họ tên"
+                                    placeholder=""
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                                <InputBox
+                                    type="number"
+                                    title="Số điện thoại"
+                                    placeholder=""
+                                    value={contactNumber}
+                                    onChange={(e) => setContactNumber(e.target.value)}
+                                />
+                                <InputBox
                                     type="email"
-                                    className="email"
-                                    placeholder="Nhập email của bạn"
-                                    id=""
+                                    title="Email"
+                                    placeholder=""
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                            </div>
-                            <div className="auth__content__login-btn">
-                                <button className="custom-btn">Lưu thay đổi</button>
-                            </div>
-                        </form>
-                        <div className={tabState === 1 ? "content-setting-info active" : "content-setting-info"}>
-                            <div className="avatar">
-                                <div className="avatar__wrapper">
-                                    <img src={userImg} alt="" />
-                                    <i class="fas fa-pen-square"></i>
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                                <div className="btn-save clear">
+                                    <button className="">Lưu thay đổi</button>
                                 </div>
                             </div>
-                            <InputBox
-                                type="text"
-                                title="Họ tên"
-                            />
-                            <InputBox
-                                type="number"
-                                title="Số điện thoại"
-                            />
-                            <InputBox
-                                type="email"
-                                title="Email"
-                            />
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                            <div className="btn-save clear">
-                                <button className="">Lưu thay đổi</button>
-                            </div>
-                        </div>
+                        </form>
 
                         <div className={tabState === 2 ? "content-setting-info active" : "content-setting-info"}>
                             <div className="avatar">
