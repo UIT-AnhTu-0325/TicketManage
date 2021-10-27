@@ -22,11 +22,10 @@ export const Enterprise = (props) => {
   }, []);
 
   const handleClose = () => {
-    // const form = new FormData();
+    setShow(false);
+  };
 
-    // form.append("name", enterpriseName);
-    // form.append("address", enterpriseAddress);
-
+  const handleSave = () => {
     const form = {
       name: enterpriseName,
       address: enterpriseAddress,
@@ -34,12 +33,8 @@ export const Enterprise = (props) => {
 
     dispatch(addEnterprise(form));
 
-    // const ent = {
-    //   enterpriseName,
-    //   enterpriseAddress,
-    // };
-
-    //console.log(ent);
+    setEnterpriseName("");
+    setEnterpriseAddress("");
 
     setShow(false);
   };
@@ -103,7 +98,7 @@ export const Enterprise = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>

@@ -10,6 +10,11 @@ const router = require("express").Router();
 var express = require("express");
 var app = express();
 var multer = require("multer");
+const {
+  requireSignin,
+  userMiddleware,
+  adminMiddleware,
+} = require("../common-middleware");
 var upload = multer();
 
 // for parsing application/json
@@ -22,14 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(express.static("public"));
 
-router.post("/create", create);
+router.post("/create", requireSignin, adminMiddleware, create);
 
 router.get("/:id", getById);
 
-router.get("/", getAll);
+router.get("/", requireSignin, getAll);
 
-router.put("/:id", update);
+router.put("/:id", requireSignin, adminMiddleware, update);
 
-router.delete("/:id", deleteById);
+router.delete("/:id", requireSignin, adminMiddleware, deleteById);
 
 module.exports = router;

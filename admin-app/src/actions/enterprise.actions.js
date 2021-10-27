@@ -30,7 +30,7 @@ export const addEnterprise = (form) => {
     if (res.status === 200) {
       dispatch({
         type: enterpriseConstants.ADD_NEW_ENTERPRISES_SUCCESS,
-        payload: res.data,
+        payload: { enterprise: res.data },
       });
     } else {
       dispatch({

@@ -9,14 +9,12 @@ import { signout } from "../../actions";
  **/
 
 export const Header = (props) => {
-
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const logout = () => {
     dispatch(signout());
-  }
-
+  };
 
   const renderLoggedInLinks = () => {
     return (
@@ -28,7 +26,7 @@ export const Header = (props) => {
         </li>
       </Nav>
     );
-  }
+  };
 
   const renderNonLoggedInLinks = () => {
     return (
@@ -46,12 +44,18 @@ export const Header = (props) => {
         </li>
       </Nav>
     );
-  }
-
+  };
 
   return (
     <div className="App">
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ zIndex: 1 }}>
+      <Navbar
+        collapseOnSelect
+        fixed="top"
+        expand="lg"
+        bg="dark"
+        variant="dark"
+        style={{ zIndex: 1 }}
+      >
         <Container fluid>
           {/* <Navbar.Brand href="#home">Admin Dashboard</Navbar.Brand> */}
           <Link className="navbar-brand" to="/">
@@ -74,8 +78,9 @@ export const Header = (props) => {
                 </NavDropdown.Item>
               </NavDropdown> */}
             </Nav>
-            {auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()}
-
+            {auth.authenticate
+              ? renderLoggedInLinks()
+              : renderNonLoggedInLinks()}
           </Navbar.Collapse>
         </Container>
       </Navbar>
