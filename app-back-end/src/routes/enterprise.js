@@ -33,7 +33,7 @@ router.get("/:id", getById);
 
 router.get("/", requireSignin, getAll);
 
-router.put("/:id", requireSignin, adminMiddleware, update);
+router.put("/:id", update);
 
 router.delete("/:id", requireSignin, adminMiddleware, deleteById);
 

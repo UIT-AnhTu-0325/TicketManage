@@ -41,3 +41,41 @@ export const addEnterprise = (form) => {
     console.log(res);
   };
 };
+
+export const editEnterprise = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: enterpriseConstants.EDIT_ENTERPRIESE_REQUEST });
+    const res = await axios.put(`/enterprise/${form._id}`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: enterpriseConstants.EDIT_ENTERPRIESE_SUCCESS,
+        payload: { enterprise: res.data },
+      });
+    } else {
+      dispatch({
+        type: enterpriseConstants.EDIT_ENTERPRIESE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
+
+export const deleteEnterprise = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: enterpriseConstants.DELETE_ENTERPRIESE_REQUEST });
+    const res = await axios.delete(`/enterprise/${form._id}`);
+    if (res.status === 200) {
+      dispatch({
+        type: enterpriseConstants.DELETE_ENTERPRIESE_SUCCESS,
+        payload: { id: form._id },
+      });
+    } else {
+      dispatch({
+        type: enterpriseConstants.DELETE_ENTERPRIESE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
