@@ -1,41 +1,43 @@
 const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
     if (user)
       return res.status(400).json({
         message: "Email already registered",
       });
-    User.findOne({ username: req.body.username }).exec((error, user) => {
-      if (user)
-        return res.status(400).json({
-          message: "Username already registered",
-        });
-
-      const { firstName, lastName, email, password, username } = req.body;
-      const _user = new User({
-        firstName,
-        lastName,
-        email,
-        password,
-        username,
+  });
+  User.findOne({ username: req.body.username }).exec((error, user) => {
+    if (user)
+      return res.status(400).json({
+        message: "Username already registered",
       });
+  });
 
-      _user.save((error, data) => {
-        if (error) {
-          return res.status(400).json({
-            message: "Something went wrong",
-          });
-        }
-        if (data) {
-          return res.status(201).json({
-            message: "Create successfully",
-          });
-        }
+  const { firstName, lastName, email, password, username } = req.body;
+  const hash_password = await bcrypt.hash(password, 10);
+  const _user = new User({
+    firstName,
+    lastName,
+    email,
+    hash_password,
+    username,
+  });
+
+  _user.save((error, data) => {
+    if (error) {
+      return res.status(400).json({
+        message: "Something went wrong",
       });
-    });
+    }
+    if (data) {
+      return res.status(201).json({
+        message: "Create successfully",
+      });
+    }
   });
 };
 

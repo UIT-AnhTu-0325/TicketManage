@@ -8,6 +8,7 @@ const initState = {
     lastName: "",
     email: "",
     picture: "",
+    role: "",
   },
   authenticate: false,
   authenticating: false,

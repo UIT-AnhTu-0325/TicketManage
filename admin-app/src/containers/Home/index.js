@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Jumbotron, Row } from "react-bootstrap";
 import { Layout } from "../../components/Layout";
-import "./style.css";
+import "../../asset/css/containers-css/Home.css";
 import { NavLink } from "react-router-dom";
 
 /**
