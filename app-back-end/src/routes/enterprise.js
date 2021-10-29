@@ -31,7 +31,7 @@ router.post("/create", requireSignin, adminMiddleware, create);
 
 router.get("/:id", getById);
 
-router.get("/", requireSignin, getAll);
+router.get("/", getAll);
 
 router.put("/:id", update);
 
