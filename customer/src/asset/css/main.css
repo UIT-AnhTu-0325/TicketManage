@@ -194,7 +194,7 @@
     display: flex;
 }
 
-.main-func__site__choose input,
+.main-func__site__choose select,
 .main-func__date__choose input{
     border: none;
     outline: none;
@@ -499,6 +499,7 @@
     position: relative;
     text-align: center;
     padding-left: 120px;
+    justify-content: center;
 }
 .func-bar__type-choosing{
     margin-left: 40px;

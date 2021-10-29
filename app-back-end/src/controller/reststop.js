@@ -1,0 +1,54 @@
+const RestStop = require("../models/reststop");
+
+exports.getAll = async (req, res) => {
+    try {
+        const restStops = await RestStop.find();
+        res.status(200).json(restStops);
+    } catch (err) {
+        res.status(500).json({error:err});
+    }
+}
+
+exports.getById = async (req, res) => {
+    try {
+        const restStop = await RestStop.findById(req.params.id);
+        res.status(200).json(restStop);
+    } catch (err) {
+        res.status(500).json({error:err});
+    }
+}
+
+exports.create = async (req, res) => {
+    const newRestStop = new RestStop(req.body);
+    
+    try {
+        const saved = await newRestStop.save();
+        res.status(200).json(saved);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+exports.update = async (req, res) => {
+    try {
+        const updated = await RestStop.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: req.body,
+          },
+          { new: true }
+        );
+        res.status(200).json(updated);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+}
+
+exports.deleteById = async (req, res) => {
+    try {
+        await RestStop.findByIdAndDelete(req.params.id);
+        res.status(200).json("Has been deleted");
+      } catch (err) {
+        res.status(500).json(err);
+      }
+}

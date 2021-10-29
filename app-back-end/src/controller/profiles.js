@@ -6,37 +6,37 @@ const { model } = require("mongoose");
 env.config();
 
 exports.userProfile = async (req, res) => {
-    try {
-        let { username } = req.params;
-        let user = await User.findOne({ username });
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found",
-            });
-        }
-        // let profile = await Profile.findOne({ account: user._id });
-        // return res.status(200).json({
-        //     profile,
-        //     success: true,
-        //     //User: user.getUserInfo(),
-        // });
-        let profile = await Profile.findOne({ account: user._id }).populate(
-            "account",
-            "firstName lastName username email contactNumber fullName",
-            User
-        );
-        return res.status(200).json({
-            success: true,
-            profile,
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        });
+  try {
+    let { username } = req.params;
+    let user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
+    // let profile = await Profile.findOne({ account: user._id });
+    // return res.status(200).json({
+    //     profile,
+    //     success: true,
+    //     //User: user.getUserInfo(),
+    // });
+    let profile = await Profile.findOne({ account: user._id }).populate(
+      "account",
+      "firstName lastName username email contactNumber fullName",
+      User
+    );
+    return res.status(200).json({
+      success: true,
+      profile,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    })
+  }
 }
 
 // exports.UpdateProfile = async (req, res) => {
@@ -63,97 +63,97 @@ exports.userProfile = async (req, res) => {
 // };
 
 exports.UpdateProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user._id)
+  try {
+    const user = await User.findById(req.user._id)
 
-        if (user) {
-            user.firstName = req.body.firstName || user.firstName;
-            user.lastName = req.body.lastName || user.lastName;
-            user.email = req.body.email || user.email;
-            user.contactNumber = req.body.contactNumber || user.contactNumber;
-        }
-
-        const updateUser = await user.save()
-
-        return res.status(200).json({
-            success: true,
-            message: "Your profile is now update",
-            user
-            // _id: updateUser._id,
-            // firstName: updateUser.firstName,
-            // lastName: updateUser.lastName,
-            // email: updateUser.email,
-            // contactNumber: updateUser.contactNumber,
-            // //oken: generateToken(updateUser._id)
-        })
-    } catch (error) {
-        console.log(error);
-        return res.status(400).json({
-            success: false,
-            message: "Unable to get profile",
-        });
+    if (user) {
+      user.firstName = req.body.firstName || user.firstName;
+      user.lastName = req.body.lastName || user.lastName;
+      user.email = req.body.email || user.email;
+      user.contactNumber = req.body.contactNumber || user.contactNumber;
     }
+
+    const updateUser = await user.save()
+
+    return res.status(200).json({
+      success: true,
+      message: "Your profile is now update",
+      user
+      // _id: updateUser._id,
+      // firstName: updateUser.firstName,
+      // lastName: updateUser.lastName,
+      // email: updateUser.email,
+      // contactNumber: updateUser.contactNumber,
+      // //oken: generateToken(updateUser._id)
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      message: "Unable to get profile",
+    });
+  }
 };
 
 exports.myProfile = async (req, res) => {
-    try {
-        let profile = await Profile.findOne({ account: req.user._id }).populate(
-            "account",
-            "firstName lastName username email contactNumber fullName",
-            User
-        );
-        if (!profile) {
-            return res.status(404).json({
-                success: false,
-                message: "Your profile is not available",
-            });
-        }
-        return res.status(200).json({
-            success: true,
-            profile,
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(400).json({
-            success: false,
-            message: "Unable to get profile",
-        });
+  try {
+    let profile = await Profile.findOne({ account: req.user._id }).populate(
+      "account",
+      "firstName lastName username email contactNumber fullName",
+      User
+    );
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "Your profile is not available",
+      });
     }
-};
+    return res.status(200).json({
+      success: true,
+      profile,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      message: "Unable to get profile",
+    });
+  }
+}
 
 
 exports.profiles = async (req, res) => {
-    try {
-        console.log(req.body);
-        let { dob, gender } = req.body;
-        //let path = process.env.APP_DOMAIN + (req.file.path).split("uploads/")[1];
-        let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
-        let _profile = new Profile({
-            account: req.user._id,
-            avatar: path,
-            dob,
-            gender,
-        })
-        console.log("USER_PROFILE", _profile);
-        _profile.save((error, data) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).json({
-                    message: "Something went wrong",
-                });
-            }
-            if (data) {
-                return res.status(201).json({
-                    message: "Profile create successfully",
-                });
-            }
-        });
-    } catch (error) {
+  try {
+    console.log(req.body);
+    let { dob, gender } = req.body;
+    //let path = process.env.APP_DOMAIN + (req.file.path).split("uploads/")[1];
+    let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+    let _profile = new Profile({
+      account: req.user._id,
+      avatar: path,
+      dob,
+      gender,
+    })
+    console.log("USER_PROFILE", _profile);
+    _profile.save((error, data) => {
+      if (error) {
         console.log(error);
         return res.status(400).json({
-            success: false,
-            message: "Unable to create your profile",
-        })
+          message: "Something went wrong",
+        });
+      }
+      if (data) {
+        return res.status(201).json({
+          message: "Profile create successfully",
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      message: "Unable to create your profile",
+    })
 
-    }
-};
+  }
+}
