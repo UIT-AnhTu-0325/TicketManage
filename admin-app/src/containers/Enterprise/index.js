@@ -30,7 +30,7 @@ export const Enterprise = (props) => {
   const [enterpriseID, setEnterpriseID] = useState("");
   const [enterpriseName, setEnterpriseName] = useState("");
   const [enterpriseAddress, setEnterpriseAddress] = useState("");
-  const enterprise = useSelector((state) => state.enterprise);
+  const state_enterprise = useSelector((state) => state.enterprise);
 
   useEffect(() => {
     dispatch(getAllEnterprises());
@@ -49,6 +49,7 @@ export const Enterprise = (props) => {
       myEnterprises.push(
         <ListGroupItem className="d-flex justify-content-around">
           <strong> {enterprise.name}</strong>
+          <div>{enterprise.address}</div>
           <div className="ml-auto">
             <Button
               color="warning"
@@ -128,7 +129,7 @@ export const Enterprise = (props) => {
           <Col md={12}>
             <ul>
               <ListGroup className="mt-4">
-                {renderEnterprises(enterprise.enterprises)}
+                {renderEnterprises(state_enterprise.enterprises)}
               </ListGroup>
             </ul>
           </Col>
