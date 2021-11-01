@@ -16,7 +16,9 @@ export const login = (email, password) => async (dispatch) => {
             { email, password },
             config
         )
+
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+
         localStorage.setItem("userInfo", JSON.stringify(data));
 
     } catch (error) {
@@ -62,8 +64,7 @@ export const readProfile = () => async (dispatch, getState) => {
         dispatch({ type: USER_PROFILE_SUCCESS, payload: data })
 
         //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
-
-        localStorage.setItem("myProfile", JSON.stringify(data))
+        //localStorage.setItem("myProfile", JSON.stringify(data))
 
     } catch (error) {
         dispatch({
@@ -97,7 +98,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
 
         //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
-        localStorage.setItem("myProfile", JSON.stringify(data))
+        //localStorage.setItem("myProfile", JSON.stringify(data))
 
     } catch (error) {
         dispatch({

@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
       });
   });
 
-  const { firstName, lastName, email, password, username } = req.body;
+  const { firstName, lastName, email, password, username, contactNumber } = req.body;
   const hash_password = await bcrypt.hash(password, 10);
   const _user = new User({
     firstName,
@@ -25,6 +25,7 @@ exports.signup = async (req, res) => {
     hash_password,
     username,
     role: "admin",
+    contactNumber
   });
 
   _user.save((error, data) => {

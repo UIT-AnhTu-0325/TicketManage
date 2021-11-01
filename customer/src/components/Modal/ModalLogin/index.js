@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { login, readProfile } from "../../../actions/userActions";
+import Loading from "../../loading";
+import ErrorMessage from "../../errorMessage";
 
 /**
 * @author
@@ -13,44 +15,22 @@ export const ModalLogin = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+
     const history = useHistory();
 
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin)
-    const { loading, error, userInfo } = userLogin
+    const { error, loading, userInfo, success } = userLogin
+    //const { userInfo } = userLogin
 
     const userProfile = useSelector((state) => state.userProfile)
     const { myProfile } = userProfile
-
-    // const [loading, setLoading] = useState(false);
-    // const auth = useSelector((state) => state.auth);
-
-    // useEffect(() => {
-    //     if (localStorage.getItem("authToken")) {
-    //         history.push("/");
-    //     }
-    // }, [history]);
-
-
-    // useEffect(() => {
-    //     const userInfo = localStorage.getItem("userInfo");
-    //     if (userInfo) {
-    //         history.push("/profile");
-    //     }
-    // }, [history]);
 
     useEffect(() => {
         if (userInfo && myProfile) {
             history.push("/profile")
         }
     }, [history, userInfo, myProfile])
-
-    // useEffect(() => {
-    //     if (myProfile) {
-    //         history.push("/")
-    //     }
-    // }, [history, myProfile])
-
 
     const submitHandle = async (e) => {
         e.preventDefault();
@@ -62,16 +42,6 @@ export const ModalLogin = (props) => {
         e.preventDefault();
         dispatch(readProfile())
     };
-
-    // const userLogin = async (e) => {
-    //     e.preventDefault();
-    //     const user = {
-    //         email,
-    //         password,
-    //     };
-    //     dispatch(signin(user));
-    //     console.log(email, password);
-    // };
 
     return (
         <div>
@@ -97,7 +67,13 @@ export const ModalLogin = (props) => {
                             <h3>Welcome Back!</h3>
                             <p>Chưa có tài khoản? <a href="">Đăng ký</a></p>
                         </div>
-
+                        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                        {loading && <Loading />}
+                        {success && (
+                            <ErrorMessage variant="success">
+                                Logged in successfully
+                            </ErrorMessage>
+                        )}
                         <div className="auth__content__form">
                             <form onSubmit={submitHandle}>
                                 <p>Email đăng nhập</p>
@@ -136,6 +112,7 @@ export const ModalLogin = (props) => {
                                 <div className="auth__content__login-btn">
                                     <button className="custom-btn">Đăng nhập</button>
                                 </div>
+
                             </form>
 
 

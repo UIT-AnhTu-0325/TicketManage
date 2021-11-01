@@ -17,7 +17,7 @@ exports.signup = async (req, res) => {
       });
   });
 
-  const { firstName, lastName, email, password, username } = req.body;
+  const { firstName, lastName, email, password, username, contactNumber } = req.body;
   const hash_password = await bcrypt.hash(password, 10);
   const _user = new User({
     firstName,
@@ -25,6 +25,7 @@ exports.signup = async (req, res) => {
     email,
     hash_password,
     username,
+    contactNumber
   });
 
   _user.save((error, data) => {
@@ -61,6 +62,7 @@ exports.signin = (req, res) => {
             fullName,
             contactNumber
           },
+          message: "Login successfully <3"
         });
       } else {
         return res.status(400).json({

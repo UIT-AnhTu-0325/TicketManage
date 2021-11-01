@@ -11,6 +11,8 @@ import updatingImg from '../../asset/img/updating.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { updateProfile } from '../../actions/userActions'
+import ErrorMessage from '../../components/errorMessage'
+import Loading from '../../components/loading'
 /**
 * @author
 * @function ProfileSetting
@@ -20,8 +22,9 @@ export const ProfileSetting = (props) => {
 
     const [firstName, setFirstName] = useState("")
     const [email, setEmail] = useState("")
-    const [pic, setPic] = useState("")
+    const [avatar, setAvatar] = useState("")
     const [contactNumber, setContactNumber] = useState("")
+    const [file, setFile] = useState("")
 
 
 
@@ -31,18 +34,16 @@ export const ProfileSetting = (props) => {
     const { userInfo } = userLogin
 
     const userUpdate = useSelector((state) => state.userUpdate)
-    const { loading, error, success } = userUpdate
+    const { loading, error, success, userInfoUpdate } = userUpdate
+    //const { userInfoUpdate } = userUpdate
 
     const userProfile = useSelector((state) => state.userProfile)
     const { myProfile } = userProfile
 
-    console.log(userInfo)
-    //console.log(myProfile)
-
     const history = useHistory()
 
     useEffect(() => {
-        if (!userInfo && !myProfile) {
+        if (!userInfo || !myProfile) {
             history.push("/")
         }
         else {
@@ -50,6 +51,18 @@ export const ProfileSetting = (props) => {
             document.getElementById("nameId").textContent = myProfile.profile.account.firstName;
             document.getElementById("phoneId").textContent = myProfile.profile.account.contactNumber;
             document.getElementById("emailId").textContent = myProfile.profile.account.email;
+
+            var image = new Image();
+            image.onload = function () {
+                document.getElementById('avatarId').setAttribute('src', this.src);
+            };
+            image.src = myProfile.profile.avatar;
+
+            var setImage = new Image();
+            setImage.onload = function () {
+                document.getElementById('setAvatarId').setAttribute('src', this.src);
+            };
+            setImage.src = myProfile.profile.avatar;
 
             setFirstName(myProfile.profile.account.firstName)
             setContactNumber(myProfile.profile.account.contactNumber)
@@ -59,15 +72,39 @@ export const ProfileSetting = (props) => {
     }, [history, userInfo, myProfile])
 
 
+
+
     const [tabState, setTabState] = useState(1);
     const changeTab = (index) => {
         setTabState(index);
         console.log(index);
     }
 
+    const postDetails = (pics) => {
+        if (pics.type === "image/jpeg" || pics.type === "image/png") {
+            const data = new FormData();
+            data.append("file", pics);
+            data.append("upload_preset", "notezipper");
+            data.append("cloud_name", "piyushproj");
+            fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setAvatar(data.url.toString());
+                    console.log(avatar);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+        }
+    };
+
     const update = (e) => {
         e.preventDefault();
-        dispatch(updateProfile({ firstName, email, contactNumber }));
+        dispatch(updateProfile({ firstName, email, contactNumber, avatar }));
     };
 
     return (
@@ -79,7 +116,7 @@ export const ProfileSetting = (props) => {
                 <div className="profile__left-bar">
                     <div className="info">
 
-                        <img src={userImg} alt="" id="picId" />
+                        <img src={userImg} alt="" id="avatarId" />
 
                         <span className="name" id="nameId">Lam Hong</span>
                         <span className="rank" id="">Hạng VIP</span>
@@ -160,7 +197,7 @@ export const ProfileSetting = (props) => {
 
                                 <div className="avatar">
                                     <div className="avatar__wrapper">
-                                        <img src={userImg} alt="" />
+                                        <img src={userImg} alt="" id="setAvatarId" />
                                         <i class="fas fa-pen-square"></i>
                                     </div>
                                 </div>
@@ -185,9 +222,24 @@ export const ProfileSetting = (props) => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <button type="submit" class="btn btn-primary">
-                                    Submit
-                                </button>
+                                <InputBox
+                                    type="file"
+                                    title="Avatar"
+                                    placeholder=""
+                                    // onChange={event => {
+                                    //     const file = event.target.files[0]
+                                    //     setFile(file)
+                                    //     console.log(file)
+                                    // }}
+                                    onChange={(e) => postDetails(e.target.files[0])}
+                                />
+                                {loading && <Loading />}
+                                {success && (
+                                    <ErrorMessage variant="success">
+                                        Updated Successfully
+                                    </ErrorMessage>
+                                )}
+                                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                                 <div className="btn-save clear">
                                     <button className="">Lưu thay đổi</button>
                                 </div>
