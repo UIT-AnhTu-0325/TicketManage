@@ -9,6 +9,7 @@ import { fetch } from '../../action/trip'
 // css
 import '../../asset/css/main-ticket.css'
 import '../../asset/css/base.css'
+import { Footer } from '../../components/Footer'
 
 /**
 * @author
@@ -52,6 +53,8 @@ export const TicketPage = (props) => {
             </div>
           </div>
          </div>
+
+         <Footer />
     </div>
    )
 

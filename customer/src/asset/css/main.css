@@ -12,6 +12,8 @@
     font-weight: 600;
     color: var(--primary-color);
     margin: 0 80px 0 40px;
+    cursor: pointer;
+    
 }
 
 .header__nav{
@@ -111,6 +113,9 @@
 /* content */
 .content{
     display: flex;
+    width: 1200px;
+    margin: 70px auto;
+    position: relative;
 }
 .content__main-func{
     flex: 1;
@@ -120,6 +125,9 @@
     margin-top: -10px;
     flex: 1;
    
+}
+.content__main-func__wrapper-out{
+    flex: 1;
 }
 
 .content__main-img img{
@@ -192,6 +200,7 @@
 
 .main-func__site__choose, .main-func__date__choose{
     display: flex;
+    position: relative;
 }
 
 .main-func__site__choose select,
@@ -251,6 +260,117 @@
 .mybtn .link-in-btn {
     font-size: 2rem !important;
 }
+
+/* SELECT MAIN-FUNC */
+.main-func__site .select-start-location{
+    position: relative;
+    background-color: white;
+    flex:1;
+    border-radius: 10px;
+}
+
+.select-start-location .select-box {
+    position: absolute;
+    background-color: var(--white-color);
+    z-index: 15;
+    width: 340px;
+    margin-left: -68px;
+    top: 100%;
+    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+   
+}
+.select-start-location .options-list.active , .select-start-location .options-list1.active{
+    height: fit-content;
+    max-height: 250px;
+    opacity: 1;
+    overflow-y: scroll;
+}
+.select-start-location .options-list::-webkit-scrollbar,
+.select-start-location .options-list1::-webkit-scrollbar{
+    width: 16px;
+    background-color: #F1F1F1;
+    border-radius: 0 8px 8px 0;
+}
+.select-start-location .options-list::-webkit-scrollbar-thumb{
+    border-radius: 8px;
+    background-color: #d1d1d1;
+}
+.select-start-location .options-list,
+.select-start-location .options-list1{
+    background-color: var(--white-color);
+    transition: all 0.5s;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+}
+.select-start-location input{
+    display: none;
+
+}
+.select-start-location .options-list,
+.select-start-location .options-list1{
+    width: 100%;
+}
+.select-start-location .option-item,
+.select-start-location .option-item1{
+    cursor: pointer;
+    padding: 8px 16px;
+    width: 100%;
+    display: block;
+}
+.select-start-location .option-item:hover,
+.select-start-location .option-item1:hover{
+    background-color: rgb(231, 231, 231);
+}
+.select-start-location label{
+    cursor: pointer;
+    display: block;
+    width: 100%;
+
+    font-size: 1.9rem;
+}
+.selected2, .selected1 {
+    position: relative;
+    font-size: 1.9rem;
+    cursor: pointer;
+    width: 100%;
+}
+.selected i , .selected1 i{
+    position: absolute;
+    left: calc(100% + 100px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* MODAL Auth */
 .modal-auth{
@@ -322,6 +442,9 @@
     position: relative;
     margin: 60px auto;
     width: 400px;
+    display: none;
+    opacity: 0;
+
 }
 .auth__content__welcome{
     margin: 0 0 30px 0;
@@ -363,12 +486,15 @@
     border: 1.6px solid var(--primary-color);
     overflow: hidden;
 }
+.auth__content__form .input-wrapper-auth.two-column{
+    margin-right: 10px;
+}
 .input-wrapper-auth input{
     padding: 10px 14px;
     border: none;
     outline: none;
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: var(--text-color);
     opacity: 1;
 }
 .input-wrapper-auth input[type='password']{
@@ -404,7 +530,7 @@
     align-items: center;
 }
 .input-wrapper-auth input::placeholder{
-    color: var(--primary-color);
+    color: var(--text-color);
     opacity: 0.7;
     font-size: 1.4rem;
 }
@@ -475,6 +601,30 @@
 }
 
 
+.auth__content.active{
+    display: block;
+    opacity: 1;
+    transition: all 0.5s;
+    animation: slide-right 0.3s ease;
+}
+@keyframes slide-right {
+    from{
+        transform: scale(1.1)
+    }
+    to{
+        transform: scale(1)
+
+    }
+}
+
+
+
+/* register */
+.input-wrapper-two{
+    display: flex;
+}
+
+
 /* ========================================= */
 
 /*  FOR BUS FOUNDED */
@@ -500,7 +650,9 @@
     text-align: center;
     padding-left: 120px;
     justify-content: center;
+    margin-left: -80px;
 }
+
 .func-bar__type-choosing{
     margin-left: 40px;
 }
@@ -524,13 +676,18 @@
     display: flex;
     align-items: center;
     margin-bottom: 0;
+    min-width: 230px;
+    max-width: 230px;
+}
+.func-bar .input input{
+    width: 150px;
 }
 .custom-icon, .custom-default-icon{
     margin-right: 14px;
 }
 .func-bar .mybtn{
     margin-left: 15px;
-    width: 120px;
+    width: 150px;
     
     
 }
