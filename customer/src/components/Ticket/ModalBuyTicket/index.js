@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import '../../../asset/css/modal-css/buy-ticket.css'
+import { useDispatch } from 'react-redux';
+
 
 // img
 import loginRequestImg from '../../../asset/img/login-nice-img.png'
@@ -8,12 +10,15 @@ import pickupPointImg from '../../../asset/img/pickup-point.png'
 import confirmImg from '../../../asset/img/confirm.png'
 import { InputBox } from '../../UI/InputBox'
 import { LeftPannel } from './Components/LeftPannel'
+import { createNew } from '../../../action/user_ticket';
 /**
 * @author
 * @function ModalBuyTicket
 **/
 
 export const ModalBuyTicket = (props) => {
+    console.log(props.info);
+    const dispatch = useDispatch();
 
     const [processStatus, setProcessState] = useState(1);
 
@@ -142,6 +147,7 @@ export const ModalBuyTicket = (props) => {
                                 desc=" Đặt vé nhanh và thuận tiện bằng cách đăng nhập để có những trải nghiệm tốt nhất"
                                 isLogin="true"
                                 linkText="Đăng nhập"
+                                info={props.info}
                             >
                             </LeftPannel>
 
@@ -150,9 +156,9 @@ export const ModalBuyTicket = (props) => {
                                     Điền thông tin liên hệ
                                 </div>
                                 <form action="" className="form-info-input">
-                                    <InputBox type="text" title="Họ tên" />
-                                    <InputBox type="number" title="Số điện thoại" />
-                                    <InputBox type="email" title="Email" />
+                                    <InputBox type="text" title="Họ tên" value={localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}></InputBox>
+                                    <InputBox type="number" title="Số điện thoại" value={localStorage.getItem('contact')}/>
+                                    <InputBox type="email" title="Email" value={localStorage.getItem('email')}/>
                                 </form>
                                 <button className="custom-btn"
                                     onClick={() => {
@@ -185,6 +191,7 @@ export const ModalBuyTicket = (props) => {
                                 desc="Hãy chọn các dịch vụ bạn cần nhé :33"
                                 isLogin="true"
                                 linkText="Tìm hiểu thêm"
+                                info={props.info}
                             >
                             </LeftPannel>
                             <div className="customer__right-panel">
@@ -236,6 +243,7 @@ export const ModalBuyTicket = (props) => {
                                 desc="Hãy chọn nơi xe luân chuyển của chúng tôi sẽ đón bạn, nơi bạn dừng ở điểm đến"
                                 isLogin="false"
                                 linkText="Tìm hiểu thêm"
+                                info={props.info}
                             >
                             </LeftPannel>
                             <div className="customer__right-panel">
@@ -312,6 +320,7 @@ export const ModalBuyTicket = (props) => {
                                 desc="Hãy kiểm tra lại các thông tin rồi bấm xác nhận để tiến hành đặt vé bạn nha"
                                 isLogin="false"
                                 linkText="Tìm hiểu thêm"
+                                info={props.info}
                             >
                             </LeftPannel>
                             <div className="customer__right-panel">
@@ -323,7 +332,10 @@ export const ModalBuyTicket = (props) => {
                                 </form>
                                 <button className="custom-btn"
                                     onClick={() => {
-                                        alert('ok');
+                                        dispatch(createNew({idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, time: Date.now(), status: "cho xac nhan"},
+                                        {idTrip: props.info.trip._id, quantity: props.info.ticket.quantity - 1, type: props.info.ticket.type, price: props.info.ticket.price, _id: props.info.ticket._id}));
+                                        alert('Đặt vé thành công');
+                                        window.location.reload();
                                     }}
 
                                 >Hoàn tất</button>

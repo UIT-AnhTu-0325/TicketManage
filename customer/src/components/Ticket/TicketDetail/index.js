@@ -72,7 +72,7 @@ export const TicketDetail = ({info}) => {
                 Giờ khởi hành: {info.route.startTime.toFixed(2).toString().replace('.',':')}
                 </div>
                 <div className="short-info__desc">
-                Thời gian di chuyển: {info.route.totalTime / 3600} giờ
+                Thời gian di chuyển: {info.route.totalTime.toFixed(2).toString().replace("."," giờ ")} phút
                 </div>
                 <div className="short-info__desc">
                     Loại: {info.ticket.type}
@@ -84,7 +84,6 @@ export const TicketDetail = ({info}) => {
                     <div className={openQuickSee ===true ?  "option__quick-see active" : "option__quick-see"} onClick={clickOpenQuickSee}>
                         <span>Xem nhanh</span>
                         <i class='bx bxs-down-arrow' ></i>
-
                     </div>
                    
                     <div className="option__choose-this custom-btn" onClick={clickOpenBuyingModal}>
@@ -135,7 +134,7 @@ export const TicketDetail = ({info}) => {
         </div>
 
         <div className="modal__buy-ticket">
-            {openBuyingModal === true ?   <ModalBuyTicket closeModal={clickCloseBuyingModal  } /> : null}
+            {openBuyingModal === true ?   <ModalBuyTicket closeModal={clickCloseBuyingModal  } info={info}/> : null}
            
         </div>
     </>
