@@ -6,6 +6,13 @@ import React from 'react'
 **/
 
 export const LeftPannel = (props) => {
+    const math = (startTime, totalTime) => {
+        let s = startTime + totalTime;
+        if((s - Math.floor(s) > 0.59) || (s - Math.floor(s) == 0)){
+            s += + 1 - 0.6;
+        }
+        return s >= 24 ? (s - 24).toFixed(2).toString().replace(".",":") : s.toFixed(2).toString().replace(".",":");
+    }
   return(
         <div className="customer__left-panel">
                             <div className="login-popup">
@@ -26,36 +33,36 @@ export const LeftPannel = (props) => {
                             <div className="left-pannel-info">
                                 <div className="header">
                                     <i class="cus-bus fas fa-bus"></i>
-                                    <span className="depart">Hà Nội</span>
+                                    <span className="depart">{props.info.route.startLocation}</span>
                                     <i class="cus-right fas fa-arrow-right"></i>
-                                    <span className="destination">Đà Nẵng</span>
+                                    <span className="destination">{props.info.route.endLocation}</span>
                                     <a href="">Chi tiết</a>
                                 </div>
                                 <div className="main">
                                     <div className="date">
                                          <i class="far fa-clock"></i>
                                          <span> Ngày khởi hành</span> 
-                                        <p> Thứ 3, ngày 26 tháng 10 năm 2021</p>
+                                        <p> {new Date(props.info.trip.startDate).toLocaleDateString('vi-VN')}</p>
                                     </div>
                                     <div className="bus-branch">
-                                         <span> Xe</span>  <spanc className="branch-name">Phương Trang</spanc>
+                                         <span> Xe</span>  <spanc className="branch-name">{props.info.enterprise.name}</spanc>
                                     </div>
 
                                     <div className="time-estimate">
                                         <div className="time-site time-site-start">
-                                            <span className="time">7:00</span>
-                                            <span className="site">Hà Nội</span>
+                                            <span className="time">{props.info.route.startTime.toFixed(2).toString().replace(".",":")}</span>
+                                            <span className="site">{props.info.route.startLocation}</span>
 
                                         </div>
                                         <i class="fas fa-caret-right"></i>
                                         <div className="time-site time-site-end">
-                                            <span className="time">11:30</span>
-                                            <span className="site">Đà Nẵng</span>
+                                            <span className="time">{math(props.info.route.startTime,props.info.route.totalTime)}</span>
+                                            <span className="site">{props.info.route.endLocation}</span>
 
                                         </div>
                                         <i class="cus-dot fas fa-circle"></i>
                                         <div className="time-taking-estimate">
-                                            11h di chuyển
+                                            {props.info.route.totalTime.toFixed(2).toString().replace("."," giờ ")} phút di chuyển
                                         </div>
                                     </div>
                                     
