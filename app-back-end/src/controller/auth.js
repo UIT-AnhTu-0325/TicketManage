@@ -32,7 +32,7 @@ exports.signup = async (req, res) => {
   _user.save((error, data) => {
     if (error) {
       return res.status(400).json({
-        message: "Something went wrong",
+        message: error, 
       });
     }
     if (data) {

@@ -9,6 +9,7 @@ const cors = require("cors");
 const path = require("path");
 const Grid = require("gridfs-stream");
 
+
 const tripRoutes = require("./routes/trip");
 const ticketRoutes = require("./routes/ticket");
 const customerRoutes = require("./routes/customer");
@@ -24,6 +25,7 @@ const ticketCancelRoutes = require("./routes/ticket_cancel");
 const goodsRoutes = require("./routes/goods");
 const feedbackRoutes = require("./routes/feedback");
 const logChangeTicketRoutes = require("./routes/log_change_ticket");
+
 //env var
 env.config();
 
@@ -81,6 +83,9 @@ app.use("/api/goods", goodsRoutes);
 app.use("/api/ticket_cancel", ticketCancelRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/log_change_ticket", logChangeTicketRoutes);
+app.use("/api/user_ticket", user_ticketRoutes);
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
