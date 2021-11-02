@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, readProfile } from "../../../actions/userActions";
 import Loading from "../../loading";
 import ErrorMessage from "../../errorMessage";
+import { ModelRegister } from "../ModalRegister/index"
 
 /**
 * @author
@@ -14,6 +15,7 @@ export const ModalLogin = (props) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
 
     const history = useHistory();
@@ -43,6 +45,10 @@ export const ModalLogin = (props) => {
         dispatch(readProfile())
     };
 
+    const openModal = () => {
+        setShowModal(prev => !prev);
+    }
+
     return (
         <div>
             <div className="modal-auth open" onClick={props.close, (e) => {
@@ -57,7 +63,7 @@ export const ModalLogin = (props) => {
                             <p>Trở thành đối tác</p>
 
                         </div>
-                        <div className="auth__heading__signup custom-btn">
+                        <div className="auth__heading__signup custom-btn" onClick={openModal} >
                             <i className="fas fa-user"></i>
                             <span>Đăng ký</span>
                         </div>
@@ -145,6 +151,8 @@ export const ModalLogin = (props) => {
                     </div>
                 </div>
             </div>
+
+            {showModal ? <ModelRegister close={openModal} /> : null}
 
         </div>
     )

@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Profile = require("../models/profile");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -37,7 +38,25 @@ exports.signup = async (req, res) => {
     if (data) {
       return res.status(201).json({
         message: "Create successfully",
+        _user
       });
+    }
+  });
+
+  let { dob, gender, avatar } = req.body;
+  let _profile = new Profile({
+    account: _user._id,
+    avatar,
+    dob,
+    gender,
+  })
+  console.log("USER_PROFILE", _profile);
+  _profile.save((error, data) => {
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
     }
   });
 };

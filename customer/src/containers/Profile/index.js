@@ -203,7 +203,7 @@ export const ProfileSetting = (props) => {
                                 </div>
                                 <InputBox
                                     type="text"
-                                    title="Họ tên"
+                                    title="Tên"
                                     placeholder=""
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
