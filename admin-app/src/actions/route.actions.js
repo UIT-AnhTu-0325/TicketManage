@@ -21,3 +21,24 @@ export const getAllRoutes = () => {
     }
   };
 };
+
+export const addRoute = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: routerConstants.ADD_NEW_ROUTE_REQUEST });
+    const res = await axios.post(`route/create`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: routerConstants.ADD_NEW_ROUTE_SUCCESS,
+        payload: { route: res.data },
+      });
+    } else {
+      dispatch({
+        type: routerConstants.ADD_NEW_ROUTE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+    console.log(res);
+  };
+};

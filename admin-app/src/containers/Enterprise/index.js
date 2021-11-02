@@ -36,7 +36,7 @@ export const Enterprise = (props) => {
     dispatch(getAllEnterprises());
   }, []);
 
-  const createEnterPrisesAddressList = (options = []) => {
+  const createAddressList = (options = []) => {
     options.push({ value: 1, name: "Ho Chi Minh" });
     options.push({ value: 2, name: "Da Lat" });
     options.push({ value: 3, name: "Nha Trang" });
@@ -152,7 +152,7 @@ export const Enterprise = (props) => {
             onChange={(e) => setEnterpriseAddress(e.target.value)}
           >
             <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
+            {createAddressList().map((option) => (
               <option key={option.value} value={option.name}>
                 {option.name}
               </option>
@@ -186,7 +186,7 @@ export const Enterprise = (props) => {
             onChange={(e) => setEnterpriseAddress(e.target.value)}
           >
             <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
+            {createAddressList().map((option) => (
               <option key={option.value} value={option.name}>
                 {option.name}
               </option>
