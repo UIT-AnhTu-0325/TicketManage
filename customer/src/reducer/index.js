@@ -3,8 +3,11 @@ import { combineReducers } from 'redux'
 import trips from './trip'
 import tickets from './ticket'
 import routes from './route';
+
+import { userLoginReducer, userProfileReducer, userUpdateReducer, userRegisterReducer } from './userReducers'
+
 import books from './user_ticket';
-import { userLoginReducer, userProfileReducer, userUpdateReducer } from './userReducers'
+
 
 export const reducers = combineReducers({
     trips,
@@ -12,6 +15,7 @@ export const reducers = combineReducers({
     routes,
     books,
     userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
     userUpdate: userUpdateReducer,
     userProfile: userProfileReducer
 });
