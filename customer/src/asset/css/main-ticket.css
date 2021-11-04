@@ -92,10 +92,11 @@
 .ticket-main{
     display: flex;
     font-size: 1.6rem;
+    margin-left: -40px;
 }
 
 .ticket__filter{
-    flex: 2;
+    flex: 3;
     padding-top: 40px;
     padding-left: 40px;
     padding-right: 15px;
@@ -136,6 +137,14 @@
     margin-left: 20px;
 }
 
+.session-filter .price{
+    margin-top: 10px;
+    margin-left: -50px;
+    margin-bottom: 5px;
+}
+.slider-price{
+    width: 250px;
+}
 /* Time Filter */
 
 .filter-wrap-property{
@@ -175,7 +184,7 @@
 }
 
 .ticket__founded{
-    flex: 6;
+    flex: 7;
     margin-left: 20px;
     margin-top: 20px;
     width: 400px;
@@ -235,6 +244,8 @@
     letter-spacing: 0.1px;
     font-size: 1.8rem;
     opacity: 0.8;
+    margin-left: 25px;
+    margin-bottom: 20px;
 }
 .ticket__header__title span{
     color: var(--primary-color);
@@ -244,6 +255,7 @@
 .ticket__header__option{
     display: flex;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 .option__item{
     margin: 0 10px;
@@ -263,7 +275,7 @@
 .ticket-detail__wrapper{
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 20px;
-    margin-left: 20px;
+    margin-left: 80px;
     width: 800px;
     margin-bottom: 50px;
 }

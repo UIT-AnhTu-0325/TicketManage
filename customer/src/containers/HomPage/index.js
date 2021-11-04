@@ -3,6 +3,8 @@ import { LayoutCustomer } from '../../components/Layout'
 import { MainSearch } from '../../components/MainSearch'
 import { useDispatch } from 'react-redux'
 import { getAll } from '../../action/route';
+import { MainContent } from '../../components/MainSearchComponents/MainContent';
+import { Footer } from '../../components/Footer';
 
 /**
 * @author
@@ -24,6 +26,10 @@ export const HomePage = (props) => {
             <MainSearch>
 
             </MainSearch>
+
+            <MainContent />
+
+            <Footer />
             
         </div>
 

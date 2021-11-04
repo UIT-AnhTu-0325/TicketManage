@@ -1,0 +1,96 @@
+.main > h3{
+    font-size: 2.4rem;
+    margin-left: 15px;
+    margin-top: 25px;
+}
+
+.main .slider-endow{
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+.main .slider-endow .item{
+    flex: 1;
+    margin: 0 14px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.slider-endow .item img{
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.main .slider-feature{
+    margin-top: 30px;
+    display: flex;
+}
+.main .slider-feature .item{
+    flex: 1;
+    display: flex;
+    margin: 0 10px;
+    border: 2px solid var(--border-shadow-color);
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.slider-feature .item img{
+    width: 55px;
+    padding: 3px;
+    height: 55px;
+    flex: 1 ;
+    margin-right: 3px;
+}
+.slider-feature .item  .feature-info{
+    margin-left: 5px;
+}
+
+.main .banner1 {
+    margin-top: 50px;
+    margin-left: 10px;
+}
+.main .banner1 img{
+    width: 100%;
+}
+
+
+/* banner1 */
+.banner1{
+    position: relative;
+    margin-bottom: 30px;
+}
+.banner1-box   {
+    position: absolute;
+    top: 150px;
+    right: 50px;
+    background-color: var(--white-color);
+    padding: 35px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
+.banner1-box h3{
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+.banner1-box .item-text{
+    margin-top: 10px;
+}
+.banner1-box  i{
+    margin-right: 6px;
+}
+.banner1-box .btn-booking{
+    padding: 10px 16px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.banner1-box .btn-booking:hover{
+    opacity: 0.8;
+}
+
+

@@ -173,10 +173,12 @@ export const FilterTicket = ({ filter, setFilter }) => {
               {price[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
             </p>
           </div>
-          <Slider
-            value={[price[0] / 20000, price[1] / 20000]}
-            onChangeCommitted={handlePrice}
-          />
+          <div className="slider-price">
+            <Slider
+              value={[price[0] / 20000, price[1] / 20000]}
+              onChangeCommitted={handlePrice}
+            />
+          </div>
         </div>
         <div className="session-filter">
           <div className="session-filter__title">

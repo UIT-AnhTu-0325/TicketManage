@@ -18,6 +18,12 @@ export const ModalLogin = (props) => {
     const [showModal, setShowModal] = useState(false);
 
 
+    //register
+    const [emailRes, setEmailRes] = useState("");
+    const [passwordRes, setPasswordRes] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
     const history = useHistory();
 
     const dispatch = useDispatch();
@@ -49,6 +55,13 @@ export const ModalLogin = (props) => {
         setShowModal(prev => !prev);
     }
 
+
+
+    // Front end
+    const [auth, setAuth] = useState(1); // 1 login, 2 is sign up
+
+    
+
     return (
         <div>
             <div className="modal-auth open" onClick={props.close, (e) => {
@@ -68,10 +81,10 @@ export const ModalLogin = (props) => {
                             <span>Đăng ký</span>
                         </div>
                     </div>
-                    <div className="auth__content">
+                    <div className={ auth ===1 ?"auth__content active" : "auth__content"}>
                         <div className="auth__content__welcome">
                             <h3>Welcome Back!</h3>
-                            <p>Chưa có tài khoản? <a href="">Đăng ký</a></p>
+                            <p>Chưa có tài khoản? <a href="#"  onClick={()=>setAuth(2)}>Đăng ký</a></p>
                         </div>
                         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                         {loading && <Loading />}
@@ -144,6 +157,95 @@ export const ModalLogin = (props) => {
                         <div className="auth__other-method">
                             <p className="text">
                                 hoặc đăng nhập với
+                            </p>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div className={ auth ===2 ?"auth__content active" : "auth__content"}>
+                        <div className="auth__content__welcome">
+                            <h3>Welcome To 5Ting Bus!</h3>
+                            <p>Đã có tài khoản? <a href="#" onClick={()=>setAuth(1)}>Đăng nhập</a></p>
+                        </div>
+
+                        <div className="auth__content__form">
+                            <form onSubmit={submitHandle}>
+                               <p>Nhập họ tên của bạn</p>
+                                <div className="input-wrapper-two">
+                                    <div className="input-wrapper-auth two-column">
+                                        <input
+                                            type="text"
+                                            className="email"
+                                            placeholder="Họ"
+                                            id=""
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="input-wrapper-auth">
+                                        <input
+                                            type="text"
+                                            className="email"
+                                            placeholder="Tên"
+                                            id=""
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <p>Email đăng nhập</p>
+                                <div className="input-wrapper-auth">
+                                    <input
+                                        type="email"
+                                        className="email"
+                                        placeholder="Nhập email của bạn"
+                                        id=""
+                                        value={emailRes}
+                                        onChange={(e) => setEmailRes(e.target.value)}
+                                    />
+                                </div>
+                                <p>Mật khẩu</p>
+                                
+                                <div className="input-wrapper-auth hide-password">
+                                    <input
+                                        type="password"
+                                        className="email"
+                                        placeholder="Nhập mật khẩu của bạn"
+                                        id=""
+                                        value={passwordRes}
+                                        onChange={(e) => setPasswordRes(e.target.value)}
+                                    />
+                                    <input type="checkbox" />
+                                </div>
+
+                                <div className="auth__content__login-btn">
+                                    <button className="custom-btn">Đăng ký</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+
+                        {/* <div className="auth__content__option">
+                            <div className="remember-me">
+                                <input type="checkbox" className="custom-checkbox-cicle" />
+                                <span>Ghi nhớ tôi</span>
+                            </div>
+
+                            <div className="forgot-password">
+                                <a href="#">Quên mật khẩu?</a>
+                            </div>
+                        </div>
+                        <div className="auth__content__login-btn">
+                            <button className="custom-btn">Đăng nhập</button>
+                        </div> */}
+                        <div className="auth__other-method">
+                            <p className="text">
+                                hoặc đăng ký với
                             </p>
                         </div>
 

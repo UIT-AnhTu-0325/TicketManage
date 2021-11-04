@@ -55,6 +55,11 @@ p {
     max-width: 100%;
     margin: 0 auto;
 }
+.grid-1000{
+    width: 1000px;
+    max-width: 100%;
+    margin: 0 auto;
+}
 .grid--larger-width{
     width: 1200px;
     max-width: 100%;

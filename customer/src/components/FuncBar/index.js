@@ -34,7 +34,7 @@ export const FuncBar = ({ start, end }) => {
                                 ))}
                             </select>
                         </div>
-                        <div className=" input">
+                        <div className="input">
                             <i className='custom-icon bx bxs-edit-location'></i>
                             <select name="endLocation" className="custom-input">
                             <option value="" disabled selected>Chọn nơi đến</option>
