@@ -83,7 +83,7 @@ app.use("/api/goods", goodsRoutes);
 app.use("/api/ticket_cancel", ticketCancelRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/log_change_ticket", logChangeTicketRoutes);
-app.use("/api/user_ticket", user_ticketRoutes);
+//app.use("/api/user_ticket", user_ticketRoutes);
 
 
 
