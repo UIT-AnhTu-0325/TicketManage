@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Profile = require("../models/profile");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -17,7 +18,7 @@ exports.signup = async (req, res) => {
       });
   });
 
-  const { firstName, lastName, email, password, username } = req.body;
+  const { firstName, lastName, email, password, username, contactNumber } = req.body;
   const hash_password = await bcrypt.hash(password, 10);
   const _user = new User({
     firstName,
@@ -25,18 +26,37 @@ exports.signup = async (req, res) => {
     email,
     hash_password,
     username,
+    contactNumber
   });
 
   _user.save((error, data) => {
     if (error) {
       return res.status(400).json({
-        message: "Something went wrong",
+        message: error, 
       });
     }
     if (data) {
       return res.status(201).json({
         message: "Create successfully",
+        _user
       });
+    }
+  });
+
+  let { dob, gender, avatar } = req.body;
+  let _profile = new Profile({
+    account: _user._id,
+    avatar,
+    dob,
+    gender,
+  })
+  console.log("USER_PROFILE", _profile);
+  _profile.save((error, data) => {
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
     }
   });
 };
@@ -61,6 +81,7 @@ exports.signin = (req, res) => {
             fullName,
             contactNumber
           },
+          message: "Login successfully <3"
         });
       } else {
         return res.status(400).json({

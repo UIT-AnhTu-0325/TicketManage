@@ -64,27 +64,47 @@ exports.userProfile = async (req, res) => {
 
 exports.UpdateProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id)
+    // //let { dob, gender } = req.body;
+    // //let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+    // let profile = await Profile.findOneAndUpdate(
+    //   { account: req.user._id },
+    //   //{ dob, gender, avatar: path },
+    //   { new: true }
+    // );
 
+
+
+    const user = await User.findById(req.user._id)
     if (user) {
       user.firstName = req.body.firstName || user.firstName;
       user.lastName = req.body.lastName || user.lastName;
       user.email = req.body.email || user.email;
       user.contactNumber = req.body.contactNumber || user.contactNumber;
     }
-
     const updateUser = await user.save()
+
+    const upProfile = await Profile.findOne({ account: user._id })
+    if (upProfile) {
+      upProfile.dob = req.body.dob || upProfile.dob;
+      upProfile.gender = req.body.gender || upProfile.gender;
+      //if (req.file) upProfile.avatar = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '') || upProfile.avatar;
+      upProfile.avatar = req.body.avatar || upProfile.avatar;
+      console.log(req.file)
+    }
+    const updateProfile = await upProfile.save()
+
+
+    let profile = await Profile.findOne({ account: user._id }).populate(
+      "account",
+      "firstName lastName username email contactNumber fullName",
+      User
+    );
+
 
     return res.status(200).json({
       success: true,
       message: "Your profile is now update",
-      user
-      // _id: updateUser._id,
-      // firstName: updateUser.firstName,
-      // lastName: updateUser.lastName,
-      // email: updateUser.email,
-      // contactNumber: updateUser.contactNumber,
-      // //oken: generateToken(updateUser._id)
+      profile
     })
   } catch (error) {
     console.log(error);
@@ -124,13 +144,15 @@ exports.myProfile = async (req, res) => {
 
 exports.profiles = async (req, res) => {
   try {
-    console.log(req.body);
-    let { dob, gender } = req.body;
+    let { dob, gender, avatar } = req.body;
+    //let path = ""
     //let path = process.env.APP_DOMAIN + (req.file.path).split("uploads/")[1];
-    let path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+    //if (req.file) path = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '');
+    //if (req.file) path = process.env.APP_DOMAIN + `${req.file.filename}`
+    //console.log("path: ", path)
     let _profile = new Profile({
       account: req.user._id,
-      avatar: path,
+      avatar,
       dob,
       gender,
     })

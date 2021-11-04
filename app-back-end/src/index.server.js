@@ -6,23 +6,26 @@ const authRoutes = require("./routes/auth.js");
 const adminRoutes = require("./routes/admin/auth");
 const profilesRoutes = require("./routes/profiles.js");
 const cors = require("cors");
-const path = require('path')
+const path = require("path");
+const Grid = require("gridfs-stream");
 
-const tripRoutes = require("./routes/trip")
-const ticketRoutes = require("./routes/ticket")
-const customerRoutes = require("./routes/customer")
-const driveRoutes = require("./routes/drive")
-const enterpriseRoutes = require("./routes/enterprise")
-const offlinePhoneTicketRoutes = require("./routes/offline_phone_ticket")
-const reststopRoutes = require("./routes/reststop")
-const routeRoutes = require("./routes/route")
-const steersmanRoutes = require("./routes/steersman")
-const tripLogRoutes = require("./routes/trip_log")
-const vehicleRoutes = require("./routes/vehicle")
-const ticketCancelRoutes = require("./routes/ticket_cancel")
-const goodsRoutes = require("./routes/goods")
-const feedbackRoutes = require("./routes/feedback")
-const logChangeTicketRoutes = require("./routes/log_change_ticket")
+
+const tripRoutes = require("./routes/trip");
+const ticketRoutes = require("./routes/ticket");
+const customerRoutes = require("./routes/customer");
+const driveRoutes = require("./routes/drive");
+const enterpriseRoutes = require("./routes/enterprise");
+const offlinePhoneTicketRoutes = require("./routes/offline_phone_ticket");
+const reststopRoutes = require("./routes/reststop");
+const routeRoutes = require("./routes/route");
+const steersmanRoutes = require("./routes/steersman");
+const tripLogRoutes = require("./routes/trip_log");
+const vehicleRoutes = require("./routes/vehicle");
+const ticketCancelRoutes = require("./routes/ticket_cancel");
+const goodsRoutes = require("./routes/goods");
+const feedbackRoutes = require("./routes/feedback");
+const logChangeTicketRoutes = require("./routes/log_change_ticket");
+
 //env var
 env.config();
 
@@ -34,6 +37,24 @@ mongoose
   .then(() => {
     console.log("Database connected");
   });
+
+// let gfs
+// const conn = mongoose.connection
+// conn.once("open", function () {
+//   gfs = Grid(conn.db, mongoose.mongo)
+//   gfs.collection("photo")
+// })
+
+// app.get('/api/file/:filename', async (req, res) => {
+//   try {
+//     const file = await gfs.files.findOne({ filename: req.params.filename })
+//     const readStream = gfs.createReadStream(file.filename)
+//     readStream.pipe(res)
+//   } catch (error) {
+//     res.send('not found')
+//     console.log(error)
+//   }
+// })
 
 app.use(express.json());
 app.use(
@@ -62,6 +83,9 @@ app.use("/api/goods", goodsRoutes);
 app.use("/api/ticket_cancel", ticketCancelRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/log_change_ticket", logChangeTicketRoutes);
+app.use("/api/user_ticket", user_ticketRoutes);
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

@@ -5,3 +5,5 @@ export const TRIP_FETCH = 'TRIP_FETCH';
 export const TRIP_CREATE = 'TRIP_CREATE';
 export const TRIP_GET_ALL = 'TRIP_GET_ALL';
 export const TRIP_GET_BY_ID = 'TRIP_GET_BY_ID';
+export const BOOK_SUCCESS = 'BOOK_SUCCESS';
+export const BOOK_FAILURE = 'BOOK_FAILURE';
