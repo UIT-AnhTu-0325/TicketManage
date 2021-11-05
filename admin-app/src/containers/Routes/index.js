@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRoute, getAllEnterprises, getAllRoutes } from "../../actions";
+import {
+  addRoute,
+  deleteRoute,
+  editRoute,
+  getAllEnterprises,
+  getAllRoutes,
+} from "../../actions";
 import { Layout } from "../../components/Layout";
 import {
   Button,
@@ -22,16 +28,21 @@ export const Routes = (props) => {
   const dispatch = useDispatch();
   const state_route = useSelector((state) => state.route);
   const state_enterprise = useSelector((state) => state.enterprise);
-  const [addShow, setAddShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [modalFlag, setModalFlag] = useState("Add");
+  const [modalTitle, setModalTitle] = useState();
 
-  const myRoute = {
-    idEnterprise: "",
-    startLocation: "",
-    endLocation: "",
-    startTime: 0.0,
-    totalTime: 0.0,
+  const initRoute = () => {
+    return {
+      _id: "",
+      idEnterprise: "",
+      startLocation: "",
+      endLocation: "",
+      startTime: 0.0,
+      totalTime: 0.0,
+    };
   };
-  const [route, setRoute] = useState(myRoute);
+  const [route, setRoute] = useState(initRoute);
 
   useEffect(() => {
     dispatch(getAllRoutes());
@@ -62,26 +73,60 @@ export const Routes = (props) => {
           <div> {findEnterpriseName(route.idEnterprise)} </div>
           <div>{route.startTime}</div>
           <div>{route.totalTime}</div>
+          <Button
+            onClick={() => {
+              handleModalShow("Edit", route);
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => {
+              delRoute(route);
+            }}
+          >
+            Delete
+          </Button>
         </ListGroupItem>
       );
     }
     return myRoutes;
   };
 
-  const handleAddShow = () => setAddShow(true);
-  const handleAddSave = () => {
-    const form = route;
-
-    dispatch(addRoute(form));
-
-    // setEnterpriseName("");
-    // setEnterpriseAddress("");
-
-    setAddShow(false);
-    console.log(route);
+  const handleModalShow = (iFlag, route) => {
+    if (iFlag === "Add") {
+      setModalFlag("Add");
+      setModalTitle("Add Route");
+    } else {
+      setModalFlag("Edit");
+      setModalTitle("Edit Route");
+      setRoute(route);
+    }
+    console.log(modalFlag);
+    setModalShow(true);
   };
-  const handleAddClose = () => {
-    setAddShow(false);
+  const handleModalSave = () => {
+    const form = route;
+    if (modalFlag === "Add") {
+      dispatch(addRoute(form));
+      console.log("doAdd");
+    } else {
+      dispatch(editRoute(form));
+      console.log("doEdit");
+    }
+    setRoute(initRoute);
+    setModalShow(false);
+  };
+  const handleModalClose = () => {
+    setRoute(initRoute);
+    setModalShow(false);
+  };
+
+  const delRoute = (selectedRot) => {
+    const form = {
+      _id: selectedRot._id,
+    };
+    dispatch(deleteRoute(form));
   };
 
   return (
@@ -91,7 +136,14 @@ export const Routes = (props) => {
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Routes</h3>
-              <button onClick={handleAddShow}>Add</button>
+              <button
+                onClick={() => {
+                  modalFlag = "Add";
+                  handleModalShow("Add");
+                }}
+              >
+                Add
+              </button>
             </div>
           </Col>
         </Row>
@@ -107,9 +159,9 @@ export const Routes = (props) => {
       </Container>
 
       {/* SHOW MODAL FOR ADD - FIX THEM */}
-      <Modal show={addShow} onHide={handleAddClose}>
+      <Modal show={modalShow} onHide={handleModalClose}>
         <Modal.Header>
-          <Modal.Title>Add New Enterprise</Modal.Title>
+          <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <select
@@ -166,10 +218,10 @@ export const Routes = (props) => {
           ></Input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleAddClose}>
+          <Button variant="secondary" onClick={handleModalClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddSave}>
+          <Button variant="primary" onClick={handleModalSave}>
             Save Changes
           </Button>
         </Modal.Footer>

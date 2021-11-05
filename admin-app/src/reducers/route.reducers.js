@@ -17,6 +17,25 @@ const rebuildAddRoutes = (routes, route) => {
   return myRoutes;
 };
 
+const rebuildEditRoutes = (routes, route) => {
+  let myRoutes = [];
+  for (let rou of routes) {
+    myRoutes.push(rou._id === route._id ? route : rou);
+  }
+
+  return myRoutes;
+};
+
+const rebuildDelRoutes = (routes, id) => {
+  let myRoutes = [];
+  for (let rou of routes) {
+    if (rou._id !== id) {
+      myRoutes.push(rou);
+    }
+  }
+  return myRoutes;
+};
+
 export default (state = initState, action) => {
   switch (action.type) {
     case routerConstants.GET_ALL_ROUTES_SUCCESS:
@@ -39,6 +58,42 @@ export default (state = initState, action) => {
       };
       break;
     case routerConstants.ADD_NEW_ROUTE_FAILURE:
+      state = {
+        ...initState,
+      };
+      break;
+    case routerConstants.EDIT_ROUTE_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case routerConstants.EDIT_ROUTE_SUCCESS:
+      state = {
+        ...state,
+        routes: rebuildEditRoutes(state.routes, action.payload.route),
+        loading: false,
+      };
+      break;
+    case routerConstants.EDIT_ROUTE_FAILURE:
+      state = {
+        ...initState,
+      };
+      break;
+    case routerConstants.DELETE_ROUTE_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case routerConstants.DELETE_ROUTE_SUCCESS:
+      state = {
+        ...state,
+        routes: rebuildDelRoutes(state.routes, action.payload.id),
+        loading: false,
+      };
+      break;
+    case routerConstants.DELETE_ROUTE_FAILURE:
       state = {
         ...initState,
       };

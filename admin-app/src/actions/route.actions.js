@@ -42,3 +42,41 @@ export const addRoute = (form) => {
     console.log(res);
   };
 };
+
+export const editRoute = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: routerConstants.EDIT_ROUTE_REQUEST });
+    const res = await axios.put(`/route/${form._id}`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: routerConstants.EDIT_ROUTE_SUCCESS,
+        payload: { route: res.data },
+      });
+    } else {
+      dispatch({
+        type: routerConstants.EDIT_ROUTE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
+
+export const deleteRoute = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: routerConstants.DELETE_ROUTE_REQUEST });
+    const res = await axios.delete(`/route/${form._id}`);
+    if (res.status === 200) {
+      dispatch({
+        type: routerConstants.DELETE_ROUTE_SUCCESS,
+        payload: { id: form._id },
+      });
+    } else {
+      dispatch({
+        type: routerConstants.DELETE_ROUTE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
