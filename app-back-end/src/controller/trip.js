@@ -38,9 +38,9 @@ exports.fetchAll = async (req, res) => {
             routes.filter((item) => trip.idRoute.equals(item._id)).map((item) => result.route = item);
             enterprise.filter((item) => result.route.idEnterprise.equals(item._id)).map((item) => result.enterprise = item);
             tickets.filter((item) => item.idTrip.equals(trip._id)).map((item) =>{
-                result.ticket = item;
-                payload.push(result);
+                result.ticket = item; 
             });
+            payload.push(result);
         })
         res.status(200).json(payload);
     } catch (err) {

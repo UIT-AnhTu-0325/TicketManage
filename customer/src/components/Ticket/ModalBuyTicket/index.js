@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../../../asset/css/modal-css/buy-ticket.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 // img
@@ -11,13 +11,16 @@ import confirmImg from '../../../asset/img/confirm.png'
 import { InputBox } from '../../UI/InputBox'
 import { LeftPannel } from './Components/LeftPannel'
 import { createNew } from '../../../action/user_ticket';
+
 /**
 * @author
 * @function ModalBuyTicket
 **/
 
 export const ModalBuyTicket = (props) => {
-    console.log(props.info);
+    const locations = useSelector(state => state.locations);
+    const getOn = locations.filter(location => location.city === props.info.route.startLocation);
+    const getOff = locations.filter(location => location.city === props.info.route.endLocation);
     const dispatch = useDispatch();
 
     const [processStatus, setProcessState] = useState(1);
@@ -47,6 +50,7 @@ export const ModalBuyTicket = (props) => {
     const clickOpen = () => {
         setIsOpen(2);
     }
+
 
 
     return (
@@ -157,8 +161,8 @@ export const ModalBuyTicket = (props) => {
                                 </div>
                                 <form action="" className="form-info-input">
                                     <InputBox type="text" title="Họ tên" value={localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}></InputBox>
-                                    <InputBox type="number" title="Số điện thoại" value={localStorage.getItem('contact')}/>
-                                    <InputBox type="email" title="Email" value={localStorage.getItem('email')}/>
+                                    <InputBox type="number" title="Số điện thoại" value={localStorage.getItem('contact')} />
+                                    <InputBox type="email" title="Email" value={localStorage.getItem('email')} />
                                 </form>
                                 <button className="custom-btn"
                                     onClick={() => {
@@ -258,18 +262,12 @@ export const ModalBuyTicket = (props) => {
                                                 Điểm đón
                                             </div>
                                             <ul className="pickup-point__content">
-                                                <li>
-                                                    <span className="content-time">7h:30</span>
-                                                    <span className="content-locate">Hội An</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">9h:30</span>
-                                                    <span className="content-locate">Điện An</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">13h:10</span>
-                                                    <span className="content-locate">Điện Bàn</span>
-                                                </li>
+                                                {getOn.map(element => (
+                                                    <li>
+                                                        <input type="radio" name="getOn" value={element.location} />
+                                                        <span className="content-locate"> {element.location}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
 
@@ -278,18 +276,12 @@ export const ModalBuyTicket = (props) => {
                                                 Điểm trả
                                             </div>
                                             <ul className="pickup-point__content">
-                                                <li>
-                                                    <span className="content-time">7h:30</span>
-                                                    <span className="content-locate">Suối tiên</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">19h:00</span>
-                                                    <span className="content-locate">Bình Dương</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">11h:30</span>
-                                                    <span className="content-locate">Quận 10</span>
-                                                </li>
+                                                {getOff.map(element => (
+                                                    <li>
+                                                        <input type="radio" name="getOff" value={element.location} />
+                                                        <span className="content-locate"> {element.location}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                     </div>
@@ -332,8 +324,8 @@ export const ModalBuyTicket = (props) => {
                                 </form>
                                 <button className="custom-btn"
                                     onClick={() => {
-                                        dispatch(createNew({idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, time: Date.now(), status: "cho xac nhan"},
-                                        {idTrip: props.info.trip._id, quantity: props.info.ticket.quantity - 1, type: props.info.ticket.type, price: props.info.ticket.price, _id: props.info.ticket._id}));
+                                        dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, time: Date.now(), status: "cho xac nhan" },
+                                            { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity - 1, type: props.info.ticket.type, price: props.info.ticket.price, _id: props.info.ticket._id }));
                                         alert('Đặt vé thành công');
                                         window.location.reload();
                                     }}
