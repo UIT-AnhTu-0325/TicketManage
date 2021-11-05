@@ -30,13 +30,13 @@ export const Enterprise = (props) => {
   const [enterpriseID, setEnterpriseID] = useState("");
   const [enterpriseName, setEnterpriseName] = useState("");
   const [enterpriseAddress, setEnterpriseAddress] = useState("");
-  const enterprise = useSelector((state) => state.enterprise);
+  const state_enterprise = useSelector((state) => state.enterprise);
 
   useEffect(() => {
     dispatch(getAllEnterprises());
   }, []);
 
-  const createEnterPrisesAddressList = (options = []) => {
+  const createAddressList = (options = []) => {
     options.push({ value: 1, name: "Ho Chi Minh" });
     options.push({ value: 2, name: "Da Lat" });
     options.push({ value: 3, name: "Nha Trang" });
@@ -49,6 +49,7 @@ export const Enterprise = (props) => {
       myEnterprises.push(
         <ListGroupItem className="d-flex justify-content-around">
           <strong> {enterprise.name}</strong>
+          <div>{enterprise.address}</div>
           <div className="ml-auto">
             <Button
               color="warning"
@@ -128,7 +129,7 @@ export const Enterprise = (props) => {
           <Col md={12}>
             <ul>
               <ListGroup className="mt-4">
-                {renderEnterprises(enterprise.enterprises)}
+                {renderEnterprises(state_enterprise.enterprises)}
               </ListGroup>
             </ul>
           </Col>
@@ -151,7 +152,7 @@ export const Enterprise = (props) => {
             onChange={(e) => setEnterpriseAddress(e.target.value)}
           >
             <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
+            {createAddressList().map((option) => (
               <option key={option.value} value={option.name}>
                 {option.name}
               </option>
@@ -185,7 +186,7 @@ export const Enterprise = (props) => {
             onChange={(e) => setEnterpriseAddress(e.target.value)}
           >
             <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
+            {createAddressList().map((option) => (
               <option key={option.value} value={option.name}>
                 {option.name}
               </option>
