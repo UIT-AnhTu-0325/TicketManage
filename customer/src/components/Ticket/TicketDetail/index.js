@@ -1,12 +1,14 @@
 import React from 'react'
 import busImg from '../../../asset/img/bus.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ImageSlider } from '../../TicketDetail/Picture/ImageSlider';
 import { TicketUtilities } from '../../TicketDetail/Utilities';
 import { PickUpPoint } from '../../TicketDetail/PickupPoint';
 import { Rating } from '../../TicketDetail/Rating'
 import { Policy } from '../../TicketDetail/Policy';
 import { ModalBuyTicket } from '../ModalBuyTicket';
+import { fetch } from '../../../action/location';
+import { useDispatch } from 'react-redux';
 /**
 * @author
 * @function TicketDetail
@@ -22,6 +24,7 @@ export const TicketDetail = ({info}) => {
         setCurrentTab(index);
     }
     
+    const dispatch = useDispatch();
     //quick-see control
     const [openQuickSee, setOpenQuickSee] = useState(false);
 
@@ -47,7 +50,10 @@ export const TicketDetail = ({info}) => {
         document.body.style.overflowY='auto';
         document.body.style.position='static';   
     }
-    
+
+    useEffect(() => {
+        dispatch(fetch());
+    }, [])
     // css set style
    
   return(
@@ -61,7 +67,7 @@ export const TicketDetail = ({info}) => {
                         {info.enterprise.name}
                     </div>
                     <div className="short-info__price">
-                        Giá vé: {info.ticket.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
+                        Giá vé: {info.ticket.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} đ
                     </div>
                     <div className="short-info__mark">
                        <i class='bx bx-bookmark' ></i>
@@ -75,10 +81,7 @@ export const TicketDetail = ({info}) => {
                 Thời gian di chuyển: {info.route.totalTime.toFixed(2).toString().replace("."," giờ ")} phút
                 </div>
                 <div className="short-info__desc">
-                    Loại: {info.ticket.type}
-                </div>
-                <div className="short-info__desc">
-                    Số vé: {info.ticket.quantity}
+                    Loại xe: {info.ticket.quantity.length} chỗ
                 </div>
                 <div className="short-info__option">
                     <div className={openQuickSee ===true ?  "option__quick-see active" : "option__quick-see"} onClick={clickOpenQuickSee}>
@@ -119,7 +122,7 @@ export const TicketDetail = ({info}) => {
                              <TicketUtilities />
                         </div>
                         <div className={currrentTab===3? "quick-see__tab active" : "quick-see__tab"}>
-                             <PickUpPoint />
+                             <PickUpPoint info={info}/>
                         </div>
                         <div className={currrentTab===4? "quick-see__tab active" : "quick-see__tab"}>
                             <Rating />

@@ -7,11 +7,7 @@ const TicketSchema = new mongoose.Schema({
         required: true
     },
     quantity : {
-        type : Number,
-        required: true
-    },
-    type : {
-        type : Number,
+        type : Array,
         required: true
     },
     price : {
