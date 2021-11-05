@@ -113,7 +113,7 @@ export const TicketDetail = ({info}) => {
                 <div className="quick-see__main">
                     <div className="quick-see__main__wrapper">
                         <div className={currrentTab===1? "quick-see__tab active" : "quick-see__tab"}>
-                        <ImageSlider />
+                            <ImageSlider />
                         </div>
                         <div className={currrentTab===2? "quick-see__tab active" : "quick-see__tab"}>
                              <TicketUtilities />

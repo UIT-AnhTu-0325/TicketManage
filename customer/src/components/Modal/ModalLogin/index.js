@@ -6,6 +6,13 @@ import Loading from "../../loading";
 import ErrorMessage from "../../errorMessage";
 import { ModelRegister } from "../ModalRegister/index"
 
+
+import { RegisterComponent } from "../RegisterComponent";
+
+// img
+import facebookImg from '../../../asset/img/social-icon/facebook.png'
+import googleImg from '../../../asset/img/social-icon/google.png'
+import appleImg from '../../../asset/img/social-icon/apple.png'
 /**
 * @author
 * @function ModalLogin
@@ -54,13 +61,16 @@ export const ModalLogin = (props) => {
     const openModal = () => {
         setShowModal(prev => !prev);
     }
+    const setAuthToSignIn= ()=>{
+        setAuth(1);
+    }
 
 
 
     // Front end
     const [auth, setAuth] = useState(1); // 1 login, 2 is sign up
 
-    
+
 
     return (
         <div>
@@ -71,7 +81,7 @@ export const ModalLogin = (props) => {
                     <div className="modal-auth__close js-closemodal-btn" onClick={props.close} >
                         <i className="fas fa-times"></i>
                     </div>
-                    <div className="auth__heading">
+                    {/* <div className="auth__heading">
                         <div className="auth__heading__nav">
                             <p>Trở thành đối tác</p>
 
@@ -80,11 +90,11 @@ export const ModalLogin = (props) => {
                             <i className="fas fa-user"></i>
                             <span>Đăng ký</span>
                         </div>
-                    </div>
-                    <div className={ auth ===1 ?"auth__content active" : "auth__content"}>
+                    </div> */}
+                    <div className={auth === 1 ? "auth__content active" : "auth__content"}>
                         <div className="auth__content__welcome">
                             <h3>Welcome Back!</h3>
-                            <p>Chưa có tài khoản? <a href="#"  onClick={()=>setAuth(2)}>Đăng ký</a></p>
+                            <p>Chưa có tài khoản? <a href="#" onClick={() => setAuth(2)}>Đăng ký</a></p>
                         </div>
                         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                         {loading && <Loading />}
@@ -158,6 +168,11 @@ export const ModalLogin = (props) => {
                             <p className="text">
                                 hoặc đăng nhập với
                             </p>
+                            <div className="method-btn">
+                                <img src={facebookImg} alt="" />
+                                <img src={googleImg} alt="" />
+                                <img src={appleImg} alt="" />
+                            </div>
                         </div>
 
 
@@ -165,93 +180,14 @@ export const ModalLogin = (props) => {
 
 
 
-                    <div className={ auth ===2 ?"auth__content active" : "auth__content"}>
-                        <div className="auth__content__welcome">
-                            <h3>Welcome To 5Ting Bus!</h3>
-                            <p>Đã có tài khoản? <a href="#" onClick={()=>setAuth(1)}>Đăng nhập</a></p>
-                        </div>
-
-                        <div className="auth__content__form">
-                            <form onSubmit={submitHandle}>
-                               <p>Nhập họ tên của bạn</p>
-                                <div className="input-wrapper-two">
-                                    <div className="input-wrapper-auth two-column">
-                                        <input
-                                            type="text"
-                                            className="email"
-                                            placeholder="Họ"
-                                            id=""
-                                            value={firstName}
-                                            onChange={(e) => setFirstName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-wrapper-auth">
-                                        <input
-                                            type="text"
-                                            className="email"
-                                            placeholder="Tên"
-                                            id=""
-                                            value={lastName}
-                                            onChange={(e) => setLastName(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-
-                                <p>Email đăng nhập</p>
-                                <div className="input-wrapper-auth">
-                                    <input
-                                        type="email"
-                                        className="email"
-                                        placeholder="Nhập email của bạn"
-                                        id=""
-                                        value={emailRes}
-                                        onChange={(e) => setEmailRes(e.target.value)}
-                                    />
-                                </div>
-                                <p>Mật khẩu</p>
-                                
-                                <div className="input-wrapper-auth hide-password">
-                                    <input
-                                        type="password"
-                                        className="email"
-                                        placeholder="Nhập mật khẩu của bạn"
-                                        id=""
-                                        value={passwordRes}
-                                        onChange={(e) => setPasswordRes(e.target.value)}
-                                    />
-                                    <input type="checkbox" />
-                                </div>
-
-                                <div className="auth__content__login-btn">
-                                    <button className="custom-btn">Đăng ký</button>
-                                </div>
-                            </form>
-
-
-                        </div>
-
-                        {/* <div className="auth__content__option">
-                            <div className="remember-me">
-                                <input type="checkbox" className="custom-checkbox-cicle" />
-                                <span>Ghi nhớ tôi</span>
-                            </div>
-
-                            <div className="forgot-password">
-                                <a href="#">Quên mật khẩu?</a>
-                            </div>
-                        </div>
-                        <div className="auth__content__login-btn">
-                            <button className="custom-btn">Đăng nhập</button>
-                        </div> */}
-                        <div className="auth__other-method">
-                            <p className="text">
-                                hoặc đăng ký với
-                            </p>
-                        </div>
-
+                    <div className={auth === 2 ? "auth__content active" : "auth__content"}>
+                        
+                       <RegisterComponent setAuth={setAuthToSignIn}/>
 
                     </div>
                 </div>
+
+
             </div>
 
             {showModal ? <ModelRegister close={openModal} /> : null}

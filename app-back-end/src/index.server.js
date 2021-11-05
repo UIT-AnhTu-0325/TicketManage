@@ -25,6 +25,7 @@ const ticketCancelRoutes = require("./routes/ticket_cancel");
 const goodsRoutes = require("./routes/goods");
 const feedbackRoutes = require("./routes/feedback");
 const logChangeTicketRoutes = require("./routes/log_change_ticket");
+const user_ticketRoutes = require("./routes/user_ticket");
 
 //env var
 env.config();
