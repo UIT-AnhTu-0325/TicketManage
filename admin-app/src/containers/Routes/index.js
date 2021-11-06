@@ -6,6 +6,7 @@ import {
   editRoute,
   getAllEnterprises,
   getAllRoutes,
+  getAllCities,
 } from "../../actions";
 import { Layout } from "../../components/Layout";
 import {
@@ -28,6 +29,7 @@ export const Routes = (props) => {
   const dispatch = useDispatch();
   const state_route = useSelector((state) => state.route);
   const state_enterprise = useSelector((state) => state.enterprise);
+  const state_city = useSelector((state) => state.city);
   const [modalShow, setModalShow] = useState(false);
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
@@ -47,14 +49,8 @@ export const Routes = (props) => {
   useEffect(() => {
     dispatch(getAllRoutes());
     dispatch(getAllEnterprises());
+    dispatch(getAllCities());
   }, []);
-
-  const createAddressList = (options = []) => {
-    options.push({ value: 1, name: "Ho Chi Minh" });
-    options.push({ value: 2, name: "Da Lat" });
-    options.push({ value: 3, name: "Nha Trang" });
-    return options;
-  };
 
   const findEnterpriseName = (idEnterprise) => {
     for (let ent of state_enterprise.enterprises) {
@@ -93,7 +89,7 @@ export const Routes = (props) => {
     return myRoutes;
   };
 
-  const handleModalShow = (iFlag, route) => {
+  const handleModalShow = (iFlag, route = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
       setModalTitle("Add Route");
@@ -102,17 +98,14 @@ export const Routes = (props) => {
       setModalTitle("Edit Route");
       setRoute(route);
     }
-    console.log(modalFlag);
     setModalShow(true);
   };
   const handleModalSave = () => {
     const form = route;
     if (modalFlag === "Add") {
       dispatch(addRoute(form));
-      console.log("doAdd");
     } else {
       dispatch(editRoute(form));
-      console.log("doEdit");
     }
     setRoute(initRoute);
     setModalShow(false);
@@ -138,7 +131,6 @@ export const Routes = (props) => {
               <h3>Routes</h3>
               <button
                 onClick={() => {
-                  modalFlag = "Add";
                   handleModalShow("Add");
                 }}
               >
@@ -158,7 +150,7 @@ export const Routes = (props) => {
         </Row>
       </Container>
 
-      {/* SHOW MODAL FOR ADD - FIX THEM */}
+      {/* SHOW MODAL - FIX THEM */}
       <Modal show={modalShow} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
@@ -172,8 +164,8 @@ export const Routes = (props) => {
             }
           >
             <option>Start Location</option>
-            {createAddressList().map((option) => (
-              <option key={option.value} value={option.name}>
+            {state_city.cities.map((option) => (
+              <option key={option._id} value={option.name}>
                 {option.name}
               </option>
             ))}
@@ -186,8 +178,8 @@ export const Routes = (props) => {
             }
           >
             <option>End Location</option>
-            {createAddressList().map((option) => (
-              <option key={option.value} value={option.name}>
+            {state_city.cities.map((option) => (
+              <option key={option._id} value={option.name}>
                 {option.name}
               </option>
             ))}
