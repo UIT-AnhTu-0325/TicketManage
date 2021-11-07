@@ -29,7 +29,7 @@ export const Layout = (props) => {
                   <NavLink to={`/enterprises`}>Enterprises</NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/analysis`}>Analysis</NavLink>
+                  <NavLink to={`/analytics`}>Analytics</NavLink>
                 </li>
               </ul>
             </Col>

@@ -28,7 +28,7 @@ function App() {
         <PrivateRoute path="/" exact component={Home} />
         <PrivateRoute path="/routes" component={Routes} />
         <PrivateRoute path="/enterprises" component={Enterprise} />
-        <PrivateRoute path="/analysis" component={Analytics} />
+        <PrivateRoute path="/analytics" component={Analytics} />
 
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
