@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../../asset/css/modal-css/buy-ticket.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 // img
@@ -11,13 +11,16 @@ import confirmImg from '../../../asset/img/confirm.png'
 import { InputBox } from '../../UI/InputBox'
 import { LeftPannel } from './Components/LeftPannel'
 import { createNew } from '../../../action/user_ticket';
+
 /**
 * @author
 * @function ModalBuyTicket
 **/
 
 export const ModalBuyTicket = (props) => {
-    console.log(props.info);
+    const locations = useSelector(state => state.locations);
+    const getOn = locations.filter(location => location.city === props.info.route.startLocation);
+    const getOff = locations.filter(location => location.city === props.info.route.endLocation);
     const dispatch = useDispatch();
 
     const [processStatus, setProcessState] = useState(1);
@@ -47,7 +50,6 @@ export const ModalBuyTicket = (props) => {
     const clickOpen = () => {
         setIsOpen(2);
     }
-
 
     // seat choosing
     const seats = [
@@ -131,7 +133,6 @@ export const ModalBuyTicket = (props) => {
     useEffect(()=>{
        
     },[])
-    
 
     return (
         <div>
@@ -457,18 +458,12 @@ export const ModalBuyTicket = (props) => {
                                                 Điểm đón
                                             </div>
                                             <ul className="pickup-point__content">
-                                                <li>
-                                                    <span className="content-time">7h:30</span>
-                                                    <span className="content-locate">Hội An</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">9h:30</span>
-                                                    <span className="content-locate">Điện An</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">13h:10</span>
-                                                    <span className="content-locate">Điện Bàn</span>
-                                                </li>
+                                                {getOn.map(element => (
+                                                    <li>
+                                                        <input type="radio" name="getOn" value={element.location} />
+                                                        <span className="content-locate"> {element.location}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
 
@@ -477,18 +472,12 @@ export const ModalBuyTicket = (props) => {
                                                 Điểm trả
                                             </div>
                                             <ul className="pickup-point__content">
-                                                <li>
-                                                    <span className="content-time">7h:30</span>
-                                                    <span className="content-locate">Suối tiên</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">19h:00</span>
-                                                    <span className="content-locate">Bình Dương</span>
-                                                </li>
-                                                <li>
-                                                    <span className="content-time">11h:30</span>
-                                                    <span className="content-locate">Quận 10</span>
-                                                </li>
+                                                {getOff.map(element => (
+                                                    <li>
+                                                        <input type="radio" name="getOff" value={element.location} />
+                                                        <span className="content-locate"> {element.location}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                     </div>

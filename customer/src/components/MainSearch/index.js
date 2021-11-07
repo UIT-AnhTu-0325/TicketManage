@@ -42,8 +42,8 @@ export const MainSearch = (props) => {
         optionLists.forEach(element => {
             element.addEventListener("click", () => {
                 optionList.classList.remove("active");
-                if(selected2)
-                 selected2.innerHTML = element.querySelector("label").innerHTML;
+                if (selected2)
+                    selected2.innerHTML = element.querySelector("label").innerHTML;
             });
         });
 
@@ -61,13 +61,13 @@ export const MainSearch = (props) => {
 
         const optionLists1 = document.querySelectorAll(".option-item1");
 
-       
+
 
         optionLists1.forEach(element => {
             element.addEventListener("click", () => {
                 optionList1.classList.remove("active");
-                if(selected1)
-                selected1.innerHTML = element.querySelector("label").innerHTML;
+                if (selected1)
+                    selected1.innerHTML = element.querySelector("label").innerHTML;
             });
         });
 
@@ -99,67 +99,26 @@ export const MainSearch = (props) => {
                                         <p>Xe du lịch</p>
                                     </div>
                                 </div>
-
                                 <div className="main-func__site">
                                     <div className="main-func__site__choose input">
                                         <i className='bx bx-home-alt' ></i>
-                                        {/* <select name="startLocation" className="startLocation">
-                                        <option value="" disabled selected>Chọn nơi đi</option>
-                                        <option value="Mọi nơi" >Mọi nơi</option>
-                                        {startLocations.map((location) => (
-                                            <option value={location}>{location}</option>
-                                        ))}
-                                    </select> */}
-
-                                        <div className="select-start-location">
-                                            <div className="selected2" >
-                                                Chon noi di
-                                               
-                                            </div>
-
-                                            <div className="select-box" >
-                                                <div className="options-list">
-                                                    {startLocations.map((location) => (
-                                                        <div className="option-item" >
-                                                            <input type="radio" className="radio" id={location} name="startLocation" />
-                                                            <label htmlFor={location}>{location}</label>
-                                                        </div>
-                                                    ))}
-
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <select name="startLocation">
+                                            <option value="" disabled selected>Chọn nơi đi</option>
+                                            <option value="Mọi nơi" >Mọi nơi</option>
+                                            {startLocations.map((location) => (
+                                                <option value={location}>{location}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="main-func__site__choose input">
                                         <i className='bx bxs-edit-location' ></i>
-                                        {/* <select name="endLocation">
-                                    <option value="" disabled selected>Chọn nơi đến</option>
-                                        <option value="Mọi nơi">Mọi nơi</option>
-                                        {endLocations.map((location) => (
-                                            <option value={location}>{location}</option>
-                                        ))}
-                                    </select> */}
-
-                                        <div className="select-start-location">
-                                            <div className="selected1" >
-                                                Chọn nơi đến
-                                               
-                                            </div>
-
-                                            <div className="select-box" >
-                                                <div className="options-list1">
-                                                    {endLocations.map((location) => (
-                                                        <div className="option-item1" >
-                                                            <input type="radio" className="radio" id={location} name="endLocation" />
-                                                            <label htmlFor={location}>{location}</label>
-                                                        </div>
-                                                    ))}
-
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <select name="endLocation">
+                                            <option value="" disabled selected>Chọn nơi đến</option>
+                                            <option value="Mọi nơi">Mọi nơi</option>
+                                            {endLocations.map((location) => (
+                                                <option value={location}>{location}</option>
+                                            ))}
+                                        </select>
                                     </div>
 
                                     <div className="main-func__site__swap">

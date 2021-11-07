@@ -26,7 +26,8 @@ const goodsRoutes = require("./routes/goods");
 const feedbackRoutes = require("./routes/feedback");
 const logChangeTicketRoutes = require("./routes/log_change_ticket");
 const user_ticketRoutes = require("./routes/user_ticket");
-
+const locationRoutes = require("./routes/location");
+const cityRoutes = require("./routes/city")
 //env var
 env.config();
 
@@ -85,7 +86,8 @@ app.use("/api/ticket_cancel", ticketCancelRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/log_change_ticket", logChangeTicketRoutes);
 app.use("/api/user_ticket", user_ticketRoutes);
-
+app.use("/api/city", cityRoutes);
+app.use("/api/location", locationRoutes);
 
 
 app.listen(process.env.PORT, () => {
