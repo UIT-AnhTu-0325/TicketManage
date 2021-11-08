@@ -7,7 +7,7 @@ export default function Chart({ title, data, dataKey1, dataKey2, grid }) {
             <h3><div className="chartTitle">{title}</div></h3>
             <ResponsiveContainer width="100%" aspect={4 / 1}>
                 <LineChart data={data}>
-                    <XAxis dataKey="date" stroke="#5550bd" />
+                    <XAxis dataKey="_id" stroke="#5550bd" />
                     <Line type="monotone" dataKey={dataKey1} stroke="#5550bd" />
                     <Line type="monotone" dataKey={dataKey2} stroke="#82ca9d" />
                     <Tooltip />

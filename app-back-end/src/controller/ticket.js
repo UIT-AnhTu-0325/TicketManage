@@ -1,28 +1,32 @@
 const Ticket = require("../models/ticket");
 
-
-exports.getByMonthYear = async (req, res) => {
+exports.getMonthByMonthYear = async (req, res) => {
     try {
         const { month, year } = req.body
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
+                    '$match': {
+                        'quantity': true
+                    }
+                }, {
                     '$project': {
                         'createdAt': '$createdAt',
-                        'totalTicket': '$totalTicket',
-                        'totalSale': '$totalSale',
                         'month': {
                             '$month': '$createdAt'
                         },
                         'year': {
                             '$year': '$createdAt'
-                        }
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
                     }
                 }, {
                     '$match': {
-                        'createdAt': {
-                            '$lt': new Date()
-                        },
                         'month': month,
                         'year': year
                     }
@@ -35,10 +39,68 @@ exports.getByMonthYear = async (req, res) => {
                             }
                         },
                         'totalTicket': {
-                            '$sum': '$totalTicket'
+                            '$sum': 1
                         },
                         'totalSale': {
-                            '$sum': '$totalSale'
+                            '$sum': '$price'
+                        }
+                    }
+                }, {
+                    '$sort': {
+                        '_id': 1
+                    }
+                }
+            ]
+        )
+        res.status(200).json(tickets);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+}
+
+exports.getDateByMonthYear = async (req, res) => {
+    try {
+        const { month, year } = req.body
+        const tickets = await Ticket.aggregate(
+            [
+                {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
+                    '$match': {
+                        'quantity': true
+                    }
+                }, {
+                    '$project': {
+                        'createdAt': '$createdAt',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
+                    }
+                }, {
+                    '$match': {
+                        'month': month,
+                        'year': year
+                    }
+                }, {
+                    '$group': {
+                        '_id': {
+                            '$dateToString': {
+                                'format': '%Y-%m-%d',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'totalTicket': {
+                            '$sum': 1
+                        },
+                        'totalSale': {
+                            '$sum': '$price'
                         }
                     }
                 }, {
@@ -59,10 +121,24 @@ exports.getAllByDay = async (req, res) => {
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
                     '$match': {
-                        'createdAt': {
-                            '$lt': new Date()
-                        }
+                        'quantity': true
+                    }
+                }, {
+                    '$project': {
+                        'createdAt': '$createdAt',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
                     }
                 }, {
                     '$group': {
@@ -73,10 +149,10 @@ exports.getAllByDay = async (req, res) => {
                             }
                         },
                         'totalTicket': {
-                            '$sum': '$totalTicket'
+                            '$sum': 1
                         },
                         'totalSale': {
-                            '$sum': '$totalSale'
+                            '$sum': '$price'
                         }
                     }
                 }, {
@@ -97,10 +173,24 @@ exports.getAllByMonth = async (req, res) => {
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
                     '$match': {
-                        'createdAt': {
-                            '$lt': new Date()
-                        }
+                        'quantity': true
+                    }
+                }, {
+                    '$project': {
+                        'createdAt': '$createdAt',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
                     }
                 }, {
                     '$group': {
@@ -111,10 +201,10 @@ exports.getAllByMonth = async (req, res) => {
                             }
                         },
                         'totalTicket': {
-                            '$sum': '$totalTicket'
+                            '$sum': 1
                         },
                         'totalSale': {
-                            '$sum': '$totalSale'
+                            '$sum': '$price'
                         }
                     }
                 }, {
@@ -135,10 +225,24 @@ exports.getAllByYear = async (req, res) => {
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
                     '$match': {
-                        'createdAt': {
-                            '$lt': new Date()
-                        }
+                        'quantity': true
+                    }
+                }, {
+                    '$project': {
+                        'createdAt': '$createdAt',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
                     }
                 }, {
                     '$group': {
@@ -149,10 +253,10 @@ exports.getAllByYear = async (req, res) => {
                             }
                         },
                         'totalTicket': {
-                            '$sum': '$totalTicket'
+                            '$sum': 1
                         },
                         'totalSale': {
-                            '$sum': '$totalSale'
+                            '$sum': '$price'
                         }
                     }
                 }, {

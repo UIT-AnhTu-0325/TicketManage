@@ -1,0 +1,15 @@
+.dropDown{
+    width: 100%;
+    display: flex;
+    justify-content:baseline;
+}
+
+.dropDownItem{
+    margin: 0px 5px;
+    padding: 10px;
+}
+
+.btnItem{
+    margin: 10px 30px;
+    padding: 5px;
+}

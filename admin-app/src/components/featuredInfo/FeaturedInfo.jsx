@@ -20,7 +20,7 @@ export default function FeaturedInfo({ ticket, sale }) {
             <div className="featuredItem">
                 <span className="featuredTitle">Sales</span>
                 <div className="featuredMoneyContainer">
-                    <span className="featuredMoney" id="saleId">${sale}</span>
+                    <span className="featuredMoney" id="saleId">{sale} VND</span>
                     <span className="featuredMoneyRate">
                         +11,4 <ArrowUpward className="featuredIcon" />
                     </span>
