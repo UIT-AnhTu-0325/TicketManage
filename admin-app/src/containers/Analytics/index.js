@@ -17,6 +17,11 @@ import "../../asset/css/containers-css/Analytics.css"
 
 export const Analytics = (props) => {
 
+    var today = new Date()
+
+    const [month, setMonth] = useState(today.getMonth() + 1)
+    const [year, setYear] = useState(today.getFullYear())
+
     const [ticketCurrentMonth, setTicketCurrentMonth] = useState("")
     const [saleCurrentMonth, setSaleCurrentMonth] = useState("")
 
@@ -26,26 +31,26 @@ export const Analytics = (props) => {
     const chart = useSelector((state) => state.chart)
     const { listOfAnalyticsChart } = chart
 
-    var today = new Date()
-    var lastMonth = today.getMonth()
-    var month = today.getMonth() + 1
-    var year = today.getFullYear()
+    // var lastMonth = today.getMonth()
+    // var month = today.getMonth() + 1
+    // var year = today.getFullYear()
 
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCurrentMonth({ month, year }));
-        console.log(listOfAnalytics.map(a => a.totalTicket))
-        setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-        setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
+        dispatch(getCurrentMonth({ month, year }))
+        dispatch(getDateByMonthYear({ month, year }))
+        //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
+        //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
     }, []);
 
     const filterShow = (e) => {
         e.preventDefault();
         dispatch(getDateByMonthYear({ month, year }))
-        console.log(listOfAnalyticsChart)
-
+        dispatch(getCurrentMonth({ month, year }))
+        setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
+        setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
     };
 
     return (
@@ -53,39 +58,29 @@ export const Analytics = (props) => {
             <div>
                 <FeaturedInfo ticket={ticketCurrentMonth} sale={saleCurrentMonth} />
                 <div className="dropDown">
-                    <Dropdown className="dropDownItem">
-                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                            Month
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu variant="dark">
-                            <Dropdown.Item href="#/action-2">All</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">January</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">February</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">March</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">April</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">May</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">June</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">July</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">August</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">September</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">October</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">November</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">December</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown className="dropDownItem">
-                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                            Year
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu variant="dark">
-                            <Dropdown.Item href="#/action-2">2020</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">2021</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">2022</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <select value={month} classname="custom-select" onChange={(e) => { setMonth(parseInt(e.target.value)) }}>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select value={year} classname="custom-select" onChange={(e) => { setYear(parseInt(e.target.value)) }}>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
                     <Button variant="dark" onClick={filterShow} className="btnItem">Filter</Button>
                 </div>
-                <Chart data={listOfAnalyticsChart} title="Analytics" grid dataKey1="totalTicket" dataKey2="totalSale" />
+                <Chart data={listOfAnalyticsChart} title="Tickets" grid dataKey1="totalTicket" />
+                <Chart data={listOfAnalyticsChart} title="Sales" grid dataKey2="totalSale" />
             </div>
         </Layout>
     )

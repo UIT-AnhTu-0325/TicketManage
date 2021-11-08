@@ -23,6 +23,7 @@ export const getDateByMonthYear = (date) => async (dispatch) => {
     try {
         dispatch({ type: ANALYTICS_CHART_REQUEST });
         const { data } = await axios.post(`ticket/getDateByMonthYear`, date)
+        console.log(date);
         console.log(data);
         dispatch({ type: ANALYTICS_CHART_SUCCESS, payload: data })
     } catch (error) {
