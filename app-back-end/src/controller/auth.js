@@ -11,12 +11,12 @@ exports.signup = async (req, res) => {
         message: "Email already registered",
       });
   });
-  User.findOne({ username: req.body.username }).exec((error, user) => {
-    if (user)
-      return res.status(400).json({
-        message: "Username already registered",
-      });
-  });
+  // User.findOne({ username: req.body.username }).exec((error, user) => {
+  //   if (user)
+  //     return res.status(400).json({
+  //       message: "Username already registered",
+  //     });
+  // });
 
   const { firstName, lastName, email, password, username, contactNumber } = req.body;
   const hash_password = await bcrypt.hash(password, 10);
@@ -25,7 +25,7 @@ exports.signup = async (req, res) => {
     lastName,
     email,
     hash_password,
-    username,
+    username ,
     contactNumber
   });
 

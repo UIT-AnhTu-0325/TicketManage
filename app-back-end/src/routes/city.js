@@ -1,13 +1,7 @@
-const {
-  create,
-  getById,
-  getAll,
-  update,
-  deleteById,
-} = require("../controller/route");
+const {create, getById, getAll, update, deleteById} = require("../controller/city")
 const router = require("express").Router();
 
-router.post("/create", create);
+router.post("/", create);
 
 router.get("/:id", getById);
 

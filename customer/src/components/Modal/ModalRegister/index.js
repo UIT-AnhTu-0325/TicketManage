@@ -26,13 +26,14 @@ export const ModelRegister = (props) => {
 
     const submitHandle = async (e) => {
         e.preventDefault();
-        dispatch(register({ firstName, lastName, email, password, username, contactNumber }))
+        dispatch(register({ firstName, lastName, email, password, contactNumber }))
     };
 
     return (
         <div>
             <div className="modal-auth open" onClick={props.close, (e) => {
                 e.stopPropagation();
+                
             }}>
                 <div className="modal-auth__container js-modal-auth__container">
                     <div className="modal-auth__close js-closemodal-btn" onClick={props.close} >

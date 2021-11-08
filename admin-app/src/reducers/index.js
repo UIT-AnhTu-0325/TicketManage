@@ -4,6 +4,7 @@ import userReducer from "./user.reducer";
 import routeReducer from "./route.reducers";
 import enterpriseReducer from "./enterprise.reducers";
 import { analyticsChartReducer, analyticsReducer } from "./analyticsReducers";
+import cityReducers from "./city.reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   enterprise: enterpriseReducer,
   analytics: analyticsReducer,
   chart: analyticsChartReducer
+  city: cityReducers,
 });
 
 export default rootReducer;
