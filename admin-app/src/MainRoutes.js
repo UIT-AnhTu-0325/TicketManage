@@ -14,7 +14,7 @@ import { Customer } from "./pages/Customers";
 
 import "./asset/css/main.css"
 
-function App() {
+function MainRoutes() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -42,4 +42,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainRoutes;
