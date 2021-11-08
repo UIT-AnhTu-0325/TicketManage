@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useRef, useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import logoImg from "../../asset/img/logo.png"
 
@@ -17,6 +17,13 @@ export const Sidebar = (props) => {
 
     const activeItem = 1;// sidebarItem.findIndex(item=>item.route = props.location.pathname)
     
+    const [currentTab, setCurrentTab] = useState(0);
+    const changeTab= (ind)=>{
+        setCurrentTab(ind);
+      
+    }
+
+  
         
 
     return (
@@ -31,7 +38,8 @@ export const Sidebar = (props) => {
                         <SidebarItem
                             title={item.display_name}
                             icon={item.icon}
-                            active={ind === activeItem}
+                            active={ind === currentTab}
+                            changeTab={()=>changeTab(ind)}
                         />
                     </NavLink>
                 ))

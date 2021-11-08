@@ -1,41 +1,49 @@
 [
     {
+        "id": 1,
         "display_name": "Dashboard",
         "route": "/home",
         "icon": "bx bx-category-alt"
     },
     {
+        "id": 2,
         "display_name": "EnterPrises",
         "route": "/enterprises",
         "icon": "bx bx-building-house"
     },
     {
+        "id": 3,
         "display_name": "Routes",
         "route": "/routes",
         "icon": "bx bx-bus"
     },
     {
+        "id": 4,
         "display_name": "Orders",
         "route": "/orders",
         "icon": "bx bx-cart"
     },
     {
+        "id": 5,
         "display_name": "Analytics",
         "route": "/analytics",
         "icon": "bx bx-bar-chart-alt"
     },
   
     {
+        "id": 6,
         "display_name": "discount",
         "route": "/discount",
         "icon": "bx bx-gift"
     },
     {
+        "id": 7,
         "display_name": "inventory",
         "route": "/inventory",
         "icon": "bx bx-store-alt"
     },
     {
+        "id": 8,
         "display_name": "settings",
         "route": "/settings",
         "icon": "bx bx-cog"
