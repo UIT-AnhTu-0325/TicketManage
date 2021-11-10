@@ -1,8 +1,16 @@
 import React from "react";
 import { Col, Container, Jumbotron, Row } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { BrowserRouter, NavLink, Route,Switch } from "react-router-dom";
+
 import { Header } from "../Header";
 import "../../asset/css/components-css/Layout.css";
+import { Sidebar } from "../sidebar/Sidebar";
+import Routes from "../../MainRoutes";
+import MainRoutes from "../../MainRoutes";
+import { TopNav } from "../topnav/TopNav";
+
+
+
 /**
  * @author
  * @function Layout
@@ -15,8 +23,10 @@ export const Layout = (props) => {
       {props.sidebar ? (
         <Container fluid>
           <Row>
+
+            {/* Side bar */}
             <Col md={2} className="slidebar">
-              <ul>
+              {/* <ul>
                 <li>
                   <NavLink exact to={`/`}>
                     Home
@@ -28,11 +38,23 @@ export const Layout = (props) => {
                 <li>
                   <NavLink to={`/enterprises`}>Enterprises</NavLink>
                 </li>
-              </ul>
+              </ul> */}
+              <Sidebar />
+
+
+
             </Col>
-            <Col md={10} style={{ marginLeft: "auto", paddingTop: "60px" }}>
+
+
+
+            {/* Right content */}
+            <Col className="right-content" md={10} style={{ marginLeft: "300px", paddingTop: "60px" }}>
+
+              <TopNav />
               {props.children}
             </Col>
+
+
           </Row>
         </Container>
       ) : (
