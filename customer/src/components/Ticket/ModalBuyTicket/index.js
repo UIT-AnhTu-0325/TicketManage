@@ -23,6 +23,9 @@ export const ModalBuyTicket = (props) => {
     const getOff = locations.filter(location => location.city === props.info.route.endLocation);
     const dispatch = useDispatch();
 
+    const [on, setOn] = useState("");
+    const [off, setOff] = useState("");
+
     const [processStatus, setProcessState] = useState(1);
 
     //front end relate logic
@@ -51,88 +54,61 @@ export const ModalBuyTicket = (props) => {
         setIsOpen(2);
     }
 
-    // seat choosing
-    const seats = [
-        {
-            id: 1,
-            value: "available"
-        },
-        {
-            id: 2,
-            value: "available"
-        },
-        {
-            id: 3,
-            value: "booked"
-        },
-        {
-            id: 4,
-            value: "available"
-        },
-        {
-            id: 5,
-            value: "available"
-        },
-        {
-            id: 6,
-            value: "available"
-        },
-        {
-            id: 7,
-            value: "available"
-        },
-        {
-            id: 8,
-            value: "available"
-        },
-        {
-            id: 9,
-            value: "available"
-        },
-        {
-            id: 10,
-            value: "available"
-        },
-        {
-            id: 11,
-            value: "available"
-        },
-
-    ];
-    const initialSeat= []
+    let seats = [];
+    props.info.ticket.quantity.forEach((item, index) => {
+        if (item) {
+            seats.push({
+                id: index + 1,
+                value: "booked"
+            });
+        }
+        else {
+            seats.push({
+                id: index + 1,
+                value: "available"
+            });
+        }
+    });
+    const initialSeat = []
     seats.forEach(seat => {
-        if(seat.value==="available"){
+        if (seat.value === "available") {
             initialSeat.push(seat.id);
         }
     });
     const [itemChoosing, setItemChoosing] = useState(
-      []
+        []
     );
     const [itemAvailable, setItemAvailable] = useState(
         initialSeat
     );
     console.log(itemChoosing)
 
-    const clickChoosing = (id)=>{
+    const clickChoosing = (id) => {
         setItemChoosing(prev => {
-            if(itemChoosing.includes(id)){
-                return itemChoosing.filter(item=>item!== id)
+            if (itemChoosing.includes(id)) {
+                return itemChoosing.filter(item => item !== id)
             }
-            else{
-                if(itemAvailable.includes(id)){
-                    return  [...prev, id];
+            else {
+                if (itemAvailable.includes(id)) {
+                    return [...prev, id];
                 }
-                else{
+                else {
                     return prev;
                 }
-              
+
             }
         })
     }
-    
-    useEffect(()=>{
-       
-    },[])
+
+    const getOnCLick = (e) => {
+        setOn(e.target.value);
+    }
+    const getOffCLick = (e) => {
+        setOff(e.target.value);
+    }
+    useEffect(() => {
+
+    }, [])
 
     return (
         <div>
@@ -188,7 +164,6 @@ export const ModalBuyTicket = (props) => {
                             }
 
                                 onClick={() => {
-
                                     clickOpen();
                                     setProcessState(3);
                                     if (processStatus > 3) {
@@ -196,7 +171,7 @@ export const ModalBuyTicket = (props) => {
                                     } else {
                                         setPreStatus(1)
                                     }
-                                    if (processHandled < 3) {
+                                    if (3 > processHandled) {
                                         setProcessHandled(3);
                                     }
                                 }
@@ -316,6 +291,23 @@ export const ModalBuyTicket = (props) => {
                                 </div>
                                 <div className="services-list">
                                     <div className="seat">
+                                        <div className="seat-choosing">
+                                            <div className="steering-wheel">
+                                                <i class="icofont-steering"></i>
+                                            </div>
+                                            <div className="pannel-wrapper">
+                                                {
+                                                    seats.map(seat => (
+                                                        <div className={itemChoosing.includes(seat.id) && itemAvailable.includes(seat.id) ? "item-seat active" : (itemAvailable.includes(seat.id) ? "item-seat" : "item-seat non-ava")}
+                                                            onClick={() => clickChoosing(seat.id)}
+                                                        >
+                                                            <i class="fas fa-couch"></i>
+                                                        </div>
+
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
                                         <div className="seat-guide">
                                             <div className="note">* Chú thích</div>
                                             <div className="item">
@@ -331,43 +323,25 @@ export const ModalBuyTicket = (props) => {
                                                 <span>Không có sẵn</span>
                                             </div>
                                         </div>
-
-                                        <div className="seat-choosing">
-                                            <div className="steering-wheel">
-                                                <i class="icofont-steering"></i>
-                                            </div>
-                                            <div className="pannel-wrapper">
-
-                                               
-
-                                                {
-                                                    seats.map(seat => (
-                                                        <div className={itemChoosing.includes(seat.id) &&  itemAvailable.includes(seat.id) ? "item-seat active" : (itemAvailable.includes(seat.id) ? "item-seat": "item-seat non-ava")} 
-                                                            onClick={()=> clickChoosing(seat.id)}   
-                                                        >
-                                                             <i class="fas fa-couch"></i>
-                                                        </div>
-                                                       
-                                                    ))
-                                                }
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <button className="custom-btn"
                                     onClick={
                                         () => {
-                                            clickOpen();
-                                            setProcessState(3);
-                                            if (processStatus > 3) {
-                                                setPreStatus(2)
+                                            if (itemChoosing.length === 0) {
+                                                alert("Vui lòng chọn ghế ngồi");
                                             } else {
-                                                setPreStatus(1)
+                                                clickOpen();
+                                                setProcessState(3);
+                                                if (processStatus > 3) {
+                                                    setPreStatus(2)
+                                                } else {
+                                                    setPreStatus(1)
+                                                }
+                                                if (3 > processHandled) {
+                                                    setProcessHandled(3);
+                                                }
                                             }
-                                            if (3 > processHandled) {
-                                                setProcessHandled(3);
-                                            }
-
                                         }
                                     }
 
@@ -412,7 +386,7 @@ export const ModalBuyTicket = (props) => {
                                     onClick={
                                         () => {
                                             clickOpen();
-                                            setProcessState(3);
+                                            setProcessState(4);
                                             if (processStatus > 3) {
                                                 setPreStatus(2)
                                             } else {
@@ -421,7 +395,6 @@ export const ModalBuyTicket = (props) => {
                                             if (3 > processHandled) {
                                                 setProcessHandled(3);
                                             }
-
                                         }
                                     }
 
@@ -431,7 +404,7 @@ export const ModalBuyTicket = (props) => {
 
 
 
-                        
+
 
                         <div className={processStatus === 4 ?
                             (prevStatus === 1 ? "content__pickup-point active slide-left" : "content__pickup-point active slide-right")
@@ -460,7 +433,7 @@ export const ModalBuyTicket = (props) => {
                                             <ul className="pickup-point__content">
                                                 {getOn.map(element => (
                                                     <li>
-                                                        <input type="radio" name="getOn" value={element.location} />
+                                                        <input type="radio" name="getOn" value={element.location} onChange={getOnCLick} />
                                                         <span className="content-locate"> {element.location}</span>
                                                     </li>
                                                 ))}
@@ -474,7 +447,7 @@ export const ModalBuyTicket = (props) => {
                                             <ul className="pickup-point__content">
                                                 {getOff.map(element => (
                                                     <li>
-                                                        <input type="radio" name="getOff" value={element.location} />
+                                                        <input type="radio" name="getOff" value={element.location} onChange={getOffCLick} />
                                                         <span className="content-locate"> {element.location}</span>
                                                     </li>
                                                 ))}
@@ -484,9 +457,11 @@ export const ModalBuyTicket = (props) => {
                                 </div>
                                 <button className="custom-btn"
                                     onClick={() => {
-
-                                        clickOpen();
-                                        setProcessState(4);
+                                        if(on === "" || off === ""){
+                                            alert("Vui lòng chọn điểm đón trả");
+                                        } else{
+                                            clickOpen();
+                                        setProcessState(5);
                                         if (processStatus > 4) {
                                             setPreStatus(2)
                                         } else {
@@ -495,6 +470,8 @@ export const ModalBuyTicket = (props) => {
                                         if (4 > processHandled) {
                                             setProcessHandled(4);
                                         }
+                                        }
+                    
                                     }}
 
                                 >Tiếp tục</button>
@@ -520,10 +497,15 @@ export const ModalBuyTicket = (props) => {
                                 </form>
                                 <button className="custom-btn"
                                     onClick={() => {
-                                        dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, time: Date.now(), status: "cho xac nhan" },
-                                            { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity - 1, type: props.info.ticket.type, price: props.info.ticket.price, _id: props.info.ticket._id }));
-                                        alert('Đặt vé thành công');
-                                        window.location.reload();
+                                        if(window.confirm("Xác nhận đặt vé")){
+                                            itemChoosing.forEach(item => {
+                                                props.info.ticket.quantity[item-1] = true;
+                                                dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, getOn: on, getOff: off, seatNumber: item},
+                                                { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }));
+                                            })
+                                            alert('Đặt vé thành công');
+                                            window.location.reload();
+                                        }  
                                     }}
 
                                 >Hoàn tất</button>

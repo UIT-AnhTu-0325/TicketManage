@@ -7,11 +7,12 @@ import { ItemTicket } from '../ItemTicket'
 **/
 
 export const ActiveTicket = (props) => {
+  //console.log(props);
   return(
     <React.Fragment>
         <div className="ticket-list">
 
-             <ItemTicket />
+             {props.info.map(item => (<ItemTicket info={item} display={true}/>))}
             
         </div>
         

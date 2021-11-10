@@ -137,7 +137,7 @@ export const TicketDetail = ({info}) => {
         </div>
 
         <div className="modal__buy-ticket">
-            {openBuyingModal === true ?   <ModalBuyTicket closeModal={clickCloseBuyingModal  } info={info}/> : null}
+            {openBuyingModal === true ?   <ModalBuyTicket closeModal={clickCloseBuyingModal} info={info}/> : null}
            
         </div>
     </>

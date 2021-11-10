@@ -26,11 +26,12 @@
     right: 0;
     padding: 15px 30px;
     font-size: 2rem;
+    background-color: var(--primary-color);
+    border-bottom-left-radius: 15px;
 }
 .modal-ticket__main .close-btn:hover{
     background-color: var(--primary-color);
     color: var(--white-color);
-    border-bottom-left-radius: 10px;
     cursor: pointer;
 }
 .modal-ticket__main{
@@ -400,15 +401,16 @@
     justify-content: center;
 }
 .seat-choosing .pannel-wrapper {
-    margin-top: 20px;
-    margin-right: 50px;
-    width: 190px;
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 230px;
     min-height: 230px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     border: 2px solid #E6EAED;
     display: grid;
-    place-content: center;
+    justify-content: space-around;
+    
 }
 .seat-choosing .pannel-wrapper{
     display: flex;
