@@ -48,13 +48,13 @@ export const Header = (props) => {
 
   return (
     <div className="App">
-      <Navbar
+      <Navbar 
         collapseOnSelect
         fixed="top"
         expand="lg"
         bg="dark"
         variant="dark"
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 1000, minHeight: "40px"}}
       >
         <Container fluid>
           {/* <Navbar.Brand href="#home">Admin Dashboard</Navbar.Brand> */}

@@ -17,6 +17,7 @@ import {
   getAllEnterprises,
 } from "../../actions";
 import { Layout } from "../../components/Layout";
+import { Table } from "../../components/table/Table";
 import { Input } from "../../components/UI/Input";
 
 /**
@@ -71,6 +72,33 @@ export const Enterprise = (props) => {
     return myEnterprises;
   };
 
+  // dev hong
+  const renderEnterprises1 = (enterprises) => {
+    let myEnterprises = [];
+    for (let enterprise of enterprises) {
+      myEnterprises.push(
+        <tr>
+          <td>{enterprise.name}</td>
+          <td>{enterprise.address}</td>
+          <td>
+            <button className="edit"
+              color="warning"
+              onClick={() => {
+                handleModalShow("Edit", enterprise);
+              }}
+            >
+              Edit
+            </button>
+            <button className="delete" color="danger" onClick={() => delEnterprise(enterprise)}>
+              Delete
+            </button>
+          </td>
+        </tr>
+      );
+    }
+    return myEnterprises;
+  };
+
   const handleModalShow = (iFlag, enterprise = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
@@ -104,9 +132,39 @@ export const Enterprise = (props) => {
     dispatch(deleteEnterprise(form));
   };
 
+
+
+
+  // hong front
+
+  const enterprises = {
+    header: [
+      "Nhà xe",
+      "Địa điểm",
+      "Tùy chọn"
+    ],
+    body: [
+
+    ]
+  }
+
+  const renderOrderHead = (item, ind) => (
+    <th key={ind}>{item}</th>
+  )
+  const renderOrderBody = (item, ind) => (
+    <tr key={ind}>
+      <td>{item.id}</td>
+      <td>{item.user}</td>
+      <td>{item.date}</td>
+      <td>{item.price}</td>
+      <td>{item.status}</td>
+    </tr>
+  )
+
+
   return (
     <Layout sidebar>
-      <Container>
+      <Container style={{ display: "none" }}>
         <Row>
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -131,6 +189,7 @@ export const Enterprise = (props) => {
           </Col>
         </Row>
       </Container>
+
       {/* SHOW MODAL - FIX THEM */}
       <Modal show={modalShow} onHide={handleModalClose}>
         <Modal.Header>
@@ -168,6 +227,32 @@ export const Enterprise = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <div className="enterprise">
+        <div className="row">
+          <div className="col-12">
+            <div className="card">
+              <div className="card__header">
+                <h3>Quản lý nhà xe</h3>
+              </div>
+              <div className="card__body">
+                <Table
+                  headData={enterprises.header}
+                  renderHead={(item, ind) => renderOrderHead(item, ind)}
+
+                  render2Body={() => renderEnterprises1(state_enterprise.enterprises)}
+                />
+              </div>
+              <div className="card__footer">
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
     </Layout>
   );
 };
