@@ -1,11 +1,11 @@
 .slidebar {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   background-color: #eee;
   padding-top: 60px;
-  box-shadow: 0 0 2px gray;
+  box-shadow: 0 0 2px gray; */
 }
 
 .slidebar ul {
@@ -28,4 +28,9 @@
 .slidebar ul li a.active {
   background: #333;
   color: #fff;
+}
+
+.right-content{
+  width: calc(100vw - 300px);
+  margin-top: 50px;
 }
