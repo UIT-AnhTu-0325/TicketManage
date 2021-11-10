@@ -30,16 +30,16 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <PrivateRoute path="/" exact component={Home} />
-        <PrivateRoute path="/routes" component={Routes} />
-        <PrivateRoute path="/enterprises" component={Enterprise} />
-        <PrivateRoute path="/analytics" component={Analytics} />
+        <Route path="/home" exact component={Home} />
+        <Route path="/routes" component={Routes} />
+        <Route path="/enterprises" component={Enterprise} />
+        <Route path="/analytics" component={Analytics} />
 
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
 
         {/* New Route */}
-        <Route path="/home" component={DashBoard} />
+        <Route path="/" component={DashBoard} />
         <Route path="/customers" component={Customer} />
       </Switch>
     </div>
