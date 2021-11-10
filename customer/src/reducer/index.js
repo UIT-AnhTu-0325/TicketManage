@@ -5,8 +5,7 @@ import tickets from './ticket'
 import routes from './route';
 import locations from './location';
 import { userLoginReducer, userProfileReducer, userUpdateReducer, userRegisterReducer } from './userReducers'
-
-import books from './user_ticket';
+import userTicket from './user_ticket';
 
 
 export const reducers = combineReducers({
@@ -14,7 +13,7 @@ export const reducers = combineReducers({
     tickets,
     locations,
     routes,
-    books,
+    userTicket,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userUpdate: userUpdateReducer,

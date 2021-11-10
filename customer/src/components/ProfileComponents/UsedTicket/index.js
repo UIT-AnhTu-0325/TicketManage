@@ -9,9 +9,7 @@ export const UsedTicket = (props) => {
   return(
     <React.Fragment>
         <div className="ticket-list">
-             <ItemTicket />
-             <ItemTicket />
-             <ItemTicket />
+        {props.info.map(item => (<ItemTicket info={item} display={false}/>))}
             
         </div>
         

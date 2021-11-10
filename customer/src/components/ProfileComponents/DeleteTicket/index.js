@@ -9,8 +9,7 @@ export const DeleteTicket = (props) => {
     return (
         <React.Fragment>
             <div className="ticket-list">
-                <ItemTicket />
-                <ItemTicket />
+            {props.info.map(item => (<ItemTicket info={item} display={false}/>))}
             </div>
 
         </React.Fragment>
