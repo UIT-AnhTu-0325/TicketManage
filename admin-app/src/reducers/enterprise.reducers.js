@@ -5,6 +5,7 @@ const initState = {
   enterprises: [],
   loading: false,
   error: null,
+  enterpriseDetail: {},
 };
 
 const rebuildAddEnterprises = (enterprises, enterprise) => {
@@ -106,6 +107,26 @@ export default (state = initState, action) => {
     case enterpriseConstants.DELETE_ENTERPRIESE_FAILURE:
       state = {
         ...initState,
+      };
+      break;
+    case enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        enterpriseDetail: action.payload.enterpriseDetails,
+      };
+      break;
+    case enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_FAILURE:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
       };
       break;
     default:
