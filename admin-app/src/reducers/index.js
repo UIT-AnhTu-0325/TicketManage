@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   route: routeReducer,
   enterprise: enterpriseReducer,
   analytics: analyticsReducer,
-  chart: analyticsChartReducer
+  chart: analyticsChartReducer,
   city: cityReducers,
 });
 
