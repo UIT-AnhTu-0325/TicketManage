@@ -9,6 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addEnterprise,
   deleteEnterprise,
@@ -81,7 +82,8 @@ export const Enterprise = (props) => {
           <td>{enterprise.name}</td>
           <td>{enterprise.address}</td>
           <td>
-            <button className="edit"
+            <button
+              className="edit"
               color="warning"
               onClick={() => {
                 handleModalShow("Edit", enterprise);
@@ -89,9 +91,18 @@ export const Enterprise = (props) => {
             >
               Edit
             </button>
-            <button className="delete" color="danger" onClick={() => delEnterprise(enterprise)}>
+            <button
+              className="delete"
+              color="danger"
+              onClick={() => delEnterprise(enterprise)}
+            >
               Delete
             </button>
+            <Link to={`enterprises/${enterprise._id}/informations`}>
+              <Button type="button" onClick={() => {}}>
+                Detail
+              </Button>
+            </Link>
           </td>
         </tr>
       );
@@ -132,25 +143,14 @@ export const Enterprise = (props) => {
     dispatch(deleteEnterprise(form));
   };
 
-
-
-
   // hong front
 
   const enterprises = {
-    header: [
-      "Nhà xe",
-      "Địa điểm",
-      "Tùy chọn"
-    ],
-    body: [
+    header: ["Nhà xe", "Địa điểm", "Tùy chọn"],
+    body: [],
+  };
 
-    ]
-  }
-
-  const renderOrderHead = (item, ind) => (
-    <th key={ind}>{item}</th>
-  )
+  const renderOrderHead = (item, ind) => <th key={ind}>{item}</th>;
   const renderOrderBody = (item, ind) => (
     <tr key={ind}>
       <td>{item.id}</td>
@@ -159,8 +159,7 @@ export const Enterprise = (props) => {
       <td>{item.price}</td>
       <td>{item.status}</td>
     </tr>
-  )
-
+  );
 
   return (
     <Layout sidebar>
@@ -239,20 +238,16 @@ export const Enterprise = (props) => {
                 <Table
                   headData={enterprises.header}
                   renderHead={(item, ind) => renderOrderHead(item, ind)}
-
-                  render2Body={() => renderEnterprises1(state_enterprise.enterprises)}
+                  render2Body={() =>
+                    renderEnterprises1(state_enterprise.enterprises)
+                  }
                 />
               </div>
-              <div className="card__footer">
-
-              </div>
+              <div className="card__footer"></div>
             </div>
           </div>
-
         </div>
       </div>
-
-
     </Layout>
   );
 };

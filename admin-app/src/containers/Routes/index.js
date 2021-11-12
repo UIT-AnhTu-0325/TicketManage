@@ -20,6 +20,7 @@ import {
 } from "react-bootstrap";
 import { Input } from "../../components/UI/Input";
 import { Table } from "../../components/table/Table";
+import { Link } from "react-router-dom";
 
 /**
  * @author
@@ -35,45 +36,39 @@ export const Routes = (props) => {
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
 
-
-
-// event handle
-const handleModalShow = (iFlag, route = []) => {
-  if (iFlag === "Add") {
-    setModalFlag("Add");
-    setModalTitle("Add Route");
-  } else {
-    setModalFlag("Edit");
-    setModalTitle("Edit Route");
-    setRoute(route);
-  }
-  setModalShow(true);
-};
-const handleModalSave = () => {
-  const form = route;
-  if (modalFlag === "Add") {
-    dispatch(addRoute(form));
-  } else {
-    dispatch(editRoute(form));
-  }
-  setRoute(initRoute);
-  setModalShow(false);
-};
-const handleModalClose = () => {
-  setRoute(initRoute);
-  setModalShow(false);
-};
-
-const delRoute = (selectedRot) => {
-  const form = {
-    _id: selectedRot._id,
+  // event handle
+  const handleModalShow = (iFlag, route = []) => {
+    if (iFlag === "Add") {
+      setModalFlag("Add");
+      setModalTitle("Add Route");
+    } else {
+      setModalFlag("Edit");
+      setModalTitle("Edit Route");
+      setRoute(route);
+    }
+    setModalShow(true);
   };
-  dispatch(deleteRoute(form));
-};
+  const handleModalSave = () => {
+    const form = route;
+    if (modalFlag === "Add") {
+      dispatch(addRoute(form));
+    } else {
+      dispatch(editRoute(form));
+    }
+    setRoute(initRoute);
+    setModalShow(false);
+  };
+  const handleModalClose = () => {
+    setRoute(initRoute);
+    setModalShow(false);
+  };
 
-
-
-
+  const delRoute = (selectedRot) => {
+    const form = {
+      _id: selectedRot._id,
+    };
+    dispatch(deleteRoute(form));
+  };
 
   const initRoute = () => {
     return {
@@ -134,35 +129,40 @@ const delRoute = (selectedRot) => {
     let myRoutes = [];
     for (let route of routes) {
       myRoutes.push(
-          <tr>
-            <td>{route.startLocation}</td>
-            <td>{route.endLocation}</td>
-            <td>{findEnterpriseName(route.idEnterprise)}</td>
-            <td>{route.startTime}</td>
-            <td>{route.totalTime}</td>
-            <td>
-            <button  className="edit"
-            onClick={() => {
-              handleModalShow("Edit", route);
-            }}
-          >
-            Edit
-          </button>
-          <button className="delete"
-            onClick={() => {
-              delRoute(route);
-            }}
-          >
-            Delete
-          </button>
-            </td>
-          </tr>
+        <tr>
+          <td>{route.startLocation}</td>
+          <td>{route.endLocation}</td>
+          <td>{findEnterpriseName(route.idEnterprise)}</td>
+          <td>{route.startTime}</td>
+          <td>{route.totalTime}</td>
+          <td>
+            <button
+              className="edit"
+              onClick={() => {
+                handleModalShow("Edit", route);
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="delete"
+              onClick={() => {
+                delRoute(route);
+              }}
+            >
+              Delete
+            </button>
+            <Link to={`/routes/${route._id}/informations`}>
+              <Button type="button" onClick={() => {}}>
+                Detail
+              </Button>
+            </Link>
+          </td>
+        </tr>
       );
     }
     return myRoutes;
   };
-
- 
 
   // dev hong
 
@@ -175,18 +175,13 @@ const delRoute = (selectedRot) => {
       "Nhà xe",
       "Giờ khởi hành",
       "Số giờ di chuyển",
-      "Tùy chọn"
+      "Tùy chọn",
     ],
-    body: [
-
-    ]
-  }
-  const renderHead = (item, ind) =>{
-    return(
-    <th key={ind}>{item}</th>
-    )
-  }
-
+    body: [],
+  };
+  const renderHead = (item, ind) => {
+    return <th key={ind}>{item}</th>;
+  };
 
   return (
     <Layout sidebar>
@@ -201,7 +196,7 @@ const delRoute = (selectedRot) => {
                 }}
               >
                 Add
-              </button  >
+              </button>
             </div>
           </Col>
         </Row>
@@ -228,20 +223,14 @@ const delRoute = (selectedRot) => {
                 <Table
                   headData={routes.header}
                   renderHead={(item, ind) => renderHead(item, ind)}
-
                   render2Body={() => renderRoutes(state_route.routes)}
                 />
               </div>
-              <div className="card__footer">
-
-              </div>
+              <div className="card__footer"></div>
             </div>
           </div>
-
         </div>
       </div>
-
-      
 
       {/* SHOW MODAL - FIX THEM */}
       <Modal show={modalShow} onHide={handleModalClose}>

@@ -5,9 +5,10 @@ const initState = {
   routes: [],
   loading: false,
   error: null,
+  routeDetails: {},
 };
 
-const rebuildAddRoutes = (routes, route) => {
+const rebuildAddRoute = (routes, route) => {
   let myRoutes = [];
   for (let rou of routes) {
     myRoutes.push(rou);
@@ -17,7 +18,7 @@ const rebuildAddRoutes = (routes, route) => {
   return myRoutes;
 };
 
-const rebuildEditRoutes = (routes, route) => {
+const rebuildEditRoute = (routes, route) => {
   let myRoutes = [];
   for (let rou of routes) {
     myRoutes.push(rou._id === route._id ? route : rou);
@@ -26,7 +27,7 @@ const rebuildEditRoutes = (routes, route) => {
   return myRoutes;
 };
 
-const rebuildDelRoutes = (routes, id) => {
+const rebuildDelRoute = (routes, id) => {
   let myRoutes = [];
   for (let rou of routes) {
     if (rou._id !== id) {
@@ -53,7 +54,7 @@ export default (state = initState, action) => {
     case routerConstants.ADD_NEW_ROUTE_SUCCESS:
       state = {
         ...state,
-        routes: rebuildAddRoutes(state.routes, action.payload.route),
+        routes: rebuildAddRoute(state.routes, action.payload.route),
         loading: false,
       };
       break;
@@ -71,7 +72,7 @@ export default (state = initState, action) => {
     case routerConstants.EDIT_ROUTE_SUCCESS:
       state = {
         ...state,
-        routes: rebuildEditRoutes(state.routes, action.payload.route),
+        routes: rebuildEditRoute(state.routes, action.payload.route),
         loading: false,
       };
       break;
@@ -89,13 +90,33 @@ export default (state = initState, action) => {
     case routerConstants.DELETE_ROUTE_SUCCESS:
       state = {
         ...state,
-        routes: rebuildDelRoutes(state.routes, action.payload.id),
+        routes: rebuildDelRoute(state.routes, action.payload.id),
         loading: false,
       };
       break;
     case routerConstants.DELETE_ROUTE_FAILURE:
       state = {
         ...initState,
+      };
+      break;
+    case routerConstants.GET_ROUTES_DETAILS_BY_ID_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case routerConstants.GET_ROUTES_DETAILS_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        routeDetails: action.payload.routeDetails,
+        loading: false,
+      };
+      break;
+    case routerConstants.GET_ROUTES_DETAILS_BY_ID_FAILURE:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
       };
       break;
     default:

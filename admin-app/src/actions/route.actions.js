@@ -6,7 +6,7 @@ export const getAllRoutes = () => {
   return async (dispatch) => {
     dispatch({ type: routerConstants.GET_ALL_ROUTES_REQUEST });
     const res = await axios.get(`route`);
-    console.log(res);
+    //console.log(res);
     if (res.status === 200) {
       const routeList = res.data;
       dispatch({
@@ -39,7 +39,7 @@ export const addRoute = (form) => {
         payload: { error: res.data.error },
       });
     }
-    console.log(res);
+    //console.log(res);
   };
 };
 
@@ -75,6 +75,30 @@ export const deleteRoute = (form) => {
     } else {
       dispatch({
         type: routerConstants.DELETE_ROUTE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
+
+export const getRouteDetailssById = (payload) => {
+  return async (dispatch) => {
+    dispatch({
+      type: routerConstants.GET_ROUTES_DETAILS_BY_ID_REQUEST,
+    });
+
+    const { routeId } = payload.params;
+    const res = await axios.get(`/route/${routeId}/informations`);
+    try {
+      if (res.status === 200) {
+        dispatch({
+          type: routerConstants.GET_ROUTES_DETAILS_BY_ID_SUCCESS,
+          payload: { routeDetails: res.data },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: routerConstants.GET_ROUTES_DETAILS_BY_ID_FAILURE,
         payload: { error: res.data.error },
       });
     }
