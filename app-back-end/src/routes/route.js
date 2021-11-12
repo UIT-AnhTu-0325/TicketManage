@@ -4,6 +4,7 @@ const {
   getAll,
   update,
   deleteById,
+  getInforbyID,
 } = require("../controller/route");
 const router = require("express").Router();
 
@@ -16,5 +17,7 @@ router.get("/", getAll);
 router.put("/:id", update);
 
 router.delete("/:id", deleteById);
+
+router.get("/:id/informations", getInforbyID);
 
 module.exports = router;

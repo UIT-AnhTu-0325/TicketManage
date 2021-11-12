@@ -86,14 +86,15 @@ export const getEnterpriseDetailsById = (payload) => {
       type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_REQUEST,
     });
 
-    let res;
+    const { enterpriseId } = payload.params;
+    const res = await axios.get(`/enterprise/${enterpriseId}/informations`);
     try {
-      const { enterpriseId } = payload.params;
-      res = await axios.get(`/enterprise/${enterpriseId}/informations`);
-      dispatch({
-        type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_SUCCESS,
-        payload: { enterpriseDetails: res.data },
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_SUCCESS,
+          payload: { enterpriseDetails: res.data },
+        });
+      }
     } catch (error) {
       dispatch({
         type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_FAILURE,

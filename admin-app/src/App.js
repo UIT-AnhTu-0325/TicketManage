@@ -17,6 +17,7 @@ import { Customer } from "./pages/Customers";
 
 import "./asset/css/main.css";
 import { EnterpriseDetails } from "./containers/EnterpriseDetails";
+import { RouteDetails } from "./containers/RouteDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
+        ></Route>
+        <Route
+          path="/routes/:routeId/informations"
+          component={RouteDetails}
         ></Route>
         <Route path="/routes" component={Routes} />
         <Route path="/enterprises" exact component={Enterprise} />

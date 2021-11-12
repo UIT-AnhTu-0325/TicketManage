@@ -1,4 +1,11 @@
-const Route = require("../models/route");
+const {
+  Enterprise,
+  Vehicle,
+  Route,
+  Steersman,
+  Profile,
+  Trip,
+} = require("../models/index");
 
 exports.getAll = async (req, res) => {
   try {
@@ -49,5 +56,21 @@ exports.deleteById = async (req, res) => {
     res.status(200).json("Has been deleted");
   } catch (err) {
     res.status(500).json(err);
+  }
+};
+
+exports.getInforbyID = async (req, res) => {
+  try {
+    const route = await Route.findById(req.params.id).populate("idEnterprise");
+    const trip = await Trip.find({ idRoute: route._id })
+      .populate("idVehicle")
+      .exec();
+    res.status(200).json({
+      route: route,
+      trips: trip,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
   }
 };

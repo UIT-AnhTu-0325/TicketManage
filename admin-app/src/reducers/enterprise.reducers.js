@@ -5,7 +5,7 @@ const initState = {
   enterprises: [],
   loading: false,
   error: null,
-  enterpriseDetail: {},
+  enterpriseDetails: {},
 };
 
 const rebuildAddEnterprises = (enterprises, enterprise) => {
@@ -118,8 +118,8 @@ export default (state = initState, action) => {
     case enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_SUCCESS:
       state = {
         ...state,
+        enterpriseDetails: action.payload.enterpriseDetails,
         loading: false,
-        enterpriseDetail: action.payload.enterpriseDetails,
       };
       break;
     case enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_FAILURE:

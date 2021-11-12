@@ -152,8 +152,10 @@ export const Routes = (props) => {
             >
               Delete
             </button>
-            <Link to="/routes">
-              <button type="button">Detail</button>
+            <Link to={`/routes/${route._id}/informations`}>
+              <Button type="button" onClick={() => {}}>
+                Detail
+              </Button>
             </Link>
           </td>
         </tr>
