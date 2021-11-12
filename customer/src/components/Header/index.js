@@ -40,7 +40,7 @@ export const HeaderCustomer = ({ props }) => {
             <div className="grid">
                 <div className="header">
                     <div className="header__logo ">
-                        <a href="" >5TING BUS</a>
+                        <a href="/" >5TING BUS</a>
                     </div>
                     <div className="header__nav">
                         <ul className="mynavbar">
