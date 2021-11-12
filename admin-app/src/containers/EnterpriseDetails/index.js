@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getEnterpriseDetailsById } from "../../actions";
+import {
+  getAllCities,
+  getAllEnterprises,
+  getEnterpriseDetailsById,
+} from "../../actions";
 import { Layout } from "../../components/Layout";
+import { ListRouteTable } from "../../components/table/ListRouteTable";
 import { Table } from "../../components/table/Table";
 
 /**
@@ -21,7 +26,12 @@ export const EnterpriseDetails = (props) => {
       },
     };
     dispatch(getEnterpriseDetailsById(payload));
+    dispatch(getAllEnterprises());
+    dispatch(getAllCities());
   }, []);
+
+  const state_enterprise = useSelector((state) => state.enterprise);
+  const state_city = useSelector((state) => state.city);
 
   const enterpriseDetails = useSelector(
     (state) => state.enterprise.enterpriseDetails
@@ -29,49 +39,49 @@ export const EnterpriseDetails = (props) => {
   const renderHead = (item, ind) => {
     return <th key={ind}>{item}</th>;
   };
-  const routes = {
-    header: [
-      "Nơi khởi hành",
-      "Nơi đến",
-      "Giờ khởi hành",
-      "Số giờ di chuyển",
-      "Tùy chọn",
-    ],
-    body: [],
-  };
+  // const routes = {
+  //   header: [
+  //     "Nơi khởi hành",
+  //     "Nơi đến",
+  //     "Giờ khởi hành",
+  //     "Số giờ di chuyển",
+  //     "Tùy chọn",
+  //   ],
+  //   body: [],
+  // };
 
-  const renderRoutes = (routes) => {
-    let myRoutes = [];
-    for (let route of routes) {
-      myRoutes.push(
-        <tr>
-          <td>{route.startLocation}</td>
-          <td>{route.endLocation}</td>
-          <td>{route.startTime}</td>
-          <td>{route.totalTime}</td>
-          <td>
-            <button
-              className="edit"
-              onClick={() => {
-                //handleModalShow("Edit", route);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className="delete"
-              onClick={() => {
-                //delRoute(route);
-              }}
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      );
-    }
-    return myRoutes;
-  };
+  // const renderRoutes = (routes) => {
+  //   let myRoutes = [];
+  //   for (let route of routes) {
+  //     myRoutes.push(
+  //       <tr>
+  //         <td>{route.startLocation}</td>
+  //         <td>{route.endLocation}</td>
+  //         <td>{route.startTime}</td>
+  //         <td>{route.totalTime}</td>
+  //         <td>
+  //           <button
+  //             className="edit"
+  //             onClick={() => {
+  //               //handleModalShow("Edit", route);
+  //             }}
+  //           >
+  //             Edit
+  //           </button>
+  //           <button
+  //             className="delete"
+  //             onClick={() => {
+  //               //delRoute(route);
+  //             }}
+  //           >
+  //             Delete
+  //           </button>
+  //         </td>
+  //       </tr>
+  //     );
+  //   }
+  //   return myRoutes;
+  // };
 
   const vehicles = {
     header: ["Biển số", "Số ghế", "Chất lượng", "Tùy chọn"],
@@ -164,7 +174,13 @@ export const EnterpriseDetails = (props) => {
         Clickme
       </Button> */}
 
-      <div className="routes">
+      <ListRouteTable
+        listRoute={enterpriseDetails}
+        listEnterprise={state_enterprise}
+        listCity={state_city}
+      ></ListRouteTable>
+
+      {/* <div className="routes">
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -182,7 +198,7 @@ export const EnterpriseDetails = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="card">
         <div className="card__header">
