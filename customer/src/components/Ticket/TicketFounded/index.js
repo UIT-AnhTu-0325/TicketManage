@@ -6,12 +6,13 @@ import { useSelector } from 'react-redux';
 * @function TicketFounded
 **/
 
-export const TicketFounded = ({ start, end, filter }) => {
+export const TicketFounded = ({ start, end, filter, date }) => {
     const trips = useSelector(state => state.trips);
     let result = [];
     trips.filter(element =>
         (start == "Mọi nơi" ? true : element.route.startLocation == start)
-        && (end == "Mọi nơi" ? true : element.route.endLocation == end))
+        && (end == "Mọi nơi" ? true : element.route.endLocation == end)
+        && (date == "" ? true : new Date(element.trip.startDate).toLocaleDateString('vi-VN').toString() == date))
         .map(element => {
             if (filter.enterprise.indexOf(element.enterprise.name) !== -1 || filter.enterprise.length == 0) {
                 if (element.ticket.price >= filter.price[0] && element.ticket.price <= filter.price[1])

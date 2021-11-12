@@ -13,6 +13,7 @@ import { useHistory } from 'react-router'
 import { updateProfile } from '../../actions/userActions'
 import ErrorMessage from '../../components/errorMessage'
 import Loading from '../../components/loading'
+import { MyTicket } from '../../components/ProfileComponents/MyTicket'
 /**
 * @author
 * @function ProfileSetting
@@ -128,6 +129,7 @@ export const ProfileSetting = (props) => {
             <Breadcrumb1></Breadcrumb1>
 
             <div className="profile__wrapper grid--larger-width">
+
                 <div className="profile__left-bar">
                     <div className="info">
 
@@ -262,16 +264,8 @@ export const ProfileSetting = (props) => {
                         </form>
 
                         <div className={tabState === 2 ? "content-setting-info active" : "content-setting-info"}>
-                            <div className="avatar">
-                                <div className="avatar__wrapper">
-                                    <img src={userImg} alt="" />
-                                    <i class="fas fa-pen-square"></i>
-                                </div>
-                            </div>
-                            <InputBox type="text" title="Họ tên" />
-
-                            <div className="btn-save clear">
-                                <button className="">Lưu thay đổi</button>
+                            <div className="my-ticket-tab">
+                             <MyTicket />
                             </div>
                         </div>
 
@@ -296,6 +290,53 @@ export const ProfileSetting = (props) => {
                             <img className="updating" src={updatingImg} alt="" />
                         </div>
                     </div>
+
+                </div>
+
+
+
+                <div className="profile__left-bar">
+                    <div className="info">
+
+                        <img src={userImg} alt="" id="avatarId" />
+
+                        <span className="name" id="nameId">Lam Hong</span>
+                        <span className="rank" id="">Hạng VIP</span>
+
+                        <div className="important-info">
+                            <div className="phone-number" id="phoneId">
+                                <i class='bx bx-phone'></i>
+                                <span>0396432406</span>
+                            </div>
+                            <div className="email" id="emailId">
+                                <i class="far fa-envelope"></i>
+                                <span>lamvanhong@gmail.com</span>
+                            </div>
+                        </div>
+
+                        <div className="manager-ticket">
+                            <div className="container quantity-ticket">
+                                <span className="quantity">
+                                    1
+                                </span>
+                                <div className="quantity-text">
+                                    Vé
+                                </div>
+                            </div>
+
+                            <div className="container discount-code">
+                                <span className="quantity">
+                                    3
+                                </span>
+                                <div className="quantity-text">
+                                    Mã giảm giá
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <img className="ads" src={adsImg} alt="" />
 
                 </div>
 

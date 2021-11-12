@@ -79,3 +79,27 @@ export const deleteEnterprise = (form) => {
     }
   };
 };
+
+export const getEnterpriseDetailsById = (payload) => {
+  return async (dispatch) => {
+    dispatch({
+      type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_REQUEST,
+    });
+
+    const { enterpriseId } = payload.params;
+    const res = await axios.get(`/enterprise/${enterpriseId}/informations`);
+    try {
+      if (res.status === 200) {
+        dispatch({
+          type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_SUCCESS,
+          payload: { enterpriseDetails: res.data },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: enterpriseConstants.GET_ENTERPRISES_DETAILS_BY_ID_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};

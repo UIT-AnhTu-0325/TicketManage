@@ -42,14 +42,14 @@ export const TicketPage = (props) => {
   return(
     <div>
          <LayoutCustomer></LayoutCustomer>
-         <FuncBar start={parse.startLocation} end={parse.endLocation}></FuncBar>
+         <FuncBar start={parse.startLocation} end={parse.endLocation} date={parse.date}></FuncBar>
          <div className="wrapper-ticket-main">
           <div className="ticket-main">
             <div className="ticket__filter">
                 <FilterTicket filter={filter} setFilter={reload}> </FilterTicket>
             </div>
             <div className="ticket__founded">
-              <TicketFounded start={parse.startLocation} end={parse.endLocation} filter={filter}></TicketFounded>
+              <TicketFounded start={parse.startLocation} end={parse.endLocation} date={parse.date} filter={filter}></TicketFounded>
             </div>
           </div>
          </div>

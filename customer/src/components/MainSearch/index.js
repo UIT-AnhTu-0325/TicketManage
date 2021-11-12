@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import travelImg from '../../asset/img/travel.png'
 import { useSelector } from 'react-redux'
 import { DatePicker } from '../DatePicker'
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 // Css
 import '../../asset/css/main-ticket.css'
 
@@ -13,6 +14,7 @@ import '../../asset/css/main-ticket.css'
 
 export const MainSearch = (props) => {
 
+    const startDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -42,8 +44,8 @@ export const MainSearch = (props) => {
         optionLists.forEach(element => {
             element.addEventListener("click", () => {
                 optionList.classList.remove("active");
-                if(selected2)
-                 selected2.innerHTML = element.querySelector("label").innerHTML;
+                if (selected2)
+                    selected2.innerHTML = element.querySelector("label").innerHTML;
             });
         });
 
@@ -61,13 +63,13 @@ export const MainSearch = (props) => {
 
         const optionLists1 = document.querySelectorAll(".option-item1");
 
-       
+
 
         optionLists1.forEach(element => {
             element.addEventListener("click", () => {
                 optionList1.classList.remove("active");
-                if(selected1)
-                selected1.innerHTML = element.querySelector("label").innerHTML;
+                if (selected1)
+                    selected1.innerHTML = element.querySelector("label").innerHTML;
             });
         });
 
@@ -99,90 +101,55 @@ export const MainSearch = (props) => {
                                         <p>Xe du lịch</p>
                                     </div>
                                 </div>
-
                                 <div className="main-func__site">
                                     <div className="main-func__site__choose input">
                                         <i className='bx bx-home-alt' ></i>
-                                        {/* <select name="startLocation" className="startLocation">
-                                        <option value="" disabled selected>Chọn nơi đi</option>
-                                        <option value="Mọi nơi" >Mọi nơi</option>
-                                        {startLocations.map((location) => (
-                                            <option value={location}>{location}</option>
-                                        ))}
-                                    </select> */}
-
-                                        <div className="select-start-location">
-                                            <div className="selected2" >
-                                                Chon noi di
-                                               
-                                            </div>
-
-                                            <div className="select-box" >
-                                                <div className="options-list">
-                                                    {startLocations.map((location) => (
-                                                        <div className="option-item" >
-                                                            <input type="radio" className="radio" id={location} name="startLocation" />
-                                                            <label htmlFor={location}>{location}</label>
-                                                        </div>
-                                                    ))}
-
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <select name="startLocation">
+                                            <option value="" disabled selected>Chọn nơi đi</option>
+                                            <option value="Mọi nơi" >Mọi nơi</option>
+                                            {startLocations.map((location) => (
+                                                <option value={location}>{location}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="main-func__site__choose input">
                                         <i className='bx bxs-edit-location' ></i>
-                                        {/* <select name="endLocation">
-                                    <option value="" disabled selected>Chọn nơi đến</option>
-                                        <option value="Mọi nơi">Mọi nơi</option>
-                                        {endLocations.map((location) => (
-                                            <option value={location}>{location}</option>
-                                        ))}
-                                    </select> */}
-
-                                        <div className="select-start-location">
-                                            <div className="selected1" >
-                                                Chọn nơi đến
-                                               
-                                            </div>
-
-                                            <div className="select-box" >
-                                                <div className="options-list1">
-                                                    {endLocations.map((location) => (
-                                                        <div className="option-item1" >
-                                                            <input type="radio" className="radio" id={location} name="endLocation" />
-                                                            <label htmlFor={location}>{location}</label>
-                                                        </div>
-                                                    ))}
-
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <select name="endLocation">
+                                            <option value="" disabled selected>Chọn nơi đến</option>
+                                            <option value="Mọi nơi">Mọi nơi</option>
+                                            {endLocations.map((location) => (
+                                                <option value={location}>{location}</option>
+                                            ))}
+                                        </select>
                                     </div>
 
                                     <div className="main-func__site__swap">
                                         <i className="fas fa-exchange-alt"></i>
                                     </div>
                                 </div>
-
                                 <div className="main-func__date">
                                     <div className="main-func__date__choose input">
-                                        <i className='bx bx-calendar-event' ></i>
-                                        <input type="text" placeholder="27/9/2021" />
-
-                                        <div className="wrapper-dialog">
-                                            <i className='btn-choose-down bx bxs-chevron-down' onClick={openModal} >
-                                            </i >
-                                            <div onClick={(e) => {
-                                                e.stopPropagation();
-                                            }}>
-                                                {showModal ? <DatePicker /> : null}
-                                            </div>
-
+                                        <DatePickerComponent
+                                            showClearButton={false}
+                                            width={23}
+                                            id="date"
+                                            min={startDate}
+                                            format="dd/MM/yyyy"
+                                            onChange={(e) => {
+                                                if (e.target.value == null) {
+                                                    document.getElementById("date-p").textContent = "Chọn ngày khởi hành";
+                                                } else {
+                                                    document.getElementById("date-p").textContent = e.target.value.toLocaleDateString('vi-VN').toString();
+                                                }
+                                            }}
+                                        ></DatePickerComponent>
+                                        <p id="date-p">Chọn ngày khởi hành</p>
+                                        <div className="clearBtn" onClick={() => {
+                                            document.getElementById("date").value = null;
+                                            document.getElementById("date-p").textContent = "Chọn ngày khởi hành";
+                                        }}>
+                                            X
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className="main-func__btn-search mybtn">

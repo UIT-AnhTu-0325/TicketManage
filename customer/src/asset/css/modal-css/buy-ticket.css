@@ -26,11 +26,12 @@
     right: 0;
     padding: 15px 30px;
     font-size: 2rem;
+    background-color: var(--primary-color);
+    border-bottom-left-radius: 15px;
 }
 .modal-ticket__main .close-btn:hover{
     background-color: var(--primary-color);
     color: var(--white-color);
-    border-bottom-left-radius: 10px;
     cursor: pointer;
 }
 .modal-ticket__main{
@@ -355,6 +356,89 @@
     border-radius: 10px;
 }
 
+
+/* SEAT CHOOSING */
+.services-list .seat {
+    display: flex;
+    margin-top: 50px;
+}
+.seat .seat-guide{
+    flex: 1;
+}
+
+.seat .seat-guide .note{
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+
+}
+.seat-guide .item {
+    display: flex;
+    margin-bottom: 17px;
+    align-items: center;
+}
+.seat-guide .item .circle{
+    width: 25px;
+    height: 25px;
+    border-radius: 30%;
+    background-color: #ccc;
+    margin-right: 13px;
+}
+.seat-guide .item .circle-choosed{
+    background-color: rgb(18, 127, 134);
+}
+
+.seat-guide .item .circle-ava{
+    background-color: rgb(145, 145, 145);
+}
+.seat-guide .item .circle-nonava{
+  
+    background-color: rgb(238, 238, 238);
+}
+.seat-choosing {
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.seat-choosing .pannel-wrapper {
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 230px;
+    min-height: 230px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: 2px solid #E6EAED;
+    display: grid;
+    justify-content: space-around;
+    
+}
+.seat-choosing .pannel-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
+.seat-choosing .item-seat {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(145, 145, 145);
+    color: white;
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+    margin: 10px 5px;
+    cursor: pointer;
+}
+
+.seat-choosing .item-seat.active{
+    background-color: rgb(18, 127, 134);
+}
+.seat-choosing .item-seat.non-ava{
+    background-color: rgb(238, 238, 238);
+    cursor: default;
+}
+
+.seat-choosing .item-seat i{
+    font-size: 2rem;
+}
 /* CONTENT SERVICES */
 .content__services{
     display: none;

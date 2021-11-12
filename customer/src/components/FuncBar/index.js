@@ -1,13 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 /**
 * @author
 * @function FuncBar
 **/
 
-export const FuncBar = ({ start, end }) => {
-
+export const FuncBar = ({ start, end, date }) => {
+    const startDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     const routes = useSelector((state) => state.routes);
     const startLocations = Array.from(new Set(routes.map((route) => route.startLocation)));
     const endLocations = Array.from(new Set(routes.map((route) => route.endLocation)));
@@ -27,7 +28,7 @@ export const FuncBar = ({ start, end }) => {
                         <div className="input">
                             <i className='custom-icon bx bx-home-alt'></i>
                             <select name="startLocation" className="custom-input">
-                            <option value="" disabled selected>Chọn nơi đi</option>
+                                <option value="" disabled selected>Chọn nơi đi</option>
                                 <option value="Mọi nơi" selected={start === "Mọi nơi" ? true : false}>Mọi nơi</option>
                                 {startLocations.map((location) => (
                                     <option value={location} selected={location === start ? true : false}>{location}</option>
@@ -37,19 +38,21 @@ export const FuncBar = ({ start, end }) => {
                         <div className="input">
                             <i className='custom-icon bx bxs-edit-location'></i>
                             <select name="endLocation" className="custom-input">
-                            <option value="" disabled selected>Chọn nơi đến</option>
+                                <option value="" disabled selected>Chọn nơi đến</option>
                                 <option value="Mọi nơi" selected={end === "Mọi nơi" ? true : false}>Mọi nơi</option>
                                 {endLocations.map((location) => (
                                     <option value={location} selected={location === end ? true : false}>{location}</option>
                                 ))}
                             </select>
                         </div>
-
-                        <div className="input">
-                            <i className='custom-default-icon bx bx-calendar-event'></i>
-                            <input className="custom-input" type="text" placeholder="27/9/2021" />
-                            <i className='custom-default-icon bx bxs-chevron-down'></i>
-                        </div>
+                        <div className="space"></div>
+                        <DatePickerComponent
+                            value={date}
+                            width={160}
+                            id="date"
+                            min={startDate}
+                            format="dd/MM/yyyy"
+                        ></DatePickerComponent>
 
                         <div className="mybtn">
                             <button className="fun-bar__btn-search link-in-btn" type="submit">

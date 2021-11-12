@@ -12,13 +12,21 @@ const USER_TICKETSchema = new mongoose.Schema(
             ref: 'Ticket',
             required: true
         },
-        time: {
-            type: Date,
+        seatNumber: {
+            type: Number,
             required: true
         },
-        status: {
+        getOn:{
             type: String,
             required: true
+        },
+        getOff:{
+            type: String,
+            required: true
+        },
+        canceled:{
+            type: Boolean,
+            default: false
         }
     },
     {

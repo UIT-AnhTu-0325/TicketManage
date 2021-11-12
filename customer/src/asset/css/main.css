@@ -7,13 +7,13 @@
     display: flex;
     align-items: center;
 }
-.header__logo h1{
+.header__logo a{
     font-size: 3rem;
     font-weight: 600;
     color: var(--primary-color);
     margin: 0 80px 0 40px;
     cursor: pointer;
-    
+    text-decoration: none;
 }
 
 .header__nav{
@@ -451,10 +451,10 @@
 
 }
 .auth__content__welcome h3{
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     font-weight: 500;
     margin-bottom: 15px;
-    color: var(--text-color);
+    color: var(--primary-color);
     text-transform: uppercase;
 }
 .auth__content__welcome p{
@@ -490,7 +490,7 @@
     margin-right: 10px;
 }
 .input-wrapper-auth input{
-    padding: 10px 14px;
+    padding: 8px 14px;
     border: none;
     outline: none;
     font-size: 1.5rem;
@@ -574,7 +574,10 @@
     text-transform: uppercase;
 }
 .auth__other-method{
-    margin-top: 40px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .auth__other-method p{
     font-size: 1.4rem;
@@ -598,6 +601,16 @@
     border-top: 2px solid var(--primary-color);
     display: block;
     margin-left: 20px;
+}
+.auth__other-method .method-btn{
+    display: flex;
+    justify-content: space-around;
+    width: 280px;
+    margin-top: 15px;
+}
+.auth__other-method .method-btn img{
+    width: 17%;
+    cursor: pointer;
 }
 
 
@@ -703,5 +716,36 @@
 }
 .fun-bar__btn-search .link-in-btn.in-func-bar{
     font-size: 1.6rem !important;
+}
+
+#date-p {
+    margin-left: 35px;
+    margin-right: 50px;
+    font-size: 2rem;
+    font-weight: 400;
+    opacity: 1;
+}
+
+.clearBtn {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.8rem;
+    cursor: pointer;
+    height: 28px;
+    width: 28px;
+    margin-top: 5px;
+    position: absolute;
+    left: 310px;
+}
+
+#date{
+    font-size: 2rem;
+}
+
+.space{
+    width: 30px;
 }
 

@@ -9,13 +9,16 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addEnterprise,
   deleteEnterprise,
   editEnterprise,
+  getAllCities,
   getAllEnterprises,
 } from "../../actions";
 import { Layout } from "../../components/Layout";
+import { Table } from "../../components/table/Table";
 import { Input } from "../../components/UI/Input";
 
 /**
@@ -25,23 +28,24 @@ import { Input } from "../../components/UI/Input";
 
 export const Enterprise = (props) => {
   const dispatch = useDispatch();
-  const [addShow, setAddShow] = useState(false);
-  const [editShow, setEditShow] = useState(false);
-  const [enterpriseID, setEnterpriseID] = useState("");
-  const [enterpriseName, setEnterpriseName] = useState("");
-  const [enterpriseAddress, setEnterpriseAddress] = useState("");
-  const enterprise = useSelector((state) => state.enterprise);
+  const initEnterprise = () => {
+    return {
+      _id: "",
+      name: "",
+      address: "",
+    };
+  };
+  const [enterprise, setEnterprise] = useState(initEnterprise);
+  const state_enterprise = useSelector((state) => state.enterprise);
+  const state_city = useSelector((state) => state.city);
+  const [modalShow, setModalShow] = useState(false);
+  const [modalFlag, setModalFlag] = useState("Add");
+  const [modalTitle, setModalTitle] = useState();
 
   useEffect(() => {
     dispatch(getAllEnterprises());
+    dispatch(getAllCities());
   }, []);
-
-  const createEnterPrisesAddressList = (options = []) => {
-    options.push({ value: 1, name: "Ho Chi Minh" });
-    options.push({ value: 2, name: "Da Lat" });
-    options.push({ value: 3, name: "Nha Trang" });
-    return options;
-  };
 
   const renderEnterprises = (enterprises) => {
     let myEnterprises = [];
@@ -49,11 +53,12 @@ export const Enterprise = (props) => {
       myEnterprises.push(
         <ListGroupItem className="d-flex justify-content-around">
           <strong> {enterprise.name}</strong>
+          <div>{enterprise.address}</div>
           <div className="ml-auto">
             <Button
               color="warning"
               onClick={() => {
-                handleEditShow(enterprise);
+                handleModalShow("Edit", enterprise);
               }}
             >
               Edit
@@ -68,59 +73,108 @@ export const Enterprise = (props) => {
     return myEnterprises;
   };
 
-  const handleAddShow = () => setAddShow(true);
-  const handleAddSave = () => {
-    const form = {
-      name: enterpriseName,
-      address: enterpriseAddress,
-    };
-
-    dispatch(addEnterprise(form));
-
-    setEnterpriseName("");
-    setEnterpriseAddress("");
-
-    setAddShow(false);
+  // dev hong
+  const renderEnterprises1 = (enterprises) => {
+    let myEnterprises = [];
+    for (let enterprise of enterprises) {
+      myEnterprises.push(
+        <tr>
+          <td>{enterprise.name}</td>
+          <td>{enterprise.address}</td>
+          <td>
+            <button
+              className="edit"
+              color="warning"
+              onClick={() => {
+                handleModalShow("Edit", enterprise);
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="delete"
+              color="danger"
+              onClick={() => delEnterprise(enterprise)}
+            >
+              Delete
+            </button>
+            <Link to={`enterprises/${enterprise._id}/informations`}>
+              <Button type="button" onClick={() => {}}>
+                Detail
+              </Button>
+            </Link>
+          </td>
+        </tr>
+      );
+    }
+    return myEnterprises;
   };
-  const handleAddClose = () => {
-    setAddShow(false);
-  };
 
-  const handleEditShow = (selectedEnt) => {
-    setEditShow(true);
-    setEnterpriseID(selectedEnt._id);
-    setEnterpriseName(selectedEnt.name);
-    setEnterpriseAddress(selectedEnt.address);
+  const handleModalShow = (iFlag, enterprise = []) => {
+    if (iFlag === "Add") {
+      setModalFlag("Add");
+      setModalTitle("Add Route");
+    } else {
+      setModalFlag("Edit");
+      setModalTitle("Edit Route");
+      setEnterprise(enterprise);
+    }
+    setModalShow(true);
   };
-  const handleEditSave = () => {
-    const form = {
-      _id: enterpriseID,
-      name: enterpriseName,
-      address: enterpriseAddress,
-    };
-    dispatch(editEnterprise(form));
-    setEditShow(false);
+  const handleModalSave = () => {
+    const form = enterprise;
+    if (modalFlag === "Add") {
+      dispatch(addEnterprise(form));
+    } else {
+      dispatch(editEnterprise(form));
+    }
+    setEnterprise(initEnterprise);
+    setModalShow(false);
   };
-  const handleEditClose = () => {
-    setEditShow(false);
+  const handleModalClose = () => {
+    setEnterprise(initEnterprise);
+    setModalShow(false);
   };
 
   const delEnterprise = (selectedEnt) => {
-    //setEnterpriseID(selectedEnt._id);
     const form = {
       _id: selectedEnt._id,
     };
     dispatch(deleteEnterprise(form));
   };
 
+  // hong front
+
+  const enterprises = {
+    header: ["Nhà xe", "Địa điểm", "Tùy chọn"],
+    body: [],
+  };
+
+  const renderOrderHead = (item, ind) => <th key={ind}>{item}</th>;
+  const renderOrderBody = (item, ind) => (
+    <tr key={ind}>
+      <td>{item.id}</td>
+      <td>{item.user}</td>
+      <td>{item.date}</td>
+      <td>{item.price}</td>
+      <td>{item.status}</td>
+    </tr>
+  );
+
   return (
     <Layout sidebar>
-      <Container>
+      <Container style={{ display: "none" }}>
         <Row>
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Enterprises</h3>
-              <button onClick={handleAddShow}>Add</button>
+              <button
+                onClick={() => {
+                  handleModalShow("Add");
+                }}
+              >
+                Add
+              </button>
             </div>
           </Col>
         </Row>
@@ -128,79 +182,72 @@ export const Enterprise = (props) => {
           <Col md={12}>
             <ul>
               <ListGroup className="mt-4">
-                {renderEnterprises(enterprise.enterprises)}
+                {renderEnterprises(state_enterprise.enterprises)}
               </ListGroup>
             </ul>
           </Col>
         </Row>
       </Container>
-      {/* SHOW MODAL FOR ADD - FIX THEM */}
-      <Modal show={addShow} onHide={handleAddClose}>
+
+      {/* SHOW MODAL - FIX THEM */}
+      <Modal show={modalShow} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>Add New Enterprise</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Input
-            value={enterpriseName}
+            value={enterprise.name}
             placeholder={`Enterprise Name`}
-            onChange={(e) => setEnterpriseName(e.target.value)}
+            onChange={(e) =>
+              setEnterprise({ ...enterprise, name: e.target.value })
+            }
           ></Input>
           <select
             className="form-control"
-            value={enterpriseAddress}
-            onChange={(e) => setEnterpriseAddress(e.target.value)}
+            value={enterprise.address}
+            onChange={(e) =>
+              setEnterprise({ ...enterprise, address: e.target.value })
+            }
           >
             <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
-              <option key={option.value} value={option.name}>
+            {state_city.cities.map((option) => (
+              <option key={option._id} value={option.name}>
                 {option.name}
               </option>
             ))}
           </select>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleAddClose}>
+          <Button variant="secondary" onClick={handleModalClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddSave}>
+          <Button variant="primary" onClick={handleModalSave}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* SHOW MODAL FOR EDIT - FIX THEM */}
-      <Modal show={editShow} onHide={handleEditClose}>
-        <Modal.Header>
-          <Modal.Title>Edit Enterprise</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={enterpriseName}
-            placeholder={`Enterprise Name`}
-            onChange={(e) => setEnterpriseName(e.target.value)}
-          ></Input>
-          <select
-            className="form-control"
-            value={enterpriseAddress}
-            onChange={(e) => setEnterpriseAddress(e.target.value)}
-          >
-            <option>Address</option>
-            {createEnterPrisesAddressList().map((option) => (
-              <option key={option.value} value={option.name}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleEditClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleEditSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <div className="enterprise">
+        <div className="row">
+          <div className="col-12">
+            <div className="card">
+              <div className="card__header">
+                <h3>Quản lý nhà xe</h3>
+              </div>
+              <div className="card__body">
+                <Table
+                  headData={enterprises.header}
+                  renderHead={(item, ind) => renderOrderHead(item, ind)}
+                  render2Body={() =>
+                    renderEnterprises1(state_enterprise.enterprises)
+                  }
+                />
+              </div>
+              <div className="card__footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };

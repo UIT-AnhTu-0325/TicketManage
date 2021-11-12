@@ -1,12 +1,14 @@
-import { BOOK_SUCCESS, BOOK_FAILURE} from "../constant/actionType";
+import { BOOK_SUCCESS, BOOK_FAILURE, BOOK_GET_ALL} from "../constant/actionType";
 
-export default (books = [], action) => {
+export default (userTicket = [], action) => {
     switch (action.type) {
         case BOOK_SUCCESS: 
-            return [...books,action.payload];
+            return [...userTicket,action.payload];
+        case BOOK_GET_ALL:
+            return action.payload;
         case BOOK_FAILURE:
             return action.payload;
         default:
-            return books;
+            return userTicket;
     }
 };
