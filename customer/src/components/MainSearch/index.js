@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import travelImg from '../../asset/img/travel.png'
 import { useSelector } from 'react-redux'
 import { DatePicker } from '../DatePicker'
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 // Css
 import '../../asset/css/main-ticket.css'
 
@@ -13,6 +14,7 @@ import '../../asset/css/main-ticket.css'
 
 export const MainSearch = (props) => {
 
+    const startDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -125,23 +127,29 @@ export const MainSearch = (props) => {
                                         <i className="fas fa-exchange-alt"></i>
                                     </div>
                                 </div>
-
                                 <div className="main-func__date">
                                     <div className="main-func__date__choose input">
-                                        <i className='bx bx-calendar-event' ></i>
-                                        <input type="text" placeholder="27/9/2021" />
-
-                                        <div className="wrapper-dialog">
-                                            <i className='btn-choose-down bx bxs-chevron-down' onClick={openModal} >
-                                            </i >
-                                            <div onClick={(e) => {
-                                                e.stopPropagation();
-                                            }}>
-                                                {showModal ? <DatePicker /> : null}
-                                            </div>
-
+                                        <DatePickerComponent
+                                            showClearButton={false}
+                                            width={23}
+                                            id="date"
+                                            min={startDate}
+                                            format="dd/MM/yyyy"
+                                            onChange={(e) => {
+                                                if (e.target.value == null) {
+                                                    document.getElementById("date-p").textContent = "Chọn ngày khởi hành";
+                                                } else {
+                                                    document.getElementById("date-p").textContent = e.target.value.toLocaleDateString('vi-VN').toString();
+                                                }
+                                            }}
+                                        ></DatePickerComponent>
+                                        <p id="date-p">Chọn ngày khởi hành</p>
+                                        <div className="clearBtn" onClick={() => {
+                                            document.getElementById("date").value = null;
+                                            document.getElementById("date-p").textContent = "Chọn ngày khởi hành";
+                                        }}>
+                                            X
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className="main-func__btn-search mybtn">

@@ -128,10 +128,10 @@ export const FilterTicket = ({ filter, setFilter }) => {
               <input
                 type="checkbox"
                 className="custom-checkbox-rectangle"
-                value="VinVeXe"
+                value="Liên Hưng"
                 onClick={handleEnterprise}
               />
-              <span>VinVeXe</span>
+              <span>Liên Hưng</span>
             </div>
             <div className="bus-house__item">
               <input
@@ -155,10 +155,10 @@ export const FilterTicket = ({ filter, setFilter }) => {
               <input
                 type="checkbox"
                 className="custom-checkbox-rectangle"
-                value="Tấn Hoài"
+                value="Phương Trang"
                 onClick={handleEnterprise}
               />
-              <span>Tấn Hoài</span>
+              <span>Phương Trang</span>
             </div>
           </div>
         </div>
