@@ -43,14 +43,19 @@ export const Analytics = (props) => {
         dispatch(getDateByMonthYear({ month, year }))
         //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
         //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
+        setTicketCurrentMonth(localStorage.getItem('totalTickets'))
+        setSaleCurrentMonth(localStorage.getItem('totalSales'))
+
     }, []);
 
     const filterShow = (e) => {
         e.preventDefault();
         dispatch(getDateByMonthYear({ month, year }))
         dispatch(getCurrentMonth({ month, year }))
-        setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-        setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
+        // setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
+        // setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
+        setTicketCurrentMonth(localStorage.getItem('totalTickets'))
+        setSaleCurrentMonth(localStorage.getItem('totalSales'))
     };
 
     return (

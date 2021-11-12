@@ -8,6 +8,9 @@ export const getCurrentMonth = (date) => async (dispatch) => {
         const { data } = await axios.post(`ticket/getMonthByMonthYear`, date)
         console.log(data);
         dispatch({ type: ANALYTICS_SUCCESS, payload: data })
+        localStorage.setItem("analytics", JSON.stringify(data))
+        localStorage.setItem("totalTickets", data.map(a => a.totalTicket));
+        localStorage.setItem("totalSales", data.map(a => a.totalSale));
     } catch (error) {
         dispatch({
             type: ANALYTICS_FAIL,
