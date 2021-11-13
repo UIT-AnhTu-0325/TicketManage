@@ -119,8 +119,6 @@ export const RouteDetails = (props) => {
     return myTrips;
   };
 
-  const createNewTrip = () => {};
-
   if (Object.keys(routeDetails).length === 0) {
     return null;
   }
