@@ -52,6 +52,9 @@ export const ListRouteTable = (props) => {
       dispatch(editRoute(form));
     }
     setRoute(initRoute);
+    if (props.type !== "Main") {
+      if (props.reLoadEnterpriseDetails());
+    }
     setModalShow(false);
   };
   const handleModalClose = () => {
@@ -64,6 +67,9 @@ export const ListRouteTable = (props) => {
       _id: selectedRot._id,
     };
     dispatch(deleteRoute(form));
+    if (props.type !== "Main") {
+      props.reLoadEnterpriseDetails();
+    }
   };
   const findEnterpriseName = (idEnterprise) => {
     for (let ent of listEnterprise.enterprises) {
@@ -219,7 +225,7 @@ export const ListRouteTable = (props) => {
               <Table
                 headData={routes.header}
                 renderHead={(item, ind) => renderHead(item, ind)}
-                render2Body={() => renderRoutes(listRoute.routes)}
+                render2Body={() => renderRoutes(listRoute)}
               />
             </div>
             <div className="card__footer"></div>

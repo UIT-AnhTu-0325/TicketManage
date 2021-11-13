@@ -20,12 +20,9 @@ import { Input } from "../UI/Input";
 
 export const ListEnterpriseTable = (props) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllEnterprises());
-    dispatch(getAllCities());
-  }, []);
-  const state_enterprise = useSelector((state) => state.enterprise);
-  const state_city = useSelector((state) => state.city);
+  const listEnterprise = props.listEnterprise;
+  const listCity = props.listCity;
+
   const initEnterprise = () => {
     return {
       _id: "",
@@ -137,7 +134,7 @@ export const ListEnterpriseTable = (props) => {
             }
           >
             <option>Address</option>
-            {state_city.cities.map((option) => (
+            {listCity.map((option) => (
               <option key={option._id} value={option.name}>
                 {option.name}
               </option>
@@ -171,9 +168,7 @@ export const ListEnterpriseTable = (props) => {
               <Table
                 headData={enterprises.header}
                 renderHead={(item, ind) => renderOrderHead(item, ind)}
-                render2Body={() =>
-                  renderEnterprises(state_enterprise.enterprises)
-                }
+                render2Body={() => renderEnterprises(listEnterprise)}
               />
             </div>
             <div className="card__footer"></div>

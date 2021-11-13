@@ -33,9 +33,10 @@ export const Routes = (props) => {
   return (
     <Layout sidebar>
       <ListRouteTable
-        listRoute={state_route}
+        listRoute={state_route.routes}
         listEnterprise={state_enterprise}
         listCity={state_city}
+        type="Main"
       ></ListRouteTable>
     </Layout>
   );
