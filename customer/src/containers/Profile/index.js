@@ -44,32 +44,47 @@ export const ProfileSetting = (props) => {
     const history = useHistory()
 
     useEffect(() => {
-        if (!userInfo || !myProfile) {
-            history.push("/")
-        }
-        else {
+        // if (!userInfo || !myProfile) {
+        //     history.push("/")
+        // }
+        // else {
 
-            document.getElementById("nameId").textContent = myProfile.profile.account.firstName;
-            document.getElementById("phoneId").textContent = myProfile.profile.account.contactNumber;
-            document.getElementById("emailId").textContent = myProfile.profile.account.email;
 
-            var image = new Image();
-            image.onload = function () {
-                document.getElementById('avatarId').setAttribute('src', this.src);
-            };
-            image.src = myProfile.profile.avatar;
+        console.log(localStorage.getItem('firstName'))
 
-            var setImage = new Image();
-            setImage.onload = function () {
-                document.getElementById('setAvatarId').setAttribute('src', this.src);
-            };
-            setImage.src = myProfile.profile.avatar;
+        // document.getElementById("nameId").textContent = myProfile.profile.account.firstName;
+        // document.getElementById("phoneId").textContent = myProfile.profile.account.contactNumber;
+        // document.getElementById("emailId").textContent = myProfile.profile.account.email;
 
-            setFirstName(myProfile.profile.account.firstName)
-            setContactNumber(myProfile.profile.account.contactNumber)
-            setEmail(myProfile.profile.account.email)
-            // setPic(userInfo.pic)
-        }
+        document.getElementById("nameId").textContent = localStorage.getItem('firstName')
+        document.getElementById("phoneId").textContent = localStorage.getItem('contact')
+        document.getElementById("emailId").textContent = localStorage.getItem('email')
+
+        var image = new Image();
+        image.onload = function () {
+            document.getElementById('avatarId').setAttribute('src', this.src);
+        };
+        //image.src = myProfile.profile.avatar;
+
+        image.src = localStorage.getItem('avatar')
+
+        var setImage = new Image();
+        setImage.onload = function () {
+            document.getElementById('setAvatarId').setAttribute('src', this.src);
+        };
+        //setImage.src = myProfile.profile.avatar;
+
+        setImage.src = localStorage.getItem('avatar')
+
+        // setFirstName(myProfile.profile.account.firstName)
+        // setContactNumber(myProfile.profile.account.contactNumber)
+        // setEmail(myProfile.profile.account.email)
+
+        setFirstName(localStorage.getItem('firstName'))
+        setContactNumber(localStorage.getItem('contact'))
+        setEmail(localStorage.getItem('email'))
+        // setPic(userInfo.pic)
+        // }
     }, [history, userInfo, myProfile])
 
 
@@ -105,7 +120,7 @@ export const ProfileSetting = (props) => {
 
     const update = (e) => {
         e.preventDefault();
-        dispatch(updateProfile({ firstName, email, contactNumber, avatar }));
+        dispatch(updateProfile({ firstName, email, contactNumber, avatar }, localStorage.getItem('token')));
     };
 
     return (
@@ -114,7 +129,51 @@ export const ProfileSetting = (props) => {
             <Breadcrumb1></Breadcrumb1>
 
             <div className="profile__wrapper grid--larger-width">
-                
+
+                <div className="profile__left-bar">
+                    <div className="info">
+
+                        <img alt="" id="avatarId" />
+
+                        <span className="name" id="nameId">Lam Hong</span>
+                        <span className="rank" id="">Hạng VIP</span>
+
+                        <div className="important-info">
+                            <div className="phone-number" id="phoneId">
+                                <i class='bx bx-phone'></i>
+                                <span>0396432406</span>
+                            </div>
+                            <div className="email" id="emailId">
+                                <i class="far fa-envelope"></i>
+                                <span>lamvanhong@gmail.com</span>
+                            </div>
+                        </div>
+
+                        <div className="manager-ticket">
+                            <div className="container quantity-ticket">
+                                <span className="quantity">
+                                    1
+                                </span>
+                                <div className="quantity-text">
+                                    Vé
+                                </div>
+                            </div>
+
+                            <div className="container discount-code">
+                                <span className="quantity">
+                                    3
+                                </span>
+                                <div className="quantity-text">
+                                    Mã giảm giá
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <img className="ads" src={adsImg} alt="" />
+
+                </div>
 
 
 
@@ -155,7 +214,7 @@ export const ProfileSetting = (props) => {
 
                                 <div className="avatar">
                                     <div className="avatar__wrapper">
-                                        <img src={userImg} alt="" id="setAvatarId" />
+                                        <img alt="" id="setAvatarId" />
                                         <i class="fas fa-pen-square"></i>
                                     </div>
                                 </div>

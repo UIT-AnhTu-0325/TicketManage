@@ -6,6 +6,29 @@ exports.getMonthByMonthYear = async (req, res) => {
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$lookup': {
+                        'from': 'trips',
+                        'localField': 'idTrip',
+                        'foreignField': '_id',
+                        'as': 'infor'
+                    }
+                }, {
+                    '$replaceRoot': {
+                        'newRoot': {
+                            '$mergeObjects': [
+                                {
+                                    '$arrayElemAt': [
+                                        '$infor', 0
+                                    ]
+                                }, '$$ROOT'
+                            ]
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'infor': 0
+                    }
+                }, {
                     '$unwind': {
                         'path': '$quantity'
                     }
@@ -15,12 +38,12 @@ exports.getMonthByMonthYear = async (req, res) => {
                     }
                 }, {
                     '$project': {
-                        'createdAt': '$createdAt',
+                        'date': '$startDate',
                         'month': {
-                            '$month': '$createdAt'
+                            '$month': '$startDate'
                         },
                         'year': {
-                            '$year': '$createdAt'
+                            '$year': '$startDate'
                         },
                         'quantity': '$quantity',
                         'price': '$price'
@@ -28,14 +51,17 @@ exports.getMonthByMonthYear = async (req, res) => {
                 }, {
                     '$match': {
                         'month': month,
-                        'year': year
+                        'year': year,
+                        'date': {
+                            '$lt': new Date()
+                        }
                     }
                 }, {
                     '$group': {
                         '_id': {
                             '$dateToString': {
                                 'format': '%Y-%m',
-                                'date': '$createdAt'
+                                'date': '$date'
                             }
                         },
                         'totalTicket': {
@@ -64,6 +90,29 @@ exports.getDateByMonthYear = async (req, res) => {
         const tickets = await Ticket.aggregate(
             [
                 {
+                    '$lookup': {
+                        'from': 'trips',
+                        'localField': 'idTrip',
+                        'foreignField': '_id',
+                        'as': 'infor'
+                    }
+                }, {
+                    '$replaceRoot': {
+                        'newRoot': {
+                            '$mergeObjects': [
+                                {
+                                    '$arrayElemAt': [
+                                        '$infor', 0
+                                    ]
+                                }, '$$ROOT'
+                            ]
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'infor': 0
+                    }
+                }, {
                     '$unwind': {
                         'path': '$quantity'
                     }
@@ -73,12 +122,12 @@ exports.getDateByMonthYear = async (req, res) => {
                     }
                 }, {
                     '$project': {
-                        'createdAt': '$createdAt',
+                        'date': '$startDate',
                         'month': {
-                            '$month': '$createdAt'
+                            '$month': '$startDate'
                         },
                         'year': {
-                            '$year': '$createdAt'
+                            '$year': '$startDate'
                         },
                         'quantity': '$quantity',
                         'price': '$price'
@@ -86,14 +135,17 @@ exports.getDateByMonthYear = async (req, res) => {
                 }, {
                     '$match': {
                         'month': month,
-                        'year': year
+                        'year': year,
+                        'date': {
+                            '$lt': new Date()
+                        }
                     }
                 }, {
                     '$group': {
                         '_id': {
                             '$dateToString': {
                                 'format': '%Y-%m-%d',
-                                'date': '$createdAt'
+                                'date': '$date'
                             }
                         },
                         'totalTicket': {

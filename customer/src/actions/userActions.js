@@ -25,6 +25,7 @@ export const login = (email, password) => async (dispatch) => {
         localStorage.setItem("contact", data.user.contactNumber);
         localStorage.setItem("lastName", data.user.lastName);
         localStorage.setItem("firstName", data.user.firstName);
+        localStorage.setItem("token", data.token);
 
     } catch (error) {
         dispatch({
@@ -94,6 +95,12 @@ export const readProfile = () => async (dispatch, getState) => {
 
         dispatch({ type: USER_PROFILE_SUCCESS, payload: data })
 
+        localStorage.setItem("myProfile", JSON.stringify(data))
+        localStorage.setItem("avatar", data.profile.avatar);
+        // localStorage.setItem("dob", data.user.email);
+        // localStorage.setItem("gender", data.user.contactNumber);
+
+
         //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
         //localStorage.setItem("myProfile", JSON.stringify(data))
 
@@ -108,7 +115,7 @@ export const readProfile = () => async (dispatch, getState) => {
     }
 }
 
-export const updateProfile = (user) => async (dispatch, getState) => {
+export const updateProfile = (user, token) => async (dispatch, getState) => {
     try {
         dispatch({ type: USER_UPDATE_REQUEST })
 
@@ -116,20 +123,26 @@ export const updateProfile = (user) => async (dispatch, getState) => {
             userLogin: { userInfo }
         } = getState()
 
-        const config = {
-            Headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        }
+        // const config = {
+        //     Headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${userInfo.token}`
+        //     }
+        // }
 
-        const { data } = await axios.put(`${url}/api/update-profile`, user, { 'headers': { 'Authorization': `Bearer ${userInfo.token}` } })
+        const { data } = await axios.put(`${url}/api/update-profile`, user, { 'headers': { 'Authorization': `Bearer ${token}` } })
 
         dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
 
         //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
-        //localStorage.setItem("myProfile", JSON.stringify(data))
+        localStorage.setItem("myProfile", JSON.stringify(data))
+        localStorage.setItem("avatar", data.profile.avatar);
+        localStorage.setItem("email", data.profile.account.email);
+        localStorage.setItem("contact", data.profile.account.contactNumber);
+        localStorage.setItem("firstName", data.profile.account.firstName);
+
+
 
     } catch (error) {
         dispatch({
