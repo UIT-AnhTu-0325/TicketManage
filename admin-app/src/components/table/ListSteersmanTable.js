@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Table } from "./Table";
 
 /**
@@ -7,7 +8,14 @@ import { Table } from "./Table";
  **/
 
 export const ListSteersmanTable = (props) => {
+  const dispatch = useDispatch();
   const listSteersman = props.listSteersman;
+  const listEnterprise = props.listEnterprise;
+  const initSteersman = () => {
+    return {
+      _id: "",
+    };
+  };
   const steersmans = {
     header: ["Họ tên", "Số điện thoại", "Vị trí", "Tùy chọn"],
     body: [],

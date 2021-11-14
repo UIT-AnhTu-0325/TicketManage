@@ -18,6 +18,7 @@ import { Customer } from "./pages/Customers";
 import "./asset/css/main.css";
 import { EnterpriseDetails } from "./containers/EnterpriseDetails";
 import { RouteDetails } from "./containers/RouteDetails";
+import { User } from "./containers/User";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
 
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
+        <Route path="/user" component={User} />
 
         {/* New Route */}
         <Route path="/" component={DashBoard} />

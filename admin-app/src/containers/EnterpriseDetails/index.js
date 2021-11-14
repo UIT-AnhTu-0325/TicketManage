@@ -69,6 +69,9 @@ export const EnterpriseDetails = (props) => {
 
       <ListVehicleTable
         listVehicle={enterpriseDetails.vehicles}
+        listEnterprise={state_enterprise}
+        type="Other"
+        reLoadEnterpriseDetails={loadEnterpriseDetails}
       ></ListVehicleTable>
       <ListSteersmanTable
         listSteersman={enterpriseDetails.steersmans}

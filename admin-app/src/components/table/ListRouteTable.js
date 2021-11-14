@@ -35,10 +35,10 @@ export const ListRouteTable = (props) => {
   const handleModalShow = (iFlag, route = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
-      setModalTitle("Add Route");
+      setModalTitle("Thêm tuyến đường");
     } else {
       setModalFlag("Edit");
-      setModalTitle("Edit Route");
+      setModalTitle("Sửa tuyến đường");
       setRoute(route);
     }
     setModalShow(true);
@@ -212,7 +212,7 @@ export const ListRouteTable = (props) => {
         <div className="col-12">
           <div className="card">
             <div className="card__header">
-              <h3>Quản lý tuyến đường</h3>
+              <h3>Các tuyến đường</h3>
               <Button
                 onClick={() => {
                   handleModalShow("Add");
