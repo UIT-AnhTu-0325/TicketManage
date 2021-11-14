@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Slider } from "@material-ui/core";
+import { useSelector } from "react-redux";
 /**
  * @author
  * @function FilterTicket
  **/
 
 export const FilterTicket = ({ filter, setFilter }) => {
-  let mark = false;
+  const trips = useSelector(state => state.trips);
+  const enterprises = Array.from(new Set(trips.map((trip) => trip.enterprise.name)));
   const [time, setTime] = useState({
     night: false,
     morning: false,
@@ -115,51 +117,15 @@ export const FilterTicket = ({ filter, setFilter }) => {
           </div>
 
           <div className="filter__bus-house filter-wrap-property">
-            <div className="bus-house__item">
+            {enterprises.map(enterprise => (<div className="bus-house__item">
               <input
                 type="checkbox"
                 className="custom-checkbox-rectangle"
-                value="Lâm Hồng"
+                value={enterprise}
                 onClick={handleEnterprise}
               />
-              <span>Lâm Hồng</span>
-            </div>
-            <div className="bus-house__item">
-              <input
-                type="checkbox"
-                className="custom-checkbox-rectangle"
-                value="Liên Hưng"
-                onClick={handleEnterprise}
-              />
-              <span>Liên Hưng</span>
-            </div>
-            <div className="bus-house__item">
-              <input
-                type="checkbox"
-                className="custom-checkbox-rectangle"
-                value="Anh Tú"
-                onClick={handleEnterprise}
-              />
-              <span>Anh Tú</span>
-            </div>
-            <div className="bus-house__item">
-              <input
-                type="checkbox"
-                className="custom-checkbox-rectangle"
-                value="Ngọc Phúc"
-                onClick={handleEnterprise}
-              />
-              <span>Ngọc Phúc</span>
-            </div>
-            <div className="bus-house__item">
-              <input
-                type="checkbox"
-                className="custom-checkbox-rectangle"
-                value="Phương Trang"
-                onClick={handleEnterprise}
-              />
-              <span>Phương Trang</span>
-            </div>
+              <span>{enterprise}</span>
+            </div>))}
           </div>
         </div>
         <div className="session-filter">

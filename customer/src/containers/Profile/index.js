@@ -90,11 +90,12 @@ export const ProfileSetting = (props) => {
 
 
 
-    const [tabState, setTabState] = useState(1);
+    const [tabState, setTabState] = useState(2);
     const changeTab = (index) => {
         setTabState(index);
         console.log(index);
     }
+
 
     const postDetails = (pics) => {
         if (pics.type === "image/jpeg" || pics.type === "image/png") {
@@ -203,7 +204,10 @@ export const ProfileSetting = (props) => {
                             <span>Cài đặt giao diện</span>
                         </div>
 
-                        <div className={tabState === 5 ? "tab setting-info active" : "tab setting-info"} onClick={() => changeTab(5)}>
+                        <div className={tabState === 5 ? "tab setting-info active" : "tab setting-info"} onClick={() => {
+                                    localStorage.clear();
+                                    history.push("/");
+                        }}>
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Đăng xuất</span>
                         </div>
