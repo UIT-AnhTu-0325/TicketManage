@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRoutes, getRouteDetailssById } from "../../actions";
+import {
+  getAllRoutes,
+  getRouteDetailssById,
+  getRouteDetailssByIdInEnterprise,
+} from "../../actions";
 import { addTrip } from "../../actions/trip.actions";
 import { getAllVehicles } from "../../actions/vehicle.actions";
 import { Layout } from "../../components/Layout";
 import { Table } from "../../components/table/Table";
 import { Input } from "../../components/UI/Input";
 
+import busImg from "../../asset/img/bus.png";
+import { SelectBox } from "../../components/UI/select/SelectBox";
+import { InputTitleLeft } from "../../components/UI/inputTitleLeft/InputTitleLeft";
 /**
  * @author
  * @function RouteDetails
@@ -21,6 +28,7 @@ export const RouteDetails = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
+  const [editData, setEditData] = useState(false);
 
   const routeDetails = useSelector((state) => state.route.routeDetails);
   // event handle
@@ -68,14 +76,16 @@ export const RouteDetails = (props) => {
   }, []);
 
   const loadRouteDetails = () => {
-    const { routeId } = props.match.params;
+    const { routeId, enterpriseId } = props.match.params;
     //console.log(props);
     const payload = {
       params: {
         routeId,
+        enterpriseId,
       },
     };
     dispatch(getRouteDetailssById(payload));
+    //dispatch(getRouteDetailssByIdInEnterprise(payload));
   };
 
   const renderHead = (item, ind) => {
@@ -102,7 +112,7 @@ export const RouteDetails = (props) => {
                 //handleModalShow("Edit", route);
               }}
             >
-              Edit
+              <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
@@ -110,7 +120,7 @@ export const RouteDetails = (props) => {
                 //delRoute(route);
               }}
             >
-              Delete
+              <i class="far fa-trash-alt"></i>
             </button>
           </td>
         </tr>
@@ -125,19 +135,26 @@ export const RouteDetails = (props) => {
 
   return (
     <Layout sidebar>
-      <h1>Nhà Xe: {routeDetails.route.idEnterprise.name}</h1>
-      <h2>Bắt đầu: {routeDetails.route.startLocation}</h2>
-      <h2>Kết thúc: {routeDetails.route.endLocation}</h2>
-      <h2>Thời gian xuất phát: {routeDetails.route.startTime}</h2>
-      <h2>Thời gian đi: {routeDetails.route.totalTime}</h2>
-      <Button
-        onClick={() => {
-          handleModalShow("Add");
-          //console.log(routeDetails);
-        }}
-      >
-        Thêm chuyến xe
-      </Button>
+      <div className="enterprise-info">
+        <div className="image image--big">
+          <img src={busImg} alt="" />
+        </div>
+        <div className="info">
+          <h1>Nhà Xe: {routeDetails.route.idEnterprise.name}</h1>
+          <p className="start-locate">
+            Bắt đầu: {routeDetails.route.startLocation}
+          </p>
+          <p className="end-locate">
+            Kết thúc: {routeDetails.route.endLocation}
+          </p>
+          <p className="start-time">
+            Thời gian xuất phát: {routeDetails.route.startTime}
+          </p>
+          <p className="end-time">
+            Thời gian đi: {routeDetails.route.totalTime}
+          </p>
+        </div>
+      </div>
 
       <div className="routes">
         <div className="row">
@@ -145,6 +162,15 @@ export const RouteDetails = (props) => {
             <div className="card">
               <div className="card__header">
                 <h3>Các chuyến xe</h3>
+
+                <button
+                  className="add-enterprise"
+                  onClick={() => {
+                    handleModalShow("Add");
+                  }}
+                >
+                  Thêm nhà xe
+                </button>
               </div>
               <div className="card__body">
                 <Table
@@ -159,7 +185,7 @@ export const RouteDetails = (props) => {
         </div>
       </div>
       {/* SHOW MODAL - FIX THEM */}
-      <Modal show={modalShow} onHide={handleModalClose}>
+      <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
@@ -205,6 +231,66 @@ export const RouteDetails = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* show modal new */}
+
+      <div
+        className={
+          modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
+        }
+      >
+        <div className={modalShow ? "add-modal active" : "add-modal"}>
+          <div className="add-modal__header">Thêm chuyến xe</div>
+
+          <div className="add-modal__body">
+            <div className="input-enterprise-name">
+              <InputTitleLeft
+                title="Bus"
+                value={trip.startDate}
+                placeholder={``}
+                onChange={(e) => {
+                  setTrip({ ...trip, startDate: e.target.value });
+                  if (e.target.value != "" && trip.idVehicle) {
+                    setEditData(true);
+                  } else {
+                    setEditData(false);
+                  }
+                }}
+              />
+
+              <SelectBox
+                value={trip.idVehicle}
+                onChange={(e) => {
+                  setTrip({ ...trip, idVehicle: e.target.value });
+                  if (e.target.value != "" && trip.startDate) {
+                    setEditData(true);
+                  } else {
+                    setEditData(false);
+                  }
+                }}
+                listCity={state_vehicle.vehicles}
+                title="Address"
+                routeDetail="true"
+              />
+            </div>
+          </div>
+
+          <div className="add-modal__footer">
+            <button className="btn-cancel" onClick={handleModalClose}>
+              {" "}
+              Hủy bỏ
+            </button>
+            <button
+              className="btn-save"
+              disabled={!editData}
+              onClick={handleModalSave}
+            >
+              {" "}
+              Lưu lại
+            </button>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };

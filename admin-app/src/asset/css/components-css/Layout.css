@@ -32,7 +32,34 @@
 
 .right-content {
   width: calc(100vw - 260px);
-  margin-top: 50px;
+  margin-top: 20px;
 
   margin-left: 230px !important;
+}
+
+/* detail */
+.enterprise-info {
+  display: flex;
+  align-items: center;
+}
+.enterprise-info .image {
+  width: 130px;
+  margin-left: 30px;
+}
+.enterprise-info .image--big {
+  width: 180px;
+}
+.enterprise-info img {
+  width: 100%;
+}
+
+.enterprise-info .info {
+  margin-left: 30px;
+}
+.enterprise-info .info h1 {
+  font-size: 2.3rem;
+}
+.enterprise-info .info p {
+  font-size: 1.6rem;
+  margin-top: 10px;
 }

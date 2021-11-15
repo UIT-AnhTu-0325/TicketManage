@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRoute, deleteRoute, editRoute } from "../../actions";
 import { Button, Modal } from "react-bootstrap";
 import { Input } from "../../components/UI/Input";
 import { Table } from "../../components/table/Table";
 import { Link } from "react-router-dom";
+import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
+import { SelectBox } from "../UI/select/SelectBox";
 
 /**
  * @author
@@ -31,6 +33,19 @@ export const ListRouteTable = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
+  const [editData, setEditData] = useState(false);
+
+  const checkEditData = () => {
+    if (
+      !route.startLocation ||
+      !route.endLocation ||
+      !route.idEnterprise ||
+      !route.startTime ||
+      !route.totalTime
+    ) {
+      setEditData(false);
+    } else setEditData(true);
+  };
 
   const handleModalShow = (iFlag, route = []) => {
     if (iFlag === "Add") {
@@ -56,10 +71,17 @@ export const ListRouteTable = (props) => {
       if (props.reLoadEnterpriseDetails());
     }
     setModalShow(false);
+    resetCss();
   };
   const handleModalClose = () => {
     setRoute(initRoute);
     setModalShow(false);
+    resetCss();
+  };
+
+  //front end
+  const resetCss = () => {
+    setEditData(false);
   };
 
   const delRoute = (selectedRot) => {
@@ -109,7 +131,7 @@ export const ListRouteTable = (props) => {
                 handleModalShow("Edit", route);
               }}
             >
-              Sửa
+              <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
@@ -117,12 +139,21 @@ export const ListRouteTable = (props) => {
                 delRoute(route);
               }}
             >
-              Xóa
+              <i class="far fa-trash-alt"></i>
             </button>
-            <Link to={`/routes/${route._id}/informations`}>
-              <Button type="button" onClick={() => {}}>
+            {/* /routes/${route._id}/informations */}
+            {/* /enterprises/${route.idEnterprise}/informations/routeinfo */}
+
+            <Link
+              to={
+                window.location.pathname === "/routes"
+                  ? `/routes/${route._id}/informations`
+                  : `/enterprises/${route.idEnterprise}/informations/${route._id}/routeinfo`
+              }
+            >
+              <button className="detail" onClick={() => {}}>
                 Chi tiết
-              </Button>
+              </button>
             </Link>
           </td>
         </tr>
@@ -141,7 +172,7 @@ export const ListRouteTable = (props) => {
 
   return (
     <div className="routes">
-      <Modal show={modalShow} onHide={handleModalClose}>
+      <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
@@ -149,9 +180,10 @@ export const ListRouteTable = (props) => {
           <select
             className="form-control"
             value={route.startLocation}
-            onChange={(e) =>
-              setRoute({ ...route, startLocation: e.target.value })
-            }
+            onChange={(e) => {
+              checkEditData();
+              setRoute({ ...route, startLocation: e.target.value });
+            }}
           >
             <option>Start Location</option>
             {listCity.cities.map((option) => (
@@ -163,9 +195,10 @@ export const ListRouteTable = (props) => {
           <select
             className="form-control"
             value={route.endLocation}
-            onChange={(e) =>
-              setRoute({ ...route, endLocation: e.target.value })
-            }
+            onChange={(e) => {
+              setRoute({ ...route, endLocation: e.target.value });
+              checkEditData();
+            }}
           >
             <option>End Location</option>
             {listCity.cities.map((option) => (
@@ -177,9 +210,10 @@ export const ListRouteTable = (props) => {
           <select
             className="form-control"
             value={route.idEnterprise}
-            onChange={(e) =>
-              setRoute({ ...route, idEnterprise: e.target.value })
-            }
+            onChange={(e) => {
+              checkEditData();
+              setRoute({ ...route, idEnterprise: e.target.value });
+            }}
           >
             <option>Enterprise</option>
             {listEnterprise.enterprises.map((option) => (
@@ -191,12 +225,18 @@ export const ListRouteTable = (props) => {
           <Input
             value={route.startTime}
             placeholder={`Start Time`}
-            onChange={(e) => setRoute({ ...route, startTime: e.target.value })}
+            onChange={(e) => {
+              checkEditData();
+              setRoute({ ...route, startTime: e.target.value });
+            }}
           ></Input>
           <Input
             value={route.totalTime}
             placeholder={`Total Time`}
-            onChange={(e) => setRoute({ ...route, totalTime: e.target.value })}
+            onChange={(e) => {
+              checkEditData();
+              setRoute({ ...route, totalTime: e.target.value });
+            }}
           ></Input>
         </Modal.Body>
         <Modal.Footer>
@@ -208,18 +248,101 @@ export const ListRouteTable = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/*   MODAL */}
+      <div
+        className={
+          modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
+        }
+      >
+        <div className={modalShow ? "add-modal active" : "add-modal"}>
+          <div className="add-modal__header">Add Router</div>
+
+          <div className="add-modal__body">
+            <div className="input-enterprise-name">
+              <SelectBox
+                value={route.startLocation}
+                onChange={(e) => {
+                  setRoute({ ...route, startLocation: e.target.value });
+                  checkEditData();
+                }}
+                listCity={listCity.cities}
+                title="Start Location"
+              />
+
+              <SelectBox
+                value={route.endLocation}
+                onChange={(e) => {
+                  setRoute({ ...route, endLocation: e.target.value });
+                  checkEditData();
+                }}
+                listCity={listCity.cities}
+                title="End Location"
+              />
+
+              <SelectBox
+                value={route.idEnterprise}
+                onChange={(e) => {
+                  setRoute({ ...route, idEnterprise: e.target.value });
+                  checkEditData();
+                }}
+                listCity={listEnterprise.enterprises}
+                title="Enterprise"
+              />
+
+              <InputTitleLeft
+                title="Start Time"
+                value={route.startTime}
+                placeholder={``}
+                onChange={(e) => {
+                  setRoute({ ...route, startTime: e.target.value });
+                  checkEditData();
+                }}
+              />
+
+              <InputTitleLeft
+                title="Total Time"
+                value={route.totalTime}
+                placeholder={``}
+                onChange={(e) => {
+                  setRoute({ ...route, totalTime: e.target.value });
+                  checkEditData();
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="add-modal__footer">
+            <button className="btn-cancel" onClick={handleModalClose}>
+              {" "}
+              Hủy bỏ
+            </button>
+            <button
+              className="btn-save"
+              disabled={!editData}
+              onClick={handleModalSave}
+            >
+              {" "}
+              Lưu lại
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* END: MODAL */}
+
       <div className="row">
         <div className="col-12">
           <div className="card">
             <div className="card__header">
               <h3>Quản lý tuyến đường</h3>
-              <Button
+              <button
                 onClick={() => {
                   handleModalShow("Add");
                 }}
               >
                 Thêm tuyến đường
-              </Button>
+              </button>
             </div>
             <div className="card__body">
               <Table

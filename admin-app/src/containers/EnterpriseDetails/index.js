@@ -12,6 +12,9 @@ import { ListSteersmanTable } from "../../components/table/ListSteersmanTable";
 import { ListVehicleTable } from "../../components/table/ListVehicleTable";
 import { Table } from "../../components/table/Table";
 
+import busImg from "../../asset/img/bus.png";
+import BreakCrumb from "../../components/breakcrumb/BreakCrumb";
+
 /**
  * @author
  * @function EnterpriseDetails
@@ -49,8 +52,15 @@ export const EnterpriseDetails = (props) => {
 
   return (
     <Layout sidebar>
-      <h1>Nhà xe {enterpriseDetails.enterprise.name}</h1>
-      <h2>Địa chỉ: {enterpriseDetails.enterprise.address}</h2>
+      <div className="enterprise-info">
+        <div className="image">
+          <img src={busImg} alt="" />
+        </div>
+        <div className="info">
+          <h1>Nhà xe {enterpriseDetails.enterprise.name}</h1>
+          <p>Địa chỉ: {enterpriseDetails.enterprise.address}</p>
+        </div>
+      </div>
       {/* <Button
         onClick={() => {
           console.log(enterpriseDetail.routes);
