@@ -21,7 +21,7 @@ export const ListUserTable = (props) => {
     };
   };
   const users = {
-    header: ["Họ tên", "Email", "Số điện thoại"],
+    header: ["Họ tên", "Giới tính", "Email", "Số điện thoại"],
     body: [],
   };
   const renderHead = (item, ind) => {
@@ -35,6 +35,7 @@ export const ListUserTable = (props) => {
           <td>
             {user.firstName} {user.lastName}
           </td>
+          <td>{user.profile[0].gender === "Male" ? "Nam" : "Nữ"}</td>
           <td>{user.email}</td>
           <td>{user.contactNumber}</td>
           <td>
