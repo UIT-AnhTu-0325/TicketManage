@@ -33,7 +33,7 @@ export const ListVehicleTable = (props) => {
                 //handleModalShow("Edit", route);
               }}
             >
-              Edit
+              <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
@@ -41,7 +41,7 @@ export const ListVehicleTable = (props) => {
                 //delRoute(route);
               }}
             >
-              Delete
+              <i class="far fa-trash-alt"></i>
             </button>
           </td>
         </tr>
