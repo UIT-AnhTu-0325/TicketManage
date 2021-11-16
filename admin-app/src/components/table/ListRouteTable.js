@@ -50,10 +50,10 @@ export const ListRouteTable = (props) => {
   const handleModalShow = (iFlag, route = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
-      setModalTitle("Add Route");
+      setModalTitle("Thêm tuyến đường");
     } else {
       setModalFlag("Edit");
-      setModalTitle("Edit Route");
+      setModalTitle("Sửa tuyến đường");
       setRoute(route);
     }
     setModalShow(true);

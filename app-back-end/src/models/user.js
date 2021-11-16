@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
       index: true,
       lowercase: true,
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "steersman"],
       default: "user",
     },
     profilePicture: { type: String },

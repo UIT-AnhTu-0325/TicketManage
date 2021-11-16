@@ -26,8 +26,8 @@
   },
   {
     "id": 5,
-    "display_name": "Orders",
-    "route": "/orders",
+    "display_name": "Người dùng",
+    "route": "/user",
     "icon": "bx bx-cart"
   },
   {

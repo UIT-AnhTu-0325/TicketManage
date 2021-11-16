@@ -146,7 +146,7 @@ export const ModalLogin = (props) => {
 
 
                         </div>
-                        <form onSubmit={onMyProfile}>
+                        <form action="/profile">
                             <div className="auth__content__login-btn">
                                 <button className="custom-btn">My profile</button>
                             </div>
