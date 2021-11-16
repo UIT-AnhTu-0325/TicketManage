@@ -30,7 +30,6 @@ export const TripDetails = (props) => {
   if (Object.keys(state_tripDetails).length === 0) {
     return null;
   }
-  console.log("ahihi");
 
   return (
     <Layout sidebar>
@@ -43,7 +42,8 @@ export const TripDetails = (props) => {
       <h2>Kết thúc: {state_tripDetails.trip.idRoute.endLocation}</h2>
       <h2>Ngày bắt đầu: {state_tripDetails.trip.startDate}</h2>
       <ListTicketOfTrip
-        tickets={state_tripDetails.tickets[0]}
+        tickets={state_tripDetails.tickets}
+        listTicket={state_tripDetails.listTicket}
       ></ListTicketOfTrip>
     </Layout>
   );

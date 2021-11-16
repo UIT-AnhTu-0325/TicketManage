@@ -3,6 +3,8 @@ const Vehicle = require("../models/vehicle");
 const Route = require("../models/route");
 const Enterprise = require("../models/enterprise");
 const Ticket = require("../models/ticket");
+const UserTicket = require("../models/user_ticket");
+const OfflineTicket = require("../models/offline_phone_ticket");
 exports.getAll = async (req, res) => {
   try {
     const trips = await Trip.find();
@@ -98,10 +100,39 @@ exports.getInforbyID = async (req, res) => {
     const trip = await Trip.findById(req.params.id)
       .populate({ path: "idVehicle", populate: "idEnterprise" })
       .populate("idRoute");
-    const tickets = await Ticket.find({ idTrip: trip._id });
+    const tickets = await Ticket.findOne({ idTrip: trip._id });
+    var listTicket = [];
+    for (var i = 0; i < tickets.quantity.length; i++) {
+      if (tickets.quantity[i] === true) {
+        let onlTi = await UserTicket.findOne({
+          idTicket: tickets._id,
+          canceled: false,
+          seatNumber: i + 1,
+        }).populate("idUser");
+        let offTi = await OfflineTicket.findOne({ idTicket: tickets._id });
+        if (onlTi) {
+          let temp = JSON.parse(JSON.stringify(onlTi));
+          temp.type = "OnlineTicket";
+          listTicket.push(temp);
+        } else if (offTi) {
+          let temp = JSON.parse(JSON.stringify(offTi));
+          temp.type = "OfflineTicket";
+          listTicket.push(temp);
+        } else {
+          const unknow = {
+            idTicket: tickets._id,
+            seatNumber: i + 1,
+            Name: "Unknow",
+            type: "UnknowTicket",
+          };
+          listTicket.push(unknow);
+        }
+      }
+    }
     res.status(200).json({
       trip: trip,
       tickets: tickets,
+      listTicket: listTicket,
     });
   } catch (err) {
     console.log(err);
