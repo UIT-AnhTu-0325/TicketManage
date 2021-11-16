@@ -26,7 +26,7 @@ export const Sidebar = (props) => {
             <SidebarItem
               title={item.display_name}
               icon={item.icon}
-              active={item.route === window.location.pathname}
+              active={window.location.pathname.includes(item.route)}
             />
           </NavLink>
         );

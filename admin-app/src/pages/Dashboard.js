@@ -146,7 +146,7 @@ export const DashBoard = (props) => {
   );
   return (
     <div>
-      <Layout sidebar>
+      <Layout sidebar dashboard="true">
         <h2 className="page-header">Dashboard</h2>
 
         <div className="row">

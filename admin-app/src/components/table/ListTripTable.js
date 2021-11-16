@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addTrip } from "../../actions/trip.actions";
 import { Input } from "../UI/Input";
+import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
+import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
 
 /**
@@ -51,6 +53,7 @@ export const ListTripTable = (props) => {
     setTrip(initTrip);
     setModalShow(false);
   };
+  const [editData, setEditData] = useState(false);
   const handleModalClose = () => {
     setTrip(initTrip);
     setModalShow(false);
@@ -79,7 +82,7 @@ export const ListTripTable = (props) => {
                 //handleModalShow("Edit", route);
               }}
             >
-              Edit
+              <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
@@ -87,7 +90,7 @@ export const ListTripTable = (props) => {
                 //delRoute(route);
               }}
             >
-              Delete
+              <i class="far fa-trash-alt"></i>
             </button>
             <Link to={`/trips/${trip._id}/informations`}>
               <button type="button" onClick={() => {}}>
@@ -109,13 +112,14 @@ export const ListTripTable = (props) => {
             <div className="card">
               <div className="card__header">
                 <h3>Các chuyến xe</h3>
-                <Button
+                <button
+                  className="add-enterprise"
                   onClick={() => {
                     handleModalShow("Add");
                   }}
                 >
                   Thêm chuyến xe
-                </Button>
+                </button>
               </div>
               <div className="card__body">
                 <Table
@@ -129,52 +133,63 @@ export const ListTripTable = (props) => {
           </div>
         </div>
       </div>
-      <Modal show={modalShow} onHide={handleModalClose}>
-        <Modal.Header>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* <select
-            className="form-control"
-            value={trip.idRoute}
-            onChange={(e) => setTrip({ ...trip, idRoute: e.target.value })}
-          >
-            <option>Tuyến đường</option>
-            {state_route.routes.map((option) => (
-              <option key={option._id} value={option._id}>
-                {option.startLocation} - {option.endLocation}
-              </option>
-            ))}
-          </select> */}
+      <div
+        className={
+          modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
+        }
+      >
+        <div className={modalShow ? "add-modal active" : "add-modal"}>
+          <div className="add-modal__header">Thêm chuyến xe</div>
 
-          <select
-            className="form-control"
-            value={trip.idVehicle}
-            onChange={(e) => setTrip({ ...trip, idVehicle: e.target.value })}
-          >
-            <option>Xe</option>
-            {listVehicle.map((option) => (
-              <option key={option._id} value={option._id}>
-                {option.quality} - {option.totalSeat}
-              </option>
-            ))}
-          </select>
+          <div className="add-modal__body">
+            <div className="input-enterprise-name">
+              <InputTitleLeft
+                title="Bus"
+                value={trip.startDate}
+                placeholder={``}
+                onChange={(e) => {
+                  setTrip({ ...trip, startDate: e.target.value });
+                  if (e.target.value != "" && trip.idVehicle) {
+                    setEditData(true);
+                  } else {
+                    setEditData(false);
+                  }
+                }}
+              />
 
-          <Input
-            value={trip.startDate}
-            placeholder={`Start Time`}
-            onChange={(e) => setTrip({ ...trip, startDate: e.target.value })}
-          ></Input>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleModalSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+              <SelectBox
+                value={trip.idVehicle}
+                onChange={(e) => {
+                  setTrip({ ...trip, idVehicle: e.target.value });
+                  if (e.target.value != "" && trip.startDate) {
+                    setEditData(true);
+                  } else {
+                    setEditData(false);
+                  }
+                }}
+                listCity={listVehicle}
+                title="Address"
+                routeDetail="true"
+              />
+            </div>
+          </div>
+
+          <div className="add-modal__footer">
+            <button className="btn-cancel" onClick={handleModalClose}>
+              {" "}
+              Hủy bỏ
+            </button>
+            <button
+              className="btn-save"
+              disabled={!editData}
+              onClick={handleModalSave}
+            >
+              {" "}
+              Lưu lại
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

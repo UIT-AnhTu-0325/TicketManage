@@ -11,6 +11,7 @@
 
   --main-bg-light: #ffffff;
   --second-bg-light: #fafafb;
+  --third-bg-light: #f8f8f8;
   --text-color-light: #455560;
   --box-shadow-light: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
@@ -34,12 +35,29 @@
   --main-color-orange: #d68102;
   --second-color-orange: #fca11a;
 
+  --white-color: #fff;
+  --border-input-color: rgb(235, 235, 235);
+  --border-input-color-focus: rgb(187, 187, 187);
+
   --sidebar-width: 100px;
   --border-radius: 15px;
+  --border-radius-small: 5px;
   --border-radius-btn-td: 8px;
   --topnav-height: 80px;
 
+  --color-wrapper-modal: rgba(0, 0, 0, 0.4);
+
   --transition-cubic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+* {
+  /* disable user selection */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
 }
 
 html {
