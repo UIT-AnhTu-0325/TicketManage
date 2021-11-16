@@ -131,51 +131,7 @@ export const ProfileSetting = (props) => {
 
             <div className="profile__wrapper grid--larger-width">
 
-                <div className="profile__left-bar">
-                    <div className="info">
-
-                        <img alt="" id="avatarId" />
-
-                        <span className="name" id="nameId">Lam Hong</span>
-                        <span className="rank" id="">Hạng VIP</span>
-
-                        <div className="important-info">
-                            <div className="phone-number" id="phoneId">
-                                <i class='bx bx-phone'></i>
-                                <span>0396432406</span>
-                            </div>
-                            <div className="email" id="emailId">
-                                <i class="far fa-envelope"></i>
-                                <span>lamvanhong@gmail.com</span>
-                            </div>
-                        </div>
-
-                        <div className="manager-ticket">
-                            <div className="container quantity-ticket">
-                                <span className="quantity">
-                                    1
-                                </span>
-                                <div className="quantity-text">
-                                    Vé
-                                </div>
-                            </div>
-
-                            <div className="container discount-code">
-                                <span className="quantity">
-                                    3
-                                </span>
-                                <div className="quantity-text">
-                                    Mã giảm giá
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <img className="ads" src={adsImg} alt="" />
-
-                </div>
-
+               
 
 
                 <div className="profile__main-content">

@@ -158,7 +158,7 @@ export const ModalBuyTicket = (props) => {
 
 
 
-                            <div className={
+                            {/*                             <div className={
                                 processStatus === 3 ? "item process active current info-customer"
                                     : (processStatus > 3 ? "item process active info-customer" : "item process info-customer")
                             }
@@ -178,7 +178,7 @@ export const ModalBuyTicket = (props) => {
                                 }>
                                 <p>3</p>
                                 <span>Dịch vụ</span>
-                            </div>
+                            </div> */}
 
 
                             <div className=
@@ -187,22 +187,26 @@ export const ModalBuyTicket = (props) => {
                                         : (processStatus > 4 ? "item process active info-customer" : "item process info-customer")
                                 }
                                 onClick={() => {
-                                    if (processHandled < 3) {
-                                        return;
-                                    }
-                                    clickOpen();
-                                    setProcessState(4);
-                                    if (processStatus > 4) {
-                                        setPreStatus(2)
+                                    if (itemChoosing.length === 0) {
+                                        alert("Vui lòng chọn ghế ngồi");
                                     } else {
-                                        setPreStatus(1)
-                                    }
-                                    if (4 > processHandled) {
-                                        setProcessHandled(4);
+                                        if (processHandled < 2) {
+                                            return;
+                                        }
+                                        clickOpen();
+                                        setProcessState(4);
+                                        if (processStatus > 4) {
+                                            setPreStatus(2)
+                                        } else {
+                                            setPreStatus(1)
+                                        }
+                                        if (4 > processHandled) {
+                                            setProcessHandled(4);
+                                        }
                                     }
                                 }
                                 }>
-                                <p>4</p>
+                                <p>3</p>
                                 <span>Điểm đón, trả</span>
                             </div>
                             <div className=
@@ -211,15 +215,19 @@ export const ModalBuyTicket = (props) => {
                                         : "item process info-customer"
                                 }
                                 onClick={() => {
-                                    if (processHandled < 4) {
-                                        return;
-                                    }
-                                    setProcessState(5); setPreStatus(1); clickOpen();
-                                    if (processStatus > processHandled) {
-                                        setProcessHandled(processStatus);
+                                    if (on === "" || off === "") {
+                                        alert("Vui lòng chọn điểm đón trả");
+                                    } else {
+                                        if (processHandled < 3) {
+                                            return;
+                                        }
+                                        setProcessState(5); setPreStatus(1); clickOpen();
+                                        if (processStatus > processHandled) {
+                                            setProcessHandled(processStatus);
+                                        }
                                     }
                                 }}>
-                                <p>5</p>
+                                <p>4</p>
                                 <span>Xác nhận</span>
                             </div>
                         </div>
@@ -287,7 +295,7 @@ export const ModalBuyTicket = (props) => {
                             </LeftPannel>
                             <div className="customer__right-panel">
                                 <div className="right-panel__header">
-                                    Chọn dịch vụ bên dưới
+                                    Chọn số ghế bên dưới
                                 </div>
                                 <div className="services-list">
                                     <div className="seat">
@@ -332,7 +340,7 @@ export const ModalBuyTicket = (props) => {
                                                 alert("Vui lòng chọn ghế ngồi");
                                             } else {
                                                 clickOpen();
-                                                setProcessState(3);
+                                                setProcessState(4);
                                                 if (processStatus > 3) {
                                                     setPreStatus(2)
                                                 } else {
@@ -349,7 +357,7 @@ export const ModalBuyTicket = (props) => {
                             </div>
                         </div>
 
-                        <div className={processStatus === 3 ?
+                        {/* <div className={processStatus === 3 ?
 
                             (prevStatus === 1 ? "content__services active slide-left" : "content__services active slide-right")
                             : "content__services"
@@ -401,7 +409,7 @@ export const ModalBuyTicket = (props) => {
                                 >Tiếp tục</button>
                             </div>
                         </div>
-
+ */}
 
 
 
@@ -457,21 +465,21 @@ export const ModalBuyTicket = (props) => {
                                 </div>
                                 <button className="custom-btn"
                                     onClick={() => {
-                                        if(on === "" || off === ""){
+                                        if (on === "" || off === "") {
                                             alert("Vui lòng chọn điểm đón trả");
-                                        } else{
-                                            clickOpen();
-                                        setProcessState(5);
-                                        if (processStatus > 4) {
-                                            setPreStatus(2)
                                         } else {
-                                            setPreStatus(1)
+                                            clickOpen();
+                                            setProcessState(5);
+                                            if (processStatus > 4) {
+                                                setPreStatus(2)
+                                            } else {
+                                                setPreStatus(1)
+                                            }
+                                            if (4 > processHandled) {
+                                                setProcessHandled(4);
+                                            }
                                         }
-                                        if (4 > processHandled) {
-                                            setProcessHandled(4);
-                                        }
-                                        }
-                    
+
                                     }}
 
                                 >Tiếp tục</button>
@@ -492,20 +500,40 @@ export const ModalBuyTicket = (props) => {
                                 <div className="right-panel__header">
                                     Kiểm tra thông tin và xác nhận
                                 </div>
-                                <form action="" className="form-info-input">
-
-                                </form>
+                                <div className="main">
+                                    <div className="bus-branch">
+                                        <span> Họ tên</span>  <spanc className="branch-name">{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Số điện thoại</span>  <spanc className="branch-name">{localStorage.getItem('contact')}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Email</span>  <spanc className="branch-name">{localStorage.getItem('email')}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Số ghế</span>  <spanc className="branch-name">{itemChoosing.map((item, index) => index + 1 == itemChoosing.length ? item : item + ", ")}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Điểm đón</span> <spanc className="branch-name">{on}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Điểm trả</span>  <spanc className="branch-name">{off}</spanc>
+                                    </div>
+                                    <div className="bus-branch">
+                                        <span> Tổng tiền</span>  <spanc className="branch-name">{(itemChoosing.length * props.info.ticket.price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} đ</spanc>
+                                    </div>
+                                </div>
                                 <button className="custom-btn"
                                     onClick={() => {
-                                        if(window.confirm("Xác nhận đặt vé")){
+                                        if (window.confirm("Xác nhận đặt vé")) {
                                             itemChoosing.forEach(item => {
-                                                props.info.ticket.quantity[item-1] = true;
-                                                dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, getOn: on, getOff: off, seatNumber: item},
-                                                { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }));
+                                                props.info.ticket.quantity[item - 1] = true;
+                                                dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, getOn: on, getOff: off, seatNumber: item },
+                                                    { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }));
                                             })
                                             alert('Đặt vé thành công');
                                             window.location.reload();
-                                        }  
+                                        }
                                     }}
 
                                 >Hoàn tất</button>

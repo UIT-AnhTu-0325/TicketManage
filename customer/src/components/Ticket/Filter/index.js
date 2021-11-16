@@ -146,7 +146,7 @@ export const FilterTicket = ({ filter, setFilter }) => {
             />
           </div>
         </div>
-        <div className="session-filter">
+{/*         <div className="session-filter">
           <div className="session-filter__title">
             <i class="fas fa-toolbox"></i>
             <span>Chọn dịch vụ</span>
@@ -170,7 +170,7 @@ export const FilterTicket = ({ filter, setFilter }) => {
               <span>Ghế Vip</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
