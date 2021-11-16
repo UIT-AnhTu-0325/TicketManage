@@ -36,9 +36,14 @@ function App() {
       <Switch>
         <Route path="/home" exact component={Home} />
         <Route
+          path="/enterprises/:enterpriseId/informations/:routeId/routeinfo"
+          component={RouteDetails}
+        ></Route>
+        <Route
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
         ></Route>
+
         <Route
           path="/routes/:routeId/informations"
           component={RouteDetails}

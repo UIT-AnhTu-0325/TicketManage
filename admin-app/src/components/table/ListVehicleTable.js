@@ -96,7 +96,7 @@ export const ListVehicleTable = (props) => {
                 handleModalShow("Edit", vehicle);
               }}
             >
-              Sửa
+              <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
@@ -104,7 +104,7 @@ export const ListVehicleTable = (props) => {
                 delVehicle(vehicle);
               }}
             >
-              Xóa
+              <i class="far fa-trash-alt"></i>
             </button>
           </td>
         </tr>

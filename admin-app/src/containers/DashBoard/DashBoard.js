@@ -1,18 +1,15 @@
-import React from 'react'
-import { Layout } from '../../components/Layout'
+import React from "react";
+import { Layout } from "../../components/Layout";
 
 /**
-* @author
-* @function DashBoard
-**/
+ * @author
+ * @function DashBoard
+ **/
 
 export const DashBoard = (props) => {
-  return(
+  return (
     <div>
-        <Layout sidebar>
-
-        </Layout>
+      <Layout sidebar dashboard="true"></Layout>
     </div>
-   )
-
- }
+  );
+};

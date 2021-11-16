@@ -5,6 +5,10 @@ import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 
+import rightImg from "../../asset/img/report.png";
+
+// css
+import "./signin.css";
 /**
  * @author
  * @function Signin
@@ -17,8 +21,6 @@ export const Signin = (props) => {
   const auth = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-
-
 
   const userLogin = (e) => {
     e.preventDefault();
@@ -35,46 +37,165 @@ export const Signin = (props) => {
   }
 
   return (
-    <Layout>
-      <Container>
-        <Row style={{ marginTop: "50px" }}>
-          <Col md={{ span: 6, offset: 3 }}>
+    <div className="sigin-wrapper">
+      <div className="row">
+        {/* SIGN IN  */}
+        <div className="col signin-left">
+          <div className="signin__header">
+            <div className="logo-name">
+              <i class="fas fa-user-shield"></i>
+              <span>ADMIN</span>
+            </div>
+            <div className="signin">Log In</div>
+            <div className="signup">Sign up</div>
+          </div>
+
+          <div className="signin__body">
             <form onSubmit={userLogin}>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">
-                  Email address
-                </label>
+              <div className="signin-title">Sign In</div>
+              <div className="signin-desc">
+                Sign in to your admin application
+              </div>
+              <div className="input">
+                <i class="far fa-envelope"></i>
                 <input
                   type="email"
-                  class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
+                  placeholder="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <div id="emailHelp" class="form-text">
-                  We'll never share your email with anyone else.
-                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">
-                  Password
-                </label>
+              <div className="input">
+                <i class="fas fa-lock"></i>
                 <input
                   type="password"
-                  class="form-control"
                   id="exampleInputPassword1"
+                  placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button type="submit" class="btn btn-primary">
-                Submit
-              </button>
+              <button type="submit">Sign in</button>
             </form>
-          </Col>
-        </Row>
-      </Container>
-    </Layout>
+          </div>
+        </div>
+
+        {/* SIGN UP  */}
+        <div className="col signup-left">
+          <div className="signin__header">
+            <div className="logo-name">
+              <i class="fas fa-user-shield"></i>
+              <span>ADMIN</span>
+            </div>
+            <div className="signin">Log In</div>
+            <div className="signup">Sign up</div>
+          </div>
+
+          <div className="signin__body">
+            <form onSubmit={userLogin}>
+              <div className="signin-title">Sign In</div>
+              <div className="signin-desc">
+                Sign in to your admin application
+              </div>
+              <div className="input">
+                <i class="far fa-envelope"></i>
+                <input
+                  type="email"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="input">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="exampleInputPassword1"
+                  placeholder="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+              <div className="input">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="exampleInputPassword1"
+                  placeholder="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+              <div className="input">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="exampleInputPassword1"
+                  placeholder="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <button type="submit">Sign in</button>
+            </form>
+          </div>
+        </div>
+
+        {/* IMAGE RIGHT */}
+        <div className="col-6">
+          <div className="image-right">
+            <img src={rightImg} alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    //   <Layout>
+    //     <Container>
+    //       <Row style={{ marginTop: "50px" }}>
+    //         <Col md={{ span: 6, offset: 3 }}>
+    //           <form onSubmit={userLogin}>
+    //             <div class="mb-3">
+    //               <label for="exampleInputEmail1" class="form-label">
+    //                 Email address
+    //               </label>
+    //               <input
+    //                 type="email"
+    //                 class="form-control"
+    //                 id="exampleInputEmail1"
+    //                 aria-describedby="emailHelp"
+    //                 value={email}
+    //                 onChange={(e) => setEmail(e.target.value)}
+    //               />
+    //               <div id="emailHelp" class="form-text">
+    //                 We'll never share your email with anyone else.
+    //               </div>
+    //             </div>
+    //             <div class="mb-3">
+    //               <label for="exampleInputPassword1" class="form-label">
+    //                 Password
+    //               </label>
+    //               <input
+    //                 type="password"
+    //                 class="form-control"
+    //                 id="exampleInputPassword1"
+    //                 value={password}
+    //                 onChange={(e) => setPassword(e.target.value)}
+    //               />
+    //             </div>
+    //             <button type="submit" class="btn btn-primary">
+    //               Submit
+    //             </button>
+    //           </form>
+    //         </Col>
+    //       </Row>
+    //     </Container>
+    //   </Layout>
   );
 };
