@@ -8,6 +8,7 @@ import pickupPointImg from '../../../asset/img/pickup-point.png'
 import { LeftPannel } from '../ModalBuyTicket/Components/LeftPannel'
 import { update } from '../../../action/user_ticket';
 import { fetch } from '../../../action/location';
+import { getAll } from '../../../api/user_ticket';
 
 /**
 * @author
@@ -293,7 +294,7 @@ export const ModalUpdateTicket = (props) => {
                                             props.info.ticket.quantity[itemChoosing - 1] = true;
                                             dispatch(update({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, getOn: on, getOff: off, seatNumber: itemChoosing },
                                                 { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }, props.info.book._id));
-                                            alert('Cập nhật thành công');
+                                            alert('Cập nhật thành công');   
                                             window.location.reload();
                                         }
                                     }

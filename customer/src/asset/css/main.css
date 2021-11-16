@@ -749,3 +749,7 @@
     width: 30px;
 }
 
+.header__login a{
+    text-decoration: none;
+    color: white;
+}
