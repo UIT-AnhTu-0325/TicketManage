@@ -8,6 +8,7 @@ import { Sidebar } from "../sidebar/Sidebar";
 import Routes from "../../MainRoutes";
 import MainRoutes from "../../MainRoutes";
 import { TopNav } from "../topnav/TopNav";
+import BreakCrumb from "../breakcrumb/BreakCrumb";
 
 /**
  * @author
@@ -17,7 +18,6 @@ import { TopNav } from "../topnav/TopNav";
 export const Layout = (props) => {
   return (
     <>
-      <Header />
       {props.sidebar ? (
         <Container fluid>
           <Row>
@@ -49,9 +49,9 @@ export const Layout = (props) => {
             <Col
               className="right-content"
               md={10}
-              style={{ marginLeft: "300px", paddingTop: "60px" }}
+              style={{ marginLeft: "300px", paddingTop: "10px" }}
             >
-              <TopNav />
+              <TopNav dashboard={props.dashboard} />
               {props.children}
             </Col>
           </Row>

@@ -17,8 +17,9 @@ export const createNew = (newBook, ticket) => async (dispatch) => {
 
 export const update = (newBook, ticket, id) => async (dispatch) => {
     try {
-        const { data }= await api.update(newBook, id);
+        await api.update(newBook, id);
         await axios.put(`http://localhost:2000/api/ticket/${ticket._id}`,ticket);
+        const { data } = await api.getAll();
         dispatch({ type: BOOK_SUCCESS, payload: data});
     } catch (error) {
         dispatch({ type: BOOK_FAILURE, payload: error});

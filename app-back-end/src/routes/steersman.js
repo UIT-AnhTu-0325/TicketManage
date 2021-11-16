@@ -1,7 +1,13 @@
-const {create, getById, getAll, update, deleteById} = require("../controller/steersman")
+const {
+  create,
+  getById,
+  getAll,
+  update,
+  deleteById,
+} = require("../controller/steersman");
 const router = require("express").Router();
 
-router.post("/", create);
+router.post("/create", create);
 
 router.get("/:id", getById);
 

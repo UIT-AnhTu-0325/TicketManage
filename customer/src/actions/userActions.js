@@ -1,6 +1,6 @@
 import axios from "axios";
 import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/userContants"
-
+import { useHistory } from "react-router";
 const url = "http://localhost:2000"
 
 export const login = (email, password) => async (dispatch) => {
@@ -26,6 +26,7 @@ export const login = (email, password) => async (dispatch) => {
         localStorage.setItem("lastName", data.user.lastName);
         localStorage.setItem("firstName", data.user.firstName);
         localStorage.setItem("token", data.token);
+        window.location.reload();
 
     } catch (error) {
         dispatch({

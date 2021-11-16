@@ -1,4 +1,6 @@
+
 const { create, getById, getAll, update, deleteById, getTicketCanceled } = require("../controller/user_ticket")
+
 const router = require("express").Router();
 
 router.post("/getTicketCanceled", getTicketCanceled);

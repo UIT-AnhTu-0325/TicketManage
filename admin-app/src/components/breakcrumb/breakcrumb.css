@@ -1,0 +1,12 @@
+.breakcrumb {
+  font-size: 2rem !important;
+}
+.breakcrumb a {
+  font-size: 1.5rem !important;
+  color: var(--text-color);
+  cursor: pointer;
+}
+.breakcrumb p {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
