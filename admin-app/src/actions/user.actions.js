@@ -23,3 +23,23 @@ export const signup = (user) => {
     }
   };
 };
+
+export const getAllUser = () => {
+  return async (dispatch) => {
+    dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
+    const res = await axios.get(`user`);
+    //console.log(res);
+    if (res.status === 200) {
+      const userList = res.data;
+      dispatch({
+        type: userConstants.GET_ALL_USERS_SUCCESS,
+        payload: { users: userList },
+      });
+    } else {
+      dispatch({
+        type: userConstants.GET_ALL_USERS_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};

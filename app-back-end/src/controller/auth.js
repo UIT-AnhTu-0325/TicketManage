@@ -18,27 +18,28 @@ exports.signup = async (req, res) => {
   //     });
   // });
 
-  const { firstName, lastName, email, password, username, contactNumber } = req.body;
+  const { firstName, lastName, email, password, username, contactNumber } =
+    req.body;
   const hash_password = await bcrypt.hash(password, 10);
   const _user = new User({
     firstName,
     lastName,
     email,
     hash_password,
-    username ,
-    contactNumber
+    username,
+    contactNumber,
   });
 
   _user.save((error, data) => {
     if (error) {
       return res.status(400).json({
-        message: error, 
+        message: error,
       });
     }
     if (data) {
       return res.status(201).json({
         message: "Create successfully",
-        _user
+        _user,
       });
     }
   });
@@ -49,8 +50,8 @@ exports.signup = async (req, res) => {
     avatar,
     dob,
     gender,
-  })
-  console.log("USER_PROFILE", _profile);
+  });
+  //console.log("USER_PROFILE", _profile);
   _profile.save((error, data) => {
     if (error) {
       console.log(error);
@@ -69,7 +70,15 @@ exports.signin = (req, res) => {
         const token = jwt.sign({ _id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "1h",
         });
-        const { _id, firstName, lastName, email, role, fullName, contactNumber } = user;
+        const {
+          _id,
+          firstName,
+          lastName,
+          email,
+          role,
+          fullName,
+          contactNumber,
+        } = user;
         res.status(200).json({
           token,
           user: {
@@ -79,9 +88,9 @@ exports.signin = (req, res) => {
             email,
             role,
             fullName,
-            contactNumber
+            contactNumber,
           },
-          message: "Login successfully <3"
+          message: "Login successfully <3",
         });
       } else {
         return res.status(400).json({

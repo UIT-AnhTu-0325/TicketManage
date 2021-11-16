@@ -1,6 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { tripConstants } from "../actions/constants";
-import routeReducer from "./route.reducers";
+
+const initState = {
+  trips: [],
+  loading: false,
+  error: null,
+  tripDetails: {},
+};
 
 const rebuildAddTrip = (trips, trip) => {
   let mytrips = [];
@@ -9,12 +15,6 @@ const rebuildAddTrip = (trips, trip) => {
   }
   mytrips.push(trip);
   return mytrips;
-};
-
-const initState = {
-  trips: [],
-  loading: false,
-  error: null,
 };
 
 export default (state = initState, action) => {
@@ -35,6 +35,26 @@ export default (state = initState, action) => {
     case tripConstants.ADD_NEW_TRIP_FAILURE:
       state = {
         ...state,
+        error: action.payload.error,
+      };
+      break;
+    case tripConstants.GET_TRIP_DETAILS_BY_ID_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case tripConstants.GET_TRIP_DETAILS_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        tripDetails: action.payload.tripDetails,
+        loading: false,
+      };
+      break;
+    case tripConstants.GET_TRIP_DETAILS_BY_ID_FAILURE:
+      state = {
+        ...state,
+        loading: false,
         error: action.payload.error,
       };
       break;

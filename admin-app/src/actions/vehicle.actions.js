@@ -20,3 +20,62 @@ export const getAllVehicles = () => {
     }
   };
 };
+
+export const addVehicle = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: vehicleConstants.ADD_NEW_VEHICLE_REQUEST });
+    const res = await axios.post(`vehicle/create`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: vehicleConstants.ADD_NEW_VEHICLE_SUCCESS,
+        payload: { vehicle: res.data },
+      });
+    } else {
+      dispatch({
+        type: vehicleConstants.ADD_NEW_VEHICLE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+    //console.log(res);
+  };
+};
+
+export const editVehicle = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: vehicleConstants.EDIT_VEHICLE_REQUEST });
+    const res = await axios.put(`/vehicle/${form._id}`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: vehicleConstants.EDIT_VEHICLE_SUCCESS,
+        payload: { vehicle: res.data },
+      });
+    } else {
+      dispatch({
+        type: vehicleConstants.EDIT_VEHICLE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
+
+export const deleteVehicle = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: vehicleConstants.DELETE_VEHICLE_REQUEST });
+    const res = await axios.delete(`/vehicle/${form._id}`);
+    if (res.status === 200) {
+      dispatch({
+        type: vehicleConstants.DELETE_VEHICLE_SUCCESS,
+        payload: { id: form._id },
+      });
+    } else {
+      dispatch({
+        type: vehicleConstants.DELETE_VEHICLE_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};

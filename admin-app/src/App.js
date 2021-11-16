@@ -18,6 +18,8 @@ import { Customer } from "./pages/Customers";
 import "./asset/css/main.css";
 import { EnterpriseDetails } from "./containers/EnterpriseDetails";
 import { RouteDetails } from "./containers/RouteDetails";
+import { User } from "./containers/User";
+import { TripDetails } from "./containers/TripDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,12 +43,17 @@ function App() {
           path="/routes/:routeId/informations"
           component={RouteDetails}
         ></Route>
+        <Route
+          path="/trips/:tripId/informations"
+          component={TripDetails}
+        ></Route>
         <Route path="/routes" component={Routes} />
         <Route path="/enterprises" exact component={Enterprise} />
         <Route path="/analytics" component={Analytics} />
 
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
+        <Route path="/user" component={User} />
 
         {/* New Route */}
         <Route path="/" component={DashBoard} />

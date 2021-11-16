@@ -5,6 +5,7 @@ const initState = {
   error: null,
   message: "",
   loading: false,
+  users: [],
 };
 
 export default (state = initState, action) => {
@@ -27,6 +28,12 @@ export default (state = initState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+      break;
+    case userConstants.GET_ALL_USERS_SUCCESS:
+      state = {
+        ...state,
+        users: action.payload.users,
       };
       break;
     default:
