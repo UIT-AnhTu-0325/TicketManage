@@ -1,5 +1,7 @@
 const Ticket = require("../models/ticket");
 
+
+
 exports.getMonthByMonthYear = async (req, res) => {
     try {
         const { month, year } = req.body
@@ -51,10 +53,7 @@ exports.getMonthByMonthYear = async (req, res) => {
                 }, {
                     '$match': {
                         'month': month,
-                        'year': year,
-                        'date': {
-                            '$lt': new Date()
-                        }
+                        'year': year
                     }
                 }, {
                     '$group': {
@@ -135,10 +134,7 @@ exports.getDateByMonthYear = async (req, res) => {
                 }, {
                     '$match': {
                         'month': month,
-                        'year': year,
-                        'date': {
-                            '$lt': new Date()
-                        }
+                        'year': year
                     }
                 }, {
                     '$group': {

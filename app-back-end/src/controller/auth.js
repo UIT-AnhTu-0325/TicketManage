@@ -4,6 +4,51 @@ const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
+exports.getNewUser = async (req, res) => {
+  try {
+    const { month, year } = req.body
+    const newUser = await User.aggregate(
+      [
+        {
+          '$project': {
+            'date': '$createdAt',
+            'month': {
+              '$month': '$createdAt'
+            },
+            'year': {
+              '$year': '$createdAt'
+            }
+          }
+        }, {
+          '$match': {
+            'month': month,
+            'year': year
+          }
+        }, {
+          '$group': {
+            '_id': {
+              '$dateToString': {
+                'format': '%Y-%m-%d',
+                'date': '$date'
+              }
+            },
+            'newUser': {
+              '$sum': 1
+            }
+          }
+        }, {
+          '$sort': {
+            '_id': 1
+          }
+        }
+      ]
+    )
+    res.status(200).json(newUser);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+
 exports.signup = async (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
     if (user)
@@ -25,14 +70,14 @@ exports.signup = async (req, res) => {
     lastName,
     email,
     hash_password,
-    username ,
+    username,
     contactNumber
   });
 
   _user.save((error, data) => {
     if (error) {
       return res.status(400).json({
-        message: error, 
+        message: error,
       });
     }
     if (data) {

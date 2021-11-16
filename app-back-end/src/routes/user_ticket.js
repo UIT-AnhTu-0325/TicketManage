@@ -1,13 +1,15 @@
-const {create, getById, getAll, update, deleteById} = require("../controller/user_ticket")
+const { create, getById, getAll, update, deleteById, getTicketCanceled } = require("../controller/user_ticket")
 const router = require("express").Router();
+
+router.post("/getTicketCanceled", getTicketCanceled);
 
 router.post("/", create);
 
 router.get("/id=:id", getById);
 
-router.get("/", getAll); 
+router.get("/", getAll);
 
-router.put("/:id", update); 
+router.put("/:id", update);
 
 router.delete("/:id", deleteById);
 

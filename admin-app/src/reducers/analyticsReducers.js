@@ -1,4 +1,4 @@
-import { ANALYTICS_FAIL, ANALYTICS_REQUEST, ANALYTICS_SUCCESS, ANALYTICS_CHART_REQUEST, ANALYTICS_CHART_SUCCESS, ANALYTICS_CHART_FAIL } from "../constants/analyticsConstants"
+import { ANALYTICS_FAIL, ANALYTICS_REQUEST, ANALYTICS_SUCCESS, ANALYTICS_CHART_REQUEST, ANALYTICS_CHART_SUCCESS, ANALYTICS_CHART_FAIL, NEW_USER_REQUEST, NEW_USER_SUCCESS, NEW_USER_FAIL, TICKET_DONUT_REQUEST, TICKET_DONUT_SUCCESS, TICKET_DONUT_FAIL } from "../constants/analyticsConstants"
 
 export const analyticsReducer = (state = {}, action) => {
     switch (action.type) {
@@ -20,6 +20,32 @@ export const analyticsChartReducer = (state = {}, action) => {
         case ANALYTICS_CHART_SUCCESS:
             return { loading: false, listOfAnalyticsChart: action.payload }
         case ANALYTICS_CHART_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const newUserReducer = (state = {}, action) => {
+    switch (action.type) {
+        case NEW_USER_REQUEST:
+            return { loading: true }
+        case NEW_USER_SUCCESS:
+            return { loading: false, listOfNewUser: action.payload }
+        case NEW_USER_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const ticketDonutReducer = (state = {}, action) => {
+    switch (action.type) {
+        case TICKET_DONUT_REQUEST:
+            return { loading: true }
+        case TICKET_DONUT_SUCCESS:
+            return { loading: false, ticketDonut: action.payload }
+        case TICKET_DONUT_FAIL:
             return { loading: false, error: action.payload }
         default:
             return state

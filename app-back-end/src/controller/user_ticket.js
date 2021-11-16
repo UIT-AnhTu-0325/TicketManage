@@ -5,6 +5,98 @@ const Route = require("../models/route");
 const Enterprise = require("../models/enterprise");
 const Ticket = require("../models/ticket")
 
+exports.getTicketCanceled = async (req, res) => {
+    try {
+        const { month, year } = req.body
+        const canceledTicket = await User_Ticket.aggregate(
+            [
+                {
+                    '$match': {
+                        'canceled': true
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'tickets',
+                        'localField': 'idTicket',
+                        'foreignField': '_id',
+                        'as': 'detail'
+                    }
+                }, {
+                    '$replaceRoot': {
+                        'newRoot': {
+                            '$mergeObjects': [
+                                {
+                                    '$arrayElemAt': [
+                                        '$detail', 0
+                                    ]
+                                }, '$$ROOT'
+                            ]
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'detail': 0
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'trips',
+                        'localField': 'idTrip',
+                        'foreignField': '_id',
+                        'as': 'infor'
+                    }
+                }, {
+                    '$replaceRoot': {
+                        'newRoot': {
+                            '$mergeObjects': [
+                                {
+                                    '$arrayElemAt': [
+                                        '$infor', 0
+                                    ]
+                                }, '$$ROOT'
+                            ]
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'infor': 0
+                    }
+                }, {
+                    '$project': {
+                        'date': '$startDate',
+                        'month': {
+                            '$month': '$startDate'
+                        },
+                        'year': {
+                            '$year': '$startDate'
+                        },
+                        'canceled': '$canceled'
+                    }
+                }, {
+                    '$match': {
+                        'month': month,
+                        'year': year
+                    }
+                }, {
+                    '$group': {
+                        '_id': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$date'
+                            }
+                        },
+                        'totalCanceledTicket': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]
+        )
+        res.status(200).json(canceledTicket);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+}
+
 exports.getAll = async (req, res) => {
     try {
         const user_tickets = await User_Ticket.find();
@@ -13,7 +105,7 @@ exports.getAll = async (req, res) => {
         const trips = await Trip.find();
         const vehicles = await Vehicle.find();
         const routes = await Route.find();
-        const enterprise = await Enterprise.find();  
+        const enterprise = await Enterprise.find();
         const tickets = await Ticket.find();
 
         trips.map((trip) => {
@@ -22,11 +114,11 @@ exports.getAll = async (req, res) => {
             vehicles.filter((item) => trip.idVehicle.equals(item._id)).map((item) => result.vehicle = item);
             routes.filter((item) => trip.idRoute.equals(item._id)).map((item) => result.route = item);
             enterprise.filter((item) => result.route.idEnterprise.equals(item._id)).map((item) => result.enterprise = item);
-            tickets.filter((item) => item.idTrip.equals(trip._id)).map((item) =>{
+            tickets.filter((item) => item.idTrip.equals(trip._id)).map((item) => {
                 result.ticket = item;
                 user_tickets.forEach((element) => {
-                    if(element.idTicket.equals(item._id)){
-                        let data ={};
+                    if (element.idTicket.equals(item._id)) {
+                        let data = {};
                         data.trip = result.trip;
                         data.vehicle = result.vehicle;
                         data.route = result.route;
@@ -35,12 +127,12 @@ exports.getAll = async (req, res) => {
                         data.book = element;
                         payload.push(data);
                     }
-                }) 
+                })
             });
         })
         res.status(200).json(payload);
     } catch (err) {
-        res.status(500).json({error:err});
+        res.status(500).json({ error: err });
     }
 }
 
@@ -49,13 +141,13 @@ exports.getById = async (req, res) => {
         const user_ticket = await User_Ticket.findById(req.params.id);
         res.status(200).json(user_ticket);
     } catch (err) {
-        res.status(500).json({error:err});
+        res.status(500).json({ error: err });
     }
 }
 
 exports.create = async (req, res) => {
     const newUser_Ticket = new User_Ticket(req.body);
-    
+
     try {
         const saved = await newUser_Ticket.save();
         res.status(200).json(saved);
@@ -67,23 +159,23 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const updated = await User_Ticket.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
+            req.params.id,
+            {
+                $set: req.body,
+            },
+            { new: true }
         );
         res.status(200).json(updated);
-      } catch (err) {
+    } catch (err) {
         res.status(500).json(err);
-      }
+    }
 }
 
 exports.deleteById = async (req, res) => {
     try {
         await User_Ticket.findByIdAndDelete(req.params.id);
         res.status(200).json("Has been deleted");
-      } catch (err) {
+    } catch (err) {
         res.status(500).json(err);
-      }
+    }
 }
