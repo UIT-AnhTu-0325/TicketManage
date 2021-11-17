@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-
+import swal from "sweetalert";
 import React, { useEffect, useState } from "react";
 import {
   addEnterprise,
@@ -54,9 +54,22 @@ export const ListEnterpriseTable = (props) => {
     const form = enterprise;
     if (modalFlag === "Add") {
       delete form._id;
+
       dispatch(addEnterprise(form));
+      swal({
+        title: "Thêm thành công",
+        text: "Bạn đã thêm nhà xe thành công",
+        icon: "success",
+        button: "OK",
+      });
     } else {
       dispatch(editEnterprise(form));
+      swal({
+        title: "Sửa thành công",
+        text: "Bạn đã sửa nhà xe thành công",
+        icon: "success",
+        button: "OK",
+      });
     }
     setEnterprise(initEnterprise);
     setModalShow(false);
@@ -76,7 +89,22 @@ export const ListEnterpriseTable = (props) => {
     const form = {
       _id: selectedEnt._id,
     };
-    dispatch(deleteEnterprise(form));
+    swal({
+      title: "Bạn chắc chắn xóa",
+      text: "Bạn có chắc sẽ xóa nhà xe này không",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Nhà xe đã được xóa thành công!", {
+          icon: "success",
+        });
+        dispatch(deleteEnterprise(form));
+      } else {
+        swal("Nhà xe vẫn chưa bị xóa!");
+      }
+    });
   };
 
   const enterprises = {
