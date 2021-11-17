@@ -1,14 +1,16 @@
 import React from "react";
 import { Layout } from "../../components/Layout";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
-import Chart from "../../components/chart/Chart";
+import LChart from "../../components/chart/Chart";
 import { userData } from "../../dummyData";
 import { Dropdown, Button } from 'react-bootstrap';
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentMonth, getDateByMonthYear } from "../../actions/analyticsActions";
+import { getCurrentMonth, getDateByMonthYear, getNewUser, getTicketCanceled } from "../../actions/analyticsActions";
 import "../../asset/css/containers-css/Analytics.css"
+import Chart from "react-apexcharts"
+
 
 /**
  * @author
@@ -22,14 +24,19 @@ export const Analytics = (props) => {
     const [month, setMonth] = useState(today.getMonth() + 1)
     const [year, setYear] = useState(today.getFullYear())
 
-    const [ticketCurrentMonth, setTicketCurrentMonth] = useState("")
-    const [saleCurrentMonth, setSaleCurrentMonth] = useState("")
+    const [ticketCurrentMonth, setTicketCurrentMonth] = useState(0)
+    const [saleCurrentMonth, setSaleCurrentMonth] = useState(0)
+    const [ticketCanceled, setTicketCanceled] = useState(0)
+
 
     const analytics = useSelector((state) => state.analytics)
     const { listOfAnalytics } = analytics
 
     const chart = useSelector((state) => state.chart)
     const { listOfAnalyticsChart } = chart
+
+    const newUser = useSelector((state) => state.newUser)
+    const { listOfNewUser } = newUser
 
     // var lastMonth = today.getMonth()
     // var month = today.getMonth() + 1
@@ -41,21 +48,27 @@ export const Analytics = (props) => {
     useEffect(() => {
         dispatch(getCurrentMonth({ month, year }))
         dispatch(getDateByMonthYear({ month, year }))
+        dispatch(getNewUser({ month, year }))
+        dispatch(getTicketCanceled({ month, year }))
         //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
         //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
         setTicketCurrentMonth(localStorage.getItem('totalTickets'))
         setSaleCurrentMonth(localStorage.getItem('totalSales'))
-
+        setTicketCanceled(localStorage.getItem('ticketCanceled'))
     }, []);
 
     const filterShow = (e) => {
         e.preventDefault();
         dispatch(getDateByMonthYear({ month, year }))
         dispatch(getCurrentMonth({ month, year }))
-        // setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-        // setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
+        dispatch(getNewUser({ month, year }))
+        dispatch(getTicketCanceled({ month, year }))
+        //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
+        //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
         setTicketCurrentMonth(localStorage.getItem('totalTickets'))
         setSaleCurrentMonth(localStorage.getItem('totalSales'))
+        setTicketCanceled(localStorage.getItem('ticketCanceled'))
+        console.log('test', ticketCurrentMonth, ticketCanceled)
     };
 
     return (
@@ -84,8 +97,31 @@ export const Analytics = (props) => {
                     </select>
                     <Button variant="dark" onClick={filterShow} className="btnItem">Filter</Button>
                 </div>
-                <Chart data={listOfAnalyticsChart} title="Tickets" grid dataKey1="totalTicket" />
-                <Chart data={listOfAnalyticsChart} title="Sales" grid dataKey2="totalSale" />
+
+                <LChart data={listOfAnalyticsChart} title="Tickets" grid dataKey1="totalTicket" />
+                <LChart data={listOfAnalyticsChart} title="Sales" grid dataKey2="totalSale" />
+                <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />
+                <Chart
+                    type="donut"
+                    width={600}
+                    height={600}
+                    series={[ticketCurrentMonth, ticketCanceled]}
+                    options={{
+                        labels: ['Ticket Sold', 'Ticket Canceled'],
+                        title: { text: 'Ticket' },
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    labels: {
+                                        show: true
+                                    }
+                                }
+                            }
+                        }
+                    }}
+                >
+
+                </Chart>
             </div>
         </Layout>
     )
