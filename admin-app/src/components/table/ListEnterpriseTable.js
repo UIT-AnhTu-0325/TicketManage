@@ -55,6 +55,7 @@ export const ListEnterpriseTable = (props) => {
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addEnterprise(form));
+      console.log(form);
     } else {
       dispatch(editEnterprise(form));
     }
