@@ -91,7 +91,13 @@ exports.getTicketCanceled = async (req, res) => {
                 }
             ]
         )
-        res.status(200).json(canceledTicket);
+        if (canceledTicket.length == 0) {
+            var totalCanceledTicket = 0
+        }
+        else {
+            var totalCanceledTicket = canceledTicket[0].totalCanceledTicket
+        }
+        res.status(200).json({ totalCanceledTicket });
     } catch (err) {
         res.status(500).json({ error: err });
     }

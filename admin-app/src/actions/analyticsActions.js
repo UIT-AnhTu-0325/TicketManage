@@ -5,11 +5,15 @@ import { DateRangeTwoTone } from "@material-ui/icons";
 export const getTicketCanceled = (date) => async (dispatch) => {
     try {
         dispatch({ type: TICKET_DONUT_REQUEST });
-        const { data } = await axios.post(`user_ticket/getTicketCanceled`, date)
+        const data = await axios.post(`user_ticket/getTicketCanceled`, date)
         console.log(data);
-        dispatch({ type: TICKET_DONUT_SUCCESS, payload: data })
-        localStorage.setItem("ticket", JSON.stringify(data))
-        localStorage.setItem("ticketCanceled", data.map(a => a.totalCanceledTicket));
+        const { totalCanceledTicket } = data.data;
+        dispatch({
+            type: TICKET_DONUT_SUCCESS,
+            payload: {
+                totalCanceledTicket
+            }
+        })
     } catch (error) {
         dispatch({
             type: TICKET_DONUT_FAIL,
@@ -24,12 +28,16 @@ export const getTicketCanceled = (date) => async (dispatch) => {
 export const getCurrentMonth = (date) => async (dispatch) => {
     try {
         dispatch({ type: ANALYTICS_REQUEST });
-        const { data } = await axios.post(`ticket/getMonthByMonthYear`, date)
+        const data = await axios.post(`ticket/getMonthByMonthYear`, date)
         console.log(data);
-        dispatch({ type: ANALYTICS_SUCCESS, payload: data })
-        localStorage.setItem("analytics", JSON.stringify(data))
-        localStorage.setItem("totalTickets", data.map(a => a.totalTicket));
-        localStorage.setItem("totalSales", data.map(a => a.totalSale));
+        const { totalTicket, totalSale } = data.data;
+        dispatch({
+            type: ANALYTICS_SUCCESS,
+            payload: {
+                totalTicket,
+                totalSale
+            }
+        })
     } catch (error) {
         dispatch({
             type: ANALYTICS_FAIL,
@@ -44,10 +52,17 @@ export const getCurrentMonth = (date) => async (dispatch) => {
 export const getDateByMonthYear = (date) => async (dispatch) => {
     try {
         dispatch({ type: ANALYTICS_CHART_REQUEST });
-        const { data } = await axios.post(`ticket/getDateByMonthYear`, date)
-        console.log(date);
-        console.log(data);
-        dispatch({ type: ANALYTICS_CHART_SUCCESS, payload: data })
+        const data = await axios.post(`ticket/getDateByMonthYear`, date)
+        //console.log(date);
+        //console.log(data);
+        const { listTicket, listSale } = data.data;
+        dispatch({
+            type: ANALYTICS_CHART_SUCCESS,
+            payload: {
+                listTicket,
+                listSale
+            }
+        })
     } catch (error) {
         dispatch({
             type: ANALYTICS_CHART_FAIL,

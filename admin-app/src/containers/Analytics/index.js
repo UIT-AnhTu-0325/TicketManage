@@ -2,7 +2,6 @@ import React from "react";
 import { Layout } from "../../components/Layout";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import LChart from "../../components/chart/Chart";
-import { userData } from "../../dummyData";
 import { Dropdown, Button } from 'react-bootstrap';
 import { useState } from "react";
 import { useEffect } from "react";
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentMonth, getDateByMonthYear, getNewUser, getTicketCanceled } from "../../actions/analyticsActions";
 import "../../asset/css/containers-css/Analytics.css"
 import Chart from "react-apexcharts"
+import { useHistory } from 'react-router'
 
 
 /**
@@ -24,24 +24,20 @@ export const Analytics = (props) => {
     const [month, setMonth] = useState(today.getMonth() + 1)
     const [year, setYear] = useState(today.getFullYear())
 
-    const [ticketCurrentMonth, setTicketCurrentMonth] = useState(0)
-    const [saleCurrentMonth, setSaleCurrentMonth] = useState(0)
-    const [ticketCanceled, setTicketCanceled] = useState(0)
+    var monthIndex = month - 1;
 
+    var date = new Date(year, monthIndex, 1);
 
-    const analytics = useSelector((state) => state.analytics)
-    const { listOfAnalytics } = analytics
+    var names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    const chart = useSelector((state) => state.chart)
-    const { listOfAnalyticsChart } = chart
+    var days = [];
+    while (date.getMonth() === monthIndex) {
+        days.push(date.getDate() + ' ' + names[date.getDay()]);
+        //days.push(date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear());
+        date.setDate(date.getDate() + 1);
+    }
 
-    const newUser = useSelector((state) => state.newUser)
-    const { listOfNewUser } = newUser
-
-    // var lastMonth = today.getMonth()
-    // var month = today.getMonth() + 1
-    // var year = today.getFullYear()
-
+    console.log(days)
 
     const dispatch = useDispatch()
 
@@ -50,11 +46,6 @@ export const Analytics = (props) => {
         dispatch(getDateByMonthYear({ month, year }))
         dispatch(getNewUser({ month, year }))
         dispatch(getTicketCanceled({ month, year }))
-        //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-        //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
-        setTicketCurrentMonth(localStorage.getItem('totalTickets'))
-        setSaleCurrentMonth(localStorage.getItem('totalSales'))
-        setTicketCanceled(localStorage.getItem('ticketCanceled'))
     }, []);
 
     const filterShow = (e) => {
@@ -63,18 +54,119 @@ export const Analytics = (props) => {
         dispatch(getCurrentMonth({ month, year }))
         dispatch(getNewUser({ month, year }))
         dispatch(getTicketCanceled({ month, year }))
-        //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-        //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
-        setTicketCurrentMonth(localStorage.getItem('totalTickets'))
-        setSaleCurrentMonth(localStorage.getItem('totalSales'))
-        setTicketCanceled(localStorage.getItem('ticketCanceled'))
-        console.log('test', ticketCurrentMonth, ticketCanceled)
+    };
+
+    const analytics = useSelector((state) => state.analytics)
+    const { totalTicket, totalSale } = analytics
+
+    const chart = useSelector((state) => state.chart)
+    const { listTicket, listSale } = chart
+
+    const newUser = useSelector((state) => state.newUser)
+    const { listNewUser } = newUser
+
+    const ticket = useSelector((state) => state.ticket)
+    const { totalCanceledTicket } = ticket
+
+    const chartOptions = {
+        series: [
+            {
+                type: "column",
+                name: "Ticket",
+                data: listTicket,
+            },
+            {
+                type: "line",
+                name: "Sale",
+                data: listSale,
+            },
+        ],
+
+        options: {
+            color: ["#6ab04c", "#2980b9"],
+            chart: {
+                background: "transparent",
+            },
+            dataLabels: {
+                enable: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            xaxis: {
+                categories: days,
+            },
+            legent: {
+                position: "left",
+            },
+            grid: {
+                show: true,
+            },
+            yaxis: [
+                {
+                    title: {
+                        text: "Ticket"
+                    },
+                },
+                {
+                    opposite: true,
+                    title: {
+                        text: "Sale"
+                    }
+                }
+            ],
+            title: {
+                text: 'Analysis of Ticket and Sale',
+                align: 'left'
+            },
+        },
+    };
+
+    const chartOptions1 = {
+        series: [
+            {
+                type: "line",
+                name: "New User",
+                data: listNewUser,
+            },
+        ],
+
+        options: {
+            color: ["#6ab04c", "#2980b9"],
+            chart: {
+                background: "transparent",
+            },
+            dataLabels: {
+                enable: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            xaxis: {
+                categories: days,
+            },
+            legent: {
+                position: "left",
+            },
+            grid: {
+                show: true,
+            },
+            title: {
+                text: 'Analysis of New User',
+                align: 'left'
+            },
+            markers: {
+                hover: {
+                    sizeOffset: 4
+                }
+            }
+        },
     };
 
     return (
         <Layout sidebar>
             <div>
-                <FeaturedInfo ticket={ticketCurrentMonth} sale={saleCurrentMonth} />
+                <FeaturedInfo ticket={totalTicket} sale={totalSale} />
                 <div className="dropDown">
                     <select value={month} classname="custom-select" onChange={(e) => { setMonth(parseInt(e.target.value)) }}>
                         <option value="1">January</option>
@@ -98,8 +190,42 @@ export const Analytics = (props) => {
                     <Button variant="dark" onClick={filterShow} className="btnItem">Filter</Button>
                 </div>
 
-                <LChart data={listOfAnalyticsChart} title="Tickets" grid dataKey1="totalTicket" />
-                <LChart data={listOfAnalyticsChart} title="Sales" grid dataKey2="totalSale" />
+                <div className="chart">
+                    <Chart
+                        options={chartOptions.options}
+                        series={chartOptions.series}
+                    />
+                </div>
+                <div className="chart">
+                    <Chart
+                        options={chartOptions1.options}
+                        series={chartOptions1.series}
+                    />
+                </div>
+                {/* <div className="chart">
+                    <Chart
+                        type="donut"
+                        width={600}
+                        height={600}
+                        series={[totalTicket, totalCanceledTicket]}
+                        options={{
+                            labels: ['Ticket Sold', 'Ticket Canceled'],
+                            title: { text: 'Ticket' },
+                            plotOptions: {
+                                pie: {
+                                    donut: {
+                                        labels: {
+                                            show: true
+                                        }
+                                    }
+                                }
+                            }
+                        }}
+                    >
+                    </Chart>
+                </div> */}
+                {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
+                <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />
                 <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />
                 <Chart
                     type="donut"
@@ -121,7 +247,7 @@ export const Analytics = (props) => {
                     }}
                 >
 
-                </Chart>
+                </Chart> */}
             </div>
         </Layout>
     )
