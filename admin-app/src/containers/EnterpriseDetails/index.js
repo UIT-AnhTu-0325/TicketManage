@@ -40,6 +40,7 @@ export const EnterpriseDetails = (props) => {
   };
 
   const state_enterprise = useSelector((state) => state.enterprise);
+
   const state_city = useSelector((state) => state.city);
 
   const enterpriseDetails = useSelector(

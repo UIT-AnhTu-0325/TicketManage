@@ -20,6 +20,7 @@ import { EnterpriseDetails } from "./containers/EnterpriseDetails";
 import { RouteDetails } from "./containers/RouteDetails";
 import { User } from "./containers/User";
 import { TripDetails } from "./containers/TripDetails";
+import { UserDetail } from "./components/customer/UserDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
         ></Route>
+        <Route path="/user/:userId/userdetail" component={UserDetail}></Route>
 
         <Route
           path="/routes/:routeId/informations"
