@@ -38,7 +38,7 @@ exports.create = async (req, res) => {
       lastName,
       email,
       hash_password,
-      //username,
+      username,
       contactNumber,
       role,
     });
