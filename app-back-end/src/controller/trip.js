@@ -51,8 +51,8 @@ exports.fetchAll = async (req, res) => {
           .filter((item) => item.idTrip.equals(trip._id))
           .map((item) => {
             result.ticket = item;
-          });
-        payload.push(result);
+            payload.push(result);
+          });      
       });
     res.status(200).json(payload);
   } catch (err) {

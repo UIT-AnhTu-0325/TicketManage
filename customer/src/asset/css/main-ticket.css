@@ -329,6 +329,7 @@
 
 .short-info__desc{
     flex: 2;
+    margin-top: 20px;
 }
 .short-info__option{
     display: flex;
@@ -575,3 +576,6 @@
 }
 /* End: rating */
 
+.fa-circle{
+    margin-right: 10px;
+}

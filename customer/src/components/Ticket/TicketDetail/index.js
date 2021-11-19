@@ -18,7 +18,13 @@ import { useDispatch } from 'react-redux';
 
 
 export const TicketDetail = ({ info }) => {
-
+    const math = (startTime, totalTime) => {
+        let s = startTime + totalTime;
+        if((s - Math.floor(s) > 0.59) || (s - Math.floor(s) == 0)){
+            s += + 1 - 0.6;
+        }
+        return s >= 24 ? (s - 24).toFixed(2).toString().replace(".",":") : s.toFixed(2).toString().replace(".",":");
+    }
     const [currrentTab, setCurrentTab] = useState(1);
     const ChangeTab = (index) => {
         setCurrentTab(index);
@@ -73,13 +79,24 @@ export const TicketDetail = ({ info }) => {
                                 <i class='bx bx-bookmark' ></i>
                             </div>
                         </div>
-                        <div className="short-info__desc">
-                            {info.route.startLocation} - {info.route.endLocation}
-                        </div>  
-                        <div className="short-info__desc">
-                            Giờ khởi hành: {info.route.startTime.toFixed(2).toString().replace('.', ':')}
-                        </div>
 
+                        <div className="time-estimate">
+                            <div className="time-site time-site-start">
+                                <span className="time">{info.route.startTime.toFixed(2).toString().replace(".", ":")}</span>
+                                <span className="site">{info.route.startLocation}</span>
+
+                            </div>
+                            <i class="fas fa-caret-right"></i>
+                            <div className="time-site time-site-end">
+                                <span className="time">{math(info.route.startTime, info.route.totalTime)}</span>
+                                <span className="site">{info.route.endLocation}</span>
+
+                            </div>
+                            <i class="cus-dot fas fa-circle"></i>
+                            <div className="time-taking-estimate">
+                                 {info.route.totalTime.toFixed(2).toString().replace(".", " giờ ")} phút di chuyển
+                            </div>
+                        </div>
                         <div className="short-info__desc">
                             Loại xe: {info.ticket.quantity.length} chỗ
                         </div>
