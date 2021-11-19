@@ -8,7 +8,7 @@ import {
 } from "../../actions/vehicle.actions";
 import { Input } from "../UI/Input";
 import { Table } from "./Table";
-
+import swal from "sweetalert";
 /**
  * @author
  * @function ListVehicleTable
@@ -67,10 +67,25 @@ export const ListVehicleTable = (props) => {
     const form = {
       _id: selectedVeh._id,
     };
-    dispatch(deleteVehicle(form));
-    if (props.type !== "Main") {
-      props.reLoadEnterpriseDetails();
-    }
+    swal({
+      title: "Bạn chắc chắn xóa",
+      text: "Bạn có chắc sẽ xóa phương tiện này không",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Phương tiện đã được xóa thành công!", {
+          icon: "success",
+        });
+        dispatch(deleteVehicle(form));
+        if (props.type !== "Main") {
+          props.reLoadEnterpriseDetails();
+        }
+      } else {
+        swal("Phương tiện vẫn chưa bị xóa!");
+      }
+    });
   };
 
   const vehicles = {

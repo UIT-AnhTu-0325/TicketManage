@@ -43,3 +43,27 @@ export const getAllUser = () => {
     }
   };
 };
+
+export const getUserDetailById = (payload) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstants.GET_USER_DETAIL_BY_ID_REQUEST,
+    });
+
+    const { userId } = payload.params;
+    const res = await axios.get(`/user/${userId}/userdetail`);
+    try {
+      if (res.status === 200) {
+        dispatch({
+          type: userConstants.GET_USER_DETAIL_BY_ID_SUCCESS,
+          payload: { userDetail: res.data },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: userConstants.GET_USER_DETAIL_BY_ID_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
