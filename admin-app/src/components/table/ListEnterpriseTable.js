@@ -42,9 +42,11 @@ export const ListEnterpriseTable = (props) => {
   const [editData, setEditData] = useState(false);
 
   const checkEditData = (targetValue, object) => {
-    if (targetValue !== "" && object) {
+    if (enterprise.name && enterprise.address && enterprise.hotline) {
       setEditData(true);
-    } else setEditData(false);
+    } else {
+      setEditData(false);
+    }
   };
 
   const handleModalShow = (iFlag, enterprise = []) => {
@@ -64,7 +66,6 @@ export const ListEnterpriseTable = (props) => {
       delete form._id;
 
       dispatch(addEnterprise(form));
-
 
       swal({
         title: "Thêm thành công",
