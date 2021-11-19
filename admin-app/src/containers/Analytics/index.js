@@ -10,6 +10,7 @@ import { getCurrentMonth, getDateByMonthYear, getNewUser, getTicketCanceled } fr
 import "../../asset/css/containers-css/Analytics.css"
 import Chart from "react-apexcharts"
 import { useHistory } from 'react-router'
+import { Doughnut } from 'react-chartjs-2'
 
 
 /**
@@ -66,7 +67,7 @@ export const Analytics = (props) => {
     const { listNewUser } = newUser
 
     const ticket = useSelector((state) => state.ticket)
-    const { totalCanceledTicket } = ticket
+    const { donutData } = ticket
 
     const chartOptions = {
         series: [
@@ -163,6 +164,25 @@ export const Analytics = (props) => {
         },
     };
 
+
+    const data = {
+        labels: [
+            'Red',
+            'Blue',
+            'Yellow'
+        ],
+        datasets: [{
+            label: 'My First Dataset',
+            data: [300, 50, 100],
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+
     return (
         <Layout sidebar>
             <div>
@@ -196,18 +216,12 @@ export const Analytics = (props) => {
                         series={chartOptions.series}
                     />
                 </div>
-                <div className="chart">
-                    <Chart
-                        options={chartOptions1.options}
-                        series={chartOptions1.series}
-                    />
-                </div>
                 {/* <div className="chart">
                     <Chart
                         type="donut"
                         width={600}
                         height={600}
-                        series={[totalTicket, totalCanceledTicket]}
+                        series={donutData}
                         options={{
                             labels: ['Ticket Sold', 'Ticket Canceled'],
                             title: { text: 'Ticket' },
@@ -224,6 +238,28 @@ export const Analytics = (props) => {
                     >
                     </Chart>
                 </div> */}
+                <div className="chart">
+                    <Doughnut
+                        data={{
+                            labels: ['Ticket Sold', 'Ticket Canceled'],
+                            datasets: [{
+                                data: donutData,
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(54, 162, 235)'
+                                ],
+                            }]
+                        }}
+                    >
+                    </Doughnut>
+                </div>
+                <div className="chart">
+                    <Chart
+                        options={chartOptions1.options}
+                        series={chartOptions1.series}
+                    />
+                </div>
+
                 {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
                 <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />
                 <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />

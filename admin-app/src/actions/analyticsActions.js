@@ -5,15 +5,16 @@ import { DateRangeTwoTone } from "@material-ui/icons";
 export const getTicketCanceled = (date) => async (dispatch) => {
     try {
         dispatch({ type: TICKET_DONUT_REQUEST });
-        const data = await axios.post(`user_ticket/getTicketCanceled`, date)
+        const { data } = await axios.post(`user_ticket/getTicketCanceled`, date)
         console.log(data);
-        const { totalCanceledTicket } = data.data;
-        dispatch({
-            type: TICKET_DONUT_SUCCESS,
-            payload: {
-                totalCanceledTicket
-            }
-        })
+        // const { totalCanceledTicket } = data.data;
+        // dispatch({
+        //     type: TICKET_DONUT_SUCCESS,
+        //     payload: {
+        //         totalCanceledTicket
+        //     }
+        // })
+        dispatch({ type: TICKET_DONUT_SUCCESS, payload: data })
     } catch (error) {
         dispatch({
             type: TICKET_DONUT_FAIL,
@@ -78,8 +79,8 @@ export const getNewUser = (date) => async (dispatch) => {
     try {
         dispatch({ type: NEW_USER_REQUEST });
         const { data } = await axios.post(`/getNewUser`, date)
-        console.log(date);
-        console.log(data);
+        //console.log(date);
+        //console.log(data);
         dispatch({ type: NEW_USER_SUCCESS, payload: data })
     } catch (error) {
         dispatch({

@@ -59,7 +59,7 @@ export const ticketDonutReducer = (state = {}, action) => {
             return { loading: true }
         case TICKET_DONUT_SUCCESS:
             return {
-                totalCanceledTicket: action.payload.totalCanceledTicket,
+                donutData: action.payload,
                 loading: false,
             };
         case TICKET_DONUT_FAIL:
