@@ -7,7 +7,7 @@ import { Input } from "../UI/Input";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
-
+import swal from "sweetalert";
 /**
  * @author
  * @function ListTripTable
@@ -47,6 +47,12 @@ export const ListTripTable = (props) => {
     if (modalFlag === "Add") {
       dispatch(addTrip(form));
       props.reLoad();
+      swal({
+        title: "Thêm thành công",
+        text: "Bạn đã thêm chuyến xe thành công",
+        icon: "success",
+        button: "OK",
+      });
     } else {
       //dispatch(editRoute(form));
     }

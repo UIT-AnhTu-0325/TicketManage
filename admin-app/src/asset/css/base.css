@@ -48,6 +48,11 @@
   --color-wrapper-modal: rgba(0, 0, 0, 0.4);
 
   --transition-cubic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* color status */
+  --status-red: #e74c3c;
+  --status-green: #00b887;
+  --status-blue: #3498db;
 }
 * {
   /* disable user selection */

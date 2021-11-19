@@ -7,7 +7,7 @@ import { Table } from "../../components/table/Table";
 import { Link } from "react-router-dom";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
-
+import swal from "sweetalert";
 /**
  * @author
  * @function ListRouteTable
@@ -63,8 +63,20 @@ export const ListRouteTable = (props) => {
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addRoute(form));
+      swal({
+        title: "Thêm thành công",
+        text: "Bạn đã thêm tuyến đường thành công",
+        icon: "success",
+        button: "OK",
+      });
     } else {
       dispatch(editRoute(form));
+      swal({
+        title: "Sửa thành công",
+        text: "Bạn đã sửa tuyến đường thành công",
+        icon: "success",
+        button: "OK",
+      });
     }
     setRoute(initRoute);
     if (props.type !== "Main") {
@@ -88,10 +100,25 @@ export const ListRouteTable = (props) => {
     const form = {
       _id: selectedRot._id,
     };
-    dispatch(deleteRoute(form));
-    if (props.type !== "Main") {
-      props.reLoadEnterpriseDetails();
-    }
+    swal({
+      title: "Bạn chắc chắn xóa",
+      text: "Bạn có chắc sẽ xóa tuyến đường này không",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Tuyến đường  đã được xóa thành công!", {
+          icon: "success",
+        });
+        dispatch(deleteRoute(form));
+        if (props.type !== "Main") {
+          props.reLoadEnterpriseDetails();
+        }
+      } else {
+        swal("Tuyến đường  vẫn chưa bị xóa!");
+      }
+    });
   };
   const findEnterpriseName = (idEnterprise) => {
     for (let ent of listEnterprise.enterprises) {
