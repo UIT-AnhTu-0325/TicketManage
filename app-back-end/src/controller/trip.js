@@ -5,23 +5,6 @@ const Enterprise = require("../models/enterprise");
 const Ticket = require("../models/ticket");
 const UserTicket = require("../models/user_ticket");
 const OfflineTicket = require("../models/offline_phone_ticket");
-exports.getAll = async (req, res) => {
-  try {
-    const trips = await Trip.find();
-    res.status(200).json(trips);
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-};
-
-exports.getById = async (req, res) => {
-  try {
-    const trip = await Trip.findById(req.params.id);
-    res.status(200).json(trip);
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-};
 
 exports.fetchAll = async (req, res) => {
   try {
@@ -59,6 +42,25 @@ exports.fetchAll = async (req, res) => {
     res.status(500).json({ error: err });
   }
 };
+
+exports.getAll = async (req, res) => {
+  try {
+    const trips = await Trip.find();
+    res.status(200).json(trips);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
+exports.getById = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    res.status(200).json(trip);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 
 exports.create = async (req, res) => {
   const newTrip = new Trip(req.body);
@@ -139,3 +141,4 @@ exports.getInforbyID = async (req, res) => {
     res.status(500).json({ error: err });
   }
 };
+

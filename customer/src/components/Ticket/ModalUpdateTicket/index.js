@@ -134,7 +134,7 @@ export const ModalUpdateTicket = (props) => {
                             }
                             }>
                                 <p>1</p>
-                                <span>Thông tin khách hàng</span>
+                                <span>Chọn ghế</span>
                             </div>
 
 
@@ -158,7 +158,7 @@ export const ModalUpdateTicket = (props) => {
                                 }
                                 }>
                                 <p>2</p>
-                                <span>Chọn ghế</span>
+                                <span>Điểm đón, trả</span>
                             </div>
                         </div>
                     </div>
