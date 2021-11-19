@@ -51,7 +51,7 @@ export const ListSteersmanTable = (props) => {
     //   createUsername();
     // }
     const form = steersman;
-    console.log(form);
+    //console.log(form);
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addSteersman(form));
@@ -74,7 +74,7 @@ export const ListSteersmanTable = (props) => {
       ...steersman,
       username: steersman.firstName + steersman.lastName + "123",
     });
-    console.log(steersman.username);
+    //console.log(steersman.username);
   };
 
   const findEnterpriseName = (idEnterprise) => {

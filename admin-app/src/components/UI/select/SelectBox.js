@@ -9,13 +9,23 @@ export const SelectBox = (props) => {
   return (
     <div className="selectbox">
       <div className="title">{props.title}</div>
-      <select value={props.value} onChange={props.onChange}>
+      <select
+        value={props.value}
+        onChange={props.onChange}
+        onMouseUp={props.onChange}
+      >
         <option></option>
-        {props.listCity.map((option) => {
-          if (props.routeDetail) {
+        {props.list.map((option) => {
+          if (props.type === "VehicleSelect") {
             return (
               <option key={option._id} value={option._id}>
                 {option.quality} - {option.totalSeat}
+              </option>
+            );
+          } else if (props.type === "EnterpriseSelect") {
+            return (
+              <option key={option._id} value={option._id}>
+                {option.name}
               </option>
             );
           } else {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Fade, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addTrip } from "../../actions/trip.actions";
@@ -17,12 +17,15 @@ export const ListTripTable = (props) => {
   const dispatch = useDispatch();
   const listTrip = props.listTrip;
   const listVehicle = props.listVehicle;
+  const listTicket = props.listTicket;
   const initTrip = () => {
     return {
-      //_id: "",
+      _id: "",
       idVehicle: "",
       idRoute: "",
       startDate: "1945-12-31T12:00:00.000Z",
+      price: "",
+      totalSeat: 0,
     };
   };
   const [trip, setTrip] = useState(initTrip);
@@ -30,6 +33,15 @@ export const ListTripTable = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
+  const [editData, setEditData] = useState(false);
+
+  const checkEditData = () => {
+    if (trip.idVehicle && trip.startDate && trip.price) {
+      setEditData(true);
+    } else {
+      setEditData(false);
+    }
+  };
 
   const handleModalShow = (iFlag, trip = []) => {
     if (iFlag === "Add") {
@@ -45,26 +57,50 @@ export const ListTripTable = (props) => {
   const handleModalSave = () => {
     const form = { ...trip, idRoute: props.idRoute };
     if (modalFlag === "Add") {
+      delete form._id;
       dispatch(addTrip(form));
-      props.reLoad();
     } else {
       //dispatch(editRoute(form));
     }
     setTrip(initTrip);
+    props.reLoad();
     setModalShow(false);
+    resetCss();
   };
-  const [editData, setEditData] = useState(false);
   const handleModalClose = () => {
     setTrip(initTrip);
     setModalShow(false);
+    resetCss();
+  };
+
+  const resetCss = () => {
+    setEditData(false);
   };
 
   const trips = {
-    header: ["Ngày khởi hành", "Biển số xe", "Số ghế", "Tùy chọn"],
+    header: ["Ngày khởi hành", "Biển số xe", "Số ghế", "Giá vé", "Tùy chọn"],
     body: [],
   };
   const renderHead = (item, ind) => {
     return <th key={ind}>{item}</th>;
+  };
+
+  const findPriceOfTrip = (idTrip) => {
+    for (const tic of listTicket) {
+      if (tic.idTrip === idTrip) {
+        return tic.price;
+      }
+    }
+    return 0;
+  };
+
+  const findTotalSeatOfVehicle = (idVehicle) => {
+    for (const veh of listVehicle) {
+      if (veh._id === idVehicle) {
+        return veh.totalSeat;
+      }
+    }
+    return 0;
   };
 
   const renderTrips = (trips) => {
@@ -75,11 +111,17 @@ export const ListTripTable = (props) => {
           <td>{trip.startDate}</td>
           <td>{trip.idVehicle.lisensePlate}</td>
           <td>{trip.idVehicle.totalSeat}</td>
+          <td>{findPriceOfTrip(trip._id)}</td>
           <td>
-            <button
+            {/* <button
               className="edit"
               onClick={() => {
-                //handleModalShow("Edit", route);
+                handleModalShow("Edit", {
+                  idVehicle: trip.idVehicle._id,
+                  startDate: trip.startDate,
+                  price: findPriceOfTrip(trip._id),
+                  totalSeat: trip.idVehicle.totalSeat,
+                });
               }}
             >
               <i class="far fa-edit"></i>
@@ -87,13 +129,13 @@ export const ListTripTable = (props) => {
             <button
               className="delete"
               onClick={() => {
-                //delRoute(route);
+                //to delete trip
               }}
             >
               <i class="far fa-trash-alt"></i>
-            </button>
+            </button> */}
             <Link to={`/trips/${trip._id}/informations`}>
-              <button type="button" onClick={() => {}}>
+              <button className="detail" onClick={() => {}}>
                 Chi tiết
               </button>
             </Link>
@@ -139,37 +181,41 @@ export const ListTripTable = (props) => {
         }
       >
         <div className={modalShow ? "add-modal active" : "add-modal"}>
-          <div className="add-modal__header">Thêm chuyến xe</div>
+          <div className="add-modal__header">{modalTitle}</div>
 
           <div className="add-modal__body">
             <div className="input-enterprise-name">
               <InputTitleLeft
-                title="Bus"
+                title="Ngày đi"
                 value={trip.startDate}
                 placeholder={``}
                 onChange={(e) => {
                   setTrip({ ...trip, startDate: e.target.value });
-                  if (e.target.value != "" && trip.idVehicle) {
-                    setEditData(true);
-                  } else {
-                    setEditData(false);
-                  }
+                  checkEditData();
                 }}
               />
-
               <SelectBox
                 value={trip.idVehicle}
                 onChange={(e) => {
-                  setTrip({ ...trip, idVehicle: e.target.value });
-                  if (e.target.value != "" && trip.startDate) {
-                    setEditData(true);
-                  } else {
-                    setEditData(false);
-                  }
+                  setTrip({
+                    ...trip,
+                    idVehicle: e.target.value,
+                    totalSeat: findTotalSeatOfVehicle(e.target.value),
+                  });
+                  checkEditData();
                 }}
-                listCity={listVehicle}
-                title="Address"
-                routeDetail="true"
+                list={listVehicle}
+                title="Phương tiện"
+                type="VehicleSelect"
+              />
+              <InputTitleLeft
+                title="Giá vé"
+                value={trip.price}
+                placeholder={``}
+                onChange={(e) => {
+                  setTrip({ ...trip, price: e.target.value });
+                  checkEditData();
+                }}
               />
             </div>
           </div>
