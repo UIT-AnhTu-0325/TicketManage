@@ -17,6 +17,7 @@ export const InputTitleLeft = (props) => {
             value={props.value}
             onChange={props.onChange}
             placeholder={props.placeholder}
+            onKeyUp={props.onChange}
           />
         </div>
       </div>

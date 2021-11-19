@@ -1,17 +1,28 @@
-const { create, getById, getAll, update, deleteById, getAllByDay, getAllByMonth, getAllByYear, getDateByMonthYear, getMonthByMonthYear } = require("../controller/ticket")
+const {
+  create,
+  getById,
+  getAll,
+  update,
+  deleteById,
+  getAllByDay,
+  getAllByMonth,
+  getAllByYear,
+  getDateByMonthYear,
+  getMonthByMonthYear,
+} = require("../controller/ticket");
 const router = require("express").Router();
 
-router.post("/getMonthByMonthYear", getMonthByMonthYear)
+router.post("/getMonthByMonthYear", getMonthByMonthYear);
 
-router.post("/getDateByMonthYear", getDateByMonthYear)
+router.post("/getDateByMonthYear", getDateByMonthYear);
 
-router.get("/getAllByDay", getAllByDay)
+router.get("/getAllByDay", getAllByDay);
 
-router.get("/getAllByMonth", getAllByMonth)
+router.get("/getAllByMonth", getAllByMonth);
 
-router.get("/getAllByYear", getAllByYear)
+router.get("/getAllByYear", getAllByYear);
 
-router.post("/", create);
+router.post("/create", create);
 
 router.get("/:id", getById);
 

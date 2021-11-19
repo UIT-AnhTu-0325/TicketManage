@@ -69,7 +69,7 @@ export const Analytics = (props) => {
     setTicketCurrentMonth(localStorage.getItem("totalTickets"));
     setSaleCurrentMonth(localStorage.getItem("totalSales"));
     setTicketCanceled(localStorage.getItem("ticketCanceled"));
-    console.log("test", ticketCurrentMonth, ticketCanceled);
+    //console.log("test", ticketCurrentMonth, ticketCanceled);
   };
 
   return (
