@@ -56,12 +56,14 @@ export const ListEnterpriseTable = (props) => {
       delete form._id;
 
       dispatch(addEnterprise(form));
+
       swal({
         title: "Thêm thành công",
         text: "Bạn đã thêm nhà xe thành công",
         icon: "success",
         button: "OK",
       });
+
     } else {
       dispatch(editEnterprise(form));
       swal({
