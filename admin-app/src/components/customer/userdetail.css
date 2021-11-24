@@ -119,6 +119,10 @@
   background-color: rgba(236, 236, 236, 0.295);
   color: var(--status-green);
 }
+.user-detail__wrapper .right-panel .status.used {
+  background-color: rgba(236, 236, 236, 0.295);
+  color: blue;
+}
 .user-detail__wrapper .right-panel .status.cancel {
   background-color: rgba(236, 236, 236, 0.295);
   color: var(--status-red);
