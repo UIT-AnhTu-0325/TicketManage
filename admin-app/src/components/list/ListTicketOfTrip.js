@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /**
  * @author
@@ -74,7 +75,11 @@ export const ListTicketOfTrip = (props) => {
             <div class="card-body">
               <h5 class="card-title">Ghế trống</h5>
               <p class="card-text">Giá vé: {tickets.price}</p>
-              <button>Thêm vé</button>
+              <Link to={`/trips/${tickets.idTrip}/crOffTicket`}>
+                <button className="detail" onClick={() => {}}>
+                  Đặt vé
+                </button>
+              </Link>
             </div>
           </div>
         );

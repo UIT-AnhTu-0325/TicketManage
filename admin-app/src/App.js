@@ -20,7 +20,8 @@ import { EnterpriseDetails } from "./containers/EnterpriseDetails";
 import { RouteDetails } from "./containers/RouteDetails";
 import { User } from "./containers/User";
 import { TripDetails } from "./containers/TripDetails";
-import { UserDetail } from "./components/customer/UserDetail";
+import { UserDetails } from "./containers/UserDetails";
+import { OfflineTicket } from "./containers/OfflineTicket";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function App() {
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
         ></Route>
-        <Route path="/user/:userId/userdetail" component={UserDetail}></Route>
+        <Route path="/user/:userId/userdetail" component={UserDetails}></Route>
 
         <Route
           path="/routes/:routeId/informations"
@@ -53,6 +54,10 @@ function App() {
         <Route
           path="/trips/:tripId/informations"
           component={TripDetails}
+        ></Route>
+        <Route
+          path="/trips/:tripId/crOffTicket"
+          component={OfflineTicket}
         ></Route>
         <Route path="/routes" component={Routes} />
         <Route path="/enterprises" exact component={Enterprise} />
