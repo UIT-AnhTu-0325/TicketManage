@@ -91,7 +91,92 @@ exports.getTicketCanceled = async (req, res) => {
                 }
             ]
         )
-        res.status(200).json(canceledTicket);
+
+        const tickets = await Ticket.aggregate(
+            [
+                {
+                    '$lookup': {
+                        'from': 'trips',
+                        'localField': 'idTrip',
+                        'foreignField': '_id',
+                        'as': 'infor'
+                    }
+                }, {
+                    '$replaceRoot': {
+                        'newRoot': {
+                            '$mergeObjects': [
+                                {
+                                    '$arrayElemAt': [
+                                        '$infor', 0
+                                    ]
+                                }, '$$ROOT'
+                            ]
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'infor': 0
+                    }
+                }, {
+                    '$unwind': {
+                        'path': '$quantity'
+                    }
+                }, {
+                    '$match': {
+                        'quantity': true
+                    }
+                }, {
+                    '$project': {
+                        'date': '$startDate',
+                        'month': {
+                            '$month': '$startDate'
+                        },
+                        'year': {
+                            '$year': '$startDate'
+                        },
+                        'quantity': '$quantity',
+                        'price': '$price'
+                    }
+                }, {
+                    '$match': {
+                        'month': month,
+                        'year': year
+                    }
+                }, {
+                    '$group': {
+                        '_id': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$date'
+                            }
+                        },
+                        'totalTicket': {
+                            '$sum': 1
+                        },
+                        'totalSale': {
+                            '$sum': '$price'
+                        }
+                    }
+                }, {
+                    '$sort': {
+                        '_id': 1
+                    }
+                }
+            ]
+        )
+
+        var totalTicket = tickets[0].totalTicket
+
+
+        if (canceledTicket.length == 0) {
+            var totalCanceledTicket = 0
+        }
+        else {
+            var totalCanceledTicket = canceledTicket[0].totalCanceledTicket
+        }
+
+
+        res.status(200).json([totalTicket, totalCanceledTicket]);
     } catch (err) {
         res.status(500).json({ error: err });
     }

@@ -77,7 +77,14 @@ exports.getMonthByMonthYear = async (req, res) => {
                 }
             ]
         )
-        res.status(200).json(tickets);
+
+        var totalTicket = tickets[0].totalTicket
+        var totalSale = tickets[0].totalSale
+
+        res.status(200).json({
+            totalTicket,
+            totalSale
+        });
     } catch (err) {
         res.status(500).json({ error: err });
     }
@@ -158,7 +165,37 @@ exports.getDateByMonthYear = async (req, res) => {
                 }
             ]
         )
-        res.status(200).json(tickets);
+
+        let listTicket = []
+        let listSale = []
+        var day = new Date(year, month, 0).getDate()
+
+        console.log(tickets.length)
+
+        if (tickets.length == day) {
+            for (var i = 0; i < tickets.length; i++) {
+                listTicket.push(tickets[i].totalTicket)
+                listSale.push(tickets[i].totalSale)
+            }
+        }
+        else {
+            for (var i = 1, j = 0; i <= day; i++) {
+                if (j == tickets.length) {
+                    listTicket.push(0)
+                    listSale.push(0)
+                }
+                else if (tickets[j]._id == ((i < 10) ? `${year}-${month}-0${i}` : `${year}-${month}-${i}`)) {
+                    listTicket.push(tickets[j].totalTicket)
+                    listSale.push(tickets[j].totalSale)
+                    j++
+                }
+                else {
+                    listTicket.push(0)
+                    listSale.push(0)
+                }
+            }
+        }
+        res.status(200).json({ listTicket, listSale });
     } catch (err) {
         res.status(500).json({ error: err });
     }
