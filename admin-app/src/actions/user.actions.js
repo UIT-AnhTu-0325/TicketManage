@@ -2,7 +2,7 @@ import axios from "../helpers/axios";
 import { userConstants } from "./constants";
 
 export const signup = (user) => {
-  console.log(user);
+  //console.log(user);
 
   return async (dispatch) => {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST });
@@ -38,6 +38,30 @@ export const getAllUser = () => {
     } else {
       dispatch({
         type: userConstants.GET_ALL_USERS_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};
+
+export const getUserDetailById = (payload) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstants.GET_USER_DETAIL_BY_ID_REQUEST,
+    });
+
+    const { userId } = payload.params;
+    const res = await axios.get(`/user/${userId}/userdetail`);
+    try {
+      if (res.status === 200) {
+        dispatch({
+          type: userConstants.GET_USER_DETAIL_BY_ID_SUCCESS,
+          payload: { userDetail: res.data },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: userConstants.GET_USER_DETAIL_BY_ID_FAILURE,
         payload: { error: res.data.error },
       });
     }

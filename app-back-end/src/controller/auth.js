@@ -6,31 +6,31 @@ const bcrypt = require("bcrypt");
 
 exports.getNewUser = async (req, res) => {
   try {
-    const { month, year } = req.body
-    const newUser = await User.aggregate(
-      [
-        {
-          '$project': {
-            'date': '$createdAt',
-            'month': {
-              '$month': '$createdAt'
-            },
-            'year': {
-              '$year': '$createdAt'
-            }
-          }
-        }, {
-          '$match': {
-            'month': month,
-            'year': year
-          }
-        }, {
-          '$group': {
-            '_id': {
-              '$dateToString': {
-                'format': '%Y-%m-%d',
-                'date': '$date'
-              }
+    const { month, year } = req.body;
+    const newUser = await User.aggregate([
+      {
+        $project: {
+          date: "$createdAt",
+          month: {
+            $month: "$createdAt",
+          },
+          year: {
+            $year: "$createdAt",
+          },
+        },
+      },
+      {
+        $match: {
+          month: month,
+          year: year,
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$date",
             },
             'newUser': {
               '$sum': 1
@@ -71,7 +71,7 @@ exports.getNewUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err });
   }
-}
+};
 
 exports.signup = async (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
@@ -126,7 +126,7 @@ exports.signup = async (req, res) => {
       console.log(error);
     }
     if (data) {
-      console.log(data);
+      //console.log(data);
     }
   });
 };

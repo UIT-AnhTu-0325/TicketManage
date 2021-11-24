@@ -35,9 +35,9 @@ exports.userProfile = async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Something went wrong",
-    })
+    });
   }
-}
+};
 
 // exports.UpdateProfile = async (req, res) => {
 //     try {
@@ -72,27 +72,24 @@ exports.UpdateProfile = async (req, res) => {
     //   { new: true }
     // );
 
-
-
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.user._id);
     if (user) {
       user.firstName = req.body.firstName || user.firstName;
       user.lastName = req.body.lastName || user.lastName;
       user.email = req.body.email || user.email;
       user.contactNumber = req.body.contactNumber || user.contactNumber;
     }
-    const updateUser = await user.save()
+    const updateUser = await user.save();
 
-    const upProfile = await Profile.findOne({ account: user._id })
+    const upProfile = await Profile.findOne({ account: user._id });
     if (upProfile) {
       upProfile.dob = req.body.dob || upProfile.dob;
       upProfile.gender = req.body.gender || upProfile.gender;
       //if (req.file) upProfile.avatar = process.env.APP_DOMAIN + (req.file.path).replace(/^.*[\\\/]/, '') || upProfile.avatar;
       upProfile.avatar = req.body.avatar || upProfile.avatar;
-      console.log(req.file)
+      //console.log(req.file)
     }
-    const updateProfile = await upProfile.save()
-
+    const updateProfile = await upProfile.save();
 
     let profile = await Profile.findOne({ account: user._id }).populate(
       "account",
@@ -100,12 +97,11 @@ exports.UpdateProfile = async (req, res) => {
       User
     );
 
-
     return res.status(200).json({
       success: true,
       message: "Your profile is now update",
-      profile
-    })
+      profile,
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -139,8 +135,7 @@ exports.myProfile = async (req, res) => {
       message: "Unable to get profile",
     });
   }
-}
-
+};
 
 exports.profiles = async (req, res) => {
   try {
@@ -155,8 +150,8 @@ exports.profiles = async (req, res) => {
       avatar,
       dob,
       gender,
-    })
-    console.log("USER_PROFILE", _profile);
+    });
+    //console.log("USER_PROFILE", _profile);
     _profile.save((error, data) => {
       if (error) {
         console.log(error);
@@ -175,7 +170,6 @@ exports.profiles = async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Unable to create your profile",
-    })
-
+    });
   }
-}
+};

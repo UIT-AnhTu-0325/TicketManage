@@ -1,164 +1,154 @@
-import React, { useEffect, useState } from 'react'
-import '../../../asset/css/modal-css/buy-ticket.css'
-import { useDispatch, useSelector } from 'react-redux';
-
+import React, { useEffect, useState } from "react";
+import "../../../asset/css/modal-css/buy-ticket.css";
+import { useDispatch, useSelector } from "react-redux";
 
 // img
-import loginRequestImg from '../../../asset/img/login-nice-img.png'
-import serviceImg from '../../../asset/img/services.png'
-import pickupPointImg from '../../../asset/img/pickup-point.png'
-import confirmImg from '../../../asset/img/confirm.png'
-import { InputBox } from '../../UI/InputBox'
-import { LeftPannel } from './Components/LeftPannel'
-import { createNew } from '../../../action/user_ticket';
+import loginRequestImg from "../../../asset/img/login-nice-img.png";
+import serviceImg from "../../../asset/img/services.png";
+import pickupPointImg from "../../../asset/img/pickup-point.png";
+import confirmImg from "../../../asset/img/confirm.png";
+import { InputBox } from "../../UI/InputBox";
+import { LeftPannel } from "./Components/LeftPannel";
+import { createNew } from "../../../action/user_ticket";
 
 /**
-* @author
-* @function ModalBuyTicket
-**/
+ * @author
+ * @function ModalBuyTicket
+ **/
 
 export const ModalBuyTicket = (props) => {
-    const locations = useSelector(state => state.locations);
-    const getOn = locations.filter(location => location.city === props.info.route.startLocation);
-    const getOff = locations.filter(location => location.city === props.info.route.endLocation);
-    const dispatch = useDispatch();
+  const locations = useSelector((state) => state.locations);
+  const getOn = locations.filter(
+    (location) => location.city === props.info.route.startLocation
+  );
+  const getOff = locations.filter(
+    (location) => location.city === props.info.route.endLocation
+  );
+  const dispatch = useDispatch();
 
-    const [on, setOn] = useState("");
-    const [off, setOff] = useState("");
+  const [on, setOn] = useState("");
+  const [off, setOff] = useState("");
 
-    const [processStatus, setProcessState] = useState(1);
+  const [processStatus, setProcessState] = useState(1);
 
-    //front end relate logic
-    const [processHandled, setProcessHandled] = useState(1);
+  //front end relate logic
+  const [processHandled, setProcessHandled] = useState(1);
 
-
-    //  only for front-end design
-    const [prevStatus, setPreStatus] = useState(1); // 1 is default with slide to right
-    const [isOpen, setIsOpen] = useState(1);  //1 is default with first open， 2 is opened -> for design only
-    const numberProcess = 4;
-    const clickNextProcess = () => {
-
-        if (processStatus < numberProcess) {
-            setPreStatus(1)
-            setProcessState(processStatus + 1)
-        }
-        else {
-            setPreStatus(2)
-        }
-        if (processStatus > processHandled) {
-            setProcessHandled(processStatus);
-        }
+  //  only for front-end design
+  const [prevStatus, setPreStatus] = useState(1); // 1 is default with slide to right
+  const [isOpen, setIsOpen] = useState(1); //1 is default with first open， 2 is opened -> for design only
+  const numberProcess = 4;
+  const clickNextProcess = () => {
+    if (processStatus < numberProcess) {
+      setPreStatus(1);
+      setProcessState(processStatus + 1);
+    } else {
+      setPreStatus(2);
     }
-
-    const clickOpen = () => {
-        setIsOpen(2);
+    if (processStatus > processHandled) {
+      setProcessHandled(processStatus);
     }
+  };
 
-    let seats = [];
-    props.info.ticket.quantity.forEach((item, index) => {
-        if (item) {
-            seats.push({
-                id: index + 1,
-                value: "booked"
-            });
+  const clickOpen = () => {
+    setIsOpen(2);
+  };
+
+  let seats = [];
+  props.info.ticket.quantity.forEach((item, index) => {
+    if (item) {
+      seats.push({
+        id: index + 1,
+        value: "booked",
+      });
+    } else {
+      seats.push({
+        id: index + 1,
+        value: "available",
+      });
+    }
+  });
+  const initialSeat = [];
+  seats.forEach((seat) => {
+    if (seat.value === "available") {
+      initialSeat.push(seat.id);
+    }
+  });
+  const [itemChoosing, setItemChoosing] = useState([]);
+  const [itemAvailable, setItemAvailable] = useState(initialSeat);
+  //console.log(itemChoosing)
+
+  const clickChoosing = (id) => {
+    setItemChoosing((prev) => {
+      if (itemChoosing.includes(id)) {
+        return itemChoosing.filter((item) => item !== id);
+      } else {
+        if (itemAvailable.includes(id)) {
+          return [...prev, id];
+        } else {
+          return prev;
         }
-        else {
-            seats.push({
-                id: index + 1,
-                value: "available"
-            });
-        }
+      }
     });
-    const initialSeat = []
-    seats.forEach(seat => {
-        if (seat.value === "available") {
-            initialSeat.push(seat.id);
-        }
-    });
-    const [itemChoosing, setItemChoosing] = useState(
-        []
-    );
-    const [itemAvailable, setItemAvailable] = useState(
-        initialSeat
-    );
-    console.log(itemChoosing)
+  };
 
-    const clickChoosing = (id) => {
-        setItemChoosing(prev => {
-            if (itemChoosing.includes(id)) {
-                return itemChoosing.filter(item => item !== id)
-            }
-            else {
-                if (itemAvailable.includes(id)) {
-                    return [...prev, id];
+  const getOnCLick = (e) => {
+    setOn(e.target.value);
+  };
+  const getOffCLick = (e) => {
+    setOff(e.target.value);
+  };
+  useEffect(() => {}, []);
+
+  return (
+    <div>
+      <div className="modal-ticket">
+        <div className="modal-ticket__main">
+          <div className="modal-ticket__header">
+            <div className="process-bar">
+              <div
+                className={
+                  processStatus === 1
+                    ? "item  active current info-customer"
+                    : "item  active info-customer"
                 }
-                else {
-                    return prev;
+                onClick={() => {
+                  setProcessState(1);
+                  if (processStatus > processHandled) {
+                    setProcessHandled(processStatus);
+                  }
+                }}
+              >
+                <p>1</p>
+                <span>Thông tin khách hàng</span>
+              </div>
+
+              <div
+                className={
+                  processStatus === 2
+                    ? "item process active current info-customer"
+                    : processStatus > 2
+                    ? "item process active info-customer"
+                    : "item process info-customer"
                 }
+                onClick={() => {
+                  clickOpen();
+                  setProcessState(2);
+                  if (processStatus > 2) {
+                    setPreStatus(2);
+                  } else {
+                    setPreStatus(1);
+                  }
+                  if (processHandled < 2) {
+                    setProcessHandled(2);
+                  }
+                }}
+              >
+                <p>2</p>
+                <span>Chọn ghế</span>
+              </div>
 
-            }
-        })
-    }
-
-    const getOnCLick = (e) => {
-        setOn(e.target.value);
-    }
-    const getOffCLick = (e) => {
-        setOff(e.target.value);
-    }
-    useEffect(() => {
-
-    }, [])
-
-    return (
-        <div>
-
-            <div className="modal-ticket">
-                <div className="modal-ticket__main">
-                    <div className="modal-ticket__header">
-
-                        <div className="process-bar">
-                            <div className={
-                                processStatus === 1 ? "item  active current info-customer"
-                                    : "item  active info-customer"
-                            } onClick={() => {
-                                setProcessState(1);
-                                if (processStatus > processHandled) {
-                                    setProcessHandled(processStatus);
-                                }
-                            }
-                            }>
-                                <p>1</p>
-                                <span>Thông tin khách hàng</span>
-                            </div>
-
-
-                            <div className={
-                                processStatus === 2 ? "item process active current info-customer"
-                                    : (processStatus > 2 ? "item process active info-customer" : "item process info-customer")
-                            }
-
-                                onClick={() => {
-
-                                    clickOpen();
-                                    setProcessState(2);
-                                    if (processStatus > 2) {
-                                        setPreStatus(2)
-                                    } else {
-                                        setPreStatus(1)
-                                    }
-                                    if (processHandled < 2) {
-                                        setProcessHandled(2);
-                                    }
-                                }
-                                }>
-                                <p>2</p>
-                                <span>Chọn ghế</span>
-                            </div>
-
-
-
-                            {/*                             <div className={
+              {/*                             <div className={
                                 processStatus === 3 ? "item process active current info-customer"
                                     : (processStatus > 3 ? "item process active info-customer" : "item process info-customer")
                             }
@@ -180,184 +170,214 @@ export const ModalBuyTicket = (props) => {
                                 <span>Dịch vụ</span>
                             </div> */}
 
+              <div
+                className={
+                  processStatus === 4
+                    ? "item process active current info-customer"
+                    : processStatus > 4
+                    ? "item process active info-customer"
+                    : "item process info-customer"
+                }
+                onClick={() => {
+                  if (itemChoosing.length === 0) {
+                    alert("Vui lòng chọn ghế ngồi");
+                  } else {
+                    if (processHandled < 2) {
+                      return;
+                    }
+                    clickOpen();
+                    setProcessState(4);
+                    if (processStatus > 4) {
+                      setPreStatus(2);
+                    } else {
+                      setPreStatus(1);
+                    }
+                    if (4 > processHandled) {
+                      setProcessHandled(4);
+                    }
+                  }
+                }}
+              >
+                <p>3</p>
+                <span>Điểm đón, trả</span>
+              </div>
+              <div
+                className={
+                  processStatus === 5
+                    ? "item process active current info-customer"
+                    : "item process info-customer"
+                }
+                onClick={() => {
+                  if (on === "" || off === "") {
+                    alert("Vui lòng chọn điểm đón trả");
+                  } else {
+                    if (processHandled < 3) {
+                      return;
+                    }
+                    setProcessState(5);
+                    setPreStatus(1);
+                    clickOpen();
+                    if (processStatus > processHandled) {
+                      setProcessHandled(processStatus);
+                    }
+                  }
+                }}
+              >
+                <p>4</p>
+                <span>Xác nhận</span>
+              </div>
+            </div>
+          </div>
 
-                            <div className=
-                                {
-                                    processStatus === 4 ? "item process active current info-customer"
-                                        : (processStatus > 4 ? "item process active info-customer" : "item process info-customer")
-                                }
-                                onClick={() => {
-                                    if (itemChoosing.length === 0) {
-                                        alert("Vui lòng chọn ghế ngồi");
-                                    } else {
-                                        if (processHandled < 2) {
-                                            return;
-                                        }
-                                        clickOpen();
-                                        setProcessState(4);
-                                        if (processStatus > 4) {
-                                            setPreStatus(2)
-                                        } else {
-                                            setPreStatus(1)
-                                        }
-                                        if (4 > processHandled) {
-                                            setProcessHandled(4);
-                                        }
-                                    }
-                                }
-                                }>
-                                <p>3</p>
-                                <span>Điểm đón, trả</span>
-                            </div>
-                            <div className=
-                                {
-                                    processStatus === 5 ? "item process active current info-customer"
-                                        : "item process info-customer"
-                                }
-                                onClick={() => {
-                                    if (on === "" || off === "") {
-                                        alert("Vui lòng chọn điểm đón trả");
-                                    } else {
-                                        if (processHandled < 3) {
-                                            return;
-                                        }
-                                        setProcessState(5); setPreStatus(1); clickOpen();
-                                        if (processStatus > processHandled) {
-                                            setProcessHandled(processStatus);
-                                        }
-                                    }
-                                }}>
-                                <p>4</p>
-                                <span>Xác nhận</span>
-                            </div>
-                        </div>
+          <div className="modal-ticket__content">
+            <div
+              className={
+                isOpen === 1
+                  ? "content__customer active"
+                  : processStatus === 1
+                  ? "content__customer active slide-right"
+                  : "content__customer"
+              }
+            >
+              <LeftPannel
+                loginImg={loginRequestImg}
+                title="Đăng nhập để bỏ qua bước này"
+                desc=" Đặt vé nhanh và thuận tiện bằng cách đăng nhập để có những trải nghiệm tốt nhất"
+                isLogin="true"
+                linkText="Đăng nhập"
+                info={props.info}
+              ></LeftPannel>
+
+              <div className="customer__right-panel">
+                <div className="right-panel__header">
+                  Điền thông tin liên hệ
+                </div>
+                <form action="" className="form-info-input">
+                  <InputBox
+                    type="text"
+                    title="Họ tên"
+                    value={
+                      localStorage.getItem("firstName") +
+                      " " +
+                      localStorage.getItem("lastName")
+                    }
+                  ></InputBox>
+                  <InputBox
+                    type="number"
+                    title="Số điện thoại"
+                    value={localStorage.getItem("contact")}
+                  />
+                  <InputBox
+                    type="email"
+                    title="Email"
+                    value={localStorage.getItem("email")}
+                  />
+                </form>
+                <button
+                  className="custom-btn"
+                  onClick={() => {
+                    clickOpen();
+                    setProcessState(2);
+                    if (processStatus > 2) {
+                      setPreStatus(2);
+                    } else {
+                      setPreStatus(1);
+                    }
+                    if (processHandled < 2) {
+                      setProcessHandled(2);
+                    }
+                  }}
+                >
+                  Tiếp tục
+                </button>
+              </div>
+            </div>
+
+            <div
+              className={
+                processStatus === 2
+                  ? prevStatus === 1
+                    ? "content__services active slide-left"
+                    : "content__services active slide-right"
+                  : "content__services"
+              }
+            >
+              <LeftPannel
+                loginImg={serviceImg}
+                title="Dịch vụ"
+                desc="Hãy chọn các dịch vụ bạn cần nhé :33"
+                isLogin="true"
+                linkText="Tìm hiểu thêm"
+                info={props.info}
+              ></LeftPannel>
+              <div className="customer__right-panel">
+                <div className="right-panel__header">Chọn số ghế bên dưới</div>
+                <div className="services-list">
+                  <div className="seat">
+                    <div className="seat-choosing">
+                      <div className="steering-wheel">
+                        <i class="icofont-steering"></i>
+                      </div>
+                      <div className="pannel-wrapper">
+                        {seats.map((seat) => (
+                          <div
+                            className={
+                              itemChoosing.includes(seat.id) &&
+                              itemAvailable.includes(seat.id)
+                                ? "item-seat active"
+                                : itemAvailable.includes(seat.id)
+                                ? "item-seat"
+                                : "item-seat non-ava"
+                            }
+                            onClick={() => clickChoosing(seat.id)}
+                          >
+                            <i class="fas fa-couch"></i>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                    <div className="seat-guide">
+                      <div className="note">* Chú thích</div>
+                      <div className="item">
+                        <div className="circle circle-choosed"></div>
+                        <span>Đang chọn</span>
+                      </div>
+                      <div className="item">
+                        <div className="circle circle-ava"></div>
+                        <span>Ghế trống</span>
+                      </div>
+                      <div className="item">
+                        <div className="circle circle-nonava"></div>
+                        <span>Không có sẵn</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="custom-btn"
+                  onClick={() => {
+                    if (itemChoosing.length === 0) {
+                      alert("Vui lòng chọn ghế ngồi");
+                    } else {
+                      clickOpen();
+                      setProcessState(4);
+                      if (processStatus > 3) {
+                        setPreStatus(2);
+                      } else {
+                        setPreStatus(1);
+                      }
+                      if (3 > processHandled) {
+                        setProcessHandled(3);
+                      }
+                    }
+                  }}
+                >
+                  Tiếp tục
+                </button>
+              </div>
+            </div>
 
-
-
-                    <div className="modal-ticket__content">
-                        <div className={isOpen === 1 ? "content__customer active" : (processStatus === 1 ? "content__customer active slide-right" : "content__customer")}>
-
-                            <LeftPannel
-                                loginImg={loginRequestImg}
-                                title="Đăng nhập để bỏ qua bước này"
-                                desc=" Đặt vé nhanh và thuận tiện bằng cách đăng nhập để có những trải nghiệm tốt nhất"
-                                isLogin="true"
-                                linkText="Đăng nhập"
-                                info={props.info}
-                            >
-                            </LeftPannel>
-
-                            <div className="customer__right-panel">
-                                <div className="right-panel__header">
-                                    Điền thông tin liên hệ
-                                </div>
-                                <form action="" className="form-info-input">
-                                    <InputBox type="text" title="Họ tên" value={localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}></InputBox>
-                                    <InputBox type="number" title="Số điện thoại" value={localStorage.getItem('contact')} />
-                                    <InputBox type="email" title="Email" value={localStorage.getItem('email')} />
-                                </form>
-                                <button className="custom-btn"
-                                    onClick={() => {
-
-                                        clickOpen();
-                                        setProcessState(2);
-                                        if (processStatus > 2) {
-                                            setPreStatus(2)
-                                        } else {
-                                            setPreStatus(1)
-                                        }
-                                        if (processHandled < 2) {
-                                            setProcessHandled(2);
-                                        }
-                                    }
-                                    }
-                                >Tiếp tục</button>
-                            </div>
-                        </div>
-
-
-
-                        <div className={processStatus === 2 ?
-
-                            (prevStatus === 1 ? "content__services active slide-left" : "content__services active slide-right")
-                            : "content__services"
-
-                        }>
-                            <LeftPannel
-                                loginImg={serviceImg}
-                                title="Dịch vụ"
-                                desc="Hãy chọn các dịch vụ bạn cần nhé :33"
-                                isLogin="true"
-                                linkText="Tìm hiểu thêm"
-                                info={props.info}
-                            >
-                            </LeftPannel>
-                            <div className="customer__right-panel">
-                                <div className="right-panel__header">
-                                    Chọn số ghế bên dưới
-                                </div>
-                                <div className="services-list">
-                                    <div className="seat">
-                                        <div className="seat-choosing">
-                                            <div className="steering-wheel">
-                                                <i class="icofont-steering"></i>
-                                            </div>
-                                            <div className="pannel-wrapper">
-                                                {
-                                                    seats.map(seat => (
-                                                        <div className={itemChoosing.includes(seat.id) && itemAvailable.includes(seat.id) ? "item-seat active" : (itemAvailable.includes(seat.id) ? "item-seat" : "item-seat non-ava")}
-                                                            onClick={() => clickChoosing(seat.id)}
-                                                        >
-                                                            <i class="fas fa-couch"></i>
-                                                        </div>
-
-                                                    ))
-                                                }
-                                            </div>
-                                        </div>
-                                        <div className="seat-guide">
-                                            <div className="note">* Chú thích</div>
-                                            <div className="item">
-                                                <div className="circle circle-choosed"></div>
-                                                <span>Đang chọn</span>
-                                            </div>
-                                            <div className="item">
-                                                <div className="circle circle-ava"></div>
-                                                <span>Ghế trống</span>
-                                            </div>
-                                            <div className="item">
-                                                <div className="circle circle-nonava"></div>
-                                                <span>Không có sẵn</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="custom-btn"
-                                    onClick={
-                                        () => {
-                                            if (itemChoosing.length === 0) {
-                                                alert("Vui lòng chọn ghế ngồi");
-                                            } else {
-                                                clickOpen();
-                                                setProcessState(4);
-                                                if (processStatus > 3) {
-                                                    setPreStatus(2)
-                                                } else {
-                                                    setPreStatus(1)
-                                                }
-                                                if (3 > processHandled) {
-                                                    setProcessHandled(3);
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                >Tiếp tục</button>
-                            </div>
-                        </div>
-
-                        {/* <div className={processStatus === 3 ?
+            {/* <div className={processStatus === 3 ?
 
                             (prevStatus === 1 ? "content__services active slide-left" : "content__services active slide-right")
                             : "content__services"
@@ -411,144 +431,204 @@ export const ModalBuyTicket = (props) => {
                         </div>
  */}
 
-
-
-
-                        <div className={processStatus === 4 ?
-                            (prevStatus === 1 ? "content__pickup-point active slide-left" : "content__pickup-point active slide-right")
-                            : "content__pickup-point"
-                        }>
-                            <LeftPannel
-                                loginImg={pickupPointImg}
-                                title="Chọn điểm đón, điểm đến"
-                                desc="Hãy chọn nơi xe luân chuyển của chúng tôi sẽ đón bạn, nơi bạn dừng ở điểm đến"
-                                isLogin="false"
-                                linkText="Tìm hiểu thêm"
-                                info={props.info}
-                            >
-                            </LeftPannel>
-                            <div className="customer__right-panel">
-                                <div className="right-panel__header">
-                                    Chọn điểm đón, trả khách
-                                </div>
-                                <div className="pickup-dropoff__chossing">
-
-                                    <div className="pickup-dropoff__main__choosing">
-                                        <div className="pickup-point">
-                                            <div className="pickup-dropoff__point pickup-point__title">
-                                                Điểm đón
-                                            </div>
-                                            <ul className="pickup-point__content">
-                                                {getOn.map(element => (
-                                                    <li>
-                                                        <input type="radio" name="getOn" value={element.location} onChange={getOnCLick} />
-                                                        <span className="content-locate"> {element.location}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-
-                                        <div className="dropoff-point">
-                                            <div className="pickup-dropoff__point dropoff-point__title">
-                                                Điểm trả
-                                            </div>
-                                            <ul className="pickup-point__content">
-                                                {getOff.map(element => (
-                                                    <li>
-                                                        <input type="radio" name="getOff" value={element.location} onChange={getOffCLick} />
-                                                        <span className="content-locate"> {element.location}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="custom-btn"
-                                    onClick={() => {
-                                        if (on === "" || off === "") {
-                                            alert("Vui lòng chọn điểm đón trả");
-                                        } else {
-                                            clickOpen();
-                                            setProcessState(5);
-                                            if (processStatus > 4) {
-                                                setPreStatus(2)
-                                            } else {
-                                                setPreStatus(1)
-                                            }
-                                            if (4 > processHandled) {
-                                                setProcessHandled(4);
-                                            }
-                                        }
-
-                                    }}
-
-                                >Tiếp tục</button>
-                            </div>
-                        </div>
-
-                        <div className={processStatus === 5 ? "content__confirm active slide-left" : "content__confirm"}>
-                            <LeftPannel
-                                loginImg={confirmImg}
-                                title="Xác nhận"
-                                desc="Hãy kiểm tra lại các thông tin rồi bấm xác nhận để tiến hành đặt vé bạn nha"
-                                isLogin="false"
-                                linkText="Tìm hiểu thêm"
-                                info={props.info}
-                            >
-                            </LeftPannel>
-                            <div className="customer__right-panel">
-                                <div className="right-panel__header">
-                                    Kiểm tra thông tin và xác nhận
-                                </div>
-                                <div className="main">
-                                    <div className="bus-branch">
-                                        <span> Họ tên</span>  <spanc className="branch-name">{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Số điện thoại</span>  <spanc className="branch-name">{localStorage.getItem('contact')}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Email</span>  <spanc className="branch-name">{localStorage.getItem('email')}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Số ghế</span>  <spanc className="branch-name">{itemChoosing.map((item, index) => index + 1 == itemChoosing.length ? item : item + ", ")}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Điểm đón</span> <spanc className="branch-name">{on}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Điểm trả</span>  <spanc className="branch-name">{off}</spanc>
-                                    </div>
-                                    <div className="bus-branch">
-                                        <span> Tổng tiền</span>  <spanc className="branch-name">{(itemChoosing.length * props.info.ticket.price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} đ</spanc>
-                                    </div>
-                                </div>
-                                <button className="custom-btn"
-                                    onClick={() => {
-                                        if (window.confirm("Xác nhận đặt vé")) {
-                                            itemChoosing.forEach(item => {
-                                                props.info.ticket.quantity[item - 1] = true;
-                                                dispatch(createNew({ idUser: localStorage.getItem('id'), idTicket: props.info.ticket._id, getOn: on, getOff: off, seatNumber: item },
-                                                    { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }));
-                                            })
-                                            alert('Đặt vé thành công');
-                                            window.location.reload();
-                                        }
-                                    }}
-
-                                >Hoàn tất</button>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <div className="close-btn" onClick={props.closeModal}>
-                        <i class="fas fa-times"></i>
-                    </div>
+            <div
+              className={
+                processStatus === 4
+                  ? prevStatus === 1
+                    ? "content__pickup-point active slide-left"
+                    : "content__pickup-point active slide-right"
+                  : "content__pickup-point"
+              }
+            >
+              <LeftPannel
+                loginImg={pickupPointImg}
+                title="Chọn điểm đón, điểm đến"
+                desc="Hãy chọn nơi xe luân chuyển của chúng tôi sẽ đón bạn, nơi bạn dừng ở điểm đến"
+                isLogin="false"
+                linkText="Tìm hiểu thêm"
+                info={props.info}
+              ></LeftPannel>
+              <div className="customer__right-panel">
+                <div className="right-panel__header">
+                  Chọn điểm đón, trả khách
                 </div>
-            </div>
-        </div>
-    )
+                <div className="pickup-dropoff__chossing">
+                  <div className="pickup-dropoff__main__choosing">
+                    <div className="pickup-point">
+                      <div className="pickup-dropoff__point pickup-point__title">
+                        Điểm đón
+                      </div>
+                      <ul className="pickup-point__content">
+                        {getOn.map((element) => (
+                          <li>
+                            <input
+                              type="radio"
+                              name="getOn"
+                              value={element.location}
+                              onChange={getOnCLick}
+                            />
+                            <span className="content-locate">
+                              {" "}
+                              {element.location}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-}
+                    <div className="dropoff-point">
+                      <div className="pickup-dropoff__point dropoff-point__title">
+                        Điểm trả
+                      </div>
+                      <ul className="pickup-point__content">
+                        {getOff.map((element) => (
+                          <li>
+                            <input
+                              type="radio"
+                              name="getOff"
+                              value={element.location}
+                              onChange={getOffCLick}
+                            />
+                            <span className="content-locate">
+                              {" "}
+                              {element.location}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="custom-btn"
+                  onClick={() => {
+                    if (on === "" || off === "") {
+                      alert("Vui lòng chọn điểm đón trả");
+                    } else {
+                      clickOpen();
+                      setProcessState(5);
+                      if (processStatus > 4) {
+                        setPreStatus(2);
+                      } else {
+                        setPreStatus(1);
+                      }
+                      if (4 > processHandled) {
+                        setProcessHandled(4);
+                      }
+                    }
+                  }}
+                >
+                  Tiếp tục
+                </button>
+              </div>
+            </div>
+
+            <div
+              className={
+                processStatus === 5
+                  ? "content__confirm active slide-left"
+                  : "content__confirm"
+              }
+            >
+              <LeftPannel
+                loginImg={confirmImg}
+                title="Xác nhận"
+                desc="Hãy kiểm tra lại các thông tin rồi bấm xác nhận để tiến hành đặt vé bạn nha"
+                isLogin="false"
+                linkText="Tìm hiểu thêm"
+                info={props.info}
+              ></LeftPannel>
+              <div className="customer__right-panel">
+                <div className="right-panel__header">
+                  Kiểm tra thông tin và xác nhận
+                </div>
+                <div className="main">
+                  <div className="bus-branch">
+                    <span> Họ tên</span>{" "}
+                    <spanc className="branch-name">
+                      {localStorage.getItem("firstName") +
+                        " " +
+                        localStorage.getItem("lastName")}
+                    </spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Số điện thoại</span>{" "}
+                    <spanc className="branch-name">
+                      {localStorage.getItem("contact")}
+                    </spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Email</span>{" "}
+                    <spanc className="branch-name">
+                      {localStorage.getItem("email")}
+                    </spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Số ghế</span>{" "}
+                    <spanc className="branch-name">
+                      {itemChoosing.map((item, index) =>
+                        index + 1 == itemChoosing.length ? item : item + ", "
+                      )}
+                    </spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Điểm đón</span>{" "}
+                    <spanc className="branch-name">{on}</spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Điểm trả</span>{" "}
+                    <spanc className="branch-name">{off}</spanc>
+                  </div>
+                  <div className="bus-branch">
+                    <span> Tổng tiền</span>{" "}
+                    <spanc className="branch-name">
+                      {(itemChoosing.length * props.info.ticket.price)
+                        .toString()
+                        .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}{" "}
+                      đ
+                    </spanc>
+                  </div>
+                </div>
+                <button
+                  className="custom-btn"
+                  onClick={() => {
+                    if (window.confirm("Xác nhận đặt vé")) {
+                      itemChoosing.forEach((item) => {
+                        props.info.ticket.quantity[item - 1] = true;
+                        dispatch(
+                          createNew(
+                            {
+                              idUser: localStorage.getItem("id"),
+                              idTicket: props.info.ticket._id,
+                              getOn: on,
+                              getOff: off,
+                              seatNumber: item,
+                            },
+                            {
+                              idTrip: props.info.trip._id,
+                              quantity: props.info.ticket.quantity,
+                              price: props.info.ticket.price,
+                              _id: props.info.ticket._id,
+                            }
+                          )
+                        );
+                      });
+                      alert("Đặt vé thành công");
+                      window.location.reload();
+                    }
+                  }}
+                >
+                  Hoàn tất
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="close-btn" onClick={props.closeModal}>
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
