@@ -198,7 +198,7 @@ export const ListRouteTable = (props) => {
   }
 
   return (
-    <div className="routes">
+    <div className="routes right-content-fixsize">
       <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>

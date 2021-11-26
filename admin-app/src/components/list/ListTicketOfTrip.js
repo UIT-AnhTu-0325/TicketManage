@@ -1,4 +1,5 @@
 import React from "react";
+import { FunctionBar } from "./functionBar";
 
 /**
  * @author
@@ -25,65 +26,85 @@ export const ListTicketOfTrip = (props) => {
         const ticketInfor = findInListTicket(i + 1);
         if (ticketInfor.type === "OnlineTicket") {
           myTickets.push(
-            <div
-              class="card text-white bg-success mb-3"
-              style={{ width: "25rem" }}
-            >
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">
+            <div class="card1 selected" style={{ width: "25rem" }}>
+              <div class="card1-header">
+                <span className="number-chair"> Ghế {i + 1}</span>
+                <span className="status">Chưa xác nhận</span>
+              </div>
+              <div class="card1-body">
+                <h5 class="customer-name">
                   {ticketInfor.idUser.firstName} {ticketInfor.idUser.lastName}
                 </h5>
-                <p class="card-text">Nơi đón: {ticketInfor.getOn}</p>
-                <p class="card-text">Nơi trả: {ticketInfor.getOff}</p>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+                <p class="card1-text">Nơi đón: {ticketInfor.getOn}</p>
+                <p class="card1-text">Nơi trả: {ticketInfor.getOff}</p>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
+                <FunctionBar />
               </div>
             </div>
           );
         } else if (ticketInfor.type === "OfflineTicket") {
           myTickets.push(
-            <div class="card text-dark bg-info mb-3" style={{ width: "25rem" }}>
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">AAAAAAAAAAAAAA</h5>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+            <div class="card1 " style={{ width: "25rem" }}>
+              <div class="card1-header">
+                <span className="number-chair"> Ghế {i + 1}</span>
+                <span className="status paid">Đã thanh toán</span>
+              </div>
+              <div class="card1-body">
+                <h5 class="card1-title">AAAAAAAAAAAAAA</h5>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
               </div>
             </div>
           );
         } else {
           myTickets.push(
-            <div
-              class="card text-dark bg-warning mb-3"
-              style={{ width: "25rem" }}
-            >
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">{ticketInfor.Name}</h5>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+            <div class="card1 " style={{ width: "25rem" }}>
+              <div class="card1-header">Ghế {i + 1}</div>
+              <div class="card1-body">
+                <h5 class="card1-title">{ticketInfor.Name}</h5>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
               </div>
             </div>
           );
         }
       } else {
         myTickets.push(
-          <div
-            class="card text-white bg-danger mb-3"
-            style={{ width: "25rem" }}
-          >
-            <div class="card-header">Ghế {i + 1}</div>
-            <div class="card-body">
-              <h5 class="card-title">Ghế trống</h5>
-              <p class="card-text">Giá vé: {tickets.price}</p>
-              <button>Thêm vé</button>
+          <div class="card1" style={{ width: "25rem" }}>
+            <div class="card1-header">Ghế {i + 1}</div>
+            <div class="card1-body">
+              <p class="card1-text">
+                Giá vé:{" "}
+                {tickets.price.toLocaleString("it-IT", {
+                  style: "currency",
+                  currency: "VND",
+                })}
+              </p>
+              <button className="btn-add-ticket">Thêm vé</button>
             </div>
           </div>
         );
       }
     }
+
     return myTickets;
   };
 
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTickets()}</div>
-  );
+  return <div className="list-ticket">{renderTickets()}</div>;
 };

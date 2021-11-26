@@ -150,7 +150,7 @@ export const ListEnterpriseTable = (props) => {
   };
 
   return (
-    <div className="enterprise">
+    <div className="enterprise right-content-fixsize">
       <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>

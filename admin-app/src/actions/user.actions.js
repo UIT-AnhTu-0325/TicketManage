@@ -51,7 +51,7 @@ export const getUserDetailById = (payload) => {
     });
 
     const { userId } = payload.params;
-    const res = await axios.get(`/user/${userId}/userdetail`);
+    const res = await axios.get(`/user/${userId}/info`);
     try {
       if (res.status === 200) {
         dispatch({

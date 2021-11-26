@@ -6,6 +6,7 @@ const initState = {
   message: "",
   loading: false,
   users: [],
+  userDetail: {},
 };
 
 export default (state = initState, action) => {

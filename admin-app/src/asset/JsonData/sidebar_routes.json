@@ -5,6 +5,7 @@
     "route": "/dashboard",
     "icon": "bx bx-category-alt"
   },
+
   {
     "id": 2,
     "display_name": "EnterPrises",
@@ -28,7 +29,7 @@
     "id": 5,
     "display_name": "Người dùng",
     "route": "/user",
-    "icon": "bx bx-cart"
+    "icon": "far fa-user"
   },
   {
     "id": 6,
@@ -38,9 +39,9 @@
   },
   {
     "id": 7,
-    "display_name": "inventory",
-    "route": "/inventory",
-    "icon": "bx bx-store-alt"
+    "display_name": "Booking",
+    "route": "/booking",
+    "icon": "far fa-calendar-check"
   },
   {
     "id": 8,

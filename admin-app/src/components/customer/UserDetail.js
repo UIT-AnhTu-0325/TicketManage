@@ -29,6 +29,10 @@ export const UserDetail = (props) => {
   const userDetail = useSelector((state) => state.user.userDetail);
   const headData = ["hong1", "hong2", "hong3"];
   const renderHead = (item, ind) => <th key={ind}>{item}</th>;
+
+  if (Object.keys(userDetail).length === 0) {
+    return null;
+  }
   return (
     <Layout sidebar>
       <div className="user-detail__wrapper">
@@ -49,7 +53,7 @@ export const UserDetail = (props) => {
               </div>
               <div className="email" id="emailId">
                 <i class="far fa-envelope"></i>
-                <span>lamvanhong@gmail.com</span>
+                <span>{}</span>
               </div>
             </div>
           </div>
