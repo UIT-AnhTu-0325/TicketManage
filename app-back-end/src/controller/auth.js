@@ -32,37 +32,36 @@ exports.getNewUser = async (req, res) => {
               format: "%Y-%m-%d",
               date: "$date",
             },
-            'newUser': {
-              '$sum': 1
-            }
-          }
-        }, {
-          '$sort': {
-            '_id': 1
-          }
-        }
-      ]
-    )
+            newUser: {
+              $sum: 1,
+            },
+          },
+        },
+        $sort: {
+          _id: 1,
+        },
+      },
+    ]);
 
-    let listUser = []
-    var day = new Date(year, month, 0).getDate()
+    let listUser = [];
+    var day = new Date(year, month, 0).getDate();
 
     if (newUser.length == day) {
       for (var i = 0; i < newUser.length; i++) {
-        listUser.push(newUser[i].newUser)
+        listUser.push(newUser[i].newUser);
       }
-    }
-    else {
+    } else {
       for (var i = 1, j = 0; i <= day; i++) {
         if (j == newUser.length) {
-          listUser.push(0)
-        }
-        else if (newUser[j]._id == ((i < 10) ? `${year}-${month}-0${i}` : `${year}-${month}-${i}`)) {
-          listUser.push(newUser[j].newUser)
-          j++
-        }
-        else {
-          listUser.push(0)
+          listUser.push(0);
+        } else if (
+          newUser[j]._id ==
+          (i < 10 ? `${year}-${month}-0${i}` : `${year}-${month}-${i}`)
+        ) {
+          listUser.push(newUser[j].newUser);
+          j++;
+        } else {
+          listUser.push(0);
         }
       }
     }
