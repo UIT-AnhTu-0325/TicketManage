@@ -32,11 +32,15 @@ export const TopNav = (props) => {
   return (
     <React.Fragment>
       <div className="topnav">
-        <div className="topnav__search">
-          <input type="text" placeholder="Search ..." />
-          <i className="bx bx-search"></i>
+        <div className="left-topnav">
+          <div className="topnav__search">
+            <input type="text" placeholder="Search ..." />
+            <i className="bx bx-search"></i>
+          </div>
+          <div className="breakcrumb">
+            {!props.dashboard ? <BreakCrumb /> : null}
+          </div>
         </div>
-
         <div className="topnav__right">
           <div className="topnav__right-item">
             <DropDown
@@ -58,9 +62,6 @@ export const TopNav = (props) => {
 
           <div className="topnav__right-item"></div>
         </div>
-      </div>
-      <div className="breakcrumb">
-        {!props.dashboard ? <BreakCrumb /> : null}
       </div>
     </React.Fragment>
   );

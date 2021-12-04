@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: space-between;
   height: var(--topnav-height);
+  box-shadow: var(--box-shadow);
+  margin: -20px;
 }
 
 .topnav__search {
@@ -61,7 +63,10 @@
 }
 
 /* breakcrumb */
+.topnav .left-topnav {
+  display: flex;
+  align-items: center;
+}
 .breakcrumb {
-  margin-left: 24px;
-  margin-bottom: 20px;
+  margin-left: 20px;
 }

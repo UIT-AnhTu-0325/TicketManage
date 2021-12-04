@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetailById } from "../../actions";
 import userImg from "../../asset/img/user.jpg";
 import "./userdetail.css";
 /**
@@ -7,6 +9,27 @@ import "./userdetail.css";
  **/
 
 export const UserDetail = (props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    loadUserDetail();
+  }, []);
+
+  const loadUserDetail = () => {
+    const { userId } = props.match.params;
+    const payload = {
+      params: {
+        userId,
+      },
+    };
+    dispatch(getUserDetailById(payload));
+  };
+  const userDetail = useSelector((state) => state.user.userDetail);
+  const headData = ["hong1", "hong2", "hong3"];
+  const renderHead = (item, ind) => <th key={ind}>{item}</th>;
+
+  if (Object.keys(userDetail).length === 0) {
+    return null;
+  }
   return (
     <div className="user-detail__wrapper">
       <div className="row1">
