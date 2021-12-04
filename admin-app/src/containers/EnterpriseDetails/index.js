@@ -60,6 +60,7 @@ export const EnterpriseDetails = (props) => {
         <div className="info">
           <h1>Nhà xe {enterpriseDetails.enterprise.name}</h1>
           <p>Địa chỉ: {enterpriseDetails.enterprise.address}</p>
+          <p>Hotline: {enterpriseDetails.enterprise.hotline}</p>
         </div>
       </div>
       {/* <Button
@@ -84,6 +85,7 @@ export const EnterpriseDetails = (props) => {
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
       ></ListVehicleTable>
+
       <ListSteersmanTable
         listEnterprise={state_enterprise}
         listSteersman={enterpriseDetails.steersmans}

@@ -27,7 +27,7 @@ export const MainSearch = (props) => {
     }
   };
   const routes = useSelector((state) => state.routes);
-  console.log(routes);
+  //console.log(routes);
   const startLocations = Array.from(
     new Set(routes.map((route) => route.startLocation))
   );

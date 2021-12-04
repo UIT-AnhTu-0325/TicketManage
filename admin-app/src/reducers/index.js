@@ -3,10 +3,16 @@ import authReducer from "./auth.reducers";
 import userReducer from "./user.reducer";
 import routeReducer from "./route.reducers";
 import enterpriseReducer from "./enterprise.reducers";
-import { analyticsChartReducer, analyticsReducer, newUserReducer, ticketDonutReducer } from "./analyticsReducers";
+import {
+  analyticsChartReducer,
+  analyticsReducer,
+  newUserReducer,
+  ticketDonutReducer,
+} from "./analyticsReducers";
 import cityReducers from "./city.reducers";
 import vehicleReducers from "./vehicle.reducers";
 import tripReducers from "./trip.reducers";
+import ticketReducers from "./ticket.reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -19,7 +25,8 @@ const rootReducer = combineReducers({
   vehicle: vehicleReducers,
   trip: tripReducers,
   newUser: newUserReducer,
-  ticket: ticketDonutReducer
+  ticket: ticketDonutReducer,
+  ticketR: ticketReducers,
 });
 
 export default rootReducer;

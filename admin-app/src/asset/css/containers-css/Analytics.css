@@ -13,3 +13,10 @@
     margin: 10px 30px;
     padding: 5px;
 }
+
+.chart {
+    padding: 50px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    margin: 35px auto;
+  }

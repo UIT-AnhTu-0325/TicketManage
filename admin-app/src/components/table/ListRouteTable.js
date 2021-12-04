@@ -37,14 +37,16 @@ export const ListRouteTable = (props) => {
 
   const checkEditData = () => {
     if (
-      !route.startLocation ||
-      !route.endLocation ||
-      !route.idEnterprise ||
-      !route.startTime ||
-      !route.totalTime
+      route.idEnterprise &&
+      route.startLocation &&
+      route.endLocation &&
+      route.startTime &&
+      route.totalTime
     ) {
+      setEditData(true);
+    } else {
       setEditData(false);
-    } else setEditData(true);
+    }
   };
 
   const handleModalShow = (iFlag, route = []) => {
@@ -91,15 +93,12 @@ export const ListRouteTable = (props) => {
     resetCss();
   };
 
-  //front end
   const resetCss = () => {
     setEditData(false);
   };
 
   const delRoute = (selectedRot) => {
-    const form = {
-      _id: selectedRot._id,
-    };
+    var form = selectedRot;
     swal({
       title: "Bạn chắc chắn xóa",
       text: "Bạn có chắc sẽ xóa tuyến đường này không",
@@ -111,7 +110,8 @@ export const ListRouteTable = (props) => {
         swal("Tuyến đường  đã được xóa thành công!", {
           icon: "success",
         });
-        dispatch(deleteRoute(form));
+        form.isActive = "no";
+        dispatch(editRoute(form));
         if (props.type !== "Main") {
           props.reLoadEnterpriseDetails();
         }
@@ -144,47 +144,48 @@ export const ListRouteTable = (props) => {
   const renderRoutes = (routes) => {
     let myRoutes = [];
     for (let route of routes) {
-      myRoutes.push(
-        <tr>
-          <td>{route.startLocation}</td>
-          <td>{route.endLocation}</td>
-          <td>{findEnterpriseName(route.idEnterprise)}</td>
-          <td>{route.startTime}</td>
-          <td>{route.totalTime}</td>
-          <td>
-            <button
-              className="edit"
-              onClick={() => {
-                handleModalShow("Edit", route);
-              }}
-            >
-              <i class="far fa-edit"></i>
-            </button>
-            <button
-              className="delete"
-              onClick={() => {
-                delRoute(route);
-              }}
-            >
-              <i class="far fa-trash-alt"></i>
-            </button>
-            {/* /routes/${route._id}/informations */}
-            {/* /enterprises/${route.idEnterprise}/informations/routeinfo */}
-
-            <Link
-              to={
-                window.location.pathname === "/routes"
-                  ? `/routes/${route._id}/informations`
-                  : `/enterprises/${route.idEnterprise}/informations/${route._id}/routeinfo`
-              }
-            >
-              <button className="detail" onClick={() => {}}>
-                Chi tiết
+      if (route.isActive === "yes") {
+        myRoutes.push(
+          <tr>
+            <td>{route.startLocation}</td>
+            <td>{route.endLocation}</td>
+            <td>{findEnterpriseName(route.idEnterprise)}</td>
+            <td>{route.startTime}</td>
+            <td>{route.totalTime}</td>
+            <td>
+              <button
+                className="edit"
+                onClick={() => {
+                  handleModalShow("Edit", route);
+                }}
+              >
+                <i class="far fa-edit"></i>
               </button>
-            </Link>
-          </td>
-        </tr>
-      );
+              <button
+                className="delete"
+                onClick={() => {
+                  delRoute(route);
+                }}
+              >
+                <i class="far fa-trash-alt"></i>
+              </button>
+              {/* /routes/${route._id}/informations */}
+              {/* /enterprises/${route.idEnterprise}/informations/routeinfo */}
+              <Link
+                to={
+                  window.location.pathname === "/routes"
+                    ? `/routes/${route._id}/informations`
+                    : `/enterprises/${route.idEnterprise}/informations/${route._id}/routeinfo`
+                }
+              >
+                <button className="detail" onClick={() => {}}>
+                  Chi tiết
+                </button>
+              </Link>
+            </td>
+          </tr>
+        );
+      }
     }
     return myRoutes;
   };
@@ -283,7 +284,7 @@ export const ListRouteTable = (props) => {
         }
       >
         <div className={modalShow ? "add-modal active" : "add-modal"}>
-          <div className="add-modal__header">Add Router</div>
+          <div className="add-modal__header">{modalTitle}</div>
 
           <div className="add-modal__body">
             <div className="input-enterprise-name">
@@ -293,8 +294,8 @@ export const ListRouteTable = (props) => {
                   setRoute({ ...route, startLocation: e.target.value });
                   checkEditData();
                 }}
-                listCity={listCity.cities}
-                title="Start Location"
+                list={listCity.cities}
+                title="Điểm đi"
               />
 
               <SelectBox
@@ -303,8 +304,8 @@ export const ListRouteTable = (props) => {
                   setRoute({ ...route, endLocation: e.target.value });
                   checkEditData();
                 }}
-                listCity={listCity.cities}
-                title="End Location"
+                list={listCity.cities}
+                title="Điểm đến"
               />
 
               <SelectBox
@@ -313,12 +314,13 @@ export const ListRouteTable = (props) => {
                   setRoute({ ...route, idEnterprise: e.target.value });
                   checkEditData();
                 }}
-                listCity={listEnterprise.enterprises}
-                title="Enterprise"
+                list={listEnterprise.enterprises}
+                type="EnterpriseSelect"
+                title="Nhà xe"
               />
 
               <InputTitleLeft
-                title="Start Time"
+                title="Thời gian bắt đầu"
                 value={route.startTime}
                 placeholder={``}
                 onChange={(e) => {
@@ -328,7 +330,7 @@ export const ListRouteTable = (props) => {
               />
 
               <InputTitleLeft
-                title="Total Time"
+                title="Thời gian đi"
                 value={route.totalTime}
                 placeholder={``}
                 onChange={(e) => {
@@ -355,8 +357,6 @@ export const ListRouteTable = (props) => {
           </div>
         </div>
       </div>
-
-      {/* END: MODAL */}
 
       <div className="row">
         <div className="col-12">

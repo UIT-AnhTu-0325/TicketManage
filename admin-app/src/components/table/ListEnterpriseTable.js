@@ -9,7 +9,7 @@ import {
   getAllEnterprises,
 } from "../../actions";
 import { Link } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, ModalTitle } from "react-bootstrap";
 import { Table } from "./Table";
 import { Input } from "../UI/Input";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
@@ -30,6 +30,8 @@ export const ListEnterpriseTable = (props) => {
       _id: "",
       name: "",
       address: "",
+      isActive: "yes",
+      hotline: "",
     };
   };
   const [enterprise, setEnterprise] = useState(initEnterprise);
@@ -39,13 +41,21 @@ export const ListEnterpriseTable = (props) => {
   const [modalTitle, setModalTitle] = useState();
   const [editData, setEditData] = useState(false);
 
+  const checkEditData = (targetValue, object) => {
+    if (enterprise.name && enterprise.address && enterprise.hotline) {
+      setEditData(true);
+    } else {
+      setEditData(false);
+    }
+  };
+
   const handleModalShow = (iFlag, enterprise = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
-      setModalTitle("Add Route");
+      setModalTitle("Thêm nhà xe");
     } else {
       setModalFlag("Edit");
-      setModalTitle("Edit Route");
+      setModalTitle("Sửa nhà xe");
       setEnterprise(enterprise);
     }
     setModalShow(true);
@@ -56,6 +66,7 @@ export const ListEnterpriseTable = (props) => {
       delete form._id;
 
       dispatch(addEnterprise(form));
+
       swal({
         title: "Thêm thành công",
         text: "Bạn đã thêm nhà xe thành công",
@@ -86,9 +97,7 @@ export const ListEnterpriseTable = (props) => {
     setEditData(false);
   };
   const delEnterprise = (selectedEnt) => {
-    const form = {
-      _id: selectedEnt._id,
-    };
+    var form = selectedEnt;
     swal({
       title: "Bạn chắc chắn xóa",
       text: "Bạn có chắc sẽ xóa nhà xe này không",
@@ -100,7 +109,8 @@ export const ListEnterpriseTable = (props) => {
         swal("Nhà xe đã được xóa thành công!", {
           icon: "success",
         });
-        dispatch(deleteEnterprise(form));
+        form.isActive = "no";
+        dispatch(editEnterprise(form));
       } else {
         swal("Nhà xe vẫn chưa bị xóa!");
       }
@@ -108,7 +118,7 @@ export const ListEnterpriseTable = (props) => {
   };
 
   const enterprises = {
-    header: ["Nhà xe", "Địa điểm", "Tùy chọn"],
+    header: ["Nhà xe", "Địa chỉ", "Hotline", "Tùy chọn"],
     body: [],
   };
   const renderOrderHead = (item, ind) => <th key={ind}>{item}</th>;
@@ -116,35 +126,38 @@ export const ListEnterpriseTable = (props) => {
   const renderEnterprises = (enterprises) => {
     let myEnterprises = [];
     for (let enterprise of enterprises) {
-      myEnterprises.push(
-        <tr>
-          <td>{enterprise.name}</td>
-          <td>{enterprise.address}</td>
-          <td>
-            <button
-              className="edit"
-              color="warning"
-              onClick={() => {
-                handleModalShow("Edit", enterprise);
-              }}
-            >
-              <i class="far fa-edit"></i>
-            </button>
-            <button
-              className="delete"
-              color="danger"
-              onClick={() => delEnterprise(enterprise)}
-            >
-              <i class="far fa-trash-alt"></i>
-            </button>
-            <Link to={`enterprises/${enterprise._id}/informations`}>
-              <button className="detail" onClick={() => {}}>
-                Chi tiết
+      if (enterprise.isActive === "yes") {
+        myEnterprises.push(
+          <tr>
+            <td>{enterprise.name}</td>
+            <td>{enterprise.address}</td>
+            <td>{enterprise.hotline}</td>
+            <td>
+              <button
+                className="edit"
+                color="warning"
+                onClick={() => {
+                  handleModalShow("Edit", enterprise);
+                }}
+              >
+                <i class="far fa-edit"></i>
               </button>
-            </Link>
-          </td>
-        </tr>
-      );
+              <button
+                className="delete"
+                color="danger"
+                onClick={() => delEnterprise(enterprise)}
+              >
+                <i class="far fa-trash-alt"></i>
+              </button>
+              <Link to={`enterprises/${enterprise._id}/informations`}>
+                <button className="detail" onClick={() => {}}>
+                  Chi tiết
+                </button>
+              </Link>
+            </td>
+          </tr>
+        );
+      }
     }
     return myEnterprises;
   };
@@ -194,21 +207,17 @@ export const ListEnterpriseTable = (props) => {
         }
       >
         <div className={modalShow ? "add-modal active" : "add-modal"}>
-          <div className="add-modal__header">Add Enterprise</div>
+          <div className="add-modal__header">{modalTitle}</div>
 
           <div className="add-modal__body">
             <div className="input-enterprise-name">
               <InputTitleLeft
-                title="Enterprise Name"
+                title="Tên nhà xe"
                 value={enterprise.name}
                 placeholder={``}
                 onChange={(e) => {
                   setEnterprise({ ...enterprise, name: e.target.value });
-                  if (e.target.value != "" && enterprise.address) {
-                    setEditData(true);
-                  } else {
-                    setEditData(false);
-                  }
+                  checkEditData();
                 }}
               />
 
@@ -216,14 +225,21 @@ export const ListEnterpriseTable = (props) => {
                 value={enterprise.address}
                 onChange={(e) => {
                   setEnterprise({ ...enterprise, address: e.target.value });
-                  if (e.target.value != "" && enterprise.name) {
-                    setEditData(true);
-                  } else {
-                    setEditData(false);
-                  }
+                  checkEditData();
                 }}
-                listCity={listCity}
-                title="Address"
+                list={listCity}
+                type="AddressSelect"
+                title="Địa chỉ"
+              />
+
+              <InputTitleLeft
+                title="Hotline"
+                value={enterprise.hotline}
+                placeholder={``}
+                onChange={(e) => {
+                  setEnterprise({ ...enterprise, hotline: e.target.value });
+                  checkEditData();
+                }}
               />
             </div>
           </div>

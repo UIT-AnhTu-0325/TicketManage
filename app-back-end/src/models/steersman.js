@@ -18,6 +18,10 @@ const SteersmanSchema = new mongoose.Schema(
       ref: "Enterprise",
       required: true,
     },
+    isActive: {
+      type: String,
+      default: "yes",
+    },
   },
   {
     timestamps: true,

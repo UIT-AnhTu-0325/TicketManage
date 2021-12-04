@@ -1,5 +1,6 @@
 import React from "react";
 import { FunctionBar } from "./functionBar";
+import { Link } from "react-router-dom";
 
 /**
  * @author

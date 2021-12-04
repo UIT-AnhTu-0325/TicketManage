@@ -13,9 +13,9 @@ const Breadcrumbs = (props) => {
     location: { pathname },
   } = props;
   const pathnames = pathname.split("/").filter((x) => x);
-  console.log("***********");
-  console.log(pathnames);
-  console.log("***********");
+  // console.log("***********");
+  // console.log(pathnames);
+  // console.log("***********");
   return (
     <MUIBreadcrumbs className="first-break" aria-label="breadcrumb">
       {pathnames.length > 0 ? (

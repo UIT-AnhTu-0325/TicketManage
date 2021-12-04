@@ -5,7 +5,7 @@ export const getAllCities = () => {
   return async (dispatch) => {
     dispatch({ type: cityConstants.GET_ALL_CITIES_REQUEST });
     const res = await axios.get(`city`);
-    console.log(res);
+    //console.log(res);
     if (res.status === 200) {
       const cityList = res.data;
       dispatch({
