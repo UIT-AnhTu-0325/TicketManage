@@ -13,7 +13,7 @@
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   margin-right: 20px;
-  width: 30%;
+  width: 20%;
 }
 .user-detail__wrapper .left-panel .image-avatar {
   margin-top: 24px;

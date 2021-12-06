@@ -8,16 +8,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetailById } from "../../actions";
 import { getAll } from "../../actions/user_ticket";
 import axios from "axios";
-
-
+import '../../asset/css/components-css/itemTicket.css'
+import { ModalUpdateTicket } from '../../components/customer/ModalUpdateTicket';
+import { StatusCard } from "../statusCard/StatusCard";
 /**
  * @author
  * @function UserDetail
  **/
 
 export const UserDetail = (props) => {
+  const [openBuyingModal, setOpenBuyingModal] = useState(false);
+  const [detail, setDetail] = useState("");
+  const [updatable, setUpdatable] = useState(false);
+  const clickCloseBuyingModal = () => {
+    setOpenBuyingModal(false);
+  }
+
+  if (openBuyingModal === true) {
+    document.body.style.overflowY = 'hidden';
+    document.body.style.width = '100%';
+    document.body.style.marginRight = "150px"
+  }
+  else {
+    document.body.style.overflowY = 'auto';
+    document.body.style.position = 'static';
+  }
   const userId = window.location.href.split('/')[4];
-  const [user,setUser] = useState({});
+  const [customer, setCustomer] = useState("");
   const dispatch = useDispatch();
   const books = useSelector((state) => state.user_ticket);
   const active = books.filter(
@@ -38,12 +55,12 @@ export const UserDetail = (props) => {
   );
   useEffect(() => {
     axios.get(`http://localhost:2000/api/user/${userId}/userdetail`)
-    .then(function(response){ return response.data})
-    .then(function(data) {
+      .then(function (response) { return response.data })
+      .then(function (data) {
         const items = data;
-        setUser(items);
+        setCustomer(items);
         console.log(items);
-    });
+      });
     //loadUserDetail();
     dispatch(getAll());
   }, []);
@@ -63,11 +80,11 @@ export const UserDetail = (props) => {
     <Layout sidebar>
       <div className="user-detail__wrapper">
         <div className="row1">
-          <div className="left-panel">
+          {customer !== "" && (<div className="left-panel">
             <div className="image-avatar">
               <img src={userImg} alt="" />
             </div>
-            <h4 className="user-fullname">{user.user.firstName} {user.user.lastName}</h4>
+            <h4 className="user-fullname">{customer.user.firstName} {customer.user.lastName}</h4>
             <span className="rank" id="">
               Hạng VIP
             </span>
@@ -75,14 +92,26 @@ export const UserDetail = (props) => {
             <div className="important-info">
               <div className="phone-number" id="phoneId">
                 <i class="bx bx-phone"></i>
-                <span>{user.user.contactNumber}</span>
+                <span>{customer.user.contactNumber}</span>
               </div>
               <div className="email" id="emailId">
                 <i class="far fa-envelope"></i>
-                <span>{user.user.email}</span>
+                <span>{customer.user.email}</span>
               </div>
             </div>
-          </div>
+            <div className="status_card">
+              <StatusCard
+                icon="bx bx-dollar-circle"
+                quantity={(active.reduce((s,i) =>  s = s + i.ticket.price , 0 )+ used.reduce((s,i) =>  s = s + i.ticket.price , 0 )).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "đ"}
+                title="Tổng tiền đã chi"
+              />
+              <StatusCard
+                icon="bx bx-receipt"
+                quantity={active.length + used.length}
+                title="Số vé đã mua"
+              />
+            </div>
+          </div>)}
 
           <div className=" right-panel">
             <h3>Giao dịch gần đây</h3>
@@ -110,7 +139,11 @@ export const UserDetail = (props) => {
                       <div className="status prepare">Chuẩn bị</div>
                     </td>
                     <td>
-                      <div className="btn-detail">
+                      <div className="btn-detail" onClick={() => {
+                        setDetail(item);
+                        setUpdatable(true);
+                        setOpenBuyingModal(true);
+                      }}>
                         <i class="fas fa-info"></i>
                         Chi tiết
                       </div>
@@ -141,7 +174,11 @@ export const UserDetail = (props) => {
                       <div className="status used">Đã đi</div>
                     </td>
                     <td>
-                      <div className="btn-detail">
+                      <div className="btn-detail" onClick={() => {
+                        setDetail(item);
+                        setUpdatable(false);
+                        setOpenBuyingModal(true);
+                      }}>
                         <i class="fas fa-info"></i>
                         Chi tiết
                       </div>
@@ -172,7 +209,11 @@ export const UserDetail = (props) => {
                       <div className="status cancel">Đã huỷ</div>
                     </td>
                     <td>
-                      <div className="btn-detail">
+                      <div className="btn-detail" onClick={() => {
+                        setDetail(item);
+                        setUpdatable(false);
+                        setOpenBuyingModal(true);
+                      }}>
                         <i class="fas fa-info"></i>
                         Chi tiết
                       </div>
@@ -182,6 +223,9 @@ export const UserDetail = (props) => {
               ))}
             </div>
           </div>
+        </div>
+        <div className="modal__buy-ticket">
+          {openBuyingModal === true ? <ModalUpdateTicket closeModal={clickCloseBuyingModal} info={detail} updatable={updatable} user={customer.user} /> : null}
         </div>
       </div>
     </Layout>
