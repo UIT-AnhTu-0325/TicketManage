@@ -13,6 +13,7 @@ import cityReducers from "./city.reducers";
 import vehicleReducers from "./vehicle.reducers";
 import tripReducers from "./trip.reducers";
 import ticketReducers from "./ticket.reducers";
+import user_ticket from "./user_ticket";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   newUser: newUserReducer,
   ticket: ticketDonutReducer,
   ticketR: ticketReducers,
+  user_ticket
 });
 
 export default rootReducer;

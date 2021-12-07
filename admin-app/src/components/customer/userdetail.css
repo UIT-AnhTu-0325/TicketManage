@@ -13,7 +13,7 @@
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   margin-right: 20px;
-  width: 30%;
+  width: 20%;
 }
 .user-detail__wrapper .left-panel .image-avatar {
   margin-top: 24px;
@@ -118,6 +118,10 @@
 .user-detail__wrapper .right-panel .status.prepare {
   background-color: rgba(236, 236, 236, 0.295);
   color: var(--status-green);
+}
+.user-detail__wrapper .right-panel .status.used {
+  background-color: rgba(236, 236, 236, 0.295);
+  color: blue;
 }
 .user-detail__wrapper .right-panel .status.cancel {
   background-color: rgba(236, 236, 236, 0.295);
