@@ -62,7 +62,7 @@ export const ListUserTable = (props) => {
               </Button>
             </Link> */}
 
-            <Link to={`user/${user._id}/userdetail`}>
+            <Link to={`user/${user._id}/info`}>
               <button className="detail" onClick={() => {}}>
                 Chi tiết
               </button>
@@ -82,7 +82,7 @@ export const ListUserTable = (props) => {
   }
   return (
     <React.Fragment>
-      <div className="user__main-content">
+      <div className="user__main-content right-content-fixsize">
         <h1 className="manager-user__title">Quản lý tài khoản</h1>
         <div className="card">
           <div className="card__header">

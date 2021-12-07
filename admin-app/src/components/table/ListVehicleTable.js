@@ -129,7 +129,7 @@ export const ListVehicleTable = (props) => {
   };
 
   return (
-    <div className="card">
+    <div className="card right-content-fixsize">
       <Modal show={modalShow} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>

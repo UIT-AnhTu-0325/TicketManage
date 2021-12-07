@@ -49,7 +49,11 @@ export const Layout = (props) => {
             <Col
               className="right-content"
               md={10}
-              style={{ marginLeft: "300px", paddingTop: "10px" }}
+              style={{
+                marginLeft: "300px",
+                position: "relative",
+                paddingTop: "110px",
+              }}
             >
               <TopNav dashboard={props.dashboard} />
               {props.children}
