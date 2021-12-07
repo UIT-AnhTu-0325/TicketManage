@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FunctionBar } from "./functionBar";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 /**
  * @author
@@ -10,10 +10,9 @@ import { Link } from "react-router-dom";
 export const ListTicketOfTrip = (props) => {
   const tickets = props.tickets;
   const listTicket = props.listTicket;
-
   const findInListTicket = (index) => {
     for (let i = 0; i < listTicket.length; i++) {
-      if (listTicket[i].seatNumber === index) {
+      if (Number(listTicket[i].seatNumber) === index) {
         return listTicket[i];
       }
     }
@@ -30,7 +29,7 @@ export const ListTicketOfTrip = (props) => {
             <div class="card1 selected" style={{ width: "25rem" }}>
               <div class="card1-header">
                 <span className="number-chair"> Ghế {i + 1}</span>
-                <span className="status">Chưa xác nhận</span>
+                <span className="status">Vé online</span>
               </div>
               <div class="card1-body">
                 <h5 class="customer-name">
@@ -51,13 +50,16 @@ export const ListTicketOfTrip = (props) => {
           );
         } else if (ticketInfor.type === "OfflineTicket") {
           myTickets.push(
-            <div class="card1 " style={{ width: "25rem" }}>
+            <div class="card1" style={{ width: "25rem" }}>
               <div class="card1-header">
                 <span className="number-chair"> Ghế {i + 1}</span>
                 <span className="status paid">Đã thanh toán</span>
               </div>
               <div class="card1-body">
-                <h5 class="card1-title">AAAAAAAAAAAAAA</h5>
+                <h5 class="card1-title">{ticketInfor.name}</h5>
+                <h5 class="card1-title">{ticketInfor.contactNumber}</h5>
+                <p class="card1-text">Nơi đón: {ticketInfor.getOn}</p>
+                <p class="card1-text">Nơi trả: {ticketInfor.getOff}</p>
                 <p class="card1-text">
                   Giá vé:{" "}
                   {tickets.price.toLocaleString("it-IT", {
@@ -88,7 +90,10 @@ export const ListTicketOfTrip = (props) => {
       } else {
         myTickets.push(
           <div class="card1" style={{ width: "25rem" }}>
-            <div class="card1-header">Ghế {i + 1}</div>
+            <div class="card1-header">
+              <span className="number-chair"> Ghế {i + 1}</span>
+              <span className="status">Ghế trống</span>
+            </div>
             <div class="card1-body">
               <p class="card1-text">
                 Giá vé:{" "}
@@ -97,7 +102,22 @@ export const ListTicketOfTrip = (props) => {
                   currency: "VND",
                 })}
               </p>
-              <button className="btn-add-ticket">Thêm vé</button>
+              <Link
+                to={`${window.location.pathname.replace(
+                  "informations",
+                  "tickets/crOffTicket"
+                )}`}
+              >
+                <button
+                  id={i + 1}
+                  className="btn-add-ticket"
+                  onClick={(e) => {
+                    localStorage.setItem("seatSelect", e.currentTarget.id);
+                  }}
+                >
+                  Thêm vé
+                </button>
+              </Link>
             </div>
           </div>
         );

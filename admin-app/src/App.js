@@ -60,7 +60,7 @@ function App() {
           component={TripDetails}
         ></Route>
         <Route
-          path="/trips/:tripId/crOffTicket"
+          path="/trips/:tripId/tickets/crOffTicket"
           component={OfflineTicket}
         ></Route>
         <Route path="/routes" component={Routes} />
