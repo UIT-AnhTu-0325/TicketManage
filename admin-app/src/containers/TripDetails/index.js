@@ -86,6 +86,7 @@ export const TripDetails = (props) => {
           <ListTicketOfTrip
             tickets={state_tripDetails.tickets}
             listTicket={state_tripDetails.listTicket}
+            trip={state_tripDetails.trip}
           ></ListTicketOfTrip>
         </div>
       </div>

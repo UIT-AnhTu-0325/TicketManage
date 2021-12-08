@@ -10,6 +10,7 @@ import { Link, NavLink } from "react-router-dom";
 export const ListTicketOfTrip = (props) => {
   const tickets = props.tickets;
   const listTicket = props.listTicket;
+  const trip = props.trip;
   const findInListTicket = (index) => {
     for (let i = 0; i < listTicket.length; i++) {
       if (Number(listTicket[i].seatNumber) === index) {
@@ -44,7 +45,11 @@ export const ListTicketOfTrip = (props) => {
                     currency: "VND",
                   })}
                 </p>
-                <FunctionBar />
+                <FunctionBar
+                  selected={ticketInfor}
+                  tickets={tickets}
+                  trip={trip}
+                />
               </div>
             </div>
           );
@@ -67,6 +72,11 @@ export const ListTicketOfTrip = (props) => {
                     currency: "VND",
                   })}
                 </p>
+                <FunctionBar
+                  selected={ticketInfor}
+                  tickets={tickets}
+                  trip={trip}
+                ></FunctionBar>
               </div>
             </div>
           );
