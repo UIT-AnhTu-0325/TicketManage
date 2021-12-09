@@ -1,18 +1,36 @@
 const Ticket = require("../models/ticket");
+const User_Ticket = require("../models/user_ticket");
 
 
 
 exports.getMonthByMonthYear = async (req, res) => {
     try {
         const { month, year } = req.body
-        const tickets = await Ticket.aggregate(
+        const tickets = await User_Ticket.aggregate(
             [
                 {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'canceled': '$canceled',
+                        'idTicket': '$idTicket',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        }
+                    }
+                }, {
                     '$lookup': {
-                        'from': 'trips',
-                        'localField': 'idTrip',
+                        'from': 'tickets',
+                        'localField': 'idTicket',
                         'foreignField': '_id',
-                        'as': 'infor'
+                        'as': 'detail'
                     }
                 }, {
                     '$replaceRoot': {
@@ -20,7 +38,7 @@ exports.getMonthByMonthYear = async (req, res) => {
                             '$mergeObjects': [
                                 {
                                     '$arrayElemAt': [
-                                        '$infor', 0
+                                        '$detail', 0
                                     ]
                                 }, '$$ROOT'
                             ]
@@ -28,41 +46,17 @@ exports.getMonthByMonthYear = async (req, res) => {
                     }
                 }, {
                     '$project': {
-                        'infor': 0
-                    }
-                }, {
-                    '$unwind': {
-                        'path': '$quantity'
+                        'detail': 0
                     }
                 }, {
                     '$match': {
-                        'quantity': true
-                    }
-                }, {
-                    '$project': {
-                        'date': '$startDate',
-                        'month': {
-                            '$month': '$startDate'
-                        },
-                        'year': {
-                            '$year': '$startDate'
-                        },
-                        'quantity': '$quantity',
-                        'price': '$price'
-                    }
-                }, {
-                    '$match': {
+                        'canceled': false,
                         'month': month,
                         'year': year
                     }
                 }, {
                     '$group': {
-                        '_id': {
-                            '$dateToString': {
-                                'format': '%Y-%m',
-                                'date': '$date'
-                            }
-                        },
+                        '_id': '$date',
                         'totalTicket': {
                             '$sum': 1
                         },
@@ -93,14 +87,31 @@ exports.getMonthByMonthYear = async (req, res) => {
 exports.getDateByMonthYear = async (req, res) => {
     try {
         const { month, year } = req.body
-        const tickets = await Ticket.aggregate(
+        const tickets = await User_Ticket.aggregate(
             [
                 {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m-%d',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'canceled': '$canceled',
+                        'idTicket': '$idTicket',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        }
+                    }
+                }, {
                     '$lookup': {
-                        'from': 'trips',
-                        'localField': 'idTrip',
+                        'from': 'tickets',
+                        'localField': 'idTicket',
                         'foreignField': '_id',
-                        'as': 'infor'
+                        'as': 'detail'
                     }
                 }, {
                     '$replaceRoot': {
@@ -108,7 +119,7 @@ exports.getDateByMonthYear = async (req, res) => {
                             '$mergeObjects': [
                                 {
                                     '$arrayElemAt': [
-                                        '$infor', 0
+                                        '$detail', 0
                                     ]
                                 }, '$$ROOT'
                             ]
@@ -116,41 +127,17 @@ exports.getDateByMonthYear = async (req, res) => {
                     }
                 }, {
                     '$project': {
-                        'infor': 0
-                    }
-                }, {
-                    '$unwind': {
-                        'path': '$quantity'
+                        'detail': 0
                     }
                 }, {
                     '$match': {
-                        'quantity': true
-                    }
-                }, {
-                    '$project': {
-                        'date': '$startDate',
-                        'month': {
-                            '$month': '$startDate'
-                        },
-                        'year': {
-                            '$year': '$startDate'
-                        },
-                        'quantity': '$quantity',
-                        'price': '$price'
-                    }
-                }, {
-                    '$match': {
+                        'canceled': false,
                         'month': month,
                         'year': year
                     }
                 }, {
                     '$group': {
-                        '_id': {
-                            '$dateToString': {
-                                'format': '%Y-%m-%d',
-                                'date': '$date'
-                            }
-                        },
+                        '_id': '$date',
                         'totalTicket': {
                             '$sum': 1
                         },

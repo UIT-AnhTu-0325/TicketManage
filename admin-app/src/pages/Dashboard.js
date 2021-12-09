@@ -2,6 +2,10 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import statusCards from "../asset/JsonData/status-card-data.json";
 import { StatusCard } from "../components/statusCard/StatusCard";
+import { getAllName, getCurrentByEnterprises, getCurrentByEnterprisesList, getCurrentDate, getLastOrder } from "../actions/analyticsActions";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Chart from "react-apexcharts";
 import { Table } from "../components/table/Table";
@@ -11,17 +15,37 @@ import { Table } from "../components/table/Table";
  **/
 
 export const DashBoard = (props) => {
+
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    dispatch(getCurrentDate())
+    dispatch(getCurrentByEnterprises())
+    dispatch(getCurrentByEnterprisesList())
+    dispatch(getAllName())
+    dispatch(getLastOrder())
+  }, []);
+
+  const currentDate = useSelector((state) => state.currentDate)
+  const chartByEnterprise = useSelector((state) => state.chartByEnterprise)
+  const listByEnterprise = useSelector((state) => state.listByEnterprise)
+  const listNameEnterprise = useSelector((state) => state.listNameEnterprise)
+  const listLastOrder = useSelector((state) => state.listLastOrder)
+
+  console.log(listNameEnterprise.listName)
+
   const chartOptions = {
     series: [
       {
         type: "line",
-        name: "Xe Khach",
-        data: [30, 50, 90, 52, 18, 50, 85, 99, 89],
+        name: "Sales",
+        data: chartByEnterprise.sale,
       },
       {
         type: "column",
-        name: "Xe Thue",
-        data: [10, 70, 40, 62, 28, 50, 55, 79, 59],
+        name: "Booking",
+        data: chartByEnterprise.booking,
       },
     ],
     options: {
@@ -36,17 +60,7 @@ export const DashBoard = (props) => {
         curve: "smooth",
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
+        categories: listNameEnterprise.listName,
       },
       legent: {
         position: "left",
@@ -54,74 +68,34 @@ export const DashBoard = (props) => {
       grid: {
         show: false,
       },
+      yaxis: [
+        {
+          title: {
+            text: "Sales"
+          },
+        },
+        {
+          opposite: true,
+          title: {
+            text: "Booking"
+          }
+        }
+      ],
+      title: {
+        text: 'Booking and Sales of Enterprises',
+        align: 'left'
+      },
     },
   };
 
   const topEnterPrises = {
     head: ["Enterprise", "total booking", "total spending"],
-    body: [
-      {
-        username: "Phương Trang",
-        order: "3.490",
-        price: "$15,870",
-      },
-      {
-        username: "Cát Linh",
-        order: "3.220",
-        price: "$12,251",
-      },
-      {
-        username: "Hà Đông",
-        order: "1.520",
-        price: "$10,840",
-      },
-      {
-        username: "Hà Nội",
-        order: "910",
-        price: "$9,251",
-      },
-    ],
+    body: listByEnterprise.listEnterprises,
   };
 
   const latestOrders = {
-    header: ["order id", "user", "total price", "date", "status"],
-    body: [
-      {
-        id: "#OD1711",
-        user: "Còn Cái Nịt",
-        date: "17 Jun 2021",
-        price: "$900",
-        status: "paid",
-      },
-      {
-        id: "#OD1712",
-        user: "Óc Lợn",
-        date: "1 Jun 2021",
-        price: "$400",
-        status: "paid",
-      },
-      {
-        id: "#OD1713",
-        user: "Chấm",
-        date: "27 Jun 2021",
-        price: "$200",
-        status: "pending",
-      },
-      {
-        id: "#OD1712",
-        user: "Lmaolmao",
-        date: "1 Jun 2021",
-        price: "$400",
-        status: "paid",
-      },
-      {
-        id: "#OD1713",
-        user: "Jett Diff",
-        date: "27 Jun 2021",
-        price: "$200",
-        status: "refund",
-      },
-    ],
+    header: ["STT", "user", "email", "contact number", "price", "status"],
+    body: listLastOrder.listOrder,
   };
 
   const renderHead = (item, ind) => <th key={ind}>{item}</th>;
@@ -139,11 +113,22 @@ export const DashBoard = (props) => {
     <tr key={ind}>
       <td>{item.id}</td>
       <td>{item.user}</td>
-      <td>{item.date}</td>
+      <td>{item.email}</td>
+      <td>{item.contact}</td>
       <td>{item.price}</td>
       <td>{item.status}</td>
     </tr>
   );
+
+  if (
+    Object.keys(currentDate).length === 0
+  ) {
+    return null;
+  }
+  if (currentDate.currentDateData === null) {
+    return null
+  }
+
   return (
     <div>
       <Layout sidebar dashboard="true">
@@ -152,7 +137,7 @@ export const DashBoard = (props) => {
         <div className="row">
           <div className="col-12">
             <div className="row">
-              {statusCards.map((item, ind) => (
+              {currentDate.currentDateData.map((item) => (
                 <div className="col-3">
                   <StatusCard
                     icon={item.icon}
