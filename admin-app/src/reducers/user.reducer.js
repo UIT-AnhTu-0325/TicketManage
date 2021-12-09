@@ -6,6 +6,7 @@ const initState = {
   message: "",
   loading: false,
   users: [],
+  userDetail: {},
 };
 
 export default (state = initState, action) => {
@@ -34,6 +35,26 @@ export default (state = initState, action) => {
       state = {
         ...state,
         users: action.payload.users,
+      };
+      break;
+    case userConstants.GET_USER_DETAIL_BY_ID_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case userConstants.GET_USER_DETAIL_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        userDetail: action.payload.userDetail,
+        loading: false,
+      };
+      break;
+    case userConstants.GET_USER_DETAIL_BY_ID_FAILURE:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
       };
       break;
     default:

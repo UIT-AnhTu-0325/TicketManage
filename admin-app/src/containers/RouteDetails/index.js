@@ -16,6 +16,7 @@ import { Input } from "../../components/UI/Input";
 import busImg from "../../asset/img/bus.png";
 import { SelectBox } from "../../components/UI/select/SelectBox";
 import { InputTitleLeft } from "../../components/UI/inputTitleLeft/InputTitleLeft";
+import { getAllTickets } from "../../actions/ticket.actions";
 /**
  * @author
  * @function RouteDetails
@@ -25,12 +26,13 @@ export const RouteDetails = (props) => {
   const dispatch = useDispatch();
   //const state_route = useSelector((state) => state.route);
   const state_vehicle = useSelector((state) => state.vehicle);
-
   const state_routeDetails = useSelector((state) => state.route.routeDetails);
+  const state_ticketR = useSelector((state) => state.ticketR);
 
   // event handle
   useEffect(() => {
     loadRouteDetails();
+
     dispatch(getAllRoutes());
     dispatch(getAllVehicles());
   }, []);
@@ -46,6 +48,7 @@ export const RouteDetails = (props) => {
       },
     };
     dispatch(getRouteDetailssById(payload));
+    dispatch(getAllTickets());
     //dispatch(getRouteDetailssByIdInEnterprise(payload));
   };
 
@@ -79,6 +82,7 @@ export const RouteDetails = (props) => {
       <ListTripTable
         listTrip={state_routeDetails.trips}
         listVehicle={state_vehicle.vehicles}
+        listTicket={state_ticketR.tickets}
         idRoute={state_routeDetails.route._id}
         reLoad={loadRouteDetails}
       ></ListTripTable>

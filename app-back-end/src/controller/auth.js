@@ -6,63 +6,62 @@ const bcrypt = require("bcrypt");
 
 exports.getNewUser = async (req, res) => {
   try {
-    const { month, year } = req.body
-    const newUser = await User.aggregate(
-      [
-        {
-          '$project': {
-            'date': '$createdAt',
-            'month': {
-              '$month': '$createdAt'
+    const { month, year } = req.body;
+    const newUser = await User.aggregate([
+      {
+        $project: {
+          date: "$createdAt",
+          month: {
+            $month: "$createdAt",
+          },
+          year: {
+            $year: "$createdAt",
+          },
+        },
+      },
+      {
+        $match: {
+          month: month,
+          year: year,
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$date",
             },
-            'year': {
-              '$year': '$createdAt'
-            }
-          }
-        }, {
-          '$match': {
-            'month': month,
-            'year': year
-          }
-        }, {
-          '$group': {
-            '_id': {
-              '$dateToString': {
-                'format': '%Y-%m-%d',
-                'date': '$date'
-              }
+            newUser: {
+              $sum: 1,
             },
-            'newUser': {
-              '$sum': 1
-            }
-          }
-        }, {
-          '$sort': {
-            '_id': 1
-          }
-        }
-      ]
-    )
+          },
+        },
+        $sort: {
+          _id: 1,
+        },
+      },
+    ]);
 
-    let listUser = []
-    var day = new Date(year, month, 0).getDate()
+    let listUser = [];
+    var day = new Date(year, month, 0).getDate();
 
     if (newUser.length == day) {
       for (var i = 0; i < newUser.length; i++) {
-        listUser.push(newUser[i].newUser)
+        listUser.push(newUser[i].newUser);
       }
-    }
-    else {
+    } else {
       for (var i = 1, j = 0; i <= day; i++) {
         if (j == newUser.length) {
-          listUser.push(0)
-        }
-        else if (newUser[j]._id == ((i < 10) ? `${year}-${month}-0${i}` : `${year}-${month}-${i}`)) {
-          listUser.push(newUser[j].newUser)
-          j++
-        }
-        else {
-          listUser.push(0)
+          listUser.push(0);
+        } else if (
+          newUser[j]._id ==
+          (i < 10 ? `${year}-${month}-0${i}` : `${year}-${month}-${i}`)
+        ) {
+          listUser.push(newUser[j].newUser);
+          j++;
+        } else {
+          listUser.push(0);
         }
       }
     }
@@ -71,7 +70,7 @@ exports.getNewUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err });
   }
-}
+};
 
 exports.signup = async (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
@@ -126,7 +125,7 @@ exports.signup = async (req, res) => {
       console.log(error);
     }
     if (data) {
-      console.log(data);
+      //console.log(data);
     }
   });
 };

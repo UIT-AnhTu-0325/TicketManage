@@ -7,6 +7,8 @@ import { analyticsChartReducer, analyticsReducer, chartByEnterprisesReducer, cur
 import cityReducers from "./city.reducers";
 import vehicleReducers from "./vehicle.reducers";
 import tripReducers from "./trip.reducers";
+import ticketReducers from "./ticket.reducers";
+import user_ticket from "./user_ticket";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -24,7 +26,9 @@ const rootReducer = combineReducers({
   chartByEnterprise: chartByEnterprisesReducer,
   listByEnterprise: listByEnterprisesReducer,
   listNameEnterprise: nameChartByEnterprisesReducer,
-  listLastOrder: lastOrderReducer
+  listLastOrder: lastOrderReducer,
+  ticketR: ticketReducers,
+  user_ticket
 });
 
 export default rootReducer;

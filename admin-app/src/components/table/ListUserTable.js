@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Table } from "./Table";
 
 /**
@@ -21,7 +22,7 @@ export const ListUserTable = (props) => {
     };
   };
   const users = {
-    header: ["Họ tên", "Giới tính", "Email", "Số điện thoại"],
+    header: ["Họ tên", "Giới tính", "Email", "Số điện thoại", "Tùy chọn"],
     body: [],
   };
   const renderHead = (item, ind) => {
@@ -60,6 +61,12 @@ export const ListUserTable = (props) => {
                 Chi tiết
               </Button>
             </Link> */}
+
+            <Link to={`user/${user._id}/info`}>
+              <button className="detail" onClick={() => {}}>
+                Chi tiết
+              </button>
+            </Link>
           </td>
         </tr>
       );
@@ -74,70 +81,72 @@ export const ListUserTable = (props) => {
     );
   }
   return (
-    <div>
-      <h1>Quản lý tài khoản</h1>
-      <div className="card">
-        <div className="card__header">
-          <h3>Danh sách admin</h3>
-          {/* <Button
+    <React.Fragment>
+      <div className="user__main-content right-content-fixsize">
+        <h1 className="manager-user__title">Quản lý tài khoản</h1>
+        <div className="card">
+          <div className="card__header">
+            <h3>Danh sách admin</h3>
+            {/* <Button
           onClick={() => {
             handleModalShow("Add");
           }}
           >
           Thêm tuyến đường
         </Button> */}
+          </div>
+          <div className="card__body">
+            <Table
+              headData={users.header}
+              renderHead={(item, ind) => renderHead(item, ind)}
+              render2Body={() => renderUsers(listUser.listAdmin)}
+            />
+          </div>
+          <div className="card__footer"></div>
         </div>
-        <div className="card__body">
-          <Table
-            headData={users.header}
-            renderHead={(item, ind) => renderHead(item, ind)}
-            render2Body={() => renderUsers(listUser.listAdmin)}
-          />
-        </div>
-        <div className="card__footer"></div>
-      </div>
 
-      <div className="card">
-        <div className="card__header">
-          <h3>Danh sách người dùng</h3>
-          {/* <Button
+        <div className="card">
+          <div className="card__header">
+            <h3>Danh sách người dùng</h3>
+            {/* <Button
           onClick={() => {
             handleModalShow("Add");
           }}
           >
           Thêm tuyến đường
         </Button> */}
+          </div>
+          <div className="card__body">
+            <Table
+              headData={users.header}
+              renderHead={(item, ind) => renderHead(item, ind)}
+              render2Body={() => renderUsers(listUser.listCustomer)}
+            />
+          </div>
+          <div className="card__footer"></div>
         </div>
-        <div className="card__body">
-          <Table
-            headData={users.header}
-            renderHead={(item, ind) => renderHead(item, ind)}
-            render2Body={() => renderUsers(listUser.listCustomer)}
-          />
-        </div>
-        <div className="card__footer"></div>
-      </div>
 
-      <div className="card">
-        <div className="card__header">
-          <h3>Danh sách tài xế</h3>
-          {/* <Button
+        <div className="card">
+          <div className="card__header">
+            <h3>Danh sách tài xế</h3>
+            {/* <Button
           onClick={() => {
             handleModalShow("Add");
           }}
           >
           Thêm tuyến đường
         </Button> */}
+          </div>
+          <div className="card__body">
+            <Table
+              headData={users.header}
+              renderHead={(item, ind) => renderHead(item, ind)}
+              render2Body={() => renderUsers(listUser.listSteersman)}
+            />
+          </div>
+          <div className="card__footer"></div>
         </div>
-        <div className="card__body">
-          <Table
-            headData={users.header}
-            renderHead={(item, ind) => renderHead(item, ind)}
-            render2Body={() => renderUsers(listUser.listSteersman)}
-          />
-        </div>
-        <div className="card__footer"></div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };

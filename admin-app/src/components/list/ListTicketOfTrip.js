@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { FunctionBar } from "./functionBar";
+import { Link, NavLink } from "react-router-dom";
 
 /**
  * @author
@@ -8,10 +10,10 @@ import React from "react";
 export const ListTicketOfTrip = (props) => {
   const tickets = props.tickets;
   const listTicket = props.listTicket;
-
+  const trip = props.trip;
   const findInListTicket = (index) => {
     for (let i = 0; i < listTicket.length; i++) {
-      if (listTicket[i].seatNumber === index) {
+      if (Number(listTicket[i].seatNumber) === index) {
         return listTicket[i];
       }
     }
@@ -25,65 +27,115 @@ export const ListTicketOfTrip = (props) => {
         const ticketInfor = findInListTicket(i + 1);
         if (ticketInfor.type === "OnlineTicket") {
           myTickets.push(
-            <div
-              class="card text-white bg-success mb-3"
-              style={{ width: "25rem" }}
-            >
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">
+            <div class="card1 selected" style={{ width: "25rem" }}>
+              <div class="card1-header">
+                <span className="number-chair"> Ghế {i + 1}</span>
+                <span className="status">Vé online</span>
+              </div>
+              <div class="card1-body">
+                <h5 class="customer-name">
                   {ticketInfor.idUser.firstName} {ticketInfor.idUser.lastName}
                 </h5>
-                <p class="card-text">Nơi đón: {ticketInfor.getOn}</p>
-                <p class="card-text">Nơi trả: {ticketInfor.getOff}</p>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+                <p class="card1-text">Nơi đón: {ticketInfor.getOn}</p>
+                <p class="card1-text">Nơi trả: {ticketInfor.getOff}</p>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
+                <FunctionBar
+                  selected={ticketInfor}
+                  tickets={tickets}
+                  trip={trip}
+                />
               </div>
             </div>
           );
         } else if (ticketInfor.type === "OfflineTicket") {
           myTickets.push(
-            <div class="card text-dark bg-info mb-3" style={{ width: "25rem" }}>
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">AAAAAAAAAAAAAA</h5>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+            <div class="card1" style={{ width: "25rem" }}>
+              <div class="card1-header">
+                <span className="number-chair"> Ghế {i + 1}</span>
+                <span className="status paid">Đã thanh toán</span>
+              </div>
+              <div class="card1-body">
+                <h5 class="card1-title">{ticketInfor.name}</h5>
+                <h5 class="card1-title">{ticketInfor.contactNumber}</h5>
+                <p class="card1-text">Nơi đón: {ticketInfor.getOn}</p>
+                <p class="card1-text">Nơi trả: {ticketInfor.getOff}</p>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
+                <FunctionBar
+                  selected={ticketInfor}
+                  tickets={tickets}
+                  trip={trip}
+                ></FunctionBar>
               </div>
             </div>
           );
         } else {
           myTickets.push(
-            <div
-              class="card text-dark bg-warning mb-3"
-              style={{ width: "25rem" }}
-            >
-              <div class="card-header">Ghế {i + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">{ticketInfor.Name}</h5>
-                <p class="card-text">Giá vé: {tickets.price}</p>
+            <div class="card1 " style={{ width: "25rem" }}>
+              <div class="card1-header">Ghế {i + 1}</div>
+              <div class="card1-body">
+                <h5 class="card1-title">{ticketInfor.Name}</h5>
+                <p class="card1-text">
+                  Giá vé:{" "}
+                  {tickets.price.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </p>
               </div>
             </div>
           );
         }
       } else {
         myTickets.push(
-          <div
-            class="card text-white bg-danger mb-3"
-            style={{ width: "25rem" }}
-          >
-            <div class="card-header">Ghế {i + 1}</div>
-            <div class="card-body">
-              <h5 class="card-title">Ghế trống</h5>
-              <p class="card-text">Giá vé: {tickets.price}</p>
-              <button>Thêm vé</button>
+          <div class="card1" style={{ width: "25rem" }}>
+            <div class="card1-header">
+              <span className="number-chair"> Ghế {i + 1}</span>
+              <span className="status">Ghế trống</span>
+            </div>
+            <div class="card1-body">
+              <p class="card1-text">
+                Giá vé:{" "}
+                {tickets.price.toLocaleString("it-IT", {
+                  style: "currency",
+                  currency: "VND",
+                })}
+              </p>
+              <Link
+                to={`${window.location.pathname.replace(
+                  "informations",
+                  "tickets/crOffTicket"
+                )}`}
+              >
+                <button
+                  id={i + 1}
+                  className="btn-add-ticket"
+                  onClick={(e) => {
+                    localStorage.setItem("seatSelect", e.currentTarget.id);
+                  }}
+                >
+                  Thêm vé
+                </button>
+              </Link>
             </div>
           </div>
         );
       }
     }
+
     return myTickets;
   };
 
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTickets()}</div>
-  );
+  return <div className="list-ticket">{renderTickets()}</div>;
 };

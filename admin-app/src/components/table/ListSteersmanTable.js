@@ -23,7 +23,7 @@ export const ListSteersmanTable = (props) => {
       lastName: "",
       email: "",
       role: "steersman",
-      //username: "driver",
+      username: "driver",
       password: "111111",
       gender: "",
       contactNumber: "",
@@ -47,7 +47,11 @@ export const ListSteersmanTable = (props) => {
     setModalShow(true);
   };
   const handleModalSave = () => {
+    // if (modalFlag === "Add") {
+    //   createUsername();
+    // }
     const form = steersman;
+    //console.log(form);
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addSteersman(form));
@@ -63,6 +67,14 @@ export const ListSteersmanTable = (props) => {
   const handleModalClose = () => {
     setSteersman(initSteersman);
     setModalShow(false);
+  };
+
+  const createUsername = () => {
+    setSteersman({
+      ...steersman,
+      username: steersman.firstName + steersman.lastName + "123",
+    });
+    //console.log(steersman.username);
   };
 
   const findEnterpriseName = (idEnterprise) => {
@@ -154,7 +166,11 @@ export const ListSteersmanTable = (props) => {
             value={steersman.lastName}
             placeholder={`Tên`}
             onChange={(e) =>
-              setSteersman({ ...steersman, lastName: e.target.value })
+              setSteersman({
+                ...steersman,
+                lastName: e.target.value,
+                username: steersman.firstName + steersman.lastName + "123",
+              })
             }
           ></Input>
           <select
@@ -210,7 +226,7 @@ export const ListSteersmanTable = (props) => {
         </Modal.Footer>
       </Modal>
 
-      <div className="card">
+      <div className="card right-content-fixsize">
         <div className="card__header">
           <h3>Các tài xế</h3>
           <Button

@@ -1,13 +1,15 @@
 import axios from "../helpers/axios";
 import { tripConstants } from "./constants";
+import { addTicketOfTrip } from "./ticket.actions";
 export const addTrip = (form) => {
   return async (dispatch) => {
     dispatch({ type: tripConstants.ADD_NEW_TRIP_REQUEST });
     const res = await axios.post(`trip/create`, {
       ...form,
     });
-    console.log(res);
+
     if (res.status === 200) {
+      dispatch(addTicketOfTrip({ ...form, _id: res.data._id }));
       dispatch({
         type: tripConstants.ADD_NEW_TRIP_SUCCESS,
         payload: { trip: res.data },

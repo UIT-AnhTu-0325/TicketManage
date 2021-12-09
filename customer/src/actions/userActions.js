@@ -1,157 +1,164 @@
 import axios from "axios";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/userContants"
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  USER_PROFILE_FAIL,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
+  USER_REGISTER_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+} from "../constants/userContants";
 import { useHistory } from "react-router";
-const url = "http://localhost:2000"
+const url = "http://localhost:2000";
 
 export const login = (email, password) => async (dispatch) => {
-    try {
-        dispatch({ type: USER_LOGIN_REQUEST });
-        const config = {
-            Headers: {
-                "Content-type": "application/json"
-            }
-        }
-        const { data } = await axios.post(
-            `${url}/api/signin`,
-            { email, password },
-            config
-        )
+  try {
+    dispatch({ type: USER_LOGIN_REQUEST });
+    const config = {
+      Headers: {
+        "Content-type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      `${url}/api/signin`,
+      { email, password },
+      config
+    );
 
-        dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        localStorage.setItem("id", data.user._id);
-        localStorage.setItem("email", data.user.email);
-        localStorage.setItem("contact", data.user.contactNumber);
-        localStorage.setItem("lastName", data.user.lastName);
-        localStorage.setItem("firstName", data.user.firstName);
-        localStorage.setItem("token", data.token);
-        window.location.reload();
-
-    } catch (error) {
-        dispatch({
-            type: USER_LOGIN_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-        })
-    }
-}
+    localStorage.setItem("userInfo", JSON.stringify(data));
+    localStorage.setItem("id", data.user._id);
+    localStorage.setItem("email", data.user.email);
+    localStorage.setItem("contact", data.user.contactNumber);
+    localStorage.setItem("lastName", data.user.lastName);
+    localStorage.setItem("firstName", data.user.firstName);
+    localStorage.setItem("token", data.token);
+    window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const register = (user) => async (dispatch) => {
-    try {
-        dispatch({ type: USER_REGISTER_REQUEST });
-        const config = {
-            Headers: {
-                "Content-type": "application/json"
-            }
-        }
-        const { data } = await axios.post(
-            `${url}/api/signup`,
-            user,
-            config
-        )
+  try {
+    dispatch({ type: USER_REGISTER_REQUEST });
+    const config = {
+      Headers: {
+        "Content-type": "application/json",
+      },
+    };
+    const { data } = await axios.post(`${url}/api/signup`, user, config);
 
-        dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
-    } catch (error) {
-        dispatch({
-            type: USER_REGISTER_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-        })
-    }
-}
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const logout = () => async (dispatch) => {
-    localStorage.removeItem("userInfo")
-    dispatch({ type: USER_LOGOUT })
-}
+  localStorage.removeItem("userInfo");
+  dispatch({ type: USER_LOGOUT });
+};
 
 export const readProfile = () => async (dispatch, getState) => {
-    try {
-        dispatch({ type: USER_PROFILE_REQUEST })
+  try {
+    dispatch({ type: USER_PROFILE_REQUEST });
 
-        const {
-            userLogin: { userInfo }
-        } = getState()
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-        //console.log(userInfo.token)
+    //console.log(userInfo.token)
 
-        // const config = {
-        //     Headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${userInfo.token}`,
-        //     }
-        // }
+    // const config = {
+    //     Headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${userInfo.token}`,
+    //     }
+    // }
 
-        //console.log(config)
+    //console.log(config)
 
-        const { data } = await axios.get(`${url}/api/my-profile`, { 'headers': { 'Authorization': `Bearer ${userInfo.token}` } })
+    const { data } = await axios.get(`${url}/api/my-profile`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
 
+    //console.log(data)
 
-        console.log(data)
+    dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
 
-        dispatch({ type: USER_PROFILE_SUCCESS, payload: data })
+    localStorage.setItem("myProfile", JSON.stringify(data));
+    localStorage.setItem("avatar", data.profile.avatar);
+    // localStorage.setItem("dob", data.user.email);
+    // localStorage.setItem("gender", data.user.contactNumber);
 
-        localStorage.setItem("myProfile", JSON.stringify(data))
-        localStorage.setItem("avatar", data.profile.avatar);
-        // localStorage.setItem("dob", data.user.email);
-        // localStorage.setItem("gender", data.user.contactNumber);
-
-
-        //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
-        //localStorage.setItem("myProfile", JSON.stringify(data))
-
-    } catch (error) {
-        dispatch({
-            type: USER_PROFILE_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-        })
-    }
-}
+    //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+    //localStorage.setItem("myProfile", JSON.stringify(data))
+  } catch (error) {
+    dispatch({
+      type: USER_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const updateProfile = (user, token) => async (dispatch, getState) => {
-    try {
-        dispatch({ type: USER_UPDATE_REQUEST })
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
 
-        const {
-            userLogin: { userInfo }
-        } = getState()
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-        // const config = {
-        //     Headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${userInfo.token}`
-        //     }
-        // }
+    // const config = {
+    //     Headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${userInfo.token}`
+    //     }
+    // }
 
-        const { data } = await axios.put(`${url}/api/update-profile`, user, { 'headers': { 'Authorization': `Bearer ${token}` } })
+    const { data } = await axios.put(`${url}/api/update-profile`, user, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-        dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 
-        //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+    //dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
-        localStorage.setItem("myProfile", JSON.stringify(data))
-        localStorage.setItem("avatar", data.profile.avatar);
-        localStorage.setItem("email", data.profile.account.email);
-        localStorage.setItem("contact", data.profile.account.contactNumber);
-        localStorage.setItem("firstName", data.profile.account.firstName);
-
-
-
-    } catch (error) {
-        dispatch({
-            type: USER_UPDATE_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-        })
-    }
-}
+    localStorage.setItem("myProfile", JSON.stringify(data));
+    localStorage.setItem("avatar", data.profile.avatar);
+    localStorage.setItem("email", data.profile.account.email);
+    localStorage.setItem("contact", data.profile.account.contactNumber);
+    localStorage.setItem("firstName", data.profile.account.firstName);
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
