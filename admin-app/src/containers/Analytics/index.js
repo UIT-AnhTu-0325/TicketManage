@@ -86,43 +86,44 @@ export const Analytics = (props) => {
       },
     ],
 
-    options: {
-      color: ["#6ab04c", "#2980b9"],
-      chart: {
-        background: "transparent",
-      },
-      dataLabels: {
-        enable: false,
-      },
-      stroke: {
-        curve: "smooth",
-      },
-      xaxis: {
-        categories: days,
-      },
-      legent: {
-        position: "left",
-      },
-      grid: {
-        show: true,
-      },
-      yaxis: [
-        {
-          title: {
-            text: "Ticket",
-          },
-        },
-        {
-          opposite: true,
-          title: {
-            text: "Sale",
-          },
-        },
-      ],
-      title: {
-        text: "Analysis of Ticket and Sale",
-        align: "left",
-      },
+
+        options: {
+            color: ["#6ab04c", "#2980b9"],
+            chart: {
+                background: "transparent",
+            },
+            dataLabels: {
+                enable: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            xaxis: {
+                categories: days,
+            },
+            legent: {
+                position: "left",
+            },
+            grid: {
+                show: true,
+            },
+            yaxis: [
+                {
+                    title: {
+                        text: "Ticket"
+                    },
+                },
+                {
+                    opposite: true,
+                    title: {
+                        text: "Sales"
+                    }
+                }
+            ],
+            title: {
+                text: 'Analysis of Ticket and Sale',
+                align: 'left'
+            },
     },
   };
 
@@ -224,6 +225,17 @@ export const Analytics = (props) => {
           </Button>
         </div>
 
+                <div className="col-12">
+                    <div className="chart">
+                        <Chart
+                            options={chartOptions.options}
+                            series={chartOptions.series}
+                        />
+                    </div>
+                </div>
+
+
+                {/* <div className="chart">
         <div className="chart">
           <Chart options={chartOptions.options} series={chartOptions.series} />
         </div>
@@ -249,25 +261,33 @@ export const Analytics = (props) => {
                     >
                     </Chart>
                 </div> */}
-        <div className="chart">
-          <Doughnut
-            data={{
-              labels: ["Ticket Sold", "Ticket Canceled"],
-              datasets: [
-                {
-                  data: donutData,
-                  backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
-                },
-              ],
-            }}
-          ></Doughnut>
-        </div>
-        <div className="chart">
-          <Chart
-            options={chartOptions1.options}
-            series={chartOptions1.series}
-          />
-        </div>
+                <div className="row">
+                    <div className="col-8">
+                        <div className="chart">
+                            <Chart
+                                options={chartOptions1.options}
+                                series={chartOptions1.series}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-4">
+                        <div className="chart">
+                            <Doughnut
+                                data={{
+                                    labels: ['Ticket Sold', 'Ticket Canceled'],
+                                    datasets: [{
+                                        data: donutData,
+                                        backgroundColor: [
+                                            'rgb(255, 99, 132)',
+                                            'rgb(54, 162, 235)'
+                                        ],
+                                    }]
+                                }}
+                            >
+                            </Doughnut>
+                        </div>
+                    </div>
+                </div>
 
         {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
                 <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />

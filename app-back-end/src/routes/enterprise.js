@@ -5,6 +5,7 @@ const {
   update,
   deleteById,
   getInforbyID,
+  getAllName
 } = require("../controller/enterprise");
 const router = require("express").Router();
 
@@ -27,6 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(upload.array());
 app.use(express.static("public"));
+
+router.get("/getAllName", getAllName);
 
 router.post("/create", requireSignin, adminMiddleware, create);
 
