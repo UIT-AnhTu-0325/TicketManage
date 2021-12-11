@@ -5,6 +5,9 @@ import { Layout } from "../../components/Layout";
 import { ListTicketOfTrip } from "../../components/list/ListTicketOfTrip";
 import "./tripdetail.css";
 import busImg from "../../asset/img/bus1.jpg";
+import { Button } from "react-bootstrap";
+import { utils as XLSXUtils, writeFile } from "xlsx";
+import ExportToExcel from "../../components/ExportToExcel";
 /**
  * @author
  * @function TripDetails
@@ -27,6 +30,35 @@ export const TripDetails = (props) => {
     };
     dispatch(getTripDetailsById(payload));
   };
+
+  const genTicketList = () => {
+    const listTicket = state_tripDetails.listTicket;
+    let count = 1;
+    var list = [];
+    for (let i = 0; i < listTicket.length; i++) {
+      let ti = listTicket[i];
+      list.push({
+        STT: count,
+        Hoten:
+          ti.type === "OnlineTicket"
+            ? ti.idUser.firstName + " " + ti.idUser.lastName
+            : ti.name,
+        SDT:
+          ti.type === "OnlineTicket"
+            ? ti.idUser.contactNumber
+            : ti.contactNumber,
+        SoGhe: Number(ti.seatNumber),
+        NoiDon: ti.getOn,
+        NoiTra: ti.getOff,
+        LoaiVe: ti.type,
+        GiaVe: state_tripDetails.tickets.price,
+      });
+      count += 1;
+    }
+    return list;
+  };
+
+  const footer = [`Tổng cộng: ${state_tripDetails.listTicket.length} vé`];
 
   if (Object.keys(state_tripDetails).length === 0) {
     return null;
@@ -82,6 +114,10 @@ export const TripDetails = (props) => {
             </div>
           </div>
         </div>
+        <ExportToExcel
+          getData={genTicketList()}
+          getFooter={footer}
+        ></ExportToExcel>
         <div className="trip-detail__list">
           <ListTicketOfTrip
             tickets={state_tripDetails.tickets}
