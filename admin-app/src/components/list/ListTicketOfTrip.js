@@ -55,7 +55,7 @@ export const ListTicketOfTrip = (props) => {
           );
         } else if (ticketInfor.type === "OfflineTicket") {
           myTickets.push(
-            <div class="card1" style={{ width: "25rem" }}>
+            <div class="card1 offline-paid" style={{ width: "25rem" }}>
               <div class="card1-header">
                 <span className="number-chair"> Ghế {i + 1}</span>
                 <span className="status paid">Đã thanh toán</span>
@@ -82,7 +82,7 @@ export const ListTicketOfTrip = (props) => {
           );
         } else {
           myTickets.push(
-            <div class="card1 " style={{ width: "25rem" }}>
+            <div class="card1 unknow" style={{ width: "25rem" }}>
               <div class="card1-header">Ghế {i + 1}</div>
               <div class="card1-body">
                 <h5 class="card1-title">{ticketInfor.Name}</h5>
