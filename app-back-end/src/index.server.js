@@ -28,6 +28,7 @@ const user_ticketRoutes = require("./routes/user_ticket");
 const locationRoutes = require("./routes/location");
 const cityRoutes = require("./routes/city");
 const userRoutes = require("./routes/user");
+const ruleRoutes = require("./routes/rule");
 //env var
 env.config();
 
@@ -89,6 +90,7 @@ app.use("/api/user_ticket", user_ticketRoutes);
 app.use("/api/city", cityRoutes);
 app.use("/api/location", locationRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/rule", ruleRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

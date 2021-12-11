@@ -17,22 +17,22 @@ export const MyTicket = (props) => {
   useEffect(() => {
     dispatch(getAll());
   }, [dispatch]);
-  //   const active = books.filter(
-  //     (item) =>
-  //       new Date(item.trip.startDate) >= Date.now() &&
-  //       item.book.idUser === localStorage.getItem("id") &&
-  //       !item.book.canceled
-  //   );
-  //   const used = books.filter(
-  //     (item) =>
-  //       new Date(item.trip.startDate) < Date.now() &&
-  //       item.book.idUser === localStorage.getItem("id") &&
-  //       !item.book.canceled
-  //   );
-  //   const canceled = books.filter(
-  //     (item) =>
-  //       item.books.canceled && item.book.idUser === localStorage.getItem("id")
-  //   );
+  const active = books.filter(
+    (item) =>
+      new Date(item.trip.startDate) >= Date.now() &&
+      item.book.idUser === localStorage.getItem("id") &&
+      !item.book.canceled
+  );
+  const used = books.filter(
+    (item) =>
+      new Date(item.trip.startDate) < Date.now() &&
+      item.book.idUser === localStorage.getItem("id") &&
+      !item.book.canceled
+  );
+  const canceled = books.filter(
+    (item) =>
+      item.book.canceled && item.book.idUser === localStorage.getItem("id")
+  );
 
   const [currentTab, setCurrentTab] = useState(1);
   console.log(books);
@@ -68,7 +68,7 @@ export const MyTicket = (props) => {
       <div className="ticket-tab__line"></div>
 
       <div className="ticket-tab__main">
-        {/* <div className={currentTab === 1 ? "tab active" : "tab"}>
+        <div className={currentTab === 1 ? "tab active" : "tab"}>
           <ActiveTicket info={active} />
         </div>
 
@@ -78,7 +78,7 @@ export const MyTicket = (props) => {
 
         <div className={currentTab === 3 ? "tab active" : "tab"}>
           <DeleteTicket info={canceled} />
-        </div> */}
+        </div>
       </div>
     </React.Fragment>
   );

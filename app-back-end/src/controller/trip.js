@@ -5,6 +5,7 @@ const Enterprise = require("../models/enterprise");
 const Ticket = require("../models/ticket");
 const UserTicket = require("../models/user_ticket");
 const OfflineTicket = require("../models/offline_phone_ticket");
+const Rules = require("../models/rule");
 exports.getAll = async (req, res) => {
   try {
     const trips = await Trip.find();
@@ -32,9 +33,9 @@ exports.fetchAll = async (req, res) => {
     const routes = await Route.find();
     const enterprise = await Enterprise.find();
     const tickets = await Ticket.find();
-
+    const rules = await Rules.find();
     trips
-      .filter((trip) => trip.startDate >= Date.now())
+      .filter((trip) => new Date(trip.startDate - 24*3600*1000*rules[0].book) >= Date.now())
       .map((trip) => {
         let result = {};
         result.trip = trip;

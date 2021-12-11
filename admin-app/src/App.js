@@ -21,9 +21,13 @@ import { RouteDetails } from "./containers/RouteDetails";
 import { User } from "./containers/User";
 import { TripDetails } from "./containers/TripDetails";
 import { UserDetail } from "./components/customer/UserDetail";
+
+import { Rules } from "./pages/Rules";
+
 import { AdminBooking } from "./pages/adminbooking/AdminBooking";
 import { UserDetails } from "./containers/UserDetails";
 import { OfflineTicket } from "./containers/OfflineTicket";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -70,6 +74,7 @@ function App() {
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
         <Route path="/user" component={User} />
+        <Route path="/settings" component={Rules} />
 
         {/* New Route */}
         <Route path="/" component={DashBoard} />

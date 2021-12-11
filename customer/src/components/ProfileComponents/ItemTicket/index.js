@@ -50,25 +50,27 @@ export const ItemTicket = (props) => {
                     </div>
                 </div>
 
-                {props.display && (<div className="right">
+                <div className="right">
                     <div className="price">
                         {props.info.ticket.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} đ
                     </div>
-                    <div className="btn" onClick={clickOpenBuyingModal}>
-                        Chi tiết
-                    </div>
-                    <div className="cancelBtn" onClick={() => {
+                    {props.details && (
+                        <div className="btn" onClick={clickOpenBuyingModal}>
+                            Chi tiết
+                        </div>
+                    )}
+                    {props.display && (<div className="cancelBtn" onClick={() => {
                         if (window.confirm("Bạn muốn hủy vé ?")) {
                             props.info.ticket.quantity[props.info.book.seatNumber - 1] = false;
-                            dispatch(update({...props.info.book, canceled: true},
+                            dispatch(update({ ...props.info.book, canceled: true },
                                 { idTrip: props.info.trip._id, quantity: props.info.ticket.quantity, price: props.info.ticket.price, _id: props.info.ticket._id }, props.info.book._id));
                             alert('Hủy vé thành công');
                             window.location.reload();
                         }
                     }}>
                         Hủy vé
-                    </div>
-                </div>)}
+                    </div>)}
+                </div>
 
                 <div className="modal__buy-ticket">
                     {openBuyingModal === true ? <ModalUpdateTicket closeModal={clickCloseBuyingModal} info={props.info} /> : null}
