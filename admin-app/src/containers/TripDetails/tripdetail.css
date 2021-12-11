@@ -91,6 +91,9 @@
   flex-direction: column;
   min-height: 200px;
 }
+.list-ticket .card1.unknow {
+  background-color: rgb(255, 226, 224);
+}
 .list-ticket .card1:hover {
   box-shadow: 0px 0px 5px rgb(0, 150, 187);
 }
@@ -123,6 +126,9 @@
 .list-ticket .card1.selected {
   background-color: rgb(236, 236, 236);
 }
+.list-ticket .card1.offline-paid {
+  background-color: rgb(230, 255, 236);
+}
 .list-ticket .card1-header .status {
   height: fit-content;
   font-size: 1.2rem;
@@ -136,8 +142,15 @@
   color: rgb(0, 226, 75);
   border: 1px solid rgb(0, 226, 75);
 }
+.list-ticket .card1-header .status.paid {
+  background-color: #50c878;
+  color: #fff;
+  border: 1px solid transparent;
+}
 .list-ticket .btn-add-ticket {
   padding: 10px 16px;
+  margin-top: 10px;
+  width: 100%;
   margin-top: 10px;
   border-radius: 5px;
   font-size: 1.4rem;
@@ -145,8 +158,10 @@
   font-weight: 600;
   color: rgb(0, 150, 187);
   margin-bottom: 20px;
+  background-color: rgb(243, 243, 243);
 }
 .list-ticket .btn-add-ticket:hover {
   cursor: pointer;
-  background-color: rgb(221, 221, 221);
+  background-color: rgb(0, 150, 187);
+  color: white;
 }
