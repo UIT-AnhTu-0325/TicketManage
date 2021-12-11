@@ -1,34 +1,84 @@
 import axios from "../helpers/axios";
 import { authConstants } from "./constants";
+import { notification } from "antd";
+import "antd/dist/antd.css";
 
 export const login = (user) => {
   //console.log(user);
 
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    const res = await axios.post(`/admin/signin`, {
-      ...user,
-    });
-    if (res.status === 200) {
-      const { token, user } = res.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      dispatch({
-        type: authConstants.LOGIN_SUCCESS,
-        payload: {
-          token,
-          user,
-        },
+    try {
+      const res = await axios.post(`/admin/signin`, {
+        ...user,
       });
-    } else {
-      if (res.status === 400) {
+      if (res.status === 200) {
+        const { token, myUser } = res.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(myUser));
         dispatch({
-          type: authConstants.LOGIN_FAILURE,
-          payload: { error: res.data.error },
+          type: authConstants.LOGIN_SUCCESS,
+          payload: {
+            token,
+            user,
+          },
         });
       }
+    } catch (error) {
+      notification.error({
+        message: "Lỗi",
+        description: "Sai tên đăng nhập hoặc mật khẩu",
+      });
+      dispatch({
+        type: authConstants.LOGIN_FAILURE,
+        payload: { error: error },
+      });
     }
   };
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         const { token, user } = res.data;
+  //         localStorage.setItem("token", token);
+  //         localStorage.setItem("user", JSON.stringify(user));
+  //         dispatch({
+  //           type: authConstants.LOGIN_SUCCESS,
+  //           payload: {
+  //             token,
+  //             user,
+  //           },
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       notification.error({
+  //         message: "Lỗi",
+  //         description: "Sai tên đăng nhập hoặc mật khẩu",
+  //       });
+  //       dispatch({
+  //         type: authConstants.LOGIN_FAILURE,
+  //         payload: { error: error },
+  //       });
+  //     });
+  //   if (res.status === 200) {
+  //     const { token, user } = res.data;
+  //     localStorage.setItem("token", token);
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //     dispatch({
+  //       type: authConstants.LOGIN_SUCCESS,
+  //       payload: {
+  //         token,
+  //         user,
+  //       },
+  //     });
+  //   } else {
+  //     if (res.status === 400) {
+  //       dispatch({
+  //         type: authConstants.LOGIN_FAILURE,
+  //         payload: { error: res.data.error },
+  //       });
+  //     }
+  //   }
+  // };
 };
 
 export const isUserLoggedIn = () => {

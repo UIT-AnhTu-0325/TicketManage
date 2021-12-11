@@ -2,38 +2,44 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import statusCards from "../asset/JsonData/status-card-data.json";
 import { StatusCard } from "../components/statusCard/StatusCard";
-import { getAllName, getCurrentByEnterprises, getCurrentByEnterprisesList, getCurrentDate, getLastOrder } from "../actions/analyticsActions";
+import {
+  getAllName,
+  getCurrentByEnterprises,
+  getCurrentByEnterprisesList,
+  getCurrentDate,
+  getLastOrder,
+} from "../actions/analyticsActions";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Chart from "react-apexcharts";
 import { Table } from "../components/table/Table";
+import { Redirect } from "react-router-dom";
 /**
  * @author
  * @function DashBoard
  **/
 
 export const DashBoard = (props) => {
-
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentDate())
-    dispatch(getCurrentByEnterprises())
-    dispatch(getCurrentByEnterprisesList())
-    dispatch(getAllName())
-    dispatch(getLastOrder())
+    dispatch(getCurrentDate());
+    dispatch(getCurrentByEnterprises());
+    dispatch(getCurrentByEnterprisesList());
+    dispatch(getAllName());
+    dispatch(getLastOrder());
   }, []);
 
-  const currentDate = useSelector((state) => state.currentDate)
-  const chartByEnterprise = useSelector((state) => state.chartByEnterprise)
-  const listByEnterprise = useSelector((state) => state.listByEnterprise)
-  const listNameEnterprise = useSelector((state) => state.listNameEnterprise)
-  const listLastOrder = useSelector((state) => state.listLastOrder)
+  const currentDate = useSelector((state) => state.currentDate);
+  const chartByEnterprise = useSelector((state) => state.chartByEnterprise);
+  const listByEnterprise = useSelector((state) => state.listByEnterprise);
+  const listNameEnterprise = useSelector((state) => state.listNameEnterprise);
+  const listLastOrder = useSelector((state) => state.listLastOrder);
+  const auth = useSelector((state) => state.auth);
 
-  console.log(listNameEnterprise.listName)
+  console.log(listNameEnterprise.listName);
 
   const chartOptions = {
     series: [
@@ -71,19 +77,19 @@ export const DashBoard = (props) => {
       yaxis: [
         {
           title: {
-            text: "Sales"
+            text: "Sales",
           },
         },
         {
           opposite: true,
           title: {
-            text: "Booking"
-          }
-        }
+            text: "Booking",
+          },
+        },
       ],
       title: {
-        text: 'Booking and Sales of Enterprises',
-        align: 'left'
+        text: "Booking and Sales of Enterprises",
+        align: "left",
       },
     },
   };
@@ -120,13 +126,15 @@ export const DashBoard = (props) => {
     </tr>
   );
 
-  if (
-    Object.keys(currentDate).length === 0
-  ) {
+  if (Object.keys(currentDate).length === 0) {
     return null;
   }
   if (currentDate.currentDateData === null) {
-    return null
+    return null;
+  }
+
+  if (!localStorage.getItem("token")) {
+    return <Redirect to={`/signin`}></Redirect>;
   }
 
   return (

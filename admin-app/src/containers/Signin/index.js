@@ -4,7 +4,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
-
+import { notification } from "antd";
+import "antd/dist/antd.css";
 import rightImg from "../../asset/img/report.png";
 
 // css
@@ -44,17 +45,17 @@ export const Signin = (props) => {
           <div className="signin__header">
             <div className="logo-name">
               <i class="fas fa-user-shield"></i>
-              <span>ADMIN</span>
+              <span>QUẢN LÝ</span>
             </div>
-            <div className="signin">Log In</div>
-            <div className="signup">Sign up</div>
+            <div className="signin">Đăng Nhập</div>
+            {/* <div className="signup">Sign up</div> */}
           </div>
 
           <div className="signin__body">
             <form onSubmit={userLogin}>
-              <div className="signin-title">Sign In</div>
+              <div className="signin-title">Đăng Nhập</div>
               <div className="signin-desc">
-                Sign in to your admin application
+                Đăng nhập để vào ứng dụng quản lý của bạn
               </div>
               <div className="input">
                 <i class="far fa-envelope"></i>
@@ -77,7 +78,7 @@ export const Signin = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button type="submit">Sign in</button>
+              <button type="submit">Đăng nhập</button>
             </form>
           </div>
         </div>
