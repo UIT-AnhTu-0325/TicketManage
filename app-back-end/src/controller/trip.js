@@ -110,7 +110,10 @@ exports.getInforbyID = async (req, res) => {
           canceled: false,
           seatNumber: i + 1,
         }).populate("idUser");
-        let offTi = await OfflineTicket.findOne({ idTicket: tickets._id });
+        let offTi = await OfflineTicket.findOne({
+          idTicket: tickets._id,
+          seatNumber: `${i + 1}`,
+        });
         if (onlTi) {
           let temp = JSON.parse(JSON.stringify(onlTi));
           temp.type = "OnlineTicket";

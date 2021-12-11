@@ -2,7 +2,6 @@ import React from "react";
 import { Layout } from "../../components/Layout";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import LChart from "../../components/chart/Chart";
-import { userData } from "../../dummyData";
 import { Dropdown, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -15,6 +14,8 @@ import {
 } from "../../actions/analyticsActions";
 import "../../asset/css/containers-css/Analytics.css";
 import Chart from "react-apexcharts";
+import { useHistory } from "react-router";
+import { Doughnut } from "react-chartjs-2";
 
 /**
  * @author
@@ -27,22 +28,20 @@ export const Analytics = (props) => {
   const [month, setMonth] = useState(today.getMonth() + 1);
   const [year, setYear] = useState(today.getFullYear());
 
-  const [ticketCurrentMonth, setTicketCurrentMonth] = useState(0);
-  const [saleCurrentMonth, setSaleCurrentMonth] = useState(0);
-  const [ticketCanceled, setTicketCanceled] = useState(0);
+  var monthIndex = month - 1;
 
-  const analytics = useSelector((state) => state.analytics);
-  const { listOfAnalytics } = analytics;
+  var date = new Date(year, monthIndex, 1);
 
-  const chart = useSelector((state) => state.chart);
-  const { listOfAnalyticsChart } = chart;
+  var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const newUser = useSelector((state) => state.newUser);
-  const { listOfNewUser } = newUser;
+  var days = [];
+  while (date.getMonth() === monthIndex) {
+    days.push(date.getDate() + " " + names[date.getDay()]);
+    //days.push(date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear());
+    date.setDate(date.getDate() + 1);
+  }
 
-  // var lastMonth = today.getMonth()
-  // var month = today.getMonth() + 1
-  // var year = today.getFullYear()
+  console.log(days);
 
   const dispatch = useDispatch();
 
@@ -51,11 +50,6 @@ export const Analytics = (props) => {
     dispatch(getDateByMonthYear({ month, year }));
     dispatch(getNewUser({ month, year }));
     dispatch(getTicketCanceled({ month, year }));
-    //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-    //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
-    setTicketCurrentMonth(localStorage.getItem("totalTickets"));
-    setSaleCurrentMonth(localStorage.getItem("totalSales"));
-    setTicketCanceled(localStorage.getItem("ticketCanceled"));
   }, []);
 
   const filterShow = (e) => {
@@ -64,18 +58,135 @@ export const Analytics = (props) => {
     dispatch(getCurrentMonth({ month, year }));
     dispatch(getNewUser({ month, year }));
     dispatch(getTicketCanceled({ month, year }));
-    //setTicketCurrentMonth(listOfAnalytics.map(a => a.totalTicket))
-    //setSaleCurrentMonth(listOfAnalytics.map(a => a.totalSale))
-    setTicketCurrentMonth(localStorage.getItem("totalTickets"));
-    setSaleCurrentMonth(localStorage.getItem("totalSales"));
-    setTicketCanceled(localStorage.getItem("ticketCanceled"));
-    //console.log("test", ticketCurrentMonth, ticketCanceled);
+  };
+
+  const analytics = useSelector((state) => state.analytics);
+  const { totalTicket, totalSale } = analytics;
+
+  const chart = useSelector((state) => state.chart);
+  const { listTicket, listSale } = chart;
+
+  const newUser = useSelector((state) => state.newUser);
+  const { listNewUser } = newUser;
+
+  const ticket = useSelector((state) => state.ticket);
+  const { donutData } = ticket;
+
+  const chartOptions = {
+    series: [
+      {
+        type: "column",
+        name: "Ticket",
+        data: listTicket,
+      },
+      {
+        type: "line",
+        name: "Sale",
+        data: listSale,
+      },
+    ],
+
+    options: {
+      color: ["#6ab04c", "#2980b9"],
+      chart: {
+        background: "transparent",
+      },
+      dataLabels: {
+        enable: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      xaxis: {
+        categories: days,
+      },
+      legent: {
+        position: "left",
+      },
+      grid: {
+        show: true,
+      },
+      yaxis: [
+        {
+          title: {
+            text: "Ticket",
+          },
+        },
+        {
+          opposite: true,
+          title: {
+            text: "Sale",
+          },
+        },
+      ],
+      title: {
+        text: "Analysis of Ticket and Sale",
+        align: "left",
+      },
+    },
+  };
+
+  const chartOptions1 = {
+    series: [
+      {
+        type: "line",
+        name: "New User",
+        data: listNewUser,
+      },
+    ],
+
+    options: {
+      color: ["#6ab04c", "#2980b9"],
+      chart: {
+        background: "transparent",
+      },
+      dataLabels: {
+        enable: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      xaxis: {
+        categories: days,
+      },
+      legent: {
+        position: "left",
+      },
+      grid: {
+        show: true,
+      },
+      title: {
+        text: "Analysis of New User",
+        align: "left",
+      },
+      markers: {
+        hover: {
+          sizeOffset: 4,
+        },
+      },
+    },
+  };
+
+  const data = {
+    labels: ["Red", "Blue", "Yellow"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [300, 50, 100],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
   };
 
   return (
     <Layout sidebar>
       <div>
-        <FeaturedInfo ticket={ticketCurrentMonth} sale={saleCurrentMonth} />
+        <FeaturedInfo ticket={totalTicket} sale={totalSale} />
         <div className="dropDown">
           <select
             value={month}
@@ -113,38 +224,75 @@ export const Analytics = (props) => {
           </Button>
         </div>
 
-        <LChart
-          data={listOfAnalyticsChart}
-          title="Tickets"
-          grid
-          dataKey1="totalTicket"
-        />
-        <LChart
-          data={listOfAnalyticsChart}
-          title="Sales"
-          grid
-          dataKey2="totalSale"
-        />
-        <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />
-        <Chart
-          type="donut"
-          width={600}
-          height={600}
-          series={[parseInt(ticketCurrentMonth), parseInt(ticketCanceled)]}
-          options={{
-            labels: ["Ticket Sold", "Ticket Canceled"],
-            title: { text: "Ticket" },
-            plotOptions: {
-              pie: {
-                donut: {
-                  labels: {
-                    show: true,
-                  },
+        <div className="chart">
+          <Chart options={chartOptions.options} series={chartOptions.series} />
+        </div>
+        {/* <div className="chart">
+                    <Chart
+                        type="donut"
+                        width={600}
+                        height={600}
+                        series={donutData}
+                        options={{
+                            labels: ['Ticket Sold', 'Ticket Canceled'],
+                            title: { text: 'Ticket' },
+                            plotOptions: {
+                                pie: {
+                                    donut: {
+                                        labels: {
+                                            show: true
+                                        }
+                                    }
+                                }
+                            }
+                        }}
+                    >
+                    </Chart>
+                </div> */}
+        <div className="chart">
+          <Doughnut
+            data={{
+              labels: ["Ticket Sold", "Ticket Canceled"],
+              datasets: [
+                {
+                  data: donutData,
+                  backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
                 },
-              },
-            },
-          }}
-        ></Chart>
+              ],
+            }}
+          ></Doughnut>
+        </div>
+        <div className="chart">
+          <Chart
+            options={chartOptions1.options}
+            series={chartOptions1.series}
+          />
+        </div>
+
+        {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
+                <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />
+                <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />
+                <Chart
+                    type="donut"
+                    width={600}
+                    height={600}
+                    series={[ticketCurrentMonth, ticketCanceled]}
+                    options={{
+                        labels: ['Ticket Sold', 'Ticket Canceled'],
+                        title: { text: 'Ticket' },
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    labels: {
+                                        show: true
+                                    }
+                                }
+                            }
+                        }
+                    }}
+                >
+
+                </Chart> */}
       </div>
     </Layout>
   );

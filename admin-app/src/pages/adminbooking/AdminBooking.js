@@ -1,40 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTripDetailsById } from "../../actions/trip.actions";
 import { Layout } from "../../components/Layout";
 import { ListTicketOfTrip } from "../../components/list/ListTicketOfTrip";
-import "./tripdetail.css";
+import "../../containers/TripDetails/tripdetail.css";
 import busImg from "../../asset/img/bus1.jpg";
 /**
  * @author
- * @function TripDetails
+ * @function AdminBooking
  **/
 
-export const TripDetails = (props) => {
-  const dispatch = useDispatch();
-  const state_tripDetails = useSelector((state) => state.trip.tripDetails);
-
-  useEffect(() => {
-    loadTripDetails();
-  }, []);
-
-  const loadTripDetails = () => {
-    const { tripId } = props.match.params;
-    const payload = {
-      params: {
-        tripId,
-      },
-    };
-    dispatch(getTripDetailsById(payload));
-  };
-
-  if (Object.keys(state_tripDetails).length === 0) {
-    return null;
-  }
-
+export const AdminBooking = (props) => {
   return (
     <Layout sidebar>
-      <div className="trip-detail__wrapper">
+      <p>hong</p>
+      {/* <div className="trip-detail__wrapper">
         <div className="trip-detail__info">
           <div className="img-bus">
             <img src={busImg} alt="" />
@@ -86,10 +66,9 @@ export const TripDetails = (props) => {
           <ListTicketOfTrip
             tickets={state_tripDetails.tickets}
             listTicket={state_tripDetails.listTicket}
-            trip={state_tripDetails.trip}
           ></ListTicketOfTrip>
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 };

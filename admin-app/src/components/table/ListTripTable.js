@@ -142,7 +142,7 @@ export const ListTripTable = (props) => {
               <i class="far fa-trash-alt"></i>
             </button> */}
             <Link to={`/trips/${trip._id}/informations`}>
-              <button className="detail" onClick={() => {}}>
+              <button className="detail" type="button" onClick={() => {}}>
                 Chi tiết
               </button>
             </Link>
@@ -155,7 +155,7 @@ export const ListTripTable = (props) => {
 
   return (
     <div>
-      <div className="routes">
+      <div className="routes right-content-fixsize">
         <div className="row">
           <div className="col-12">
             <div className="card">

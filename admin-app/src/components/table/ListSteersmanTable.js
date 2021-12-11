@@ -226,7 +226,7 @@ export const ListSteersmanTable = (props) => {
         </Modal.Footer>
       </Modal>
 
-      <div className="card">
+      <div className="card right-content-fixsize">
         <div className="card__header">
           <h3>Các tài xế</h3>
           <Button

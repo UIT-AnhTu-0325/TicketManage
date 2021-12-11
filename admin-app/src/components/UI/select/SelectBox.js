@@ -28,6 +28,22 @@ export const SelectBox = (props) => {
                 {option.name}
               </option>
             );
+          } else if (props.type === "SeatSelect") {
+            return (
+              <option
+                key={option.num}
+                value={option.num}
+                disabled={option.isSel}
+              >
+                {option.num}
+              </option>
+            );
+          } else if (props.type === "LocationSelect") {
+            return (
+              <option key={option._id} value={option.name}>
+                {option.name} - {props.addShow}
+              </option>
+            );
           } else {
             return (
               <option key={option._id} value={option.name}>

@@ -21,7 +21,13 @@ import { RouteDetails } from "./containers/RouteDetails";
 import { User } from "./containers/User";
 import { TripDetails } from "./containers/TripDetails";
 import { UserDetail } from "./components/customer/UserDetail";
+
 import { Rules } from "./pages/Rules";
+
+import { AdminBooking } from "./pages/adminbooking/AdminBooking";
+import { UserDetails } from "./containers/UserDetails";
+import { OfflineTicket } from "./containers/OfflineTicket";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +42,7 @@ function App() {
   return (
     <div className="App">
       <Switch>
+        <Route path="/booking" component={AdminBooking} />
         <Route path="/home" exact component={Home} />
         <Route
           path="/enterprises/:enterpriseId/informations/:routeId/routeinfo"
@@ -45,7 +52,8 @@ function App() {
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
         ></Route>
-        <Route path="/user/:userId/userdetail" component={UserDetail}></Route>
+        <Route path="/user/:userId/info" component={UserDetail}></Route>
+        <Route path="/user/:userId/userdetail" component={UserDetails}></Route>
 
         <Route
           path="/routes/:routeId/informations"
@@ -54,6 +62,10 @@ function App() {
         <Route
           path="/trips/:tripId/informations"
           component={TripDetails}
+        ></Route>
+        <Route
+          path="/trips/:tripId/tickets/crOffTicket"
+          component={OfflineTicket}
         ></Route>
         <Route path="/routes" component={Routes} />
         <Route path="/enterprises" exact component={Enterprise} />
@@ -67,6 +79,7 @@ function App() {
         {/* New Route */}
         <Route path="/" component={DashBoard} />
         <Route path="/customers" component={Customer} />
+        <Route path="/booking" component={AdminBooking} />
       </Switch>
     </div>
   );
