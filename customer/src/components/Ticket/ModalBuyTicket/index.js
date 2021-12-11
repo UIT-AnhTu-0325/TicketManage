@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../asset/css/modal-css/buy-ticket.css";
 import { useDispatch, useSelector } from "react-redux";
-
+import axios from 'axios';
 // img
 import loginRequestImg from "../../../asset/img/login-nice-img.png";
 import serviceImg from "../../../asset/img/services.png";
@@ -17,6 +17,23 @@ import { createNew } from "../../../action/user_ticket";
  **/
 
 export const ModalBuyTicket = (props) => {
+  const [rules,setRules] = useState({
+    book: 1,
+    cancel: 1,
+    max: 1
+  });
+  useEffect(() => {
+    axios.get(`http://localhost:2000/api/rule`)
+            .then(function (response) { return response.data })
+            .then(function (data) {
+                const items = data;
+                setRules({
+                    book: items[0].book,
+                    cancel: items[0].cancel,
+                    max: items[0].max
+                });
+            });
+  }, []);
   const locations = useSelector((state) => state.locations);
   const getOn = locations.filter(
     (location) => location.city === props.info.route.startLocation
@@ -83,7 +100,7 @@ export const ModalBuyTicket = (props) => {
       if (itemChoosing.includes(id)) {
         return itemChoosing.filter((item) => item !== id);
       } else {
-        if (itemAvailable.includes(id)) {
+        if (itemAvailable.includes(id) && itemChoosing.length < rules.max) {
           return [...prev, id];
         } else {
           return prev;
