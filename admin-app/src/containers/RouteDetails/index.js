@@ -28,6 +28,8 @@ export const RouteDetails = (props) => {
   const state_vehicle = useSelector((state) => state.vehicle);
   const state_routeDetails = useSelector((state) => state.route.routeDetails);
   const state_ticketR = useSelector((state) => state.ticketR);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   // event handle
   useEffect(() => {
@@ -56,6 +58,23 @@ export const RouteDetails = (props) => {
     return null;
   }
 
+  const searchHandler = (searchTerm) => {
+    //console.log(searchTerm)
+    setSearchTerm(searchTerm)
+    if (searchTerm !== "") {
+      const newTrips = state_routeDetails.trips.filter((trip) => {
+        return Object.values(trip)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      })
+      setSearchResults(newTrips)
+    }
+    else {
+      setSearchResults(state_routeDetails.trips)
+    }
+  }
+
   return (
     <Layout sidebar>
       <div className="enterprise-info">
@@ -80,11 +99,13 @@ export const RouteDetails = (props) => {
       </div>
 
       <ListTripTable
-        listTrip={state_routeDetails.trips}
+        listTrip={searchTerm.length < 1 ? state_routeDetails.trips : searchResults}
         listVehicle={state_vehicle.vehicles}
         listTicket={state_ticketR.tickets}
         idRoute={state_routeDetails.route._id}
         reLoad={loadRouteDetails}
+        term={searchTerm}
+        searchKeyword={searchHandler}
       ></ListTripTable>
     </Layout>
   );
