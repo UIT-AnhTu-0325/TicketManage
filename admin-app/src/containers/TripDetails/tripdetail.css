@@ -69,7 +69,11 @@
 }
 
 /* TRIP LIST CARD */
-
+.export-to-excel__wrapper {
+  position: absolute;
+  right: 20px;
+  top: 90px;
+}
 .list-ticket {
   display: flex;
   flex-wrap: wrap;
@@ -107,7 +111,26 @@
 .list-ticket .card1-body .customer-name {
   font-size: 1.7rem;
   margin-bottom: 20px;
+
   color: rgb(0, 150, 187);
+}
+.list-ticket .offline-customer-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list-ticket .card1-body .customer-number {
+  display: inline;
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+  margin-top: -10px;
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid rgb(0, 150, 187);
+  color: rgb(0, 150, 187);
+  width: fit-content;
+  border-radius: 5px;
+  font-size: 1.2rem;
 }
 .list-ticket .card1-header {
   background-image: linear-gradient(
@@ -124,7 +147,8 @@
   padding: 0px;
 }
 .list-ticket .card1.selected {
-  background-color: rgb(236, 236, 236);
+  /* background-color: rgb(236, 236, 236); */
+  background-color: rgb(238, 250, 255);
 }
 .list-ticket .card1.offline-paid {
   background-color: rgb(230, 255, 236);

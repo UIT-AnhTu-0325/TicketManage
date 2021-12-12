@@ -58,7 +58,8 @@ export const TripDetails = (props) => {
     return list;
   };
 
-  const footer = [`Tổng cộng: ${state_tripDetails.listTicket.length} vé`];
+  //const footer = [`Tổng cộng: ${state_tripDetails.listTicket.length} vé`];
+  const footer = [`Tổng cộng: xx vé`];
 
   if (Object.keys(state_tripDetails).length === 0) {
     return null;
@@ -114,10 +115,13 @@ export const TripDetails = (props) => {
             </div>
           </div>
         </div>
-        <ExportToExcel
-          getData={genTicketList()}
-          getFooter={footer}
-        ></ExportToExcel>
+        <div className="export-to-excel__wrapper">
+          <ExportToExcel
+            getData={genTicketList()}
+            getFooter={footer}
+          ></ExportToExcel>
+        </div>
+
         <div className="trip-detail__list">
           <ListTicketOfTrip
             tickets={state_tripDetails.tickets}

@@ -3,6 +3,8 @@ import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addSteersman } from "../../actions/steersman.actions";
 import { Input } from "../UI/Input";
+import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
+import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
 
 /**
@@ -14,6 +16,21 @@ export const ListSteersmanTable = (props) => {
   const dispatch = useDispatch();
   const listSteersman = props.listSteersman;
   const listEnterprise = props.listEnterprise;
+  const [editData, setEditData] = useState(false);
+  const checkEditData = () => {
+    if (
+      steersman.idEnterprise &&
+      steersman.firstName &&
+      steersman.lastName &&
+      steersman.gender &&
+      steersman.email &&
+      steersman.contactNumber
+    ) {
+      setEditData(true);
+    } else {
+      setEditData(false);
+    }
+  };
   const initSteersman = () => {
     return {
       _id: "",
@@ -136,7 +153,7 @@ export const ListSteersmanTable = (props) => {
   };
   return (
     <div>
-      <Modal show={modalShow} onHide={handleModalClose}>
+      <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
@@ -225,6 +242,120 @@ export const ListSteersmanTable = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/*   MODAL */}
+      <div
+        className={
+          modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
+        }
+      >
+        <div className={modalShow ? "add-modal active" : "add-modal"}>
+          <div className="add-modal__header">{modalTitle}</div>
+
+          <div className="add-modal__body">
+            <div className="input-enterprise-name">
+              <SelectBox
+                type="commonID"
+                value={steersman.idEnterprise}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, idEnterprise: e.target.value });
+                  checkEditData();
+                }}
+                list={listEnterprise.enterprises}
+                title="Doanh nghiệp"
+              />
+
+              <InputTitleLeft
+                title="Họ tên"
+                placeholder={``}
+                onChange={(e) => {
+                  if (e.target.value.split(" ").length > 1)
+                    setSteersman({
+                      ...steersman,
+                      firstName: e.target.value.split(" ")[0],
+                      lastName: e.target.value.substring(
+                        e.target.value.split(" ")[1].length,
+                        e.target.value.length
+                      ),
+                    });
+
+                  checkEditData();
+                }}
+              />
+              {/* 
+              <InputTitleLeft
+                title="Tên"
+                value={steersman.lastName}
+                placeholder={``}
+                onChange={(e) => {
+                  setSteersman({
+                    ...steersman,
+                    lastName: e.target.value,
+                    username: steersman.firstName + steersman.lastName + "123",
+                  });
+                  checkEditData();
+                }}
+              /> */}
+
+              <SelectBox
+                type="gender"
+                value={steersman.gender}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, gender: e.target.value });
+                  checkEditData();
+                }}
+                list={genders}
+                title="Giới tính"
+              />
+
+              <InputTitleLeft
+                title="Email"
+                value={steersman.email}
+                placeholder={``}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, email: e.target.value });
+                  checkEditData();
+                }}
+              />
+              <InputTitleLeft
+                title="Số điện thoại"
+                value={steersman.contactNumber}
+                placeholder={``}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, contactNumber: e.target.value });
+                  checkEditData();
+                }}
+              />
+
+              <SelectBox
+                type="gender"
+                value={steersman.position}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, position: e.target.value });
+                  checkEditData();
+                }}
+                list={positions}
+                title="Vị trí"
+              />
+            </div>
+          </div>
+
+          <div className="add-modal__footer">
+            <button className="btn-cancel" onClick={handleModalClose}>
+              {" "}
+              Hủy bỏ
+            </button>
+            <button
+              className="btn-save"
+              disabled={!editData}
+              onClick={handleModalSave}
+            >
+              {" "}
+              Lưu lại
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className="card right-content-fixsize">
         <div className="card__header">

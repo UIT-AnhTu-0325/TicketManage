@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { saveAs } from "file-saver";
+import "./exporttoexcel.css";
 const ExcelJS = require("exceljs");
 class ExportToExcel extends React.Component {
   constructor() {
@@ -162,7 +163,12 @@ class ExportToExcel extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={() => this.exportToExcel()}>Xuất danh sách vé</Button>
+        <button
+          className="export-excel-btn"
+          onClick={() => this.exportToExcel()}
+        >
+          Xuất danh sách vé
+        </button>
       </div>
     );
   }

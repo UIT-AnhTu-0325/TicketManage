@@ -61,8 +61,13 @@ export const ListTicketOfTrip = (props) => {
                 <span className="status paid">Đã thanh toán</span>
               </div>
               <div class="card1-body">
-                <h5 class="card1-title">{ticketInfor.name}</h5>
-                <h5 class="card1-title">{ticketInfor.contactNumber}</h5>
+                <div className="offline-customer-info">
+                  {" "}
+                  <h5 class="customer-name">{ticketInfor.name}</h5>
+                  <h5 class="customer-number">
+                    {"SĐT: " + ticketInfor.contactNumber}
+                  </h5>
+                </div>
                 <p class="card1-text">Nơi đón: {ticketInfor.getOn}</p>
                 <p class="card1-text">Nơi trả: {ticketInfor.getOff}</p>
                 <p class="card1-text">
