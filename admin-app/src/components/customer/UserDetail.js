@@ -34,6 +34,7 @@ export const UserDetail = (props) => {
     document.body.style.position = "static";
   }
   const userId = window.location.href.split("/")[4];
+  console.log(userId);
   const [customer, setCustomer] = useState("");
   const dispatch = useDispatch();
   const books = useSelector((state) => state.user_ticket);
@@ -54,7 +55,7 @@ export const UserDetail = (props) => {
   );
   useEffect(() => {
     axios
-      .get(`http://localhost:2000/api/user/${userId}/userdetail`)
+      .get(`http://localhost:2000/api/user/${userId}/info`)
       .then(function (response) {
         return response.data;
       })
@@ -93,7 +94,7 @@ export const UserDetail = (props) => {
                 <img src={userImg} alt="" />
               </div>
               <h4 className="user-fullname">
-                {customer.user.firstName} {customer.user.lastName}
+                {customer.firstName} {customer.lastName}
               </h4>
               <span className="rank" id="">
                 Hạng VIP
@@ -102,11 +103,11 @@ export const UserDetail = (props) => {
               <div className="important-info">
                 <div className="phone-number" id="phoneId">
                   <i class="bx bx-phone"></i>
-                  <span>{customer.user.contactNumber}</span>
+                  <span>{customer.contactNumber}</span>
                 </div>
                 <div className="email" id="emailId">
                   <i class="far fa-envelope"></i>
-                  <span>{customer.user.email}</span>
+                  <span>{customer.email}</span>
                 </div>
               </div>
               <div className="status_card">
