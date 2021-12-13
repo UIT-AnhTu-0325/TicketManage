@@ -7,41 +7,42 @@ const bcrypt = require("bcrypt");
 exports.getNewUser = async (req, res) => {
   try {
     const { month, year } = req.body;
-    const newUser = await User.aggregate([
-      {
-        $project: {
-          date: "$createdAt",
-          month: {
-            $month: "$createdAt",
-          },
-          year: {
-            $year: "$createdAt",
-          },
-        },
-      },
-      {
-        $match: {
-          month: month,
-          year: year,
-        },
-      },
-      {
-        $group: {
-          _id: {
-            $dateToString: {
-              format: "%Y-%m-%d",
-              date: "$date",
+    const newUser = await User.aggregate(
+      [
+        {
+          '$project': {
+            'date': '$createdAt',
+            'month': {
+              '$month': '$createdAt'
             },
-            newUser: {
-              $sum: 1,
+            'year': {
+              '$year': '$createdAt'
+            }
+          }
+        }, {
+          '$match': {
+            'month': month,
+            'year': year
+          }
+        }, {
+          '$group': {
+            '_id': {
+              '$dateToString': {
+                'format': '%Y-%m-%d',
+                'date': '$date'
+              }
             },
-          },
-        },
-        $sort: {
-          _id: 1,
-        },
-      },
-    ]);
+            'newUser': {
+              '$sum': 1
+            }
+          }
+        }, {
+          '$sort': {
+            '_id': 1
+          }
+        }
+      ]
+    )
 
     let listUser = [];
     var day = new Date(year, month, 0).getDate();

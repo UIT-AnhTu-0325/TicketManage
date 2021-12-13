@@ -1,5 +1,6 @@
 const Ticket = require("../models/ticket");
 const User_Ticket = require("../models/user_ticket");
+const User = require("../models/user");
 
 
 
@@ -71,13 +72,106 @@ exports.getMonthByMonthYear = async (req, res) => {
                 }
             ]
         )
+        const canceledTicket = await User_Ticket.aggregate(
+            [
+                {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'canceled': '$canceled',
+                        'idTicket': '$idTicket',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        }
+                    }
+                }, {
+                    '$match': {
+                        'canceled': true,
+                        'month': month,
+                        'year': year
+                    }
+                }, {
+                    '$group': {
+                        '_id': '$date',
+                        'totalCanceledTicket': {
+                            '$sum': 1
+                        },
+                    }
+                }, {
+                    '$sort': {
+                        '_id': 1
+                    }
+                }
+            ]
+        )
+        const newUser = await User.aggregate(
+            [
+                {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        }
+                    }
+                }, {
+                    '$match': {
+                        'month': month,
+                        'year': year
+                    }
+                }, {
+                    '$group': {
+                        '_id': '$date',
+                        'totalNewUser': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]
+        )
 
-        var totalTicket = tickets[0].totalTicket
-        var totalSale = tickets[0].totalSale
+        if (tickets.length == 0) {
+            var totalTicket = 0
+            var totalSale = 0
+        }
+        else {
+            var totalTicket = tickets[0].totalTicket
+            var totalSale = tickets[0].totalSale
+        }
+        if (canceledTicket.length == 0) {
+            var totalCanceledTicket = 0
+        }
+        else {
+            var totalCanceledTicket = canceledTicket[0].totalCanceledTicket
+        }
+        if (newUser.length == 0) {
+            var totalNewUser = 0
+        }
+        else {
+            var totalNewUser = newUser[0].totalNewUser
+        }
+
+
 
         res.status(200).json({
             totalTicket,
-            totalSale
+            totalSale,
+            totalCanceledTicket,
+            totalNewUser
         });
     } catch (err) {
         res.status(500).json({ error: err });

@@ -60,8 +60,13 @@ userSchema.virtual("fullName").get(function () {
 });
 
 userSchema.methods = {
-  authenticate: async function (password) {
-    return await bcrypt.compare(password, this.hash_password);
+  authenticate: function (password) {
+    let rel;
+    bcrypt.compare(password, this.hash_password, function (err, result) {
+      //console.log(result);
+      rel = result;
+    });
+    return rel;
   },
 };
 

@@ -1,7 +1,7 @@
 
 import "../featuredInfo/featuredInfo.css"
 
-export default function FeaturedInfo({ ticket, sale }) {
+export default function FeaturedInfo({ ticket, sale, canceledTicket, newUser }) {
 
 
 
@@ -19,9 +19,31 @@ export default function FeaturedInfo({ ticket, sale }) {
                 {/* {<span className="featuredSub">Compared to last month</span>} */}
             </div>
             <div className="featuredItem">
+                <span className="featuredTitle">Canceled Ticket</span>
+                <div className="featuredMoneyContainer">
+                    <span className="featuredMoney" id="saleId">{canceledTicket} </span>
+                    <span className="featuredMoneyRate">
+                        {/* +11,4 <ArrowUpward className="featuredIcon" /> */}
+                        {/* <i class="fas fa-chevron-right"></i> */}
+                    </span>
+                </div>
+                {/*<span className="featuredSub">Compared to last month</span>*/}
+            </div>
+            <div className="featuredItem">
                 <span className="featuredTitle">Sales</span>
                 <div className="featuredMoneyContainer">
                     <span className="featuredMoney" id="saleId">{sale} VND</span>
+                    <span className="featuredMoneyRate">
+                        {/* +11,4 <ArrowUpward className="featuredIcon" /> */}
+                        {/* <i class="fas fa-chevron-right"></i> */}
+                    </span>
+                </div>
+                {/*<span className="featuredSub">Compared to last month</span>*/}
+            </div>
+            <div className="featuredItem">
+                <span className="featuredTitle">New User</span>
+                <div className="featuredMoneyContainer">
+                    <span className="featuredMoney" id="saleId">{newUser} </span>
                     <span className="featuredMoneyRate">
                         {/* +11,4 <ArrowUpward className="featuredIcon" /> */}
                         {/* <i class="fas fa-chevron-right"></i> */}

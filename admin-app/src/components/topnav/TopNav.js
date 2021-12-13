@@ -7,6 +7,8 @@ import userImg from "../../asset/img/user.jpg";
 import notifications from "../../asset/JsonData/notification.json";
 import userMenu from "../../asset/JsonData/user_menus.json";
 import BreakCrumb from "../breakcrumb/BreakCrumb";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * @author
@@ -14,16 +16,21 @@ import BreakCrumb from "../breakcrumb/BreakCrumb";
  **/
 
 export const TopNav = (props) => {
+  const state_User = useSelector((state) => state.auth.user);
+  if (!state_User) {
+    return <></>;
+  }
   const currentUser = {
-    displayName: "Hong Admin",
+    //displayName: "GG",
+    displayName: JSON.parse(localStorage.getItem("user")).fullName,
     image: userImg,
   };
 
   const renderUserToggle = (user) => (
     <div className="topnav__right-user">
-      <div className="topnav__right-user__img">
+      {/* <div className="topnav__right-user__img">
         <img src={userImg} alt="" />
-      </div>
+      </div> */}
 
       <div className="topnav__right-user__name">{user.displayName}</div>
     </div>
@@ -33,10 +40,10 @@ export const TopNav = (props) => {
     <React.Fragment>
       <div className="topnav">
         <div className="left-topnav">
-          <div className="topnav__search">
+          {/* <div className="topnav__search">
             <input type="text" placeholder="Search ..." />
             <i className="bx bx-search"></i>
-          </div>
+          </div> */}
           <div className="breakcrumb">
             {!props.dashboard ? <BreakCrumb /> : null}
           </div>
@@ -50,7 +57,7 @@ export const TopNav = (props) => {
             />
           </div>
 
-          <div className="topnav__right-item">
+          {/* <div className="topnav__right-item">
             <DropDown
               icon="bx bx-bell"
               badge="12"
@@ -58,7 +65,7 @@ export const TopNav = (props) => {
               renderItems="true"
               renderFooter="true"
             />
-          </div>
+          </div> */}
 
           <div className="topnav__right-item"></div>
         </div>

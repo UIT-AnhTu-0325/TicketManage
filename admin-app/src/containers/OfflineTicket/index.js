@@ -49,6 +49,7 @@ export const OfflineTicket = (props) => {
     return {
       _id: "",
       idTicket: "",
+      idAdmin: "",
       //idUser: "",
       name: "",
       contactNumber: "",
@@ -67,6 +68,7 @@ export const OfflineTicket = (props) => {
     ticket.quantity[offTicket.seatNumber - 1] = true;
     const form = offTicket;
     form.idTicket = state_ticket._id;
+    form.idAdmin = JSON.parse(localStorage.getItem("user"))._id;
     //form.seatNumber = localStorage.getItem("seatSelect");
     delete form._id;
     dispatch(addOfflineTicket(form, ticket));

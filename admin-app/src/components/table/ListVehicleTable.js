@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import {
@@ -18,8 +18,10 @@ import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 
 export const ListVehicleTable = (props) => {
   const dispatch = useDispatch();
+  const inputEl = useRef("");
   const listVehicle = props.listVehicle;
   const listEnterprise = props.listEnterprise;
+  const term = props.term;
   const initVehicle = () => {
     return {
       _id: "",
@@ -142,6 +144,11 @@ export const ListVehicleTable = (props) => {
     }
     return myVehicles;
   };
+
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value)
+    props.searchKeyword(inputEl.current.value)
+  }
 
   return (
     <div className="card right-content-fixsize">
@@ -276,11 +283,20 @@ export const ListVehicleTable = (props) => {
           Thêm phương tiện
         </Button>
       </div>
+      <div className="ui-search">
+        <input
+          ref={inputEl}
+          type="text"
+          placeholder="Search Here"
+          className="prompt"
+          value={term}
+          onChange={getSearchTerm} />
+      </div>
       <div className="card__body">
         <Table
           headData={vehicles.header}
           renderHead={(item, ind) => renderHead(item, ind)}
-          render2Body={() => renderVehicles(listVehicle)}
+          render2Body={() => renderVehicles(listVehicle).length > 0 ? renderVehicles(listVehicle) : "Không tìm thấy kết quả"}
         />
       </div>
       <div className="card__footer"></div>

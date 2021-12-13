@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   addEnterprise,
   deleteEnterprise,
@@ -22,8 +22,10 @@ import { SelectBox } from "../UI/select/SelectBox";
 
 export const ListEnterpriseTable = (props) => {
   const dispatch = useDispatch();
+  const inputEl = useRef("");
   const listEnterprise = props.listEnterprise;
   const listCity = props.listCity;
+  const term = props.term;
 
   const initEnterprise = () => {
     return {
@@ -40,6 +42,8 @@ export const ListEnterpriseTable = (props) => {
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
   const [editData, setEditData] = useState(false);
+
+  //const [searchTerm, setSearchTerm] = useState("");
 
   const checkEditData = (targetValue, object) => {
     if (enterprise.name && enterprise.address && enterprise.hotline) {
@@ -127,80 +131,50 @@ export const ListEnterpriseTable = (props) => {
     let myEnterprises = [];
     for (let enterprise of enterprises) {
       if (enterprise.isActive === "yes") {
-        myEnterprises.push(
-          <tr>
-            <td>{enterprise.name}</td>
-            <td>{enterprise.address}</td>
-            <td>{enterprise.hotline}</td>
-            <td>
-              <button
-                className="edit"
-                color="warning"
-                onClick={() => {
-                  handleModalShow("Edit", enterprise);
-                }}
-              >
-                <i class="far fa-edit"></i>
-              </button>
-              <button
-                className="delete"
-                color="danger"
-                onClick={() => delEnterprise(enterprise)}
-              >
-                <i class="far fa-trash-alt"></i>
-              </button>
-              <Link to={`enterprises/${enterprise._id}/informations`}>
-                <button className="detail" onClick={() => {}}>
-                  Chi tiết
+        myEnterprises
+          .push(
+            <tr>
+              <td>{enterprise.name}</td>
+              <td>{enterprise.address}</td>
+              <td>{enterprise.hotline}</td>
+              <td>
+                <button
+                  className="edit"
+                  color="warning"
+                  onClick={() => {
+                    handleModalShow("Edit", enterprise);
+                  }}
+                >
+                  <i class="far fa-edit"></i>
                 </button>
-              </Link>
-            </td>
-          </tr>
-        );
+                <button
+                  className="delete"
+                  color="danger"
+                  onClick={() => delEnterprise(enterprise)}
+                >
+                  <i class="far fa-trash-alt"></i>
+                </button>
+                <Link to={`enterprises/${enterprise._id}/informations`}>
+                  <button className="detail" onClick={() => { }}>
+                    Chi tiết
+                  </button>
+                </Link>
+              </td>
+            </tr>
+          );
       }
     }
+    console.log(myEnterprises)
     return myEnterprises;
   };
 
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value)
+    props.searchKeyword(inputEl.current.value)
+  }
+
   return (
     <div className="enterprise right-content-fixsize">
-      <Modal show={false} onHide={handleModalClose}>
-        <Modal.Header>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={enterprise.name}
-            placeholder={`Enterprise Name`}
-            onChange={(e) =>
-              setEnterprise({ ...enterprise, name: e.target.value })
-            }
-          ></Input>
-          <select
-            className="form-control"
-            value={enterprise.address}
-            onChange={(e) =>
-              setEnterprise({ ...enterprise, address: e.target.value })
-            }
-          >
-            <option>Address</option>
-            {listCity.map((option) => (
-              <option key={option._id} value={option.name}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Đóng
-          </Button>
-          <Button variant="primary" onClick={handleModalSave}>
-            Lưu thay đổi
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <div
         className={
           modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
@@ -275,11 +249,20 @@ export const ListEnterpriseTable = (props) => {
                 Thêm nhà xe
               </button>
             </div>
+            <div className="ui-search">
+              <input
+                ref={inputEl}
+                type="text"
+                placeholder="Search Here"
+                className="prompt"
+                value={term}
+                onChange={getSearchTerm} />
+            </div>
             <div className="card__body">
               <Table
                 headData={enterprises.header}
                 renderHead={(item, ind) => renderOrderHead(item, ind)}
-                render2Body={() => renderEnterprises(listEnterprise)}
+                render2Body={() => renderEnterprises(listEnterprise).length > 0 ? renderEnterprises(listEnterprise) : "Không tìm thấy kết quả"}
               />
             </div>
             <div className="card__footer"></div>

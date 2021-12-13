@@ -11,6 +11,10 @@ const OfflinePhoneTicketSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    idAdmin: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     //Infor
     name: {
       type: String,

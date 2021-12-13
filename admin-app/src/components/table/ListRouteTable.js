@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRoute, deleteRoute, editRoute } from "../../actions";
 import { Button, Modal } from "react-bootstrap";
@@ -15,9 +15,11 @@ import swal from "sweetalert";
 
 export const ListRouteTable = (props) => {
   const dispatch = useDispatch();
+  const inputEl = useRef("");
   const listRoute = props.listRoute;
   const listEnterprise = props.listEnterprise;
   const listCity = props.listCity;
+  const term = props.term;
   const initRoute = () => {
     return {
       _id: "",
@@ -178,7 +180,7 @@ export const ListRouteTable = (props) => {
                     : `/enterprises/${route.idEnterprise}/informations/${route._id}/routeinfo`
                 }
               >
-                <button className="detail" onClick={() => {}}>
+                <button className="detail" onClick={() => { }}>
                   Chi tiết
                 </button>
               </Link>
@@ -190,12 +192,17 @@ export const ListRouteTable = (props) => {
     return myRoutes;
   };
 
-  if (
-    Object.keys(listRoute).length === 0 ||
-    Object.keys(listEnterprise).length === 0 ||
-    Object.keys(listCity).length === 0
-  ) {
-    return null;
+  // if (
+  //   Object.keys(listRoute).length === 0 ||
+  //   Object.keys(listEnterprise).length === 0 ||
+  //   Object.keys(listCity).length === 0
+  // ) {
+  //   return null;
+  // }
+
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value)
+    props.searchKeyword(inputEl.current.value)
   }
 
   return (
@@ -371,11 +378,20 @@ export const ListRouteTable = (props) => {
                 Thêm tuyến đường
               </button>
             </div>
+            <div className="ui-search">
+              <input
+                ref={inputEl}
+                type="text"
+                placeholder="Search Here"
+                className="prompt"
+                value={term}
+                onChange={getSearchTerm} />
+            </div>
             <div className="card__body">
               <Table
                 headData={routes.header}
                 renderHead={(item, ind) => renderHead(item, ind)}
-                render2Body={() => renderRoutes(listRoute)}
+                render2Body={() => renderRoutes(listRoute).length > 0 ? renderRoutes(listRoute) : "Không tìm thấy kết quả"}
               />
             </div>
             <div className="card__footer"></div>
