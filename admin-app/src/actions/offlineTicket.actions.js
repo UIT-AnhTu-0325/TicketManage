@@ -22,3 +22,26 @@ export const addOfflineTicket = (form, ticket) => {
     }
   };
 };
+
+export const getAllOfflineTicket = () => {
+  return async (dispatch) => {
+    dispatch({ type: ticketConstants.GET_ALL_OFFLINETICKETS_REQUEST });
+    try {
+      const res = await axios.get(`offline_phone_ticket`);
+      if (res.status === 200) {
+        const offlineTicketList = res.data;
+        console.log(res.data);
+        dispatch({
+          type: ticketConstants.GET_ALL_OFFLINETICKETS_SUCCESS,
+          payload: { offlineTickets: offlineTicketList },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ticketConstants.GET_ALL_OFFLINETICKETS_FAILURE,
+        payload: { error: error },
+      });
+    }
+  };
+};

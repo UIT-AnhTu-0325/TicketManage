@@ -164,43 +164,6 @@ export const ListEnterpriseTable = (props) => {
 
   return (
     <div className="enterprise right-content-fixsize">
-      <Modal show={false} onHide={handleModalClose}>
-        <Modal.Header>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={enterprise.name}
-            placeholder={`Enterprise Name`}
-            onChange={(e) =>
-              setEnterprise({ ...enterprise, name: e.target.value })
-            }
-          ></Input>
-          <select
-            className="form-control"
-            value={enterprise.address}
-            onChange={(e) =>
-              setEnterprise({ ...enterprise, address: e.target.value })
-            }
-          >
-            <option>Address</option>
-            {listCity.map((option) => (
-              <option key={option._id} value={option.name}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Đóng
-          </Button>
-          <Button variant="primary" onClick={handleModalSave}>
-            Lưu thay đổi
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <div
         className={
           modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
