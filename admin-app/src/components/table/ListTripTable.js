@@ -117,7 +117,7 @@ export const ListTripTable = (props) => {
     for (let trip of trips) {
       myTrips.push(
         <tr>
-          <td>{trip.startDate}</td>
+          <td>{new Date(trip.startDate).toLocaleDateString('vi-VN')}</td>
           <td>{trip.idVehicle.lisensePlate}</td>
           <td>{trip.idVehicle.totalSeat}</td>
           <td>{findPriceOfTrip(trip._id)}</td>
@@ -210,7 +210,7 @@ export const ListTripTable = (props) => {
             <div className="input-enterprise-name">
               <InputTitleLeft
                 title="Ngày đi"
-                value={trip.startDate}
+                value={trip.startDate.substring(0, 10)}
                 placeholder={``}
                 onChange={(e) => {
                   setTrip({ ...trip, startDate: e.target.value });
