@@ -28,7 +28,6 @@ import { AdminBooking } from "./pages/adminbooking/AdminBooking";
 import { UserDetails } from "./containers/UserDetails";
 import { OfflineTicket } from "./containers/OfflineTicket";
 
-
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -52,7 +51,7 @@ function App() {
           path="/enterprises/:enterpriseId/informations"
           component={EnterpriseDetails}
         ></Route>
-        <Route path="/user/:userId/info" component={UserDetail}></Route>
+        <Route path="/user/:userId/info" component={UserDetails}></Route>
         <Route path="/user/:userId/userdetail" component={UserDetails}></Route>
 
         <Route

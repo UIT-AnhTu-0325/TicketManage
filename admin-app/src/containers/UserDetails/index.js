@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetailById } from "../../actions";
 import { UserDetail } from "../../components/customer/UserDetail";
 import { Layout } from "../../components/Layout";
+import { AdminDetailTable } from "../../components/table/AdminDetailTable";
 
 /**
  * @author
@@ -25,10 +26,20 @@ export const UserDetails = (props) => {
     dispatch(getUserDetailById(payload));
   };
   const state_userDetail = useSelector((state) => state.user.userDetail);
-  //console.log(state_userDetail);
+  console.log(state_userDetail);
   return (
-    <Layout sidebar>
-      <UserDetail userDetails={state_userDetail}></UserDetail>
-    </Layout>
+    <>
+      {state_userDetail.role === "admin" ? (
+        <Layout sidebar>
+          <div>Day la thong tin ca nhan - manv</div>
+          <div>Day la thong tin ca nhan - ten</div>
+          <div>Day la thong tin ca nhan - gioi tinh </div>
+          <div>Day la thong tin ca nhan - so dien thoai</div>
+          <AdminDetailTable user={state_userDetail}></AdminDetailTable>
+        </Layout>
+      ) : (
+        <UserDetail userDetails={state_userDetail}></UserDetail>
+      )}
+    </>
   );
 };

@@ -3,12 +3,23 @@ import authReducer from "./auth.reducers";
 import userReducer from "./user.reducer";
 import routeReducer from "./route.reducers";
 import enterpriseReducer from "./enterprise.reducers";
-import { analyticsChartReducer, analyticsReducer, chartByEnterprisesReducer, currentDateReducer, lastOrderReducer, listByEnterprisesReducer, nameChartByEnterprisesReducer, newUserReducer, ticketDonutReducer } from "./analyticsReducers";
+import {
+  analyticsChartReducer,
+  analyticsReducer,
+  chartByEnterprisesReducer,
+  currentDateReducer,
+  lastOrderReducer,
+  listByEnterprisesReducer,
+  nameChartByEnterprisesReducer,
+  newUserReducer,
+  ticketDonutReducer,
+} from "./analyticsReducers";
 import cityReducers from "./city.reducers";
 import vehicleReducers from "./vehicle.reducers";
 import tripReducers from "./trip.reducers";
 import ticketReducers from "./ticket.reducers";
 import user_ticket from "./user_ticket";
+import offlineTicketReducers from "./offlineTicket.reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -28,7 +39,8 @@ const rootReducer = combineReducers({
   listNameEnterprise: nameChartByEnterprisesReducer,
   listLastOrder: lastOrderReducer,
   ticketR: ticketReducers,
-  user_ticket
+  offlineticket: offlineTicketReducers,
+  user_ticket,
 });
 
 export default rootReducer;
