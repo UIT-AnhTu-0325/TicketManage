@@ -3,7 +3,9 @@ const Trip = require("../models/trip");
 const Vehicle = require("../models/vehicle");
 const Route = require("../models/route");
 const Enterprise = require("../models/enterprise");
-const Ticket = require("../models/ticket")
+const Ticket = require("../models/ticket");
+const User = require("../models/user");
+
 
 
 exports.getLastOrder = async (req, res) => {
@@ -478,6 +480,35 @@ exports.getCurrentDate = async (req, res) => {
                 }
             ]
         )
+        const cancelTicketCD = await User_Ticket.aggregate(
+            [
+                {
+                    '$match': {
+                        'createdAt': {
+                            '$gte': new Date(new Date().setUTCHours(0, 0, 0, 0)),
+                            '$lt': new Date(new Date().setUTCHours(23, 59, 59, 999))
+                        },
+                        'canceled': true
+                    }
+                }, {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m-%d',
+                                'date': '$createdAt'
+                            }
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': '$date',
+                        'count': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]
+        )
 
         const salesCD = await User_Ticket.aggregate(
             [
@@ -532,6 +563,35 @@ exports.getCurrentDate = async (req, res) => {
                 }
             ]
         )
+        const newUser = await User.aggregate(
+            [
+                {
+                    '$match': {
+                        'role': 'user',
+                        'createdAt': {
+                            '$gte': new Date(new Date().setUTCHours(0, 0, 0, 0)),
+                            '$lt': new Date(new Date().setUTCHours(23, 59, 59, 999))
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m-%d',
+                                'date': '$createdAt'
+                            }
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': '$date',
+                        'count': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]
+        )
 
         let data =
             [
@@ -549,7 +609,17 @@ exports.getCurrentDate = async (req, res) => {
                     "icon": "bx bx-receipt",
                     "count": ticketCD.length == 0 ? "0" : ticketCD[0].count.toString(),
                     "title": "Total booking"
-                }
+                },
+                {
+                    "icon": "bx bx-receipt",
+                    "count": cancelTicketCD.length == 0 ? "0" : cancelTicketCD[0].count.toString(),
+                    "title": "Total canceled Ticket"
+                },
+                {
+                    "icon": "bx bx-receipt",
+                    "count": newUser.length == 0 ? "0" : newUser[0].count.toString(),
+                    "title": "New user"
+                },
             ]
 
 
@@ -567,79 +637,31 @@ exports.getTicketCanceled = async (req, res) => {
         const canceledTicket = await User_Ticket.aggregate(
             [
                 {
+                    '$project': {
+                        'date': {
+                            '$dateToString': {
+                                'format': '%Y-%m',
+                                'date': '$createdAt'
+                            }
+                        },
+                        'canceled': '$canceled',
+                        'idTicket': '$idTicket',
+                        'month': {
+                            '$month': '$createdAt'
+                        },
+                        'year': {
+                            '$year': '$createdAt'
+                        }
+                    }
+                }, {
                     '$match': {
+                        'month': 12,
+                        'year': 2021,
                         'canceled': true
                     }
                 }, {
-                    '$lookup': {
-                        'from': 'tickets',
-                        'localField': 'idTicket',
-                        'foreignField': '_id',
-                        'as': 'detail'
-                    }
-                }, {
-                    '$replaceRoot': {
-                        'newRoot': {
-                            '$mergeObjects': [
-                                {
-                                    '$arrayElemAt': [
-                                        '$detail', 0
-                                    ]
-                                }, '$$ROOT'
-                            ]
-                        }
-                    }
-                }, {
-                    '$project': {
-                        'detail': 0
-                    }
-                }, {
-                    '$lookup': {
-                        'from': 'trips',
-                        'localField': 'idTrip',
-                        'foreignField': '_id',
-                        'as': 'infor'
-                    }
-                }, {
-                    '$replaceRoot': {
-                        'newRoot': {
-                            '$mergeObjects': [
-                                {
-                                    '$arrayElemAt': [
-                                        '$infor', 0
-                                    ]
-                                }, '$$ROOT'
-                            ]
-                        }
-                    }
-                }, {
-                    '$project': {
-                        'infor': 0
-                    }
-                }, {
-                    '$project': {
-                        'date': '$startDate',
-                        'month': {
-                            '$month': '$startDate'
-                        },
-                        'year': {
-                            '$year': '$startDate'
-                        },
-                        'canceled': '$canceled'
-                    }
-                }, {
-                    '$match': {
-                        'month': month,
-                        'year': year
-                    }
-                }, {
                     '$group': {
-                        '_id': {
-                            '$dateToString': {
-                                'format': '%Y-%m',
-                                'date': '$date'
-                            }
-                        },
+                        '_id': '$date',
                         'totalCanceledTicket': {
                             '$sum': 1
                         }
@@ -714,7 +736,12 @@ exports.getTicketCanceled = async (req, res) => {
             ]
         )
 
-        var totalTicket = tickets[0].totalTicket
+        if (tickets.length == 0) {
+            var totalTicket = 0
+        }
+        else {
+            var totalTicket = tickets[0].totalTicket
+        }
 
 
         if (canceledTicket.length == 0) {

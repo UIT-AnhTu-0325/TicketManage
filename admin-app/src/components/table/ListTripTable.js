@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Fade, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,9 +15,11 @@ import swal from "sweetalert";
 
 export const ListTripTable = (props) => {
   const dispatch = useDispatch();
+  const inputEl = useRef("");
   const listTrip = props.listTrip;
   const listVehicle = props.listVehicle;
   const listTicket = props.listTicket;
+  const term = props.term;
   const initTrip = () => {
     return {
       _id: "",
@@ -142,7 +144,7 @@ export const ListTripTable = (props) => {
               <i class="far fa-trash-alt"></i>
             </button> */}
             <Link to={`/trips/${trip._id}/informations`}>
-              <button className="detail" type="button" onClick={() => {}}>
+              <button className="detail" type="button" onClick={() => { }}>
                 Chi tiết
               </button>
             </Link>
@@ -152,6 +154,11 @@ export const ListTripTable = (props) => {
     }
     return myTrips;
   };
+
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value)
+    props.searchKeyword(inputEl.current.value)
+  }
 
   return (
     <div>
@@ -170,11 +177,20 @@ export const ListTripTable = (props) => {
                   Thêm chuyến xe
                 </button>
               </div>
+              <div className="ui-search">
+                <input
+                  ref={inputEl}
+                  type="text"
+                  placeholder="Search Here"
+                  className="prompt"
+                  value={term}
+                  onChange={getSearchTerm} />
+              </div>
               <div className="card__body">
                 <Table
                   headData={trips.header}
                   renderHead={(item, ind) => renderHead(item, ind)}
-                  render2Body={() => renderTrips(listTrip)}
+                  render2Body={() => renderTrips(listTrip).length > 0 ? renderTrips(listTrip) : "Không tìm thấy kết quả"}
                 />
               </div>
               <div className="card__footer"></div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addSteersman } from "../../actions/steersman.actions";
@@ -12,8 +12,10 @@ import { Table } from "./Table";
 
 export const ListSteersmanTable = (props) => {
   const dispatch = useDispatch();
+  const inputEl = useRef("");
   const listSteersman = props.listSteersman;
   const listEnterprise = props.listEnterprise;
+  const term = props.term;
   const initSteersman = () => {
     return {
       _id: "",
@@ -134,6 +136,12 @@ export const ListSteersmanTable = (props) => {
     }
     return mySteersmans;
   };
+
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value)
+    props.searchKeyword(inputEl.current.value)
+  }
+
   return (
     <div>
       <Modal show={modalShow} onHide={handleModalClose}>
@@ -236,6 +244,15 @@ export const ListSteersmanTable = (props) => {
           >
             Thêm tài xế
           </Button>
+        </div>
+        <div className="ui-search">
+          <input
+            ref={inputEl}
+            type="text"
+            placeholder="Search Here"
+            className="prompt"
+            value={term}
+            onChange={getSearchTerm} />
         </div>
         <div className="card__body">
           <Table

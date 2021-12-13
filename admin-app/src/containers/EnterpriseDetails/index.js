@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -43,12 +43,75 @@ export const EnterpriseDetails = (props) => {
 
   const state_city = useSelector((state) => state.city);
 
+  const [searchTermR, setSearchTermR] = useState("");
+  const [searchResultsR, setSearchResultsR] = useState([]);
+  const [searchTermV, setSearchTermV] = useState("");
+  const [searchResultsV, setSearchResultsV] = useState([]);
+  const [searchTermS, setSearchTermS] = useState("");
+  const [searchResultsS, setSearchResultsS] = useState([]);
+
   const enterpriseDetails = useSelector(
     (state) => state.enterprise.enterpriseDetails
   );
 
   if (Object.keys(enterpriseDetails).length === 0) {
     return null;
+  }
+
+  const searchHandlerR = (searchTermR) => {
+    //console.log(searchTermR)
+    setSearchTermR(searchTermR)
+    if (searchTermR !== "") {
+      const newRoutes = enterpriseDetails.routes.filter((route) => {
+        return Object.values(route)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTermR.toLowerCase())
+      })
+      //console.log(Object.values(enterpriseDetails.routes))
+      setSearchResultsR(newRoutes)
+      //console.log(Object.values(newRoutes))
+    }
+    else {
+      setSearchResultsR(enterpriseDetails.routes)
+    }
+  }
+
+  const searchHandlerV = (searchTermV) => {
+    //console.log(searchTermV)
+    setSearchTermV(searchTermV)
+    if (searchTermV !== "") {
+      const newVehicles = enterpriseDetails.vehicles.filter((vehicle) => {
+        return Object.values(vehicle)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTermV.toLowerCase())
+      })
+      //console.log(Object.values(enterpriseDetails.vehicles))
+      setSearchResultsV(newVehicles)
+      //console.log(Object.values(newVehicles))
+    }
+    else {
+      setSearchResultsV(enterpriseDetails.vehicles)
+    }
+  }
+  const searchHandlerS = (searchTermS) => {
+    //console.log(searchTermS)
+    setSearchTermS(searchTermS)
+    if (searchTermS !== "") {
+      const newSteersmans = enterpriseDetails.steersmans.filter((steersman) => {
+        return Object.values(steersman)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTermS.toLowerCase())
+      })
+      //console.log(Object.values(enterpriseDetails.steersmans))
+      setSearchResultsS(newSteersmans)
+      //console.log(Object.values(newSteersmans))
+    }
+    else {
+      setSearchResultsS(enterpriseDetails.steersmans)
+    }
   }
 
   return (
@@ -72,25 +135,31 @@ export const EnterpriseDetails = (props) => {
       </Button> */}
 
       <ListRouteTable
-        listRoute={enterpriseDetails.routes}
+        listRoute={searchTermR.length < 1 ? enterpriseDetails.routes : searchResultsR}
         listEnterprise={state_enterprise}
         listCity={state_city}
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
+        term={searchTermR}
+        searchKeyword={searchHandlerR}
       ></ListRouteTable>
 
       <ListVehicleTable
-        listVehicle={enterpriseDetails.vehicles}
+        listVehicle={searchTermV.length < 1 ? enterpriseDetails.vehicles : searchResultsV}
         listEnterprise={state_enterprise}
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
+        term={searchTermV}
+        searchKeyword={searchHandlerV}
       ></ListVehicleTable>
 
       <ListSteersmanTable
         listEnterprise={state_enterprise}
-        listSteersman={enterpriseDetails.steersmans}
+        listSteersman={searchTermS.length < 1 ? enterpriseDetails.steersmans : searchResultsS}
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
+        term={searchTermS}
+        searchKeyword={searchHandlerS}
       ></ListSteersmanTable>
     </Layout>
   );

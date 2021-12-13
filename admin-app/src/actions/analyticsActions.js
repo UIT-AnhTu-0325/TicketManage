@@ -143,12 +143,14 @@ export const getCurrentMonth = (date) => async (dispatch) => {
         dispatch({ type: ANALYTICS_REQUEST });
         const data = await axios.post(`ticket/getMonthByMonthYear`, date)
         console.log(data);
-        const { totalTicket, totalSale } = data.data;
+        const { totalTicket, totalSale, totalCanceledTicket, totalNewUser } = data.data;
         dispatch({
             type: ANALYTICS_SUCCESS,
             payload: {
                 totalTicket,
-                totalSale
+                totalSale,
+                totalCanceledTicket,
+                totalNewUser
             }
         })
     } catch (error) {
