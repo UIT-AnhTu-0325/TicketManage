@@ -28,6 +28,12 @@ export const SelectBox = (props) => {
                 {option.name}
               </option>
             );
+          } else if (props.type === "commonID") {
+            return (
+              <option key={option._id} value={option._id}>
+                {option.name}
+              </option>
+            );
           } else if (props.type === "SeatSelect") {
             return (
               <option
@@ -42,6 +48,12 @@ export const SelectBox = (props) => {
             return (
               <option key={option._id} value={option.name}>
                 {option.name} - {props.addShow}
+              </option>
+            );
+          } else if (props.type === "gender") {
+            return (
+              <option key={option._id} value={option.value}>
+                {option.show}
               </option>
             );
           } else {

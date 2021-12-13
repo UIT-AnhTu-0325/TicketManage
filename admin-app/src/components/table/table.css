@@ -118,6 +118,8 @@ td button.detail:hover {
   bottom: 0;
   z-index: 1111;
 }
+.add-modal__wrapper .input-enterprise-name {
+}
 @keyframes openModal {
   from {
     transform: scale(0);

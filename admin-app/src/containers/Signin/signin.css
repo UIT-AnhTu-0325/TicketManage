@@ -72,9 +72,10 @@
 }
 
 .signin__body .input {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 15px 16px;
-  border-bottom: 2px solid rgba(238, 238, 238, 0.384);
+  /* border-bottom: 2px solid rgba(238, 238, 238, 0.384); */
+  overflow: hidden;
   display: flex;
   align-items: center;
 }
@@ -93,7 +94,7 @@
 .signin__body i {
   opacity: 0.4;
   margin-right: 20px;
-  margin-left: -10px;
+  margin-left: 5px;
 }
 .signin__body button {
   margin-top: 40px;

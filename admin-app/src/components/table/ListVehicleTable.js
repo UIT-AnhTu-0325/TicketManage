@@ -9,6 +9,8 @@ import {
 import { Input } from "../UI/Input";
 import { Table } from "./Table";
 import swal from "sweetalert";
+import { SelectBox } from "../UI/select/SelectBox";
+import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 /**
  * @author
  * @function ListVehicleTable
@@ -34,7 +36,20 @@ export const ListVehicleTable = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
+  const [editData, setEditData] = useState(false);
 
+  const checkEditData = () => {
+    if (
+      vehicle.quality &&
+      vehicle.totalSeat &&
+      vehicle.lisensePlate &&
+      vehicle.idEnterprise
+    ) {
+      setEditData(true);
+    } else {
+      setEditData(false);
+    }
+  };
   const handleModalShow = (iFlag, vehicle = []) => {
     if (iFlag === "Add") {
       setModalFlag("Add");
@@ -137,7 +152,7 @@ export const ListVehicleTable = (props) => {
 
   return (
     <div className="card right-content-fixsize">
-      <Modal show={modalShow} onHide={handleModalClose}>
+      <Modal show={false} onHide={handleModalClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
@@ -187,6 +202,77 @@ export const ListVehicleTable = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/*   MODAL */}
+      <div
+        className={
+          modalShow ? "add-modal__wrapper active" : "add-modal__wrapper"
+        }
+      >
+        <div className={modalShow ? "add-modal active" : "add-modal"}>
+          <div className="add-modal__header">{modalTitle}</div>
+
+          <div className="add-modal__body">
+            <div className="input-enterprise-name">
+              <SelectBox
+                type="commonID"
+                value={vehicle.idEnterprise}
+                onChange={(e) => {
+                  setVehicle({ ...vehicle, idEnterprise: e.target.value });
+                  checkEditData();
+                }}
+                list={listEnterprise.enterprises}
+                title="Enterprise"
+              />
+
+              <InputTitleLeft
+                title="Biển số"
+                value={vehicle.lisensePlate}
+                placeholder={``}
+                onChange={(e) => {
+                  setVehicle({ ...vehicle, lisensePlate: e.target.value });
+                  checkEditData();
+                }}
+              />
+
+              <InputTitleLeft
+                title="Số ghế"
+                value={vehicle.totalSeat}
+                placeholder={``}
+                onChange={(e) => {
+                  setVehicle({ ...vehicle, totalSeat: e.target.value });
+                  checkEditData();
+                }}
+              />
+              <InputTitleLeft
+                title="Chất lượng"
+                value={vehicle.quality}
+                placeholder={``}
+                onChange={(e) => {
+                  setVehicle({ ...vehicle, quality: e.target.value });
+                  checkEditData();
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="add-modal__footer">
+            <button className="btn-cancel" onClick={handleModalClose}>
+              {" "}
+              Hủy bỏ
+            </button>
+            <button
+              className="btn-save"
+              disabled={!editData}
+              onClick={handleModalSave}
+            >
+              {" "}
+              Lưu lại
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="card__header">
         <h3>Các phương tiện</h3>
         <Button
