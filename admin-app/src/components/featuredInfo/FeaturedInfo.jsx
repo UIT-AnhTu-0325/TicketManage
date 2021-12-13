@@ -32,7 +32,9 @@ export default function FeaturedInfo({ ticket, sale, canceledTicket, newUser }) 
             <div className="featuredItem">
                 <span className="featuredTitle">Sales</span>
                 <div className="featuredMoneyContainer">
-                    <span className="featuredMoney" id="saleId">{sale} VND</span>
+                    <span className="featuredMoney money" id="saleId">
+                        
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(sale)} </span>
                     <span className="featuredMoneyRate">
                         {/* +11,4 <ArrowUpward className="featuredIcon" /> */}
                         {/* <i class="fas fa-chevron-right"></i> */}

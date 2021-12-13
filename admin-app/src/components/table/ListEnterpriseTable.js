@@ -131,47 +131,46 @@ export const ListEnterpriseTable = (props) => {
     let myEnterprises = [];
     for (let enterprise of enterprises) {
       if (enterprise.isActive === "yes") {
-        myEnterprises
-          .push(
-            <tr>
-              <td>{enterprise.name}</td>
-              <td>{enterprise.address}</td>
-              <td>{enterprise.hotline}</td>
-              <td>
-                <button
-                  className="edit"
-                  color="warning"
-                  onClick={() => {
-                    handleModalShow("Edit", enterprise);
-                  }}
-                >
-                  <i class="far fa-edit"></i>
+        myEnterprises.push(
+          <tr>
+            <td>{enterprise.name}</td>
+            <td>{enterprise.address}</td>
+            <td>{enterprise.hotline}</td>
+            <td>
+              <button
+                className="edit"
+                color="warning"
+                onClick={() => {
+                  handleModalShow("Edit", enterprise);
+                }}
+              >
+                <i class="far fa-edit"></i>
+              </button>
+              <button
+                className="delete"
+                color="danger"
+                onClick={() => delEnterprise(enterprise)}
+              >
+                <i class="far fa-trash-alt"></i>
+              </button>
+              <Link to={`enterprises/${enterprise._id}/informations`}>
+                <button className="detail" onClick={() => {}}>
+                  Chi tiết
                 </button>
-                <button
-                  className="delete"
-                  color="danger"
-                  onClick={() => delEnterprise(enterprise)}
-                >
-                  <i class="far fa-trash-alt"></i>
-                </button>
-                <Link to={`enterprises/${enterprise._id}/informations`}>
-                  <button className="detail" onClick={() => { }}>
-                    Chi tiết
-                  </button>
-                </Link>
-              </td>
-            </tr>
-          );
+              </Link>
+            </td>
+          </tr>
+        );
       }
     }
-    console.log(myEnterprises)
+    console.log(myEnterprises);
     return myEnterprises;
   };
 
   const getSearchTerm = () => {
     //console.log(inputEl.current.value)
-    props.searchKeyword(inputEl.current.value)
-  }
+    props.searchKeyword(inputEl.current.value);
+  };
 
   return (
     <div className="enterprise right-content-fixsize">
@@ -248,21 +247,29 @@ export const ListEnterpriseTable = (props) => {
               >
                 Thêm nhà xe
               </button>
+              <div className="ui-search">
+                <input
+                  ref={inputEl}
+                  type="text"
+                  placeholder="Search Here"
+                  className="prompt"
+                  value={term}
+                  onChange={getSearchTerm}
+                />
+              </div>
             </div>
-            <div className="ui-search">
-              <input
-                ref={inputEl}
-                type="text"
-                placeholder="Search Here"
-                className="prompt"
-                value={term}
-                onChange={getSearchTerm} />
-            </div>
+
             <div className="card__body">
               <Table
                 headData={enterprises.header}
                 renderHead={(item, ind) => renderOrderHead(item, ind)}
-                render2Body={() => renderEnterprises(listEnterprise).length > 0 ? renderEnterprises(listEnterprise) : "Không tìm thấy kết quả"}
+                render2Body={() =>
+                  renderEnterprises(listEnterprise).length > 0 ? (
+                    renderEnterprises(listEnterprise)
+                  ) : (
+                    <span className="no-result">Không tìm thấy kết quả</span>
+                  )
+                }
               />
             </div>
             <div className="card__footer"></div>

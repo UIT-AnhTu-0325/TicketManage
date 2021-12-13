@@ -31,10 +31,12 @@ export const UserDetails = (props) => {
     <>
       {state_userDetail.role === "admin" ? (
         <Layout sidebar>
-          <div>Day la thong tin ca nhan - manv</div>
-          <div>Day la thong tin ca nhan - ten</div>
-          <div>Day la thong tin ca nhan - gioi tinh </div>
-          <div>Day la thong tin ca nhan - so dien thoai</div>
+          <div className="persional-info-identity">
+            <div>Day la thong tin ca nhan - manv</div>
+            <div>Day la thong tin ca nhan - ten</div>
+            <div>Day la thong tin ca nhan - gioi tinh </div>
+            <div>Day la thong tin ca nhan - so dien thoai</div>
+          </div>
           <AdminDetailTable user={state_userDetail}></AdminDetailTable>
         </Layout>
       ) : (

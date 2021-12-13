@@ -180,7 +180,7 @@ export const ListRouteTable = (props) => {
                     : `/enterprises/${route.idEnterprise}/informations/${route._id}/routeinfo`
                 }
               >
-                <button className="detail" onClick={() => { }}>
+                <button className="detail" onClick={() => {}}>
                   Chi tiết
                 </button>
               </Link>
@@ -202,8 +202,8 @@ export const ListRouteTable = (props) => {
 
   const getSearchTerm = () => {
     //console.log(inputEl.current.value)
-    props.searchKeyword(inputEl.current.value)
-  }
+    props.searchKeyword(inputEl.current.value);
+  };
 
   return (
     <div className="routes right-content-fixsize">
@@ -376,22 +376,30 @@ export const ListRouteTable = (props) => {
                 }}
               >
                 Thêm tuyến đường
-              </button>
+              </button>{" "}
+              <div className="ui-search">
+                <input
+                  ref={inputEl}
+                  type="text"
+                  placeholder="Search Here"
+                  className="prompt"
+                  value={term}
+                  onChange={getSearchTerm}
+                />
+              </div>
             </div>
-            <div className="ui-search">
-              <input
-                ref={inputEl}
-                type="text"
-                placeholder="Search Here"
-                className="prompt"
-                value={term}
-                onChange={getSearchTerm} />
-            </div>
+
             <div className="card__body">
               <Table
                 headData={routes.header}
                 renderHead={(item, ind) => renderHead(item, ind)}
-                render2Body={() => renderRoutes(listRoute).length > 0 ? renderRoutes(listRoute) : "Không tìm thấy kết quả"}
+                render2Body={() =>
+                  renderRoutes(listRoute).length > 0 ? (
+                    renderRoutes(listRoute)
+                  ) : (
+                    <span className="no-result">Không tìm thấy kết quả</span>
+                  )
+                }
               />
             </div>
             <div className="card__footer"></div>

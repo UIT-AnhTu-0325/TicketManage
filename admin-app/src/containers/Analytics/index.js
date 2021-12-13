@@ -61,7 +61,8 @@ export const Analytics = (props) => {
   };
 
   const analytics = useSelector((state) => state.analytics);
-  const { totalTicket, totalSale, totalCanceledTicket, totalNewUser } = analytics;
+  const { totalTicket, totalSale, totalCanceledTicket, totalNewUser } =
+    analytics;
 
   const chart = useSelector((state) => state.chart);
   const { listTicket, listSale } = chart;
@@ -86,7 +87,6 @@ export const Analytics = (props) => {
       },
     ],
 
-
     options: {
       color: ["#6ab04c", "#2980b9"],
       chart: {
@@ -110,19 +110,19 @@ export const Analytics = (props) => {
       yaxis: [
         {
           title: {
-            text: "Ticket"
+            text: "Ticket",
           },
         },
         {
           opposite: true,
           title: {
-            text: "Sales"
-          }
-        }
+            text: "Sales",
+          },
+        },
       ],
       title: {
-        text: 'Analysis of Ticket and Sale',
-        align: 'left'
+        text: "Analysis of Ticket and Sale",
+        align: "left",
       },
     },
   };
@@ -187,8 +187,13 @@ export const Analytics = (props) => {
   return (
     <Layout sidebar>
       <div>
-        <FeaturedInfo ticket={totalTicket} sale={totalSale} canceledTicket={totalCanceledTicket} newUser={totalNewUser} />
-        <div className="dropDown">
+        <FeaturedInfo
+          ticket={totalTicket}
+          sale={totalSale}
+          canceledTicket={totalCanceledTicket}
+          newUser={totalNewUser}
+        />
+        <div className="dropDown ticket-analytics">
           <select
             value={month}
             classname="custom-select"
@@ -234,7 +239,6 @@ export const Analytics = (props) => {
           </div>
         </div>
 
-
         {/* <div className="chart">
         <div className="chart">
           <Chart options={chartOptions.options} series={chartOptions.series} />
@@ -272,20 +276,21 @@ export const Analytics = (props) => {
           </div>
           <div className="col-4">
             <div className="chart">
-              <span > Ticket </span>
+              <span> Ticket </span>
               <Doughnut
                 data={{
-                  labels: ['Ticket Sold', 'Ticket Canceled'],
-                  datasets: [{
-                    data: donutData,
-                    backgroundColor: [
-                      'rgb(255, 99, 132)',
-                      'rgb(54, 162, 235)'
-                    ],
-                  }]
+                  labels: ["Ticket Sold", "Ticket Canceled"],
+                  datasets: [
+                    {
+                      data: donutData,
+                      backgroundColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)",
+                      ],
+                    },
+                  ],
                 }}
-              >
-              </Doughnut>
+              ></Doughnut>
             </div>
           </div>
         </div>

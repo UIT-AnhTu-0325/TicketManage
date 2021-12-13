@@ -73,7 +73,7 @@ export const ListUserTable = (props) => {
             </Link> */}
 
             <Link to={`user/${user._id}/info`}>
-              <button className="detail" onClick={() => { }}>
+              <button className="detail" onClick={() => {}}>
                 Chi tiết
               </button>
             </Link>
@@ -93,75 +93,71 @@ export const ListUserTable = (props) => {
 
   const searchHandler = (searchTerm) => {
     //console.log(searchTermR)
-    setSearchTerm(searchTerm)
+    setSearchTerm(searchTerm);
     if (searchTerm !== "") {
       const newAdmin = listUser.listAdmin.filter((admin) => {
         return Object.values(admin)
           .join(" ")
           .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      })
+          .includes(searchTerm.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.routes))
-      setSearchResults(newAdmin)
+      setSearchResults(newAdmin);
       //console.log(Object.values(newRoutes))
+    } else {
+      setSearchResults(listUser.listAdmin);
     }
-    else {
-      setSearchResults(listUser.listAdmin)
-    }
-  }
+  };
 
   const getSearchTerm = () => {
     //console.log(inputEl.current.value)
-    searchHandler(inputEl.current.value)
-  }
+    searchHandler(inputEl.current.value);
+  };
 
   const searchHandlerC = (searchTermC) => {
     //console.log(searchTermR)
-    setSearchTermC(searchTermC)
+    setSearchTermC(searchTermC);
     if (searchTermC !== "") {
       const newCustomer = listUser.listCustomer.filter((customer) => {
         return Object.values(customer)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermC.toLowerCase())
-      })
+          .includes(searchTermC.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.routes))
-      setSearchResultsC(newCustomer)
+      setSearchResultsC(newCustomer);
       //console.log(Object.values(newRoutes))
+    } else {
+      setSearchResultsC(listUser.listCustomer);
     }
-    else {
-      setSearchResultsC(listUser.listCustomer)
-    }
-  }
+  };
 
   const getSearchTermC = () => {
     //console.log(inputEl.current.value)
-    searchHandlerC(inputElC.current.value)
-  }
+    searchHandlerC(inputElC.current.value);
+  };
   const searchHandlerS = (searchTermS) => {
     //console.log(searchTermR)
-    setSearchTermS(searchTermS)
+    setSearchTermS(searchTermS);
     if (searchTermS !== "") {
       const newSteersmans = listUser.listSteersman.filter((steersman) => {
         return Object.values(steersman)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermS.toLowerCase())
-      })
+          .includes(searchTermS.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.routes))
-      setSearchResultsS(newSteersmans)
+      setSearchResultsS(newSteersmans);
       //console.log(Object.values(newRoutes))
+    } else {
+      setSearchResultsS(listUser.listSteersman);
     }
-    else {
-      setSearchResultsS(listUser.listSteersman)
-    }
-  }
+  };
 
   const getSearchTermS = () => {
     //console.log(inputEl.current.value)
-    searchHandlerS(inputElS.current.value)
-  }
-
+    searchHandlerS(inputElS.current.value);
+  };
 
   return (
     <React.Fragment>
@@ -176,22 +172,32 @@ export const ListUserTable = (props) => {
           }}
           >
           Thêm tuyến đường
-        </Button> */}
+        </Button> */}{" "}
+            <div className="ui-search">
+              <input
+                ref={inputEl}
+                type="text"
+                placeholder="Search Here"
+                className="prompt"
+                value={searchTerm}
+                onChange={getSearchTerm}
+              />
+            </div>
           </div>
-          <div className="ui-search">
-            <input
-              ref={inputEl}
-              type="text"
-              placeholder="Search Here"
-              className="prompt"
-              value={searchTerm}
-              onChange={getSearchTerm} />
-          </div>
+
           <div className="card__body">
             <Table
               headData={users.header}
               renderHead={(item, ind) => renderHead(item, ind)}
-              render2Body={() => renderUsers(searchTerm.length < 1 ? listUser.listAdmin : searchResults).length > 0 ? renderUsers(searchTerm.length < 1 ? listUser.listAdmin : searchResults) : "Không tìm thấy kết quả"}
+              render2Body={() =>
+                renderUsers(
+                  searchTerm.length < 1 ? listUser.listAdmin : searchResults
+                ).length > 0
+                  ? renderUsers(
+                      searchTerm.length < 1 ? listUser.listAdmin : searchResults
+                    )
+                  : "Không tìm thấy kết quả"
+              }
             />
           </div>
           <div className="card__footer"></div>
@@ -207,21 +213,35 @@ export const ListUserTable = (props) => {
           >
           Thêm tuyến đường
         </Button> */}
+            <div className="ui-search">
+              <input
+                ref={inputElC}
+                type="text"
+                placeholder="Search Here"
+                className="prompt"
+                value={searchTermC}
+                onChange={getSearchTermC}
+              />
+            </div>
           </div>
-          <div className="ui-search">
-            <input
-              ref={inputElC}
-              type="text"
-              placeholder="Search Here"
-              className="prompt"
-              value={searchTermC}
-              onChange={getSearchTermC} />
-          </div>
+
           <div className="card__body">
             <Table
               headData={users.header}
               renderHead={(item, ind) => renderHead(item, ind)}
-              render2Body={() => renderUsers(searchTermC.length < 1 ? listUser.listCustomer : searchResultsC).length > 0 ? renderUsers(searchTermC.length < 1 ? listUser.listCustomer : searchResultsC) : "Không tìm thấy kết quả"}
+              render2Body={() =>
+                renderUsers(
+                  searchTermC.length < 1
+                    ? listUser.listCustomer
+                    : searchResultsC
+                ).length > 0
+                  ? renderUsers(
+                      searchTermC.length < 1
+                        ? listUser.listCustomer
+                        : searchResultsC
+                    )
+                  : "Không tìm thấy kết quả"
+              }
             />
           </div>
           <div className="card__footer"></div>
@@ -236,22 +256,36 @@ export const ListUserTable = (props) => {
           }}
           >
           Thêm tuyến đường
-        </Button> */}
+        </Button> */}{" "}
+            <div className="ui-search">
+              <input
+                ref={inputElS}
+                type="text"
+                placeholder="Search Here"
+                className="prompt"
+                value={searchTermS}
+                onChange={getSearchTermS}
+              />
+            </div>
           </div>
-          <div className="ui-search">
-            <input
-              ref={inputElS}
-              type="text"
-              placeholder="Search Here"
-              className="prompt"
-              value={searchTermS}
-              onChange={getSearchTermS} />
-          </div>
+
           <div className="card__body">
             <Table
               headData={users.header}
               renderHead={(item, ind) => renderHead(item, ind)}
-              render2Body={() => renderUsers(searchTermS.length < 1 ? listUser.listSteersman : searchResultsS).length > 0 ? renderUsers(searchTermS.length < 1 ? listUser.listSteersman : searchResultsS) : "Không tìm thấy kết quả"}
+              render2Body={() =>
+                renderUsers(
+                  searchTermS.length < 1
+                    ? listUser.listSteersman
+                    : searchResultsS
+                ).length > 0
+                  ? renderUsers(
+                      searchTermS.length < 1
+                        ? listUser.listSteersman
+                        : searchResultsS
+                    )
+                  : "Không tìm thấy kết quả"
+              }
             />
           </div>
           <div className="card__footer"></div>
