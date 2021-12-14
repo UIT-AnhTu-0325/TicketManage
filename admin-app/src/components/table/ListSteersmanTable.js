@@ -374,18 +374,19 @@ export const ListSteersmanTable = (props) => {
             }}
           >
             Thêm tài xế
-          </Button>
+          </Button>{" "}
+          <div className="ui-search">
+            <input
+              ref={inputEl}
+              type="text"
+              placeholder="Search Here"
+              className="prompt"
+              value={term}
+              onChange={getSearchTerm}
+            />
+          </div>
         </div>
-        <div className="ui-search">
-          <input
-            ref={inputEl}
-            type="text"
-            placeholder="Search Here"
-            className="prompt"
-            value={term}
-            onChange={getSearchTerm}
-          />
-        </div>
+
         <div className="card__body">
           <Table
             headData={steersmans.header}

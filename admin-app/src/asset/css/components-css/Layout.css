@@ -64,3 +64,19 @@
   font-size: 1.6rem;
   margin-top: 10px;
 }
+
+/* bs */
+.persional-info-identity {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 35px;
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  padding: 10px 26px 20px;
+  border: 2px solid #ebebeb;
+  width: fit-content;
+}
+.persional-info-identity > div {
+  margin-top: 8px;
+}

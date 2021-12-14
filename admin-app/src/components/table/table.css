@@ -2,19 +2,41 @@
   display: flex;
   align-items: center;
 }
+.card__header h3 {
+  margin-top: 5px;
+}
 .card__header > button {
   margin-left: 20px;
   padding: 6px 12px;
-  border-radius: var(--border-radius-small);
+  border-radius: 5px;
   color: var(--main-color);
   border: 2px solid var(--main-color);
   background-color: #fff;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 .card__header > button:hover {
   background-color: var(--main-color);
   color: #fff;
 }
+.card__header > .ui-search {
+  margin-left: 15px;
+}
+.card__header > .ui-search > input {
+  padding: 6px 12px;
+  border: 2px solid #e5e5e5;
+  font-size: 1.4rem;
+  border-radius: 5px;
+}
+.card__header > .ui-search > input:focus {
+  border: 2px solid #c7c7c7;
+}
+.no-result {
+  padding-left: 20px;
+  padding-top: 100px !important;
+  text-align: center;
+}
+
+/* table */
 .table-container {
   min-width: 400px;
 }
