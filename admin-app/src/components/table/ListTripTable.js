@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Button, Fade, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addTrip } from "../../actions/trip.actions";
+import { addTrip, editTrip } from "../../actions/trip.actions";
 import { Input } from "../UI/Input";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
@@ -16,7 +16,9 @@ import swal from "sweetalert";
 export const ListTripTable = (props) => {
   const dispatch = useDispatch();
   const inputEl = useRef("");
-  const listTrip = props.listTrip;
+  const prop_listTrip = props.listTrip.sort((a, b) =>
+    a.startDate > b.startDate ? 1 : -1
+  );
   const listVehicle = props.listVehicle;
   const listTicket = props.listTicket;
   const term = props.term;
@@ -36,6 +38,24 @@ export const ListTripTable = (props) => {
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
   const [editData, setEditData] = useState(false);
+  const [checked, setChecked] = React.useState(true);
+  const [listTrip, setListTrip] = React.useState(prop_listTrip);
+
+  const getListTrip = () => {
+    if (checked) {
+      let list = [];
+      for (let i = 0; i < prop_listTrip.length; i++) {
+        var date = new Date(prop_listTrip[i].startDate);
+        var curDate = new Date();
+        if (date > curDate) {
+          list.push(prop_listTrip[i]);
+        }
+      }
+      setListTrip(list);
+    } else {
+      setListTrip(prop_listTrip);
+    }
+  };
 
   const checkEditData = () => {
     if (trip.idVehicle && trip.startDate && trip.price) {
@@ -87,9 +107,35 @@ export const ListTripTable = (props) => {
   };
 
   const trips = {
-    header: ["Ngày khởi hành", "Biển số xe", "Số ghế", "Giá vé", "Tùy chọn"],
+    header: [
+      "Ngày khởi hành",
+      "Biển số xe",
+      "Số ghế",
+      "Giá vé",
+      "Trạng thái",
+      "Tùy chọn",
+    ],
     body: [],
   };
+
+  const getStatus = (item) => {
+    if (item.isActive === "no") return "Đã hủy";
+    var date = new Date(item.startDate);
+    var curDate = new Date();
+    //console.log(date);
+    //console.log(curDate);
+    return date > curDate ? "Sẵn sàng" : "Đã hoàn thành";
+  };
+
+  const isDisable = (item) => {
+    if (item.isActive === "no") return true;
+    var date = new Date(item.startDate);
+    var curDate = new Date();
+    //console.log(date);
+    //console.log(curDate);
+    return date > curDate ? false : true;
+  };
+
   const renderHead = (item, ind) => {
     return <th key={ind}>{item}</th>;
   };
@@ -112,17 +158,42 @@ export const ListTripTable = (props) => {
     return 0;
   };
 
+  const delTrip = (trip) => {
+    let form = trip;
+    swal({
+      title: "Bạn chắc chắn xóa",
+      text: "Bạn có chắc sẽ xóa chuyến xe này không",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Chuyến xe đã được xóa thành công!", {
+          icon: "success",
+        });
+        form.isActive = "no";
+        dispatch(editTrip(form));
+        if (props.type !== "Main") {
+          props.reLoad();
+        }
+      } else {
+        swal("Chuyến xe vẫn chưa bị xóa!");
+      }
+    });
+  };
+
   const renderTrips = (trips) => {
     let myTrips = [];
     for (let trip of trips) {
       myTrips.push(
         <tr>
-          <td>{new Date(trip.startDate).toLocaleDateString('vi-VN')}</td>
+          <td>{new Date(trip.startDate).toLocaleDateString("vi-VN")}</td>
           <td>{trip.idVehicle.lisensePlate}</td>
           <td>{trip.idVehicle.totalSeat}</td>
           <td>{findPriceOfTrip(trip._id)}</td>
+          <td>{getStatus(trip)}</td>
           <td>
-            {/* <button
+            <button
               className="edit"
               onClick={() => {
                 handleModalShow("Edit", {
@@ -132,19 +203,21 @@ export const ListTripTable = (props) => {
                   totalSeat: trip.idVehicle.totalSeat,
                 });
               }}
+              hidden={isDisable(trip)}
             >
               <i class="far fa-edit"></i>
             </button>
             <button
               className="delete"
+              hidden={isDisable(trip)}
               onClick={() => {
-                //to delete trip
+                delTrip(trip);
               }}
             >
               <i class="far fa-trash-alt"></i>
-            </button> */}
+            </button>
             <Link to={`/trips/${trip._id}/informations`}>
-              <button className="detail" type="button" onClick={() => { }}>
+              <button className="detail" type="button" onClick={() => {}}>
                 Chi tiết
               </button>
             </Link>
@@ -157,8 +230,8 @@ export const ListTripTable = (props) => {
 
   const getSearchTerm = () => {
     //console.log(inputEl.current.value)
-    props.searchKeyword(inputEl.current.value)
-  }
+    props.searchKeyword(inputEl.current.value);
+  };
 
   return (
     <div>
@@ -176,21 +249,40 @@ export const ListTripTable = (props) => {
                 >
                   Thêm chuyến xe
                 </button>
+                <div className="ui-search">
+                  <input
+                    ref={inputEl}
+                    type="number"
+                    placeholder="Search Here"
+                    className="prompt"
+                    value={term}
+                    onChange={getSearchTerm}
+                  />
+                </div>
+                <div style={{ marginLeft: 60, fontSize: 18 }}>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => {
+                      setChecked(!checked);
+                      getListTrip();
+                    }}
+                  />
+                  <label style={{ marginLeft: 10, fontSize: 18 }}>
+                    Hiển thị chuyến xe đã hoàn thành (đã hủy)
+                  </label>
+                </div>
               </div>
-              <div className="ui-search">
-                <input
-                  ref={inputEl}
-                  type="text"
-                  placeholder="Search Here"
-                  className="prompt"
-                  value={term}
-                  onChange={getSearchTerm} />
-              </div>
+
               <div className="card__body">
                 <Table
                   headData={trips.header}
                   renderHead={(item, ind) => renderHead(item, ind)}
-                  render2Body={() => renderTrips(listTrip).length > 0 ? renderTrips(listTrip) : "Không tìm thấy kết quả"}
+                  render2Body={() =>
+                    renderTrips(listTrip).length > 0
+                      ? renderTrips(listTrip)
+                      : "Không tìm thấy kết quả"
+                  }
                 />
               </div>
               <div className="card__footer"></div>

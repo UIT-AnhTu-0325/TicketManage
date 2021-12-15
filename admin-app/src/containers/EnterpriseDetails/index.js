@@ -60,59 +60,56 @@ export const EnterpriseDetails = (props) => {
 
   const searchHandlerR = (searchTermR) => {
     //console.log(searchTermR)
-    setSearchTermR(searchTermR)
+    setSearchTermR(searchTermR);
     if (searchTermR !== "") {
       const newRoutes = enterpriseDetails.routes.filter((route) => {
         return Object.values(route)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermR.toLowerCase())
-      })
+          .includes(searchTermR.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.routes))
-      setSearchResultsR(newRoutes)
+      setSearchResultsR(newRoutes);
       //console.log(Object.values(newRoutes))
+    } else {
+      setSearchResultsR(enterpriseDetails.routes);
     }
-    else {
-      setSearchResultsR(enterpriseDetails.routes)
-    }
-  }
+  };
 
   const searchHandlerV = (searchTermV) => {
     //console.log(searchTermV)
-    setSearchTermV(searchTermV)
+    setSearchTermV(searchTermV);
     if (searchTermV !== "") {
       const newVehicles = enterpriseDetails.vehicles.filter((vehicle) => {
         return Object.values(vehicle)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermV.toLowerCase())
-      })
+          .includes(searchTermV.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.vehicles))
-      setSearchResultsV(newVehicles)
+      setSearchResultsV(newVehicles);
       //console.log(Object.values(newVehicles))
+    } else {
+      setSearchResultsV(enterpriseDetails.vehicles);
     }
-    else {
-      setSearchResultsV(enterpriseDetails.vehicles)
-    }
-  }
+  };
   const searchHandlerS = (searchTermS) => {
     //console.log(searchTermS)
-    setSearchTermS(searchTermS)
+    setSearchTermS(searchTermS);
     if (searchTermS !== "") {
       const newSteersmans = enterpriseDetails.steersmans.filter((steersman) => {
         return Object.values(steersman)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermS.toLowerCase())
-      })
+          .includes(searchTermS.toLowerCase());
+      });
       //console.log(Object.values(enterpriseDetails.steersmans))
-      setSearchResultsS(newSteersmans)
+      setSearchResultsS(newSteersmans);
       //console.log(Object.values(newSteersmans))
+    } else {
+      setSearchResultsS(enterpriseDetails.steersmans);
     }
-    else {
-      setSearchResultsS(enterpriseDetails.steersmans)
-    }
-  }
+  };
 
   return (
     <Layout sidebar>
@@ -135,7 +132,9 @@ export const EnterpriseDetails = (props) => {
       </Button> */}
 
       <ListRouteTable
-        listRoute={searchTermR.length < 1 ? enterpriseDetails.routes : searchResultsR}
+        listRoute={
+          searchTermR.length < 1 ? enterpriseDetails.routes : searchResultsR
+        }
         listEnterprise={state_enterprise}
         listCity={state_city}
         type="Other"
@@ -145,7 +144,9 @@ export const EnterpriseDetails = (props) => {
       ></ListRouteTable>
 
       <ListVehicleTable
-        listVehicle={searchTermV.length < 1 ? enterpriseDetails.vehicles : searchResultsV}
+        listVehicle={
+          searchTermV.length < 1 ? enterpriseDetails.vehicles : searchResultsV
+        }
         listEnterprise={state_enterprise}
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
@@ -154,8 +155,11 @@ export const EnterpriseDetails = (props) => {
       ></ListVehicleTable>
 
       <ListSteersmanTable
-        listEnterprise={state_enterprise}
-        listSteersman={searchTermS.length < 1 ? enterpriseDetails.steersmans : searchResultsS}
+        idEnterprise={enterpriseDetails.enterprise._id}
+        listSteersman={
+          searchTermS.length < 1 ? enterpriseDetails.steersmans : searchResultsS
+        }
+        listVehicle={enterpriseDetails.vehicles}
         type="Other"
         reLoadEnterpriseDetails={loadEnterpriseDetails}
         term={searchTermS}

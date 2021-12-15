@@ -32,10 +32,16 @@ export const UserDetails = (props) => {
       {state_userDetail.role === "admin" ? (
         <Layout sidebar>
           <div className="persional-info-identity">
-            <div>Day la thong tin ca nhan - manv</div>
-            <div>Day la thong tin ca nhan - ten</div>
-            <div>Day la thong tin ca nhan - gioi tinh </div>
-            <div>Day la thong tin ca nhan - so dien thoai</div>
+            <div>Mã nhân viên : {state_userDetail._id}</div>
+            <h2>
+              Họ tên : {state_userDetail.firstName} {state_userDetail.lastName}
+            </h2>
+            <div>
+              Giới tính :{" "}
+              {state_userDetail.profile.gender === "Male" ? "Nam" : "Nữ"}
+            </div>
+            <div>Số điện thoại: {state_userDetail.contactNumber}</div>
+            <div>Email: {state_userDetail.email}</div>
           </div>
           <AdminDetailTable user={state_userDetail}></AdminDetailTable>
         </Layout>

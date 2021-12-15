@@ -21,3 +21,23 @@ export const addSteersman = (form) => {
     //console.log(res);
   };
 };
+
+export const editSteersman = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: steersmanConstants.EDIT_STEERSMAN_REQUEST });
+    const res = await axiosIntance.put(`/steersman/${form._id}`, {
+      ...form,
+    });
+    if (res.status === 200) {
+      dispatch({
+        type: steersmanConstants.EDIT_STEERSMAN_SUCCESS,
+        payload: { steersman: res.data },
+      });
+    } else {
+      dispatch({
+        type: steersmanConstants.EDIT_STEERSMAN_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
+  };
+};

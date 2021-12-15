@@ -19,7 +19,13 @@ export const SelectBox = (props) => {
           if (props.type === "VehicleSelect") {
             return (
               <option key={option._id} value={option._id}>
-                {option.quality} - {option.totalSeat}
+                BS:{option.quality} - SG:{option.totalSeat}
+              </option>
+            );
+          } else if (props.type === "VehicleSelect_BS") {
+            return (
+              <option key={option._id} value={option._id}>
+                BS:{option.lisensePlate} - SG:{option.totalSeat}
               </option>
             );
           } else if (props.type === "EnterpriseSelect") {

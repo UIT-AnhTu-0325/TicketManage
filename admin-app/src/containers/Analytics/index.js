@@ -16,6 +16,7 @@ import "../../asset/css/containers-css/Analytics.css";
 import Chart from "react-apexcharts";
 import { useHistory } from "react-router";
 import { Doughnut } from "react-chartjs-2";
+import { ReportEnterpriseTable } from "../../components/table/ReportEnterpriseTable";
 
 /**
  * @author
@@ -41,7 +42,7 @@ export const Analytics = (props) => {
     date.setDate(date.getDate() + 1);
   }
 
-  console.log(days);
+  //console.log(days);
 
   const dispatch = useDispatch();
 
@@ -294,6 +295,10 @@ export const Analytics = (props) => {
             </div>
           </div>
         </div>
+        <ReportEnterpriseTable
+          month={month}
+          year={year}
+        ></ReportEnterpriseTable>
 
         {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
                 <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />

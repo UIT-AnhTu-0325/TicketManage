@@ -19,6 +19,10 @@ const VehicleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isActive: {
+      type: String,
+      default: "yes",
+    },
   },
   {
     timestamps: true,

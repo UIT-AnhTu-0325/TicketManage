@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import "./rule.css";
+import { useDispatch } from "react-redux";
+import { signout } from "../actions";
 import axios from "axios";
 import avatarImg from "../asset/img/user.jpg";
+import { ReportEnterpriseTable } from "../components/table/ReportEnterpriseTable";
 export const Rules = () => {
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(signout());
+  };
   const [rules, setRules] = useState({
     book: 0,
     cancel: 0,
@@ -101,9 +109,11 @@ export const Rules = () => {
               <img src={avatarImg} alt="" />
             </div>
             <div className="account__option">
-              <div className="account-name">Hong Admin</div>
+              <div className="account-name">
+                {JSON.parse(localStorage.getItem("user")).fullName}
+              </div>
               <span className="txt-notyou">Không phải bạn?</span>
-              <a href="#" className="change-account">
+              <a href="/" className="change-account" onClick={logout}>
                 Đăng xuất
               </a>
             </div>

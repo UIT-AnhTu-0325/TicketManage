@@ -26,6 +26,24 @@ export default (state = initState, action) => {
         ...initState,
       };
       break;
+    case steersmanConstants.EDIT_STEERSMAN_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case steersmanConstants.EDIT_STEERSMAN_SUCCESS:
+      state = {
+        ...state,
+        //STEERSMANs: rebuildEditSTEERSMAN(state.STEERSMANs, action.payload.STEERSMAN),
+        loading: false,
+      };
+      break;
+    case steersmanConstants.EDIT_STEERSMAN_FAILURE:
+      state = {
+        ...initState,
+      };
+      break;
     default:
   }
   return state;

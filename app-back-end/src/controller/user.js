@@ -33,7 +33,10 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    res.status(200).json(user);
+    const profile = await Profile.findOne({ account: user._id });
+    let res_user = JSON.parse(JSON.stringify(user));
+    res_user.profile = profile;
+    res.status(200).json(res_user);
   } catch (err) {
     res.status(500).json({ error: err });
   }

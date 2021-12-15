@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, forwardRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addSteersman } from "../../actions/steersman.actions";
+import { addSteersman, editSteersman } from "../../actions/steersman.actions";
 import { Input } from "../UI/Input";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
@@ -16,7 +16,18 @@ export const ListSteersmanTable = (props) => {
   const dispatch = useDispatch();
   const inputEl = useRef("");
   const listSteersman = props.listSteersman;
-  const listEnterprise = props.listEnterprise;
+  const id_Enterprise = props.idEnterprise;
+  const prop_listVehicle = props.listVehicle;
+  const getListVehicle = () => {
+    let listVehicle = [];
+    for (let i = 0; i < prop_listVehicle.length; i++) {
+      if (prop_listVehicle[i].isActive === "yes") {
+        //console.log(prop_listVehicle[i].isActive);
+        listVehicle.push(prop_listVehicle[i]);
+      }
+    }
+    return listVehicle;
+  };
   const [editData, setEditData] = useState(false);
   const checkEditData = () => {
     if (
@@ -36,7 +47,7 @@ export const ListSteersmanTable = (props) => {
   const initSteersman = () => {
     return {
       _id: "",
-      idEnterprise: "",
+      idEnterprise: id_Enterprise,
       position: "",
       firstName: "",
       lastName: "",
@@ -46,6 +57,8 @@ export const ListSteersmanTable = (props) => {
       password: "111111",
       gender: "",
       contactNumber: "",
+      idVehicle: "",
+      idUser: "",
     };
   };
   const [steersman, setSteersman] = useState(initSteersman);
@@ -61,21 +74,32 @@ export const ListSteersmanTable = (props) => {
     } else {
       setModalFlag("Edit");
       setModalTitle("Sửa tài xế");
-      setSteersman(steersman);
+      setSteersman({
+        _id: steersman._id,
+        idEnterprise: steersman.idEnterprise,
+        position: steersman.position,
+        firstName: steersman.idUser.firstName,
+        lastName: steersman.idUser.lastName,
+        email: steersman.idUser.email,
+        contactNumber: steersman.idUser.contactNumber,
+        gender: steersman.profile.gender,
+        idVehicle: steersman.idVehicle ? steersman.idVehicle._id : "",
+        idUser: steersman.idUser._id,
+      });
     }
     setModalShow(true);
   };
   const handleModalSave = () => {
-    // if (modalFlag === "Add") {
-    //   createUsername();
-    // }
+    if (modalFlag === "Add") {
+      createUsername();
+    }
     const form = steersman;
     //console.log(form);
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addSteersman(form));
     } else {
-      //dispatch(editRoute(form));
+      dispatch(editSteersman(form));
     }
     setSteersman(initSteersman);
     if (props.type !== "Main") {
@@ -96,13 +120,6 @@ export const ListSteersmanTable = (props) => {
     //console.log(steersman.username);
   };
 
-  const findEnterpriseName = (idEnterprise) => {
-    for (let ent of listEnterprise.enterprises) {
-      if (ent._id === idEnterprise) return ent.name;
-    }
-    return "";
-  };
-
   const positions = [
     { _id: 1, value: "main", show: "Lái chính" },
     { _id: 2, value: "helper", show: "Lái phụ" },
@@ -114,7 +131,14 @@ export const ListSteersmanTable = (props) => {
   ];
 
   const steersmans = {
-    header: ["Họ tên", "Số điện thoại", "Vị trí", "Tùy chọn"],
+    header: [
+      "Họ tên",
+      "Giới tính",
+      "Số điện thoại",
+      "Vị trí",
+      "Xe phụ trách",
+      "Tùy chọn",
+    ],
     body: [],
   };
   const renderHead = (item, ind) => {
@@ -128,13 +152,17 @@ export const ListSteersmanTable = (props) => {
           <td>
             {steersman.idUser.firstName} {steersman.idUser.lastName}
           </td>
+          <td>{steersman.profile.gender === "Male" ? "Nam" : "Nữ"}</td>
           <td>{steersman.idUser.contactNumber}</td>
           <td>{steersman.position}</td>
+          <td>
+            {steersman.idVehicle ? steersman.idVehicle.lisensePlate : "Trống"}
+          </td>
           <td>
             <button
               className="edit"
               onClick={() => {
-                //handleModalShow("Edit", route);
+                handleModalShow("Edit", steersman);
               }}
             >
               <i class="far fa-edit"></i>
@@ -161,96 +189,6 @@ export const ListSteersmanTable = (props) => {
 
   return (
     <div>
-      <Modal show={false} onHide={handleModalClose}>
-        <Modal.Header>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <select
-            className="form-control"
-            value={steersman.idEnterprise}
-            onChange={(e) =>
-              setSteersman({ ...steersman, idEnterprise: e.target.value })
-            }
-          >
-            <option>Doanh nghiệp</option>
-            {listEnterprise.enterprises.map((option) => (
-              <option key={option._id} value={option._id}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-          <Input
-            value={steersman.firstName}
-            placeholder={`Họ`}
-            onChange={(e) =>
-              setSteersman({ ...steersman, firstName: e.target.value })
-            }
-          ></Input>
-          <Input
-            value={steersman.lastName}
-            placeholder={`Tên`}
-            onChange={(e) =>
-              setSteersman({
-                ...steersman,
-                lastName: e.target.value,
-                username: steersman.firstName + steersman.lastName + "123",
-              })
-            }
-          ></Input>
-          <select
-            className="form-control"
-            value={steersman.gender}
-            onChange={(e) =>
-              setSteersman({ ...steersman, gender: e.target.value })
-            }
-          >
-            <option>Giới tính</option>
-            {genders.map((option) => (
-              <option key={option._id} value={option.value}>
-                {option.show}
-              </option>
-            ))}
-          </select>
-          <Input
-            value={steersman.email}
-            placeholder={`Email`}
-            onChange={(e) =>
-              setSteersman({ ...steersman, email: e.target.value })
-            }
-          ></Input>
-          <Input
-            value={steersman.contactNumber}
-            placeholder={`Số điện thoại`}
-            onChange={(e) =>
-              setSteersman({ ...steersman, contactNumber: e.target.value })
-            }
-          ></Input>
-          <select
-            className="form-control"
-            value={steersman.position}
-            onChange={(e) =>
-              setSteersman({ ...steersman, position: e.target.value })
-            }
-          >
-            <option>Vị trí</option>
-            {positions.map((option) => (
-              <option key={option._id} value={option.value}>
-                {option.show}
-              </option>
-            ))}
-          </select>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Đóng
-          </Button>
-          <Button variant="primary" onClick={handleModalSave}>
-            Lưu thay đổi
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       {/*   MODAL */}
       <div
         className={
@@ -262,20 +200,29 @@ export const ListSteersmanTable = (props) => {
 
           <div className="add-modal__body">
             <div className="input-enterprise-name">
-              <SelectBox
-                type="commonID"
-                value={steersman.idEnterprise}
+              <InputTitleLeft
+                title="Họ"
+                placeholder={``}
+                value={steersman.firstName}
                 onChange={(e) => {
-                  setSteersman({ ...steersman, idEnterprise: e.target.value });
+                  setSteersman({ ...steersman, firstName: e.target.value });
                   checkEditData();
                 }}
-                list={listEnterprise.enterprises}
-                title="Doanh nghiệp"
-              />
-
+              ></InputTitleLeft>
               <InputTitleLeft
+                title="Tên"
+                placeholder={``}
+                value={steersman.lastName}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, lastName: e.target.value });
+                  checkEditData();
+                }}
+              ></InputTitleLeft>
+
+              {/* <InputTitleLeft
                 title="Họ tên"
                 placeholder={``}
+                value={`${steersman.firstName} ${steersman.lastName}`}
                 onChange={(e) => {
                   if (e.target.value.split(" ").length > 1)
                     setSteersman({
@@ -289,7 +236,7 @@ export const ListSteersmanTable = (props) => {
 
                   checkEditData();
                 }}
-              />
+              /> */}
               {/* 
               <InputTitleLeft
                 title="Tên"
@@ -344,6 +291,16 @@ export const ListSteersmanTable = (props) => {
                 }}
                 list={positions}
                 title="Vị trí"
+              />
+              <SelectBox
+                type="VehicleSelect_BS"
+                value={steersman.idVehicle}
+                onChange={(e) => {
+                  setSteersman({ ...steersman, idVehicle: e.target.value });
+                  checkEditData();
+                }}
+                list={getListVehicle()}
+                title="Phương tiện điều khiển"
               />
             </div>
           </div>
