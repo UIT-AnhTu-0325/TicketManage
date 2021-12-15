@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import swal from "sweetalert";
 import { getAllCities } from "../../actions";
 import { addOfflineTicket } from "../../actions/offlineTicket.actions";
 import { getTripDetailsById } from "../../actions/trip.actions";
@@ -72,8 +74,18 @@ export const OfflineTicket = (props) => {
     //form.seatNumber = localStorage.getItem("seatSelect");
     delete form._id;
     dispatch(addOfflineTicket(form, ticket));
+    swal({
+      title: "Thêm thành công",
+      text: "Bạn đã thêm chuyến xe thành công",
+      icon: "success",
+      button: "OK",
+    }).then(function () {
+      window.location = `${window.location.pathname.replace(
+        "tickets",
+        "informations"
+      )}`;
+    });
   };
-
   if (!state_trip) return <></>;
   if (!state_ticket) {
     return <></>;

@@ -8,6 +8,7 @@ import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
 import swal from "sweetalert";
+import { useEffect } from "react";
 /**
  * @author
  * @function ListTripTable
@@ -32,6 +33,7 @@ export const ListTripTable = (props) => {
       totalSeat: 0,
     };
   };
+
   const [trip, setTrip] = useState(initTrip);
 
   const [modalShow, setModalShow] = useState(false);
@@ -56,6 +58,10 @@ export const ListTripTable = (props) => {
       setListTrip(prop_listTrip);
     }
   };
+
+  useEffect(() => {
+    getListTrip();
+  }, [props.listTrip]);
 
   const checkEditData = () => {
     if (trip.idVehicle && trip.startDate && trip.price) {

@@ -20,6 +20,15 @@ export const ListTicketOfTrip = (props) => {
     return;
   };
 
+  const isDisable = () => {
+    if (trip.isActive === "no") return true;
+    var date = new Date(trip.startDate);
+    var curDate = new Date();
+    //console.log(date);
+    //console.log(curDate);
+    return date > curDate ? false : true;
+  };
+
   const renderTickets = () => {
     let myTickets = [];
     for (let i = 0; i < tickets.quantity.length; i++) {
@@ -120,12 +129,13 @@ export const ListTicketOfTrip = (props) => {
               <Link
                 to={`${window.location.pathname.replace(
                   "informations",
-                  "tickets/crOffTicket"
+                  "tickets"
                 )}`}
               >
                 <button
                   id={i + 1}
                   className="btn-add-ticket"
+                  hidden={isDisable()}
                   onClick={(e) => {
                     localStorage.setItem("seatSelect", e.currentTarget.id);
                   }}

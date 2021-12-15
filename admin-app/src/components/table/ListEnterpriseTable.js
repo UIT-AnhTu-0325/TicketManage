@@ -207,6 +207,7 @@ export const ListEnterpriseTable = (props) => {
 
               <InputTitleLeft
                 title="Hotline"
+                type="number"
                 value={enterprise.hotline}
                 placeholder={``}
                 onChange={(e) => {

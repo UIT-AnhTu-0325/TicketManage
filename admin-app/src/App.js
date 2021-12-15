@@ -62,10 +62,7 @@ function App() {
           path="/trips/:tripId/informations"
           component={TripDetails}
         ></Route>
-        <Route
-          path="/trips/:tripId/tickets/crOffTicket"
-          component={OfflineTicket}
-        ></Route>
+        <Route path="/trips/:tripId/tickets" component={OfflineTicket}></Route>
         <Route path="/routes" component={Routes} />
         <Route path="/enterprises" exact component={Enterprise} />
         <Route path="/analytics" component={Analytics} />
