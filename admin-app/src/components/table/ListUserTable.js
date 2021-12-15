@@ -50,7 +50,7 @@ export const ListUserTable = (props) => {
           <td>{user.email}</td>
           <td>{user.contactNumber}</td>
           <td>
-            <button
+            {/* <button
               className="edit"
               onClick={() => {
                 //handleModalShow("Edit", route);
@@ -65,7 +65,7 @@ export const ListUserTable = (props) => {
               }}
             >
               Xóa
-            </button>
+            </button> */}
             {/* <Link to={`/routes/${route._id}/informations`}>
               <Button type="button" onClick={() => {}}>
                 Chi tiết

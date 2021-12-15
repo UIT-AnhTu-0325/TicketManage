@@ -163,7 +163,7 @@ export const ListEnterpriseTable = (props) => {
         );
       }
     }
-    console.log(myEnterprises);
+    //console.log(myEnterprises);
     return myEnterprises;
   };
 

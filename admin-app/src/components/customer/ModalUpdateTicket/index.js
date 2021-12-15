@@ -23,7 +23,7 @@ export const ModalUpdateTicket = (props) => {
   const getOn = locations.filter(
     (location) => location.city === props.info.route.startLocation
   );
-  console.log(locations);
+  //console.log(locations);
   const getOff = locations.filter(
     (location) => location.city === props.info.route.endLocation
   );

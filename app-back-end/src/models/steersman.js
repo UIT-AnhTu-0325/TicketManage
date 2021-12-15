@@ -9,6 +9,10 @@ const SteersmanSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    idProfile: {
+      type: Schema.Types.ObjectId,
+      ref: "Profile",
+    },
     position: {
       type: String,
       required: true,
@@ -21,6 +25,10 @@ const SteersmanSchema = new mongoose.Schema(
     isActive: {
       type: String,
       default: "yes",
+    },
+    idVehicle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vehicle",
     },
   },
   {

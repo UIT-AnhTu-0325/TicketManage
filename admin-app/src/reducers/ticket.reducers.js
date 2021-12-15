@@ -3,6 +3,7 @@ import { ticketConstants } from "../actions/constants";
 /* eslint-disable import/no-anonymous-default-export */
 const initState = {
   tickets: [],
+  report: [],
   loading: false,
   error: null,
 };
@@ -41,6 +42,12 @@ export default (state = initState, action) => {
       state = {
         ...state,
         error: action.payload.error,
+      };
+      break;
+    case "GETREPORT":
+      state = {
+        ...state,
+        report: action.payload.report,
       };
       break;
     default:

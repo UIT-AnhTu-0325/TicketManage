@@ -9,6 +9,7 @@ const {
   getAllByYear,
   getDateByMonthYear,
   getMonthByMonthYear,
+  getReport,
 } = require("../controller/ticket");
 const router = require("express").Router();
 
@@ -21,6 +22,8 @@ router.get("/getAllByDay", getAllByDay);
 router.get("/getAllByMonth", getAllByMonth);
 
 router.get("/getAllByYear", getAllByYear);
+
+router.post("/getReport", getReport);
 
 router.post("/create", create);
 

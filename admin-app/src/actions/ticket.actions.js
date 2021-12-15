@@ -25,7 +25,7 @@ export const addTicketOfTrip = (form) => {
   return async (dispatch) => {
     var newForm = { idTrip: form._id, price: form.price };
     newForm.quantity = Array(form.totalSeat).fill(false);
-    console.log(newForm);
+    //console.log(newForm);
     dispatch({ type: ticketConstants.ADD_NEW_TICKET_REQUEST });
     const res = await axios.post(`ticket/create`, {
       ...newForm,
@@ -42,5 +42,14 @@ export const addTicketOfTrip = (form) => {
         payload: { error: res.data.error },
       });
     }
+  };
+};
+
+export const getReport = (form) => {
+  return async (dispatch) => {
+    axios.defaults.timeout = 1000000;
+    const res = await axios.post(`ticket/getReport`, { ...form });
+    //console.log(form);
+    dispatch({ type: "GETREPORT", payload: { report: res.data } });
   };
 };

@@ -5,15 +5,16 @@ const {
   Steersman,
   Profile,
 } = require("../models/index");
+const user = require("../models/user");
 
 exports.getAllName = async (req, res) => {
   try {
     const enterpriseList = await Enterprise.find();
 
-    var data = []
+    var data = [];
 
     for (let i = 0; i < enterpriseList.length; i++) {
-      data.push(enterpriseList[i].name)
+      data.push(enterpriseList[i].name);
     }
 
     res.status(200).json(data);
@@ -89,12 +90,22 @@ exports.getInforbyID = async (req, res) => {
     }).exec();
     var steersmans = await Steersman.find({
       idEnterprise: enterprise._id,
-    }).populate("idUser");
+    })
+      .populate("idUser")
+      .populate("idVehicle");
+    let listSteersman = [];
+    var users = await user.find();
+    for (var i = 0; i < steersmans.length; i++) {
+      let ste = JSON.parse(JSON.stringify(steersmans[i]));
+      let profile = await Profile.findOne({ account: ste.idUser._id });
+      ste.profile = profile;
+      listSteersman.push(ste);
+    }
     res.status(200).json({
       enterprise: enterprise,
       routes: routes,
       vehicles: vehicles,
-      steersmans: steersmans,
+      steersmans: listSteersman,
     });
   } catch (err) {
     console.log(err);

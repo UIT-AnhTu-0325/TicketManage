@@ -17,7 +17,17 @@ export const ListRouteTable = (props) => {
   const dispatch = useDispatch();
   const inputEl = useRef("");
   const listRoute = props.listRoute;
-  const listEnterprise = props.listEnterprise;
+  const prop_listEnterprise = props.listEnterprise;
+  const getListEnterprise = () => {
+    let list = [];
+    for (let i = 0; i < prop_listEnterprise.enterprises.length; i++) {
+      if (prop_listEnterprise.enterprises[i].isActive === "yes") {
+        //console.log(prop_listEnterprise[i].isActive);
+        list.push(prop_listEnterprise.enterprises[i]);
+      }
+    }
+    return list;
+  };
   const listCity = props.listCity;
   const term = props.term;
   const initRoute = () => {
@@ -123,7 +133,7 @@ export const ListRouteTable = (props) => {
     });
   };
   const findEnterpriseName = (idEnterprise) => {
-    for (let ent of listEnterprise.enterprises) {
+    for (let ent of getListEnterprise()) {
       if (ent._id === idEnterprise) return ent.name;
     }
     return "";
@@ -251,7 +261,7 @@ export const ListRouteTable = (props) => {
             }}
           >
             <option>Enterprise</option>
-            {listEnterprise.enterprises.map((option) => (
+            {getListEnterprise().map((option) => (
               <option key={option._id} value={option._id}>
                 {option.name}
               </option>
@@ -321,7 +331,7 @@ export const ListRouteTable = (props) => {
                   setRoute({ ...route, idEnterprise: e.target.value });
                   checkEditData();
                 }}
-                list={listEnterprise.enterprises}
+                list={getListEnterprise()}
                 type="EnterpriseSelect"
                 title="Nhà xe"
               />

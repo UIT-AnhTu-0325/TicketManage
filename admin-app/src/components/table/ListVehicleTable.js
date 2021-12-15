@@ -19,8 +19,28 @@ import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 export const ListVehicleTable = (props) => {
   const dispatch = useDispatch();
   const inputEl = useRef("");
-  const listVehicle = props.listVehicle;
-  const listEnterprise = props.listEnterprise;
+  const prop_listVehicle = props.listVehicle;
+  const prop_listEnterprise = props.listEnterprise;
+  const getListVehicle = () => {
+    let listVehicle = [];
+    for (let i = 0; i < prop_listVehicle.length; i++) {
+      if (prop_listVehicle[i].isActive === "yes") {
+        //console.log(prop_listVehicle[i].isActive);
+        listVehicle.push(prop_listVehicle[i]);
+      }
+    }
+    return listVehicle;
+  };
+  const getListEnterprise = () => {
+    let list = [];
+    for (let i = 0; i < prop_listEnterprise.enterprises.length; i++) {
+      if (prop_listEnterprise.enterprises[i].isActive === "yes") {
+        //console.log(prop_listEnterprise[i].isActive);
+        list.push(prop_listEnterprise.enterprises[i]);
+      }
+    }
+    return list;
+  };
   const term = props.term;
   const initVehicle = () => {
     return {
@@ -29,6 +49,7 @@ export const ListVehicleTable = (props) => {
       idEnterprise: "",
       totalSeat: 0,
       quality: "",
+      isActive: "yes",
     };
   };
 
@@ -81,9 +102,7 @@ export const ListVehicleTable = (props) => {
   };
 
   const delVehicle = (selectedVeh) => {
-    const form = {
-      _id: selectedVeh._id,
-    };
+    const form = selectedVeh;
     swal({
       title: "Bạn chắc chắn xóa",
       text: "Bạn có chắc sẽ xóa phương tiện này không",
@@ -95,7 +114,8 @@ export const ListVehicleTable = (props) => {
         swal("Phương tiện đã được xóa thành công!", {
           icon: "success",
         });
-        dispatch(deleteVehicle(form));
+        form.isActive = "no";
+        dispatch(editVehicle(form));
         if (props.type !== "Main") {
           props.reLoadEnterpriseDetails();
         }
@@ -147,8 +167,8 @@ export const ListVehicleTable = (props) => {
 
   const getSearchTerm = () => {
     //console.log(inputEl.current.value)
-    props.searchKeyword(inputEl.current.value)
-  }
+    props.searchKeyword(inputEl.current.value);
+  };
 
   return (
     <div className="card right-content-fixsize">
@@ -165,7 +185,7 @@ export const ListVehicleTable = (props) => {
             }
           >
             <option>Enterprise</option>
-            {listEnterprise.enterprises.map((option) => (
+            {getListEnterprise().map((option) => (
               <option key={option._id} value={option._id}>
                 {option.name}
               </option>
@@ -221,7 +241,7 @@ export const ListVehicleTable = (props) => {
                   setVehicle({ ...vehicle, idEnterprise: e.target.value });
                   checkEditData();
                 }}
-                list={listEnterprise.enterprises}
+                list={getListEnterprise()}
                 title="Enterprise"
               />
 
@@ -290,13 +310,18 @@ export const ListVehicleTable = (props) => {
           placeholder="Search Here"
           className="prompt"
           value={term}
-          onChange={getSearchTerm} />
+          onChange={getSearchTerm}
+        />
       </div>
       <div className="card__body">
         <Table
           headData={vehicles.header}
           renderHead={(item, ind) => renderHead(item, ind)}
-          render2Body={() => renderVehicles(listVehicle).length > 0 ? renderVehicles(listVehicle) : "Không tìm thấy kết quả"}
+          render2Body={() =>
+            renderVehicles(getListVehicle()).length > 0
+              ? renderVehicles(getListVehicle())
+              : "Không tìm thấy kết quả"
+          }
         />
       </div>
       <div className="card__footer"></div>

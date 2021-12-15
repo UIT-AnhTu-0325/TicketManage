@@ -40,12 +40,12 @@ export const FunctionBar = (props) => {
       <button className="print" onClick={handlePrint}>
         <i class="fas fa-print"></i>
       </button>
-      <button className="edit">
+      {/* <button className="edit">
         <i class="far fa-edit"></i>
       </button>
       <button className="change-chair">
         <i class="fas fa-exchange-alt"></i>
-      </button>
+      </button> */}
       <button className="change-ticket" onClick={handleOpenZoomModal}>
         <i class="fas fa-expand-arrows-alt"></i>
       </button>
