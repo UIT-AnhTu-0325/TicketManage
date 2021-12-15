@@ -41,7 +41,8 @@ export const UserDetail = (props) => {
     (item) =>
       new Date(item.trip.startDate) >= Date.now() &&
       item.book.idUser === userId &&
-      !item.book.canceled
+      !item.book.canceled &&
+      item.trip.isActive != "no"
   );
   const used = books.filter(
     (item) =>
@@ -51,7 +52,7 @@ export const UserDetail = (props) => {
   );
   const canceled = books.filter(
     (item) =>
-      item.book.canceled && item.book.idUser === userId
+      (item.book.canceled || item.trip.isActive == "no") && item.book.idUser === userId
   );
   useEffect(() => {
     axios.get(`http://localhost:2000/api/user/${userId}/userdetail`)

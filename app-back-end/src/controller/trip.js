@@ -35,7 +35,7 @@ exports.fetchAll = async (req, res) => {
     const tickets = await Ticket.find();
     const rules = await Rules.find();
     trips
-      .filter((trip) => new Date(trip.startDate - 24*3600*1000*rules[0].book) >= Date.now())
+      .filter((trip) => new Date(trip.startDate - 24*3600*1000*rules[0].book) >= Date.now() && trip.isActive != "no")
       .map((trip) => {
         let result = {};
         result.trip = trip;
@@ -52,8 +52,8 @@ exports.fetchAll = async (req, res) => {
           .filter((item) => item.idTrip.equals(trip._id))
           .map((item) => {
             result.ticket = item;
+            payload.push(result);
           });
-        payload.push(result);
       });
     res.status(200).json(payload);
   } catch (err) {

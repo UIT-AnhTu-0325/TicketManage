@@ -15,6 +15,10 @@ const TripSchema = new mongoose.Schema(
         startDate: {
             type: Date,
             required: true
+        },
+        isActive:{
+            type: String,
+            default: "yes"
         }
     },
     {
