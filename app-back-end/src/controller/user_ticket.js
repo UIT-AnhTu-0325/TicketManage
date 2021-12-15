@@ -83,7 +83,7 @@ exports.getLastOrder = async (req, res) => {
                     email: lastOrder[i].email,
                     contact: lastOrder[i].contactNumber,
                     price: lastOrder[i].price,
-                    status: "refund",
+                    status: "Hoàn tiền",
                 })
             }
             if (!lastOrder[i].canceled) {
@@ -93,7 +93,7 @@ exports.getLastOrder = async (req, res) => {
                     email: lastOrder[i].email,
                     contact: lastOrder[i].contactNumber,
                     price: lastOrder[i].price,
-                    status: "paid",
+                    status: "Đã thanh toán",
                 })
             }
         }
@@ -206,7 +206,8 @@ exports.getCurrentByEnterprisesList = async (req, res) => {
                             '$gte': new Date(new Date().setUTCHours(0, 0, 0, 0)),
                             '$lt': new Date(new Date().setUTCHours(23, 59, 59, 999))
                         },
-                        'canceled': false
+                        'canceled': false,
+                        'isActive': 'yes'
                     }
                 }, {
                     '$group': {
@@ -223,7 +224,15 @@ exports.getCurrentByEnterprisesList = async (req, res) => {
         )
 
         if (bookingByEnterprises.length == 0) {
-            const enterpriseList = await Enterprise.find();
+            const enterpriseList = await Enterprise.aggregate(
+                [
+                    {
+                        '$match': {
+                            'isActive': 'yes'
+                        }
+                    }
+                ]
+            );
 
             var data = []
 
@@ -236,7 +245,15 @@ exports.getCurrentByEnterprisesList = async (req, res) => {
             }
         }
         else {
-            const enterpriseList = await Enterprise.find();
+            const enterpriseList = await Enterprise.aggregate(
+                [
+                    {
+                        '$match': {
+                            'isActive': 'yes'
+                        }
+                    }
+                ]
+            );
 
             var data = []
             var temp = false
@@ -373,7 +390,8 @@ exports.getCurrentByEnterprises = async (req, res) => {
                             '$gte': new Date(new Date().setUTCHours(0, 0, 0, 0)),
                             '$lt': new Date(new Date().setUTCHours(23, 59, 59, 999))
                         },
-                        'canceled': false
+                        'canceled': false,
+                        'isActive': 'yes'
                     }
                 }, {
                     '$group': {
@@ -390,7 +408,15 @@ exports.getCurrentByEnterprises = async (req, res) => {
         )
 
         if (bookingByEnterprises.length == 0) {
-            const enterpriseList = await Enterprise.find();
+            const enterpriseList = await Enterprise.aggregate(
+                [
+                    {
+                        '$match': {
+                            'isActive': 'yes'
+                        }
+                    }
+                ]
+            );
 
             var booking = []
             var sale = []
@@ -401,7 +427,15 @@ exports.getCurrentByEnterprises = async (req, res) => {
             }
         }
         else {
-            const enterpriseList = await Enterprise.find();
+            const enterpriseList = await Enterprise.aggregate(
+                [
+                    {
+                        '$match': {
+                            'isActive': 'yes'
+                        }
+                    }
+                ]
+            );
 
             var booking = []
             var sale = []
@@ -598,27 +632,27 @@ exports.getCurrentDate = async (req, res) => {
                 {
                     "icon": "bx bx-bus",
                     "count": tripCD.length == 0 ? "0" : tripCD[0].count.toString(),
-                    "title": "Total trip"
+                    "title": "Số chuyến xe"
                 },
                 {
                     "icon": "bx bx-dollar-circle",
                     "count": salesCD.length == 0 ? "0" : salesCD[0].count.toString(),
-                    "title": "Total income"
+                    "title": "Doanh thu"
                 },
                 {
                     "icon": "bx bx-receipt",
                     "count": ticketCD.length == 0 ? "0" : ticketCD[0].count.toString(),
-                    "title": "Total booking"
+                    "title": "Vé bán"
                 },
                 {
                     "icon": "bx bx-receipt",
                     "count": cancelTicketCD.length == 0 ? "0" : cancelTicketCD[0].count.toString(),
-                    "title": "Total canceled Ticket"
+                    "title": "Vé hủy"
                 },
                 {
                     "icon": "bx bx-receipt",
                     "count": newUser.length == 0 ? "0" : newUser[0].count.toString(),
-                    "title": "New user"
+                    "title": "Người dùng mới"
                 },
             ]
 

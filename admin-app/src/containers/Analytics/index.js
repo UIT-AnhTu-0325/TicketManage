@@ -33,11 +33,11 @@ export const Analytics = (props) => {
 
   var date = new Date(year, monthIndex, 1);
 
-  var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var names = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
 
   var days = [];
   while (date.getMonth() === monthIndex) {
-    days.push(date.getDate() + " " + names[date.getDay()]);
+    days.push(date.getDate() + "-" + names[date.getDay()]);
     //days.push(date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear());
     date.setDate(date.getDate() + 1);
   }
@@ -78,12 +78,12 @@ export const Analytics = (props) => {
     series: [
       {
         type: "column",
-        name: "Ticket",
+        name: "Vé bán",
         data: listTicket,
       },
       {
         type: "line",
-        name: "Sale",
+        name: "Doanh thu",
         data: listSale,
       },
     ],
@@ -111,18 +111,18 @@ export const Analytics = (props) => {
       yaxis: [
         {
           title: {
-            text: "Ticket",
+            text: "Vé bán",
           },
         },
         {
           opposite: true,
           title: {
-            text: "Sales",
+            text: "Doanh thu",
           },
         },
       ],
       title: {
-        text: "Analysis of Ticket and Sale",
+        text: "Thống kê vé bán và doanh thu",
         align: "left",
       },
     },
@@ -132,7 +132,7 @@ export const Analytics = (props) => {
     series: [
       {
         type: "line",
-        name: "New User",
+        name: "Người dùng mới",
         data: listNewUser,
       },
     ],
@@ -158,7 +158,7 @@ export const Analytics = (props) => {
         show: true,
       },
       title: {
-        text: "Analysis of New User",
+        text: "Thống kê người dùng mới",
         align: "left",
       },
       markers: {
@@ -202,18 +202,18 @@ export const Analytics = (props) => {
               setMonth(parseInt(e.target.value));
             }}
           >
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
           </select>
           <select
             value={year}
@@ -277,10 +277,10 @@ export const Analytics = (props) => {
           </div>
           <div className="col-4">
             <div className="chart">
-              <span> Ticket </span>
+              <b> Thống kê vé </b>
               <Doughnut
                 data={{
-                  labels: ["Ticket Sold", "Ticket Canceled"],
+                  labels: ["Vé bán", "Vé hủy"],
                   datasets: [
                     {
                       data: donutData,
