@@ -45,12 +45,12 @@ export const DashBoard = (props) => {
     series: [
       {
         type: "line",
-        name: "Sales",
+        name: "Doanh thu",
         data: chartByEnterprise.sale,
       },
       {
         type: "column",
-        name: "Booking",
+        name: "Vé bán",
         data: chartByEnterprise.booking,
       },
     ],
@@ -77,30 +77,30 @@ export const DashBoard = (props) => {
       yaxis: [
         {
           title: {
-            text: "Sales",
+            text: "Doanh thu",
           },
         },
         {
           opposite: true,
           title: {
-            text: "Booking",
+            text: "Vé bán",
           },
         },
       ],
       title: {
-        text: "Booking and Sales of Enterprises",
+        text: "Thống kê vé bán và doanh thu",
         align: "left",
       },
     },
   };
 
   const topEnterPrises = {
-    head: ["Enterprise", "total booking", "total spending"],
+    head: ["Nhà xe", "Vé bán", "Doanh thu"],
     body: listByEnterprise.listEnterprises,
   };
 
   const latestOrders = {
-    header: ["STT", "user", "email", "contact number", "price", "status"],
+    header: ["STT", "Người dùng", "Email", "Số điện thoại", "Thanh toán", "Trạng thái"],
     body: listLastOrder.listOrder,
   };
 
@@ -170,7 +170,7 @@ export const DashBoard = (props) => {
           <div className="col-5">
             <div className="card">
               <div className="card__header">
-                <h3>Top Enterprise</h3>
+                <h3>Nhà xe</h3>
               </div>
               <div className="card__body">
                 <Table
@@ -189,7 +189,7 @@ export const DashBoard = (props) => {
           <div className="col-8">
             <div className="card">
               <div className="card__header">
-                <h3>Latest Order</h3>
+                <h3>Trạng thái khách hàng</h3>
               </div>
               <div className="card__body">
                 <Table
