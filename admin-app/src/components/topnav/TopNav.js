@@ -6,7 +6,7 @@ import Link from "react-router-dom";
 import userImg from "../../asset/img/user.jpg";
 import notifications from "../../asset/JsonData/notification.json";
 import userMenu from "../../asset/JsonData/user_menus.json";
-import BreakCrumb from "../breakcrumb/BreakCrumb";
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,9 +44,6 @@ export const TopNav = (props) => {
             <input type="text" placeholder="Search ..." />
             <i className="bx bx-search"></i>
           </div> */}
-          <div className="breakcrumb">
-            {!props.dashboard ? <BreakCrumb /> : null}
-          </div>
         </div>
         <div className="topnav__right">
           <div className="topnav__right-item">

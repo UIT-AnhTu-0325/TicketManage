@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "../../components/Layout";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
-import LChart from "../../components/chart/Chart";
 import { Dropdown, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -302,31 +301,6 @@ export const Analytics = (props) => {
           month={month}
           year={year}
         ></ReportEnterpriseTable>
-
-        {/* <LChart data={listTicket} title="Tickets" grid dataKey1="totalTicket" />
-                <LChart data={listTicket} title="Sales" grid dataKey2="totalSale" />
-                <LChart data={listOfNewUser} title="New User" grid dataKey3="newUser" />
-                <Chart
-                    type="donut"
-                    width={600}
-                    height={600}
-                    series={[ticketCurrentMonth, ticketCanceled]}
-                    options={{
-                        labels: ['Ticket Sold', 'Ticket Canceled'],
-                        title: { text: 'Ticket' },
-                        plotOptions: {
-                            pie: {
-                                donut: {
-                                    labels: {
-                                        show: true
-                                    }
-                                }
-                            }
-                        }
-                    }}
-                >
-
-                </Chart> */}
       </div>
     </Layout>
   );

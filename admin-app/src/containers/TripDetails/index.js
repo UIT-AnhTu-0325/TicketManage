@@ -5,9 +5,6 @@ import { Layout } from "../../components/Layout";
 import { ListTicketOfTrip } from "../../components/list/ListTicketOfTrip";
 import "./tripdetail.css";
 import busImg from "../../asset/img/bus1.jpg";
-import { Button } from "react-bootstrap";
-import { utils as XLSXUtils, writeFile } from "xlsx";
-import ExportToExcel from "../../components/ExportToExcel";
 /**
  * @author
  * @function TripDetails
@@ -115,10 +112,6 @@ export const TripDetails = (props) => {
             </div>
           </div>
         </div>
-        <ExportToExcel
-          getData={genTicketList()}
-          getFooter={[`Tổng cộng: ${state_tripDetails.listTicket.length} vé`]}
-        ></ExportToExcel>
         <div className="trip-detail__list">
           <ListTicketOfTrip
             tickets={state_tripDetails.tickets}

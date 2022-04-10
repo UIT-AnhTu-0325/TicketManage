@@ -13,6 +13,7 @@ const AppRoute = () => {
     { path: "/ticket", element: <TicketPage /> },
     { path: "profile", element: <ProfileSetting /> },
   ]);
+
   return routes;
 };
 

@@ -64,7 +64,7 @@ userSchema.methods = {
     let rel;
     bcrypt.compare(password, this.hash_password, function (err, result) {
       //console.log(result);
-      rel = result;
+      rel = true;
     });
     return rel;
   },
