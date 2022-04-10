@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import travelImg from "../../asset/img/travel.png";
 import { useSelector } from "react-redux";
 import { DatePicker } from "../DatePicker";
-import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 // Css
 import "../../asset/css/main-ticket.css";
 
@@ -130,7 +129,8 @@ export const MainSearch = (props) => {
                 </div>
                 <div className="main-func__date">
                   <div className="main-func__date__choose input">
-                    <DatePickerComponent
+                    <div>Remove DatePicker because expired</div>
+                    {/* <DatePickerComponent
                       showClearButton={false}
                       width={23}
                       id="date"
@@ -141,13 +141,14 @@ export const MainSearch = (props) => {
                           document.getElementById("date-p").textContent =
                             "Chọn ngày khởi hành";
                         } else {
-                          document.getElementById("date-p").textContent =
-                            e.target.value
-                              .toLocaleDateString("vi-VN")
-                              .toString();
+                          document.getElementById(
+                            "date-p"
+                          ).textContent = e.target.value
+                            .toLocaleDateString("vi-VN")
+                            .toString();
                         }
                       }}
-                    ></DatePickerComponent>
+                    ></DatePickerComponent> */}
                     <p id="date-p">Chọn ngày khởi hành</p>
                     <div
                       className="clearBtn"

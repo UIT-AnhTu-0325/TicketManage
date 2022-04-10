@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Input } from "../../components/UI/Input";
-import { Redirect } from "react-router";
-import { useDispatch, useSelector } from 'react-redux'
+import { Navigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../actions";
 
 /**
@@ -12,20 +12,17 @@ import { signup } from "../../actions";
  **/
 
 export const Signup = (props) => {
-
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const userSignup = (e) => {
-
     e.preventDefault();
 
     const user = {
@@ -33,18 +30,18 @@ export const Signup = (props) => {
       lastName,
       email,
       password,
-      username
+      username,
     };
 
     dispatch(signup(user));
   };
 
   if (auth.authenticate) {
-    return <Redirect to={`/`}></Redirect>;
+    return <Navigate to={`/`} />;
   }
 
   if (user.loading) {
-    return <p>Loading...!</p>
+    return <p>Loading...!</p>;
   }
 
   return (

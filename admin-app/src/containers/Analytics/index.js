@@ -14,7 +14,6 @@ import {
 } from "../../actions/analyticsActions";
 import "../../asset/css/containers-css/Analytics.css";
 import Chart from "react-apexcharts";
-import { useHistory } from "react-router";
 import { Doughnut } from "react-chartjs-2";
 import { ReportEnterpriseTable } from "../../components/table/ReportEnterpriseTable";
 
@@ -62,8 +61,12 @@ export const Analytics = (props) => {
   };
 
   const analytics = useSelector((state) => state.analytics);
-  const { totalTicket, totalSale, totalCanceledTicket, totalNewUser } =
-    analytics;
+  const {
+    totalTicket,
+    totalSale,
+    totalCanceledTicket,
+    totalNewUser,
+  } = analytics;
 
   const chart = useSelector((state) => state.chart);
   const { listTicket, listSale } = chart;

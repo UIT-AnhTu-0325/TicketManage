@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Home } from "./containers/Home";
 import { Signin } from "./containers/Signin";
 import { Signup } from "./containers/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions";
-import { Routes } from "./containers/Routes";
+import { Routes as WayRouters } from "./containers/Routes";
 import { Enterprise } from "./containers/Enterprise";
 
 import { Analytics } from "./containers/Analytics";
@@ -27,8 +27,9 @@ import { Rules } from "./pages/Rules";
 import { AdminBooking } from "./pages/adminbooking/AdminBooking";
 import { UserDetails } from "./containers/UserDetails";
 import { OfflineTicket } from "./containers/OfflineTicket";
+import PropTypes from "prop-types";
 
-function App() {
+const App = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -40,7 +41,7 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
+      <Routes>
         <Route path="/booking" component={AdminBooking} />
         <Route path="/home" exact component={Home} />
         <Route
@@ -63,7 +64,7 @@ function App() {
           component={TripDetails}
         ></Route>
         <Route path="/trips/:tripId/tickets" component={OfflineTicket}></Route>
-        <Route path="/routes" component={Routes} />
+        <Route path="/routes" component={WayRouters} />
         <Route path="/enterprises" exact component={Enterprise} />
         <Route path="/analytics" component={Analytics} />
 
@@ -76,9 +77,11 @@ function App() {
         <Route path="/" component={DashBoard} />
         <Route path="/customers" component={Customer} />
         <Route path="/booking" component={AdminBooking} />
-      </Switch>
+      </Routes>
     </div>
   );
-}
+};
+
+App.propTypes = {};
 
 export default App;

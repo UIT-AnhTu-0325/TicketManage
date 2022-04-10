@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, readProfile } from "../../../actions/userActions";
 import Loading from "../../loading";
@@ -28,8 +27,6 @@ export const ModalLogin = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const history = useHistory();
-
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo, success } = userLogin;
@@ -37,12 +34,6 @@ export const ModalLogin = (props) => {
 
   const userProfile = useSelector((state) => state.userProfile);
   const { myProfile } = userProfile;
-
-  useEffect(() => {
-    if (userInfo && myProfile) {
-      history.push("/profile");
-    }
-  }, [history, userInfo, myProfile]);
 
   const submitHandle = async (e) => {
     e.preventDefault();

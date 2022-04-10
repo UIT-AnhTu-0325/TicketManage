@@ -3,7 +3,7 @@ import { Layout } from "../../components/Layout";
 import { Container, Row, Col } from "react-bootstrap";
 import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import { notification } from "antd";
 import "antd/dist/antd.css";
 import rightImg from "../../asset/img/report.png";
@@ -34,7 +34,7 @@ export const Signin = (props) => {
   };
 
   if (auth.authenticate) {
-    return <Redirect to={`/`}></Redirect>;
+    return <Navigate to={`/`} />;
   }
 
   return (

@@ -1,26 +1,27 @@
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { HomePage } from "./containers/HomPage";
-import { TicketPage } from './containers/TiketPage'
-// css Import
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './asset/css/base.css';
-import './asset/css/main.css';
-import { ProfileSetting } from './containers/Profile';
+import { TicketPage } from "./containers/TiketPage";
+import { ProfileSetting } from "./containers/Profile";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./asset/css/base.css";
+import "./asset/css/main.css";
 
+const AppRoute = () => {
+  let routes = useRoutes([
+    { path: "/", element: <HomePage /> },
+    { path: "/ticket", element: <TicketPage /> },
+    { path: "profile", element: <ProfileSetting /> },
+  ]);
+  return routes;
+};
 
-
-function App() {
+const App = (props) => {
   return (
-    <div className="App">
-      <Router>
-        <Switch> 
-          <Route path="/" exact component={HomePage} ></Route>
-          <Route path="/ticket" exact component={TicketPage} ></Route>
-         <Route path="/profile" exact component={ProfileSetting} ></Route>
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <AppRoute />
+    </Router>
   );
-}
+};
 
 export default App;

@@ -5,7 +5,6 @@ import {
   Link,
   Typography,
 } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
 
 const Breadcrumbs = (props) => {
   const {
@@ -40,4 +39,4 @@ const Breadcrumbs = (props) => {
   );
 };
 
-export default withRouter(Breadcrumbs);
+export default Breadcrumbs;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route } from "react-router";
+import { Navigate, Route } from "react-router";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         if (token) {
           return <Component {...props} />;
         } else {
-          return <Redirect to={`/signin`} />;
+          return <Navigate to={`/signin`} />;
         }
       }}
     />

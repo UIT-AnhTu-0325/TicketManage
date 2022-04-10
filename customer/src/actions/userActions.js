@@ -14,7 +14,6 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from "../constants/userContants";
-import { useHistory } from "react-router";
 const url = "http://localhost:2000";
 
 export const login = (email, password) => async (dispatch) => {

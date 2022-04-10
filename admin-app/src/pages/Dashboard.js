@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Chart from "react-apexcharts";
 import { Table } from "../components/table/Table";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 /**
  * @author
  * @function DashBoard
@@ -100,7 +100,14 @@ export const DashBoard = (props) => {
   };
 
   const latestOrders = {
-    header: ["STT", "Người dùng", "Email", "Số điện thoại", "Thanh toán", "Trạng thái"],
+    header: [
+      "STT",
+      "Người dùng",
+      "Email",
+      "Số điện thoại",
+      "Thanh toán",
+      "Trạng thái",
+    ],
     body: listLastOrder.listOrder,
   };
 
@@ -134,7 +141,7 @@ export const DashBoard = (props) => {
   }
 
   if (!localStorage.getItem("token")) {
-    return <Redirect to={`/signin`}></Redirect>;
+    return <Navigate to={`/signin`} />;
   }
 
   return (

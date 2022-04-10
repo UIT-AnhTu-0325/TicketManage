@@ -9,7 +9,6 @@ import userImg from "../../asset/img/user.jpg";
 import adsImg from "../../asset/img/ads.png";
 import updatingImg from "../../asset/img/updating.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import { updateProfile } from "../../actions/userActions";
 import ErrorMessage from "../../components/errorMessage";
 import Loading from "../../components/loading";
@@ -38,29 +37,19 @@ export const ProfileSetting = (props) => {
   const userProfile = useSelector((state) => state.userProfile);
   const { myProfile } = userProfile;
 
-  const history = useHistory();
-
   useEffect(() => {
-    // if (!userInfo || !myProfile) {
-    //     history.push("/")
-    // }
-    // else {
-
-    //console.log(localStorage.getItem('firstName'))
-
-    // document.getElementById("nameId").textContent = myProfile.profile.account.firstName;
-    // document.getElementById("phoneId").textContent = myProfile.profile.account.contactNumber;
-    // document.getElementById("emailId").textContent = myProfile.profile.account.email;
-
-    document.getElementById("nameId").textContent =
-      localStorage.getItem("firstName");
-    document.getElementById("phoneId").textContent =
-      localStorage.getItem("contact");
-    document.getElementById("emailId").textContent =
-      localStorage.getItem("email");
+    document.getElementById("nameId").textContent = localStorage.getItem(
+      "firstName"
+    );
+    document.getElementById("phoneId").textContent = localStorage.getItem(
+      "contact"
+    );
+    document.getElementById("emailId").textContent = localStorage.getItem(
+      "email"
+    );
 
     var image = new Image();
-    image.onload = function () {
+    image.onload = function() {
       document.getElementById("avatarId").setAttribute("src", this.src);
     };
     //image.src = myProfile.profile.avatar;
@@ -68,7 +57,7 @@ export const ProfileSetting = (props) => {
     image.src = localStorage.getItem("avatar");
 
     var setImage = new Image();
-    setImage.onload = function () {
+    setImage.onload = function() {
       document.getElementById("setAvatarId").setAttribute("src", this.src);
     };
     //setImage.src = myProfile.profile.avatar;
@@ -84,7 +73,7 @@ export const ProfileSetting = (props) => {
     setEmail(localStorage.getItem("email"));
     // setPic(userInfo.pic)
     // }
-  }, [history, userInfo, myProfile]);
+  }, [userInfo, myProfile]);
 
   const [tabState, setTabState] = useState(2);
   const changeTab = (index) => {
@@ -181,7 +170,6 @@ export const ProfileSetting = (props) => {
               }
               onClick={() => {
                 localStorage.clear();
-                history.push("/");
               }}
             >
               <i class="fas fa-sign-out-alt"></i>

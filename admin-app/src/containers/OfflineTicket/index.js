@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import { getAllCities } from "../../actions";
 import { addOfflineTicket } from "../../actions/offlineTicket.actions";
@@ -79,7 +79,7 @@ export const OfflineTicket = (props) => {
       text: "Bạn đã thêm chuyến xe thành công",
       icon: "success",
       button: "OK",
-    }).then(function () {
+    }).then(function() {
       window.location = `${window.location.pathname.replace(
         "tickets",
         "informations"
@@ -106,8 +106,14 @@ export const OfflineTicket = (props) => {
       s += +1 - 0.6;
     }
     return s >= 24
-      ? (s - 24).toFixed(2).toString().replace(".", ":")
-      : s.toFixed(2).toString().replace(".", ":");
+      ? (s - 24)
+          .toFixed(2)
+          .toString()
+          .replace(".", ":")
+      : s
+          .toFixed(2)
+          .toString()
+          .replace(".", ":");
   };
   return (
     <Layout sidebar>

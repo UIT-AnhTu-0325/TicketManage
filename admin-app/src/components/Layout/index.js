@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Container, Jumbotron, Row } from "react-bootstrap";
-import { BrowserRouter, NavLink, Route, Switch } from "react-router-dom";
 
 import { Header } from "../Header";
 import "../../asset/css/components-css/Layout.css";
