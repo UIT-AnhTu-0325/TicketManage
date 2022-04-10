@@ -1,15 +1,11 @@
 import React from "react";
-import { Col, Container, Jumbotron, Row } from "react-bootstrap";
-
-import { Header } from "../Header";
+import { Col, Container, Row } from "react-bootstrap";
 import "../../asset/css/components-css/Layout.css";
 import { Sidebar } from "../sidebar/Sidebar";
-import Routes from "../../MainRoutes";
-import MainRoutes from "../../MainRoutes";
 import { TopNav } from "../topnav/TopNav";
 
 /**
- * @author
+ * @author TuDang
  * @function Layout
  **/
 
@@ -19,31 +15,10 @@ export const Layout = (props) => {
       {props.sidebar ? (
         <Container fluid>
           <Row>
-            {/* Side bar */}
             <Col md={2} className="slidebar">
-              {/* <ul>
-                <li>
-                  <NavLink exact to={`/`}>
-                    Home
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`/routes`}>Routes</NavLink>
-                </li>
-                <li>
-                  <NavLink to={`/enterprises`}>Enterprises</NavLink>
-                </li>
-
-                <li>
-                  <NavLink to={`/analytics`}>Analytics</NavLink>
-                </li>
-            
-
-              </ul> */}
               <Sidebar />
             </Col>
 
-            {/* Right content */}
             <Col
               className="right-content"
               md={10}
