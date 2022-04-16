@@ -128,8 +128,6 @@ export const ListTripTable = (props) => {
     if (item.isActive === "no") return "Đã hủy";
     var date = new Date(item.startDate);
     var curDate = new Date();
-    //console.log(date);
-    //console.log(curDate);
     return date > curDate ? "Sẵn sàng" : "Đã hoàn thành";
   };
 
@@ -137,8 +135,6 @@ export const ListTripTable = (props) => {
     if (item.isActive === "no") return true;
     var date = new Date(item.startDate);
     var curDate = new Date();
-    //console.log(date);
-    //console.log(curDate);
     return date > curDate ? false : true;
   };
 
@@ -235,7 +231,6 @@ export const ListTripTable = (props) => {
   };
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     props.searchKeyword(inputEl.current.value);
   };
 

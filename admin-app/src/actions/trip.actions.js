@@ -25,7 +25,6 @@ export const addTrip = (form) => {
 
 export const editTrip = (form) => {
   return async (dispatch) => {
-    //console.log(form);
     dispatch({ type: tripConstants.EDIT_TRIP_REQUEST });
     const res = await axios.put(`/trip/${form._id}`, {
       ...form,

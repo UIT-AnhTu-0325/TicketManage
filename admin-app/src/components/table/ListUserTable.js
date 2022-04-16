@@ -92,7 +92,6 @@ export const ListUserTable = (props) => {
   }
 
   const searchHandler = (searchTerm) => {
-    //console.log(searchTermR)
     setSearchTerm(searchTerm);
     if (searchTerm !== "") {
       const newAdmin = listUser.listAdmin.filter((admin) => {
@@ -101,21 +100,17 @@ export const ListUserTable = (props) => {
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.routes))
       setSearchResults(newAdmin);
-      //console.log(Object.values(newRoutes))
     } else {
       setSearchResults(listUser.listAdmin);
     }
   };
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     searchHandler(inputEl.current.value);
   };
 
   const searchHandlerC = (searchTermC) => {
-    //console.log(searchTermR)
     setSearchTermC(searchTermC);
     if (searchTermC !== "") {
       const newCustomer = listUser.listCustomer.filter((customer) => {
@@ -124,20 +119,16 @@ export const ListUserTable = (props) => {
           .toLowerCase()
           .includes(searchTermC.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.routes))
       setSearchResultsC(newCustomer);
-      //console.log(Object.values(newRoutes))
     } else {
       setSearchResultsC(listUser.listCustomer);
     }
   };
 
   const getSearchTermC = () => {
-    //console.log(inputEl.current.value)
     searchHandlerC(inputElC.current.value);
   };
   const searchHandlerS = (searchTermS) => {
-    //console.log(searchTermR)
     setSearchTermS(searchTermS);
     if (searchTermS !== "") {
       const newSteersmans = listUser.listSteersman.filter((steersman) => {
@@ -146,16 +137,13 @@ export const ListUserTable = (props) => {
           .toLowerCase()
           .includes(searchTermS.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.routes))
       setSearchResultsS(newSteersmans);
-      //console.log(Object.values(newRoutes))
     } else {
       setSearchResultsS(listUser.listSteersman);
     }
   };
 
   const getSearchTermS = () => {
-    //console.log(inputEl.current.value)
     searchHandlerS(inputElS.current.value);
   };
 

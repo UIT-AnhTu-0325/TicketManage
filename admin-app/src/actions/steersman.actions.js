@@ -18,7 +18,6 @@ export const addSteersman = (form) => {
         payload: { error: res.data.error },
       });
     }
-    //console.log(res);
   };
 };
 

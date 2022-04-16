@@ -24,8 +24,6 @@ export const ListTicketOfTrip = (props) => {
     if (trip.isActive === "no") return true;
     var date = new Date(trip.startDate);
     var curDate = new Date();
-    //console.log(date);
-    //console.log(curDate);
     return date > curDate ? false : true;
   };
 

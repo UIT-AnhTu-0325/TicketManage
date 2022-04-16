@@ -1,32 +1,4 @@
-import {
-  ANALYTICS_FAIL,
-  ANALYTICS_REQUEST,
-  ANALYTICS_SUCCESS,
-  ANALYTICS_CHART_REQUEST,
-  ANALYTICS_CHART_SUCCESS,
-  ANALYTICS_CHART_FAIL,
-  NEW_USER_REQUEST,
-  NEW_USER_SUCCESS,
-  NEW_USER_FAIL,
-  TICKET_DONUT_REQUEST,
-  TICKET_DONUT_SUCCESS,
-  TICKET_DONUT_FAIL,
-  CURRENT_DATE_REQUEST,
-  CURRENT_DATE_SUCCESS,
-  CURRENT_DATE_FAIL,
-  CHART_ENTERPRISE_REQUEST,
-  CHART_ENTERPRISE_SUCCESS,
-  CHART_ENTERPRISE_FAIL,
-  LIST_ENTERPRISE_REQUEST,
-  LIST_ENTERPRISE_SUCCESS,
-  LIST_ENTERPRISE_FAIL,
-  NAME_CHART_ENTERPRISE_REQUEST,
-  NAME_CHART_ENTERPRISE_SUCCESS,
-  NAME_CHART_ENTERPRISE_FAIL,
-  LAST_ORDER_REQUEST,
-  LAST_ORDER_SUCCESS,
-  LAST_ORDER_FAIL,
-} from "../constants/analyticsConstants";
+import { analyticsConstants } from "../actions/constants";
 
 const initState = {
   currentDateData: null,
@@ -35,16 +7,15 @@ const initState = {
 };
 
 export const lastOrderReducer = (state = {}, action) => {
-  //console.log(action)
   switch (action.type) {
-    case LAST_ORDER_REQUEST:
+    case analyticsConstants.LAST_ORDER_REQUEST:
       return { loading: true };
-    case LAST_ORDER_SUCCESS:
+    case analyticsConstants.LAST_ORDER_SUCCESS:
       return {
         listOrder: action.payload,
         loading: false,
       };
-    case LAST_ORDER_FAIL:
+    case analyticsConstants.LAST_ORDER_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -52,69 +23,67 @@ export const lastOrderReducer = (state = {}, action) => {
 };
 
 export const analyticsReducer = (state = {}, action) => {
-    //console.log(action)
-    switch (action.type) {
-        case ANALYTICS_REQUEST:
-            return { loading: true };
-        case ANALYTICS_SUCCESS:
-            return {
-                totalTicket: action.payload.totalTicket,
-                totalSale: action.payload.totalSale,
-                totalCanceledTicket: action.payload.totalCanceledTicket,
-                totalNewUser: action.payload.totalNewUser,
-                loading: false,
-            };
-        case ANALYTICS_FAIL:
-            return { loading: false, error: action.payload };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case analyticsConstants.ANALYTICS_REQUEST:
+      return { loading: true };
+    case analyticsConstants.ANALYTICS_SUCCESS:
+      return {
+        totalTicket: action.payload.totalTicket,
+        totalSale: action.payload.totalSale,
+        totalCanceledTicket: action.payload.totalCanceledTicket,
+        totalNewUser: action.payload.totalNewUser,
+        loading: false,
+      };
+    case analyticsConstants.ANALYTICS_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const analyticsChartReducer = (state = {}, action) => {
-    //console.log(action)
-    switch (action.type) {
-        case ANALYTICS_CHART_REQUEST:
-            return { loading: true };
-        case ANALYTICS_CHART_SUCCESS:
-            return {
-                listTicket: action.payload.listTicket,
-                listSale: action.payload.listSale,
-                loading: false,
-            };
-        case ANALYTICS_CHART_FAIL:
-            return { loading: false, error: action.payload };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case analyticsConstants.ANALYTICS_CHART_REQUEST:
+      return { loading: true };
+    case analyticsConstants.ANALYTICS_CHART_SUCCESS:
+      return {
+        listTicket: action.payload.listTicket,
+        listSale: action.payload.listSale,
+        loading: false,
+      };
+    case analyticsConstants.ANALYTICS_CHART_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const newUserReducer = (state = {}, action) => {
-    switch (action.type) {
-        case NEW_USER_REQUEST:
-            return { loading: true };
-        case NEW_USER_SUCCESS:
-            return {
-                loading: false,
-                listNewUser: action.payload,
-            };
-        case NEW_USER_FAIL:
-            return { loading: false, error: action.payload };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case analyticsConstants.NEW_USER_REQUEST:
+      return { loading: true };
+    case analyticsConstants.NEW_USER_SUCCESS:
+      return {
+        loading: false,
+        listNewUser: action.payload,
+      };
+    case analyticsConstants.NEW_USER_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const ticketDonutReducer = (state = {}, action) => {
   switch (action.type) {
-    case TICKET_DONUT_REQUEST:
+    case analyticsConstants.TICKET_DONUT_REQUEST:
       return { loading: true };
-    case TICKET_DONUT_SUCCESS:
+    case analyticsConstants.TICKET_DONUT_SUCCESS:
       return {
         donutData: action.payload,
         loading: false,
       };
-    case TICKET_DONUT_FAIL:
+    case analyticsConstants.TICKET_DONUT_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -123,20 +92,20 @@ export const ticketDonutReducer = (state = {}, action) => {
 
 export const currentDateReducer = (state = initState, action) => {
   switch (action.type) {
-    case CURRENT_DATE_REQUEST:
+    case analyticsConstants.CURRENT_DATE_REQUEST:
       state = {
         ...state,
         loading: true,
       };
       break;
-    case CURRENT_DATE_SUCCESS:
+    case analyticsConstants.CURRENT_DATE_SUCCESS:
       state = {
         ...state,
         currentDateData: action.payload,
         loading: false,
       };
       break;
-    case CURRENT_DATE_FAIL:
+    case analyticsConstants.CURRENT_DATE_FAILURE:
       state = {
         ...state,
         loading: false,
@@ -149,17 +118,16 @@ export const currentDateReducer = (state = initState, action) => {
 };
 
 export const chartByEnterprisesReducer = (state = {}, action) => {
-  //console.log(action)
   switch (action.type) {
-    case CHART_ENTERPRISE_REQUEST:
+    case analyticsConstants.CHART_ENTERPRISE_REQUEST:
       return { loading: true };
-    case CHART_ENTERPRISE_SUCCESS:
+    case analyticsConstants.CHART_ENTERPRISE_SUCCESS:
       return {
         booking: action.payload.booking,
         sale: action.payload.sale,
         loading: false,
       };
-    case CHART_ENTERPRISE_FAIL:
+    case analyticsConstants.CHART_ENTERPRISE_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -168,14 +136,14 @@ export const chartByEnterprisesReducer = (state = {}, action) => {
 
 export const listByEnterprisesReducer = (state = {}, action) => {
   switch (action.type) {
-    case LIST_ENTERPRISE_REQUEST:
+    case analyticsConstants.LIST_ENTERPRISE_REQUEST:
       return { loading: true };
-    case LIST_ENTERPRISE_SUCCESS:
+    case analyticsConstants.LIST_ENTERPRISE_SUCCESS:
       return {
         listEnterprises: action.payload,
         loading: false,
       };
-    case LIST_ENTERPRISE_FAIL:
+    case analyticsConstants.LIST_ENTERPRISE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -184,14 +152,14 @@ export const listByEnterprisesReducer = (state = {}, action) => {
 
 export const nameChartByEnterprisesReducer = (state = {}, action) => {
   switch (action.type) {
-    case NAME_CHART_ENTERPRISE_REQUEST:
+    case analyticsConstants.NAME_CHART_ENTERPRISE_REQUEST:
       return { loading: true };
-    case NAME_CHART_ENTERPRISE_SUCCESS:
+    case analyticsConstants.NAME_CHART_ENTERPRISE_SUCCESS:
       return {
         listName: action.payload,
         loading: false,
       };
-    case NAME_CHART_ENTERPRISE_FAIL:
+    case analyticsConstants.NAME_CHART_ENTERPRISE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

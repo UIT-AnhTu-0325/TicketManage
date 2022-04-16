@@ -9,26 +9,25 @@ import { LeftPannel } from "../ModalUpdateTicket/LeftPannel";
 import { update } from "../../../actions/user_ticket";
 import axios from "axios";
 
-
 /**
  * @author
  * @function ModalUpdateTicket
  **/
 
 export const ModalUpdateTicket = (props) => {
-  const [locations, setLocations] = useState([{
-    city: "",
-    name: ""
-  }])
+  const [locations, setLocations] = useState([
+    {
+      city: "",
+      name: "",
+    },
+  ]);
   const getOn = locations.filter(
     (location) => location.city === props.info.route.startLocation
   );
-  //console.log(locations);
   const getOff = locations.filter(
     (location) => location.city === props.info.route.endLocation
   );
   const dispatch = useDispatch();
-  //console.log(props.info);
   const [on, setOn] = useState(props.info.book.getOn);
   const [off, setOff] = useState(props.info.book.getOff);
 
@@ -37,7 +36,7 @@ export const ModalUpdateTicket = (props) => {
   //front end relate logic
   const [processHandled, setProcessHandled] = useState(1);
 
-  //  only for front-end design
+  //only for front-end design
   const [prevStatus, setPreStatus] = useState(1); // 1 is default with slide to right
   const [isOpen, setIsOpen] = useState(1); //1 is default with first open， 2 is opened -> for design only
   const numberProcess = 4;
@@ -86,7 +85,6 @@ export const ModalUpdateTicket = (props) => {
   });
   const [itemChoosing, setItemChoosing] = useState(props.info.book.seatNumber);
   const [itemAvailable, setItemAvailable] = useState(initialSeat);
-  //console.log(itemChoosing)
 
   const clickChoosing = (id) => {
     setItemChoosing((prev) => {
@@ -109,9 +107,12 @@ export const ModalUpdateTicket = (props) => {
     setOff(e.target.value);
   };
   useEffect(() => {
-    axios.get(`http://localhost:2000/api/location/fetch`)
-      .then(function (response) { return response.data })
-      .then(function (data) {
+    axios
+      .get(`http://localhost:2000/api/location/fetch`)
+      .then(function(response) {
+        return response.data;
+      })
+      .then(function(data) {
         const items = data;
         setLocations(items);
       });
@@ -318,39 +319,41 @@ export const ModalUpdateTicket = (props) => {
                     </div>
                   </div>
                 </div>
-                {props.updatable && (<button
-                  className="custom-btn"
-                  onClick={() => {
-                    if (window.confirm("Bạn muốn lưu thay đổi ?")) {
-                      props.info.ticket.quantity[
-                        props.info.book.seatNumber - 1
-                      ] = false;
-                      props.info.ticket.quantity[itemChoosing - 1] = true;
-                      dispatch(
-                        update(
-                          {
-                            idUser: props.user._id,
-                            idTicket: props.info.ticket._id,
-                            getOn: on,
-                            getOff: off,
-                            seatNumber: itemChoosing,
-                          },
-                          {
-                            idTrip: props.info.trip._id,
-                            quantity: props.info.ticket.quantity,
-                            price: props.info.ticket.price,
-                            _id: props.info.ticket._id,
-                          },
-                          props.info.book._id
-                        )
-                      );
-                      alert("Cập nhật thành công");
-                      window.location.reload();
-                    }
-                  }}
-                >
-                  Lưu thay đổi
-                </button>)}
+                {props.updatable && (
+                  <button
+                    className="custom-btn"
+                    onClick={() => {
+                      if (window.confirm("Bạn muốn lưu thay đổi ?")) {
+                        props.info.ticket.quantity[
+                          props.info.book.seatNumber - 1
+                        ] = false;
+                        props.info.ticket.quantity[itemChoosing - 1] = true;
+                        dispatch(
+                          update(
+                            {
+                              idUser: props.user._id,
+                              idTicket: props.info.ticket._id,
+                              getOn: on,
+                              getOff: off,
+                              seatNumber: itemChoosing,
+                            },
+                            {
+                              idTrip: props.info.trip._id,
+                              quantity: props.info.ticket.quantity,
+                              price: props.info.ticket.price,
+                              _id: props.info.ticket._id,
+                            },
+                            props.info.book._id
+                          )
+                        );
+                        alert("Cập nhật thành công");
+                        window.location.reload();
+                      }
+                    }}
+                  >
+                    Lưu thay đổi
+                  </button>
+                )}
               </div>
             </div>
           </div>

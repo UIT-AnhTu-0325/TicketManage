@@ -6,7 +6,6 @@ export const getAllRoutes = () => {
   return async (dispatch) => {
     dispatch({ type: routerConstants.GET_ALL_ROUTES_REQUEST });
     const res = await axios.get(`route`);
-    //console.log(res);
     if (res.status === 200) {
       const routeList = res.data;
       dispatch({
@@ -39,7 +38,6 @@ export const addRoute = (form) => {
         payload: { error: res.data.error },
       });
     }
-    //console.log(res);
   };
 };
 

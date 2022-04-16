@@ -163,12 +163,10 @@ export const ListEnterpriseTable = (props) => {
         );
       }
     }
-    //console.log(myEnterprises);
     return myEnterprises;
   };
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     props.searchKeyword(inputEl.current.value);
   };
 

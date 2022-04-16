@@ -41,7 +41,6 @@ export const RouteDetails = (props) => {
 
   const loadRouteDetails = () => {
     const { routeId, enterpriseId } = props.match.params;
-    //console.log(props);
 
     const payload = {
       params: {
@@ -59,21 +58,19 @@ export const RouteDetails = (props) => {
   }
 
   const searchHandler = (searchTerm) => {
-    //console.log(searchTerm)
-    setSearchTerm(searchTerm)
+    setSearchTerm(searchTerm);
     if (searchTerm !== "") {
       const newTrips = state_routeDetails.trips.filter((trip) => {
         return Object.values(trip)
           .join(" ")
           .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      })
-      setSearchResults(newTrips)
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newTrips);
+    } else {
+      setSearchResults(state_routeDetails.trips);
     }
-    else {
-      setSearchResults(state_routeDetails.trips)
-    }
-  }
+  };
 
   return (
     <Layout sidebar>
@@ -99,7 +96,9 @@ export const RouteDetails = (props) => {
       </div>
 
       <ListTripTable
-        listTrip={searchTerm.length < 1 ? state_routeDetails.trips : searchResults}
+        listTrip={
+          searchTerm.length < 1 ? state_routeDetails.trips : searchResults
+        }
         listVehicle={state_vehicle.vehicles}
         listTicket={state_ticketR.tickets}
         idRoute={state_routeDetails.route._id}

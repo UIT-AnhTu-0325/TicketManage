@@ -39,8 +39,6 @@ export const DashBoard = (props) => {
   const listLastOrder = useSelector((state) => state.listLastOrder);
   const auth = useSelector((state) => state.auth);
 
-  console.log(listNameEnterprise.listName);
-
   const chartOptions = {
     series: [
       {

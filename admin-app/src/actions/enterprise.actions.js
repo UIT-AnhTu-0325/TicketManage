@@ -6,7 +6,6 @@ export const getAllEnterprises = () => {
   return async (dispatch) => {
     dispatch({ type: enterpriseConstants.GET_ALL_ENTERPRISES_REQUEST });
     const res = await axios.get(`enterprise`);
-    //console.log(res);
     if (res.status === 200) {
       const { enterpriseList } = res.data;
       dispatch({
@@ -39,7 +38,6 @@ export const addEnterprise = (form) => {
         payload: { error: res.data.error },
       });
     }
-    //console.log(res);
   };
 };
 

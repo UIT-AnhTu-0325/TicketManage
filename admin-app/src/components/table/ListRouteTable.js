@@ -22,7 +22,6 @@ export const ListRouteTable = (props) => {
     let list = [];
     for (let i = 0; i < prop_listEnterprise.enterprises.length; i++) {
       if (prop_listEnterprise.enterprises[i].isActive === "yes") {
-        //console.log(prop_listEnterprise[i].isActive);
         list.push(prop_listEnterprise.enterprises[i]);
       }
     }
@@ -211,7 +210,6 @@ export const ListRouteTable = (props) => {
   // }
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     props.searchKeyword(inputEl.current.value);
   };
 

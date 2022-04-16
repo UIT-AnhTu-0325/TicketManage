@@ -19,7 +19,6 @@ import "./offlineticket.css";
 export const OfflineTicket = (props) => {
   const state_trip = useSelector((state) => state.trip.tripDetails.trip);
   const state_ticket = useSelector((state) => state.trip.tripDetails.tickets);
-  //console.log(props.match.params);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -90,8 +89,6 @@ export const OfflineTicket = (props) => {
   if (!state_ticket) {
     return <></>;
   }
-
-  //console.log(getLocationByCityName(trip.idRoute.endLocation));
 
   const genSeatSelect = () => {
     let listSeat = [];

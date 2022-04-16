@@ -26,23 +26,19 @@ export const Routes = (props) => {
   const [searchResultsR, setSearchResultsR] = useState([]);
 
   const searchHandlerR = (searchTermR) => {
-    //console.log(searchTermR)
-    setSearchTermR(searchTermR)
+    setSearchTermR(searchTermR);
     if (searchTermR !== "") {
       const newRoutes = state_route.routes.filter((route) => {
         return Object.values(route)
           .join(" ")
           .toLowerCase()
-          .includes(searchTermR.toLowerCase())
-      })
-      //console.log(Object.values(enterpriseDetails.routes))
-      setSearchResultsR(newRoutes)
-      //console.log(Object.values(newRoutes))
+          .includes(searchTermR.toLowerCase());
+      });
+      setSearchResultsR(newRoutes);
+    } else {
+      setSearchResultsR(state_route.routes);
     }
-    else {
-      setSearchResultsR(state_route.routes)
-    }
-  }
+  };
 
   if (
     Object.keys(state_route).length === 0 ||

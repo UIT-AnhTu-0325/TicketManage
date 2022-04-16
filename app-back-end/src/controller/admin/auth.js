@@ -9,6 +9,7 @@ exports.signup = async (req, res) => {
         message: "Admin email already registered hihi",
       });
   });
+
   User.findOne({ username: req.body.username }).exec((error, user) => {
     if (user)
       return res.status(400).json({
@@ -18,7 +19,9 @@ exports.signup = async (req, res) => {
 
   const { firstName, lastName, email, password, username, contactNumber } =
     req.body;
+
   const hash_password = await bcrypt.hash(password, 10);
+
   const _user = new User({
     firstName,
     lastName,
@@ -45,10 +48,12 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   let myUser;
+
   User.findOne({ email: req.body.email }).exec((error, user) => {
     if (error) return res.status(400).json({ error });
     myUser = user;
   });
+
   myUser = await User.findOne({ email: req.body.email });
   if (myUser) {
     const match = await bcrypt.compare(req.body.password, myUser.hash_password);

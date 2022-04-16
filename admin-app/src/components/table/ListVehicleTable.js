@@ -25,7 +25,6 @@ export const ListVehicleTable = (props) => {
     let listVehicle = [];
     for (let i = 0; i < prop_listVehicle.length; i++) {
       if (prop_listVehicle[i].isActive === "yes") {
-        //console.log(prop_listVehicle[i].isActive);
         listVehicle.push(prop_listVehicle[i]);
       }
     }
@@ -35,7 +34,6 @@ export const ListVehicleTable = (props) => {
     let list = [];
     for (let i = 0; i < prop_listEnterprise.enterprises.length; i++) {
       if (prop_listEnterprise.enterprises[i].isActive === "yes") {
-        //console.log(prop_listEnterprise[i].isActive);
         list.push(prop_listEnterprise.enterprises[i]);
       }
     }
@@ -166,7 +164,6 @@ export const ListVehicleTable = (props) => {
   };
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     props.searchKeyword(inputEl.current.value);
   };
 

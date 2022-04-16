@@ -34,17 +34,16 @@ export const Rules = () => {
   useEffect(() => {
     axios
       .get(`http://localhost:2000/api/rule`)
-      .then(function (response) {
+      .then(function(response) {
         return response.data;
       })
-      .then(function (data) {
+      .then(function(data) {
         const items = data;
         setRules({
           book: items[0].book,
           cancel: items[0].cancel,
           max: items[0].max,
         });
-        console.log(items[0]);
       });
   }, []);
   return (

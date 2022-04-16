@@ -22,7 +22,6 @@ export const ListSteersmanTable = (props) => {
     let listVehicle = [];
     for (let i = 0; i < prop_listVehicle.length; i++) {
       if (prop_listVehicle[i].isActive === "yes") {
-        //console.log(prop_listVehicle[i].isActive);
         listVehicle.push(prop_listVehicle[i]);
       }
     }
@@ -94,7 +93,6 @@ export const ListSteersmanTable = (props) => {
       createUsername();
     }
     const form = steersman;
-    //console.log(form);
     if (modalFlag === "Add") {
       delete form._id;
       dispatch(addSteersman(form));
@@ -117,7 +115,6 @@ export const ListSteersmanTable = (props) => {
       ...steersman,
       username: steersman.firstName + steersman.lastName + "123",
     });
-    //console.log(steersman.username);
   };
 
   const positions = [
@@ -183,7 +180,6 @@ export const ListSteersmanTable = (props) => {
   };
 
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value)
     props.searchKeyword(inputEl.current.value);
   };
 

@@ -4,7 +4,6 @@ import { ticketConstants } from "./constants";
 export const addOfflineTicket = (form, ticket) => {
   return async (dispatch) => {
     dispatch({ type: ticketConstants.ADD_NEW_OFFLINETICKET_REQUEST });
-    //console.log(ticket);
     const res = await axios.post(`offline_phone_ticket/create`, {
       ...form,
     });
@@ -30,7 +29,6 @@ export const getAllOfflineTicket = () => {
       const res = await axios.get(`offline_phone_ticket`);
       if (res.status === 200) {
         const offlineTicketList = res.data;
-        console.log(res.data);
         dispatch({
           type: ticketConstants.GET_ALL_OFFLINETICKETS_SUCCESS,
           payload: { offlineTickets: offlineTicketList },

@@ -26,7 +26,6 @@ export const UserDetails = (props) => {
     dispatch(getUserDetailById(payload));
   };
   const state_userDetail = useSelector((state) => state.user.userDetail);
-  console.log(state_userDetail);
   return (
     <>
       {state_userDetail.role === "admin" ? (

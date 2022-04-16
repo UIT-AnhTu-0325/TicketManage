@@ -16,7 +16,6 @@ export const ReportEnterpriseTable = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const form = { month: p_month, year: p_year };
-    console.log("get get");
     dispatch(getReport(form));
   }, [p_month, p_year]);
   const state_report = useSelector((state) => state.ticketR.report);
@@ -30,7 +29,6 @@ export const ReportEnterpriseTable = (props) => {
     let count = 1;
 
     for (const d of state_report) {
-      //console.log(d);
       list.push(
         <tr>
           <td>{count}</td>

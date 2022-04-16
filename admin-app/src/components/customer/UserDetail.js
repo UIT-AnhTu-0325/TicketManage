@@ -34,7 +34,6 @@ export const UserDetail = (props) => {
     document.body.style.position = "static";
   }
   const userId = window.location.href.split("/")[4];
-  //console.log(userId);
   const [customer, setCustomer] = useState("");
   const dispatch = useDispatch();
   const books = useSelector((state) => state.user_ticket);
@@ -56,13 +55,12 @@ export const UserDetail = (props) => {
   useEffect(() => {
     axios
       .get(`http://localhost:2000/api/user/${userId}/info`)
-      .then(function (response) {
+      .then(function(response) {
         return response.data;
       })
-      .then(function (data) {
+      .then(function(data) {
         const items = data;
         setCustomer(items);
-        //console.log(items);
       });
     //loadUserDetail();
     dispatch(getAll());

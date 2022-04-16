@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Layout } from "../../components/Layout";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { Input } from "../../components/UI/Input";
+import { Container, Row, Col } from "react-bootstrap";
 import { Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../actions";

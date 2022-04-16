@@ -2,8 +2,6 @@ import axios from "../helpers/axios";
 import { userConstants } from "./constants";
 
 export const signup = (user) => {
-  //console.log(user);
-
   return async (dispatch) => {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST });
     const res = await axios.post(`/admin/signup`, {
@@ -28,7 +26,6 @@ export const getAllUser = () => {
   return async (dispatch) => {
     dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
     const res = await axios.get(`user`);
-    //console.log(res);
     if (res.status === 200) {
       const userList = res.data;
       dispatch({

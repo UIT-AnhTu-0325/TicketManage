@@ -29,7 +29,6 @@ export const EnterpriseDetails = (props) => {
 
   const loadEnterpriseDetails = () => {
     const { enterpriseId } = props.match.params;
-    //console.log(props);
     const payload = {
       params: {
         enterpriseId,
@@ -58,7 +57,6 @@ export const EnterpriseDetails = (props) => {
   }
 
   const searchHandlerR = (searchTermR) => {
-    //console.log(searchTermR)
     setSearchTermR(searchTermR);
     if (searchTermR !== "") {
       const newRoutes = enterpriseDetails.routes.filter((route) => {
@@ -67,16 +65,13 @@ export const EnterpriseDetails = (props) => {
           .toLowerCase()
           .includes(searchTermR.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.routes))
       setSearchResultsR(newRoutes);
-      //console.log(Object.values(newRoutes))
     } else {
       setSearchResultsR(enterpriseDetails.routes);
     }
   };
 
   const searchHandlerV = (searchTermV) => {
-    //console.log(searchTermV)
     setSearchTermV(searchTermV);
     if (searchTermV !== "") {
       const newVehicles = enterpriseDetails.vehicles.filter((vehicle) => {
@@ -85,15 +80,12 @@ export const EnterpriseDetails = (props) => {
           .toLowerCase()
           .includes(searchTermV.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.vehicles))
       setSearchResultsV(newVehicles);
-      //console.log(Object.values(newVehicles))
     } else {
       setSearchResultsV(enterpriseDetails.vehicles);
     }
   };
   const searchHandlerS = (searchTermS) => {
-    //console.log(searchTermS)
     setSearchTermS(searchTermS);
     if (searchTermS !== "") {
       const newSteersmans = enterpriseDetails.steersmans.filter((steersman) => {
@@ -102,9 +94,7 @@ export const EnterpriseDetails = (props) => {
           .toLowerCase()
           .includes(searchTermS.toLowerCase());
       });
-      //console.log(Object.values(enterpriseDetails.steersmans))
       setSearchResultsS(newSteersmans);
-      //console.log(Object.values(newSteersmans))
     } else {
       setSearchResultsS(enterpriseDetails.steersmans);
     }
@@ -124,7 +114,6 @@ export const EnterpriseDetails = (props) => {
       </div>
       {/* <Button
         onClick={() => {
-          console.log(enterpriseDetail.routes);
         }}
       >
         Clickme

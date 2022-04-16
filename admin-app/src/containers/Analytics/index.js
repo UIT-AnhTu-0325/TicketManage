@@ -40,8 +40,6 @@ export const Analytics = (props) => {
     date.setDate(date.getDate() + 1);
   }
 
-  //console.log(days);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

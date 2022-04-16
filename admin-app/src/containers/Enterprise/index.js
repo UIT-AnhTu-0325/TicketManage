@@ -21,26 +21,28 @@ export const Enterprise = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   const searchHandler = (searchTerm) => {
-    //console.log(searchTerm)
-    setSearchTerm(searchTerm)
+    setSearchTerm(searchTerm);
     if (searchTerm !== "") {
-      const newEnterprises = state_enterprise.enterprises.filter((enterprise) => {
-        return Object.values(enterprise)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      })
-      setSearchResults(newEnterprises)
+      const newEnterprises = state_enterprise.enterprises.filter(
+        (enterprise) => {
+          return Object.values(enterprise)
+            .join(" ")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        }
+      );
+      setSearchResults(newEnterprises);
+    } else {
+      setSearchResults(state_enterprise.enterprises);
     }
-    else {
-      setSearchResults(state_enterprise.enterprises)
-    }
-  }
+  };
 
   return (
     <Layout sidebar>
       <ListEnterpriseTable
-        listEnterprise={searchTerm.length < 1 ? state_enterprise.enterprises : searchResults}
+        listEnterprise={
+          searchTerm.length < 1 ? state_enterprise.enterprises : searchResults
+        }
         listCity={state_city.cities}
         term={searchTerm}
         searchKeyword={searchHandler}
