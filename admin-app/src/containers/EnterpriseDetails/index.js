@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllCities,
-  getAllEnterprises,
-  getEnterpriseDetailsById,
-} from "../../actions";
 import { Layout } from "../../components/Layout";
 import { ListRouteTable } from "../../components/table/ListRouteTable";
 import { ListSteersmanTable } from "../../components/table/ListSteersmanTable";
 import { ListVehicleTable } from "../../components/table/ListVehicleTable";
-import { Table } from "../../components/table/Table";
 
 import busImg from "../../asset/img/bus.png";
+import CityAction from "../../actions/city.actions";
+import EnterpriseAction from "../../actions/enterprise.actions";
 
 /**
  * @author
@@ -23,8 +18,8 @@ export const EnterpriseDetails = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     loadEnterpriseDetails();
-    dispatch(getAllEnterprises());
-    dispatch(getAllCities());
+    dispatch(EnterpriseAction.getAllEnterprises());
+    dispatch(CityAction.getAllCities());
   }, []);
 
   const loadEnterpriseDetails = () => {
@@ -34,7 +29,7 @@ export const EnterpriseDetails = (props) => {
         enterpriseId,
       },
     };
-    dispatch(getEnterpriseDetailsById(payload));
+    dispatch(EnterpriseAction.getEnterpriseDetailsById(payload));
   };
 
   const state_enterprise = useSelector((state) => state.enterprise);

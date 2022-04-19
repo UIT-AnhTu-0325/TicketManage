@@ -1,5 +1,5 @@
 import React from "react";
-import { DropDown } from "../dropdown/DropDown";
+import { DropDown } from "../dropdown";
 import "./topnav.css";
 import Link from "react-router-dom";
 

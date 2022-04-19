@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { signout } from "../../actions";
+import AuthAction from "../../actions/auth.actions";
 import "./dropdown.css";
 
 /**
@@ -22,7 +22,7 @@ export const DropDown = (props) => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(signout());
+    dispatch(AuthAction.signout());
   };
   const renderNotifyItem = (item, ind) => {
     return (

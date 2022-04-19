@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import { getAllCities } from "../../actions";
+import CityAction from "../../actions/city.actions";
 import { addOfflineTicket } from "../../actions/offlineTicket.actions";
 import { getTripDetailsById } from "../../actions/trip.actions";
 import { Layout } from "../../components/Layout";
@@ -22,7 +23,7 @@ export const OfflineTicket = (props) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllCities());
+    dispatch(CityAction.getAllCities());
     loadTripDetails();
   }, []);
 

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "../../components/Layout";
-import { Container, Row, Col } from "react-bootstrap";
-import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router";
-import { notification } from "antd";
 import "antd/dist/antd.css";
 import rightImg from "../../asset/img/report.png";
-
-// css
 import "./signin.css";
+import AuthAction from "../../actions/auth.actions";
 /**
  * @author
  * @function Signin
@@ -30,7 +25,7 @@ export const Signin = (props) => {
       email,
       password,
     };
-    dispatch(login(user));
+    dispatch(AuthAction.login(user));
   };
 
   if (auth.authenticate) {

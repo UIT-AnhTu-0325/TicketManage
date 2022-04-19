@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import "./rule.css";
 import { useDispatch } from "react-redux";
-import { signout } from "../actions";
 import axios from "axios";
 import avatarImg from "../asset/img/user.jpg";
 import { ReportEnterpriseTable } from "../components/table/ReportEnterpriseTable";
+import AuthAction from "../actions/auth.actions";
 export const Rules = () => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(signout());
+    dispatch(AuthAction.signout());
   };
   const [rules, setRules] = useState({
     book: 0,

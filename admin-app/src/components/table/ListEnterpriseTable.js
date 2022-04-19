@@ -1,19 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import React, { useEffect, useState, useRef } from "react";
-import {
-  addEnterprise,
-  deleteEnterprise,
-  editEnterprise,
-  getAllCities,
-  getAllEnterprises,
-} from "../../actions";
 import { Link } from "react-router-dom";
-import { Button, Modal, ModalTitle } from "react-bootstrap";
 import { Table } from "./Table";
-import { Input } from "../UI/Input";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
+import EnterpriseAction from "../../actions/enterprise.actions";
 
 /**
  * @author
@@ -69,7 +61,7 @@ export const ListEnterpriseTable = (props) => {
     if (modalFlag === "Add") {
       delete form._id;
 
-      dispatch(addEnterprise(form));
+      dispatch(EnterpriseAction.addEnterprise(form));
 
       swal({
         title: "Thêm thành công",
@@ -78,7 +70,7 @@ export const ListEnterpriseTable = (props) => {
         button: "OK",
       });
     } else {
-      dispatch(editEnterprise(form));
+      dispatch(EnterpriseAction.editEnterprise(form));
       swal({
         title: "Sửa thành công",
         text: "Bạn đã sửa nhà xe thành công",
@@ -114,7 +106,7 @@ export const ListEnterpriseTable = (props) => {
           icon: "success",
         });
         form.isActive = "no";
-        dispatch(editEnterprise(form));
+        dispatch(EnterpriseAction.editEnterprise(form));
       } else {
         swal("Nhà xe vẫn chưa bị xóa!");
       }
