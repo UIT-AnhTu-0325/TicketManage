@@ -5,16 +5,11 @@ import { Dropdown, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentMonth,
-  getDateByMonthYear,
-  getNewUser,
-  getTicketCanceled,
-} from "../../actions/analyticsActions";
 import "../../asset/css/containers-css/Analytics.css";
 import Chart from "react-apexcharts";
 import { Doughnut } from "react-chartjs-2";
 import { ReportEnterpriseTable } from "../../components/table/ReportEnterpriseTable";
+import AnalyticsAction from "../../actions/analytics.actions";
 
 /**
  * @author
@@ -43,18 +38,18 @@ export const Analytics = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentMonth({ month, year }));
-    dispatch(getDateByMonthYear({ month, year }));
-    dispatch(getNewUser({ month, year }));
-    dispatch(getTicketCanceled({ month, year }));
+    dispatch(AnalyticsAction.getCurrentMonth({ month, year }));
+    dispatch(AnalyticsAction.getDateByMonthYear({ month, year }));
+    dispatch(AnalyticsAction.getNewUser({ month, year }));
+    dispatch(AnalyticsAction.getTicketCanceled({ month, year }));
   }, [month, year]);
 
   const filterShow = (e) => {
     e.preventDefault();
-    dispatch(getDateByMonthYear({ month, year }));
-    dispatch(getCurrentMonth({ month, year }));
-    dispatch(getNewUser({ month, year }));
-    dispatch(getTicketCanceled({ month, year }));
+    dispatch(AnalyticsAction.getDateByMonthYear({ month, year }));
+    dispatch(AnalyticsAction.getCurrentMonth({ month, year }));
+    dispatch(AnalyticsAction.getNewUser({ month, year }));
+    dispatch(AnalyticsAction.getTicketCanceled({ month, year }));
   };
 
   const analytics = useSelector((state) => state.analytics);

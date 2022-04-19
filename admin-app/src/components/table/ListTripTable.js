@@ -254,7 +254,7 @@ export const ListTripTable = (props) => {
                   <input
                     ref={inputEl}
                     type="number"
-                    placeholder="Search Here"
+                    placeholder="Tìm kiếm"
                     className="prompt"
                     value={term}
                     onChange={getSearchTerm}

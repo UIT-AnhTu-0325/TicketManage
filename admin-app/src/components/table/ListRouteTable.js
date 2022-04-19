@@ -389,7 +389,7 @@ export const ListRouteTable = (props) => {
                 <input
                   ref={inputEl}
                   type="text"
-                  placeholder="Search Here"
+                  placeholder="Tìm kiếm"
                   className="prompt"
                   value={term}
                   onChange={getSearchTerm}

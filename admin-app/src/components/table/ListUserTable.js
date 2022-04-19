@@ -165,7 +165,7 @@ export const ListUserTable = (props) => {
               <input
                 ref={inputEl}
                 type="text"
-                placeholder="Search Here"
+                placeholder="Tìm kiếm"
                 className="prompt"
                 value={searchTerm}
                 onChange={getSearchTerm}
@@ -205,7 +205,7 @@ export const ListUserTable = (props) => {
               <input
                 ref={inputElC}
                 type="text"
-                placeholder="Search Here"
+                placeholder="Tìm kiếm"
                 className="prompt"
                 value={searchTermC}
                 onChange={getSearchTermC}
@@ -249,7 +249,7 @@ export const ListUserTable = (props) => {
               <input
                 ref={inputElS}
                 type="text"
-                placeholder="Search Here"
+                placeholder="Tìm kiếm"
                 className="prompt"
                 value={searchTermS}
                 onChange={getSearchTermS}

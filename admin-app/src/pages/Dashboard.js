@@ -2,13 +2,6 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import statusCards from "../asset/JsonData/status-card-data.json";
 import { StatusCard } from "../components/statusCard/StatusCard";
-import {
-  getAllName,
-  getCurrentByEnterprises,
-  getCurrentByEnterprisesList,
-  getCurrentDate,
-  getLastOrder,
-} from "../actions/analyticsActions";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import { Table } from "../components/table/Table";
 import { Navigate } from "react-router-dom";
+import AnalyticsAction from "../actions/analytics.actions";
 /**
  * @author
  * @function DashBoard
@@ -25,11 +19,11 @@ export const DashBoard = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentDate());
-    dispatch(getCurrentByEnterprises());
-    dispatch(getCurrentByEnterprisesList());
-    dispatch(getAllName());
-    dispatch(getLastOrder());
+    dispatch(AnalyticsAction.getCurrentDate());
+    dispatch(AnalyticsAction.getCurrentByEnterprises());
+    dispatch(AnalyticsAction.getCurrentByEnterprisesList());
+    dispatch(AnalyticsAction.getAllName());
+    dispatch(AnalyticsAction.getLastOrder());
   }, []);
 
   const currentDate = useSelector((state) => state.currentDate);
@@ -141,6 +135,8 @@ export const DashBoard = (props) => {
   if (!localStorage.getItem("token")) {
     return <Navigate to={`/signin`} />;
   }
+
+  console.log(currentDate);
 
   return (
     <div>

@@ -1,7 +1,19 @@
-import axios from 'axios';
+import axiosIntance from "../helpers/axios";
 
-const url = 'http://localhost:2000/api/user_ticket'
+const baseUrl = `user_ticket`;
 
-export const createNew = (bookTicket) => axios.post(url, bookTicket);
-export const getAll = () => axios.get(url);
-export const update = (bookTicket, id) => axios.put(`${url}/${id}`, bookTicket);
+const UserTicketApi = {
+  createNew: async (bookTicket) => {
+    axiosIntance.post(baseUrl, bookTicket);
+  },
+
+  getAll: async () => {
+    axiosIntance.get(baseUrl);
+  },
+
+  update: async (bookTicket, id) => {
+    axiosIntance.put(`${baseUrl}/${id}`, bookTicket);
+  },
+};
+
+export default UserTicketApi;
