@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllRoutes,
-  getRouteDetailssById,
-  getRouteDetailssByIdInEnterprise,
-} from "../../actions";
-import { addTrip } from "../../actions/trip.actions";
 import { getAllVehicles } from "../../actions/vehicle.actions";
 import { Layout } from "../../components/Layout";
 import { ListTripTable } from "../../components/table/ListTripTable";
-import { Table } from "../../components/table/Table";
-import { Input } from "../../components/UI/Input";
-
 import busImg from "../../asset/img/bus.png";
-import { SelectBox } from "../../components/UI/select/SelectBox";
-import { InputTitleLeft } from "../../components/UI/inputTitleLeft/InputTitleLeft";
 import { getAllTickets } from "../../actions/ticket.actions";
+import RouteAction from "../../actions/route.actions";
 /**
  * @author
  * @function RouteDetails
@@ -35,7 +24,7 @@ export const RouteDetails = (props) => {
   useEffect(() => {
     loadRouteDetails();
 
-    dispatch(getAllRoutes());
+    dispatch(RouteAction.getAllRoutes());
     dispatch(getAllVehicles());
   }, []);
 
@@ -48,7 +37,7 @@ export const RouteDetails = (props) => {
         enterpriseId,
       },
     };
-    dispatch(getRouteDetailssById(payload));
+    dispatch(RouteAction.getRouteDetailssById(payload));
     dispatch(getAllTickets());
     //dispatch(getRouteDetailssByIdInEnterprise(payload));
   };

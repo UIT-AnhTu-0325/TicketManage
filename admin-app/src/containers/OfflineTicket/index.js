@@ -3,9 +3,8 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
-import { getAllCities } from "../../actions";
 import CityAction from "../../actions/city.actions";
-import { addOfflineTicket } from "../../actions/offlineTicket.actions";
+import OfflineTicketAction from "../../actions/offlineTicket.actions";
 import { getTripDetailsById } from "../../actions/trip.actions";
 import { Layout } from "../../components/Layout";
 import { InputTitleLeft } from "../../components/UI/inputTitleLeft/InputTitleLeft";
@@ -73,7 +72,7 @@ export const OfflineTicket = (props) => {
     form.idAdmin = JSON.parse(localStorage.getItem("user"))._id;
     //form.seatNumber = localStorage.getItem("seatSelect");
     delete form._id;
-    dispatch(addOfflineTicket(form, ticket));
+    dispatch(OfflineTicketAction.addOfflineTicket(form, ticket));
     swal({
       title: "Thêm thành công",
       text: "Bạn đã thêm chuyến xe thành công",

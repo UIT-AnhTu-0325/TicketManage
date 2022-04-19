@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOfflineTicket } from "../../actions/offlineTicket.actions";
+import OfflineTicketAction from "../../actions/offlineTicket.actions";
 import { Table } from "./Table";
 
 /**
@@ -16,7 +16,7 @@ export const AdminDetailTable = (props) => {
     (state) => state.offlineticket.offlineTickets
   );
   useEffect(() => {
-    dispatch(getAllOfflineTicket());
+    dispatch(OfflineTicketAction.getAllOfflineTicket());
   }, []);
 
   const header = [

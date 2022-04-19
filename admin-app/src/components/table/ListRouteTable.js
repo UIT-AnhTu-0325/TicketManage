@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRoute, deleteRoute, editRoute } from "../../actions";
 import { Button, Modal } from "react-bootstrap";
 import { Input } from "../../components/UI/Input";
 import { Table } from "../../components/table/Table";
@@ -8,6 +7,7 @@ import { Link } from "react-router-dom";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
 import swal from "sweetalert";
+import RouteAction from "../../actions/route.actions";
 /**
  * @author
  * @function ListRouteTable
@@ -75,7 +75,7 @@ export const ListRouteTable = (props) => {
     const form = route;
     if (modalFlag === "Add") {
       delete form._id;
-      dispatch(addRoute(form));
+      dispatch(RouteAction.addRoute(form));
       swal({
         title: "Thêm thành công",
         text: "Bạn đã thêm tuyến đường thành công",
@@ -83,7 +83,7 @@ export const ListRouteTable = (props) => {
         button: "OK",
       });
     } else {
-      dispatch(editRoute(form));
+      dispatch(RouteAction.editRoute(form));
       swal({
         title: "Sửa thành công",
         text: "Bạn đã sửa tuyến đường thành công",
@@ -122,7 +122,7 @@ export const ListRouteTable = (props) => {
           icon: "success",
         });
         form.isActive = "no";
-        dispatch(editRoute(form));
+        dispatch(RouteAction.editRoute(form));
         if (props.type !== "Main") {
           props.reLoadEnterpriseDetails();
         }

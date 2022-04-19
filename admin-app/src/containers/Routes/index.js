@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRoutes } from "../../actions";
 import CityAction from "../../actions/city.actions";
 import EnterpriseAction from "../../actions/enterprise.actions";
+import RouteAction from "../../actions/route.actions";
 
 import { Layout } from "../../components/Layout";
 
@@ -16,11 +16,13 @@ import { ListRouteTable } from "../../components/table/ListRouteTable";
 
 export const Routes = (props) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getAllRoutes());
+    dispatch(RouteAction.getAllRoutes());
     dispatch(EnterpriseAction.getAllEnterprises());
     dispatch(CityAction.getAllCities());
   }, []);
+
   const state_route = useSelector((state) => state.route);
   const state_enterprise = useSelector((state) => state.enterprise);
   const state_city = useSelector((state) => state.city);

@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import AuthApi from "../api/auth";
 
 const AuthAction = {
-  login: async (user) => {
+  login: (user) => {
     return async (dispatch) => {
       dispatch({ type: authConstants.LOGIN_REQUEST });
 
