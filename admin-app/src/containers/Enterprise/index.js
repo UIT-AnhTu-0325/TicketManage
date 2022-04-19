@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCities, getAllEnterprises } from "../../actions";
+import CityAction from "../../actions/city.actions";
+import EnterpriseAction from "../../actions/enterprise.actions";
 import { Layout } from "../../components/Layout";
 import { ListEnterpriseTable } from "../../components/table/ListEnterpriseTable";
 
@@ -11,10 +12,12 @@ import { ListEnterpriseTable } from "../../components/table/ListEnterpriseTable"
 
 export const Enterprise = (props) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getAllEnterprises());
-    dispatch(getAllCities());
+    dispatch(EnterpriseAction.getAllEnterprises());
+    dispatch(CityAction.getAllCities());
   }, []);
+
   const state_enterprise = useSelector((state) => state.enterprise);
   const state_city = useSelector((state) => state.city);
   const [searchTerm, setSearchTerm] = useState("");
