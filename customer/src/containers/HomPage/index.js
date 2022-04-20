@@ -1,39 +1,37 @@
-import React, { useEffect } from 'react'
-import { LayoutCustomer } from '../../components/Layout'
-import { MainSearch } from '../../components/MainSearch'
-import { useDispatch } from 'react-redux'
-import { getAll } from '../../action/route';
-import { MainContent } from '../../components/MainSearchComponents/MainContent';
-import { Footer } from '../../components/Footer';
+import React, { useEffect } from "react";
+import { LayoutCustomer } from "../../components/Layout";
+import { MainSearch } from "../../components/MainSearch";
+import { useDispatch } from "react-redux";
+import { getAll } from "../../action/route";
+import { MainContent } from "../../components/MainSearchComponents/MainContent";
+import { Footer } from "../../components/Footer";
+import MainPage from "../../layouts/mainPage/MainPage";
+import PopularRoute from "../../layouts/mainPage/PopularRoute";
 
 /**
-* @author
-* @function HomePage
-**/
+ * @author
+ * @function HomePage
+ **/
 
 export const HomePage = (props) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getAll());
-    },[]);
-    return (
-        <div>
-            <LayoutCustomer>
+  useEffect(() => {
+    dispatch(getAll());
+  }, []);
+  return (
+    <div className="bg-gray-200 dark:!bg-black !transition-colors !duration-500 ">
+      <LayoutCustomer></LayoutCustomer>
 
-            </LayoutCustomer>
+      <MainPage />
 
-            <MainSearch>
+      <PopularRoute />
 
-            </MainSearch>
+      {/* <MainSearch></MainSearch>
 
-            <MainContent />
+      <MainContent /> */}
 
-            <Footer />
-            
-        </div>
-
-
-    )
-
-}
+      <Footer />
+    </div>
+  );
+};

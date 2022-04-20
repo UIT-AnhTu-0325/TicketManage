@@ -1,63 +1,95 @@
-import React, { useEffect, useState } from 'react'
-import { HeaderLogin } from '../HeaderComponents/HeaderLogin';
-import { HeaderLogined } from '../HeaderComponents/HeaderLogined';
-import { ModalLogin } from '../Modal/ModalLogin/index'
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import React, { useEffect, useState } from "react";
+import { HeaderLogin } from "../HeaderComponents/HeaderLogin";
+import { HeaderLogined } from "../HeaderComponents/HeaderLogined";
+import { ModalLogin } from "../Modal/ModalLogin/index";
+import { useDispatch } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import "./header.scss";
+import DartMode from "../../minusComponents/dartMode/DartMode";
 /**
-* @author
-* @function HeaderCustomer
-**/
+ * @author
+ * @function HeaderCustomer
+ **/
 
 export const HeaderCustomer = ({ props }) => {
+  const [showModal, setShowModal] = useState(false);
 
-    const [showModal, setShowModal] = useState(false);
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  // const dispatch = useDispatch();
+  // const history = useHistory();
+  // const location = useLocation();
 
-    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    // const dispatch = useDispatch();
-    // const history = useHistory();
-    // const location = useLocation();
+  // console.log(user);
 
-    // console.log(user);
+  // const logout = () => {
+  //     dispatch({ type: LOGOUT })
+  //     history.push('/');
+  //     setUser(null);
+  // }
 
-    // const logout = () => {
-    //     dispatch({ type: LOGOUT })
-    //     history.push('/');
-    //     setUser(null);
-    // }
+  // useEffect(() => {
+  //     const token = user?.token;
 
-    // useEffect(() => {
-    //     const token = user?.token;
+  //     setUser(JSON.parse(localStorage.getItem('profile')));
+  // }, [location]);
 
-    //     setUser(JSON.parse(localStorage.getItem('profile')));
-    // }, [location]);
-
-    const openModal = () => {
-        setShowModal(prev => !prev);
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+  const handleDardMode = () => {
+    if (localStorage.theme !== "dark") {
+      localStorage.theme = "dark";
+    } else {
+      localStorage.theme = "light";
     }
-    return (
-        <>
-            <div className="grid">
-                <div className="header">
-                    <div className="header__logo ">
-                        <a href="/" >5TING BUS</a>
-                    </div>
-                    <div className="header__nav">
-                        <ul className="mynavbar">
-                            <li className="navbar__item navbar__item--actived">Thuê xe</li>
-                            <li className="navbar__item ">Quản lý đơn hàng</li>
-                            <li className="navbar__item ">Trở thành đối tác</li>
-                        </ul>
-                    </div>
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+  if (
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+  return (
+    <>
+      <div className="min-h-[80px] bg-white dark:!bg-black !transition-colors !duration-500 2xl:px-16 md:px-1 w-screen flex items-center">
+        <div className=" flex items-center w-screen justify-between">
+          <div className="header__logo ssm:hidden  ">
+            <div className="img-logo"></div>
+            <a
+              href="/"
+              className="2xl:text-3xl text-[#1d99d3] sm:!text-xl w-fit "
+            >
+              5Ting Bus
+            </a>
+          </div>
+          <div className="header__nav hidden">
+            <ul className="mynavbar">
+              <li className="navbar__item navbar__item--actived">Thuê xe</li>
+              <li className="navbar__item ">Quản lý đơn hàng</li>
+              <li className="navbar__item ">Trở thành đối tác</li>
+            </ul>
+          </div>
+          <div className="flex items-center gap-4">
+            <DartMode onClick={handleDardMode} />
 
-                    <HeaderLogin open={openModal} ></HeaderLogin>
-                    {/* <HeaderLogined ></HeaderLogined> */}
-                </div>
-            </div>
-            {showModal ? <ModalLogin close={openModal} /> : null}
-
-        </>
-
-    )
-
-}
+            <HeaderLogin open={openModal}></HeaderLogin>
+          </div>
+          {/* <HeaderLogined ></HeaderLogined> */}
+        </div>
+      </div>
+      {showModal ? <ModalLogin close={openModal} /> : null}
+    </>
+  );
+};

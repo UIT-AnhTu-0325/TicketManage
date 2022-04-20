@@ -83,7 +83,7 @@ export const MainSearch = (props) => {
 
   return (
     <div>
-      <div className="content" onClick={closePicker}>
+      <div className="content bg-red-500" onClick={closePicker}>
         <form action="/ticket" method="get">
           <div className="content__main-func">
             <div className="content__main-func__wrapper-out">
