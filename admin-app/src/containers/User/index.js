@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser } from "../../actions";
+import UserAction from "../../actions/user.actions";
 import { Layout } from "../../components/Layout";
 import { ListUserTable } from "../../components/table/ListUserTable";
 
@@ -12,10 +11,13 @@ import { ListUserTable } from "../../components/table/ListUserTable";
 
 export const User = (props) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getAllUser());
+    dispatch(UserAction.getAllUser());
   }, []);
+
   const state_user = useSelector((state) => state.user);
+
   if (Object.keys(state_user).length === 0) {
     return null;
   }

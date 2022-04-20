@@ -3,7 +3,7 @@ import { Layout } from "../../components/Layout";
 import { Container, Row, Col } from "react-bootstrap";
 import { Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../actions";
+import UserAction from "../../actions/user.actions";
 
 /**
  * @author
@@ -32,7 +32,7 @@ export const Signup = (props) => {
       username,
     };
 
-    dispatch(signup(user));
+    dispatch(UserAction.signup(user));
   };
 
   if (auth.authenticate) {

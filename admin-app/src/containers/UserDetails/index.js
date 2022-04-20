@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetailById } from "../../actions";
+import UserAction from "../../actions/user.actions";
 import { UserDetail } from "../../components/customer/UserDetail";
 import { Layout } from "../../components/Layout";
 import { AdminDetailTable } from "../../components/table/AdminDetailTable";
@@ -23,7 +23,7 @@ export const UserDetails = (props) => {
         userId,
       },
     };
-    dispatch(getUserDetailById(payload));
+    dispatch(UserAction.getUserDetailById(payload));
   };
   const state_userDetail = useSelector((state) => state.user.userDetail);
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVehicles } from "../../actions/vehicle.actions";
+import VehicleAction from "../../actions/vehicle.actions";
 import { Layout } from "../../components/Layout";
 import { ListTripTable } from "../../components/table/ListTripTable";
 import busImg from "../../asset/img/bus.png";
@@ -25,7 +25,7 @@ export const RouteDetails = (props) => {
     loadRouteDetails();
 
     dispatch(RouteAction.getAllRoutes());
-    dispatch(getAllVehicles());
+    dispatch(VehicleAction.getAllVehicles());
   }, []);
 
   const loadRouteDetails = () => {

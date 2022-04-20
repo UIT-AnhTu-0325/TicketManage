@@ -1,11 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import {
-  addVehicle,
-  deleteVehicle,
-  editVehicle,
-} from "../../actions/vehicle.actions";
+import VehicleAction from "../../actions/vehicle.actions";
 import { Input } from "../UI/Input";
 import { Table } from "./Table";
 import swal from "sweetalert";
@@ -84,9 +80,9 @@ export const ListVehicleTable = (props) => {
     const form = vehicle;
     if (modalFlag === "Add") {
       delete form._id;
-      dispatch(addVehicle(form));
+      dispatch(VehicleAction.addVehicle(form));
     } else {
-      dispatch(editVehicle(form));
+      dispatch(VehicleAction.editVehicle(form));
     }
     setVehicle(initVehicle);
     if (props.type !== "Main") {
@@ -113,7 +109,7 @@ export const ListVehicleTable = (props) => {
           icon: "success",
         });
         form.isActive = "no";
-        dispatch(editVehicle(form));
+        dispatch(VehicleAction.editVehicle(form));
         if (props.type !== "Main") {
           props.reLoadEnterpriseDetails();
         }

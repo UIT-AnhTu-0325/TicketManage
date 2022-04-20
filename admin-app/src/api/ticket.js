@@ -22,6 +22,10 @@ const TicketApi = {
 
     return res;
   },
+
+  update: async (ticket) => {
+    await axios.put(`/ticket/${ticket._id}`, ticket);
+  },
 };
 
 export default TicketApi;
