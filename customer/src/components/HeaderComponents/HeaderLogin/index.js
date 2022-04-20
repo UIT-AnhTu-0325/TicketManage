@@ -13,6 +13,7 @@ export const HeaderLogin = (props) => {
           <div
             className="min-w-[160px] w-fit grid place-items-center  lg:hidden  mr-4 text-base  py-2  rounded-lg text-blue-500 border-2 dark:text-white  dark:border-blue-300 border-blue-500 hover:bg-blue-500 hover:text-white hover:border-none cursor-pointer"
             onClick={props.open}
+            ref={props.nodeRef}
           >
             Đăng ký
           </div>

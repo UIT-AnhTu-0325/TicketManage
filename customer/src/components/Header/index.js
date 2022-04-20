@@ -6,13 +6,19 @@ import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import "./header.scss";
 import DartMode from "../../minusComponents/dartMode/DartMode";
+import AuthModal from "../../layouts/mainPage/AuthModal";
+import useClickOutSide from "../../hooks/useClickOutSide";
 /**
  * @author
  * @function HeaderCustomer
  **/
 
 export const HeaderCustomer = ({ props }) => {
-  const [showModal, setShowModal] = useState(false);
+  const {
+    show: showModal,
+    setShow: setShowModal,
+    nodeRef,
+  } = useClickOutSide(".modal-login");
 
   // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   // const dispatch = useDispatch();
@@ -84,12 +90,13 @@ export const HeaderCustomer = ({ props }) => {
           <div className="flex items-center gap-4">
             <DartMode onClick={handleDardMode} />
 
-            <HeaderLogin open={openModal}></HeaderLogin>
+            <HeaderLogin nodeRef={nodeRef} open={openModal}></HeaderLogin>
           </div>
           {/* <HeaderLogined ></HeaderLogined> */}
         </div>
       </div>
-      {showModal ? <ModalLogin close={openModal} /> : null}
+      {/* {showModal ? <ModalLogin close={openModal} /> : null} */}
+      {showModal ? <AuthModal handleClose={openModal} /> : null}
     </>
   );
 };
