@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTripDetailsById } from "../../actions/trip.actions";
+import TripAction from "../../actions/trip.actions";
 import { Layout } from "../../components/Layout";
 import { ListTicketOfTrip } from "../../components/list/ListTicketOfTrip";
 import "./tripdetail.css";
@@ -25,7 +25,7 @@ export const TripDetails = (props) => {
         tripId,
       },
     };
-    dispatch(getTripDetailsById(payload));
+    dispatch(TripAction.getTripDetailsById(payload));
   };
 
   const genTicketList = () => {

@@ -1,52 +1,59 @@
-import axios from "../helpers/axios";
+import TicketApi from "../api/ticket";
 import { ticketConstants } from "./constants";
 
-export const getAllTickets = () => {
-  return async (dispatch) => {
-    dispatch({ type: ticketConstants.GET_ALL_TICKETS_REQUEST });
-    const res = await axios.get(`ticket`);
-    if (res.status === 200) {
-      const ticketList = res.data;
-      dispatch({
-        type: ticketConstants.GET_ALL_TICKETS_SUCCESS,
-        payload: { tickets: ticketList },
-      });
-    } else {
-      dispatch({
-        type: ticketConstants.GET_ALL_TICKETS_FAILURE,
-        payload: { error: res.data.error },
-      });
-    }
-  };
+const TicketAction = {
+  getAllTickets: () => {
+    return async (dispatch) => {
+      dispatch({ type: ticketConstants.GET_ALL_TICKETS_REQUEST });
+
+      const res = await TicketApi.getAll();
+
+      if (res.status === 200) {
+        const ticketList = res.data;
+        dispatch({
+          type: ticketConstants.GET_ALL_TICKETS_SUCCESS,
+          payload: { tickets: ticketList },
+        });
+      } else {
+        dispatch({
+          type: ticketConstants.GET_ALL_TICKETS_FAILURE,
+          payload: { error: res.data.error },
+        });
+      }
+    };
+  },
+
+  addTicketOfTrip: (form) => {
+    return async (dispatch) => {
+      var newForm = { idTrip: form._id, price: form.price };
+
+      newForm.quantity = Array(form.totalSeat).fill(false);
+
+      dispatch({ type: ticketConstants.ADD_NEW_TICKET_REQUEST });
+
+      const res = await TicketApi.create(newForm);
+
+      if (res.status === 200) {
+        dispatch({
+          type: ticketConstants.ADD_NEW_TICKET_SUCCESS,
+          payload: { ticket: res.data },
+        });
+      } else {
+        dispatch({
+          type: ticketConstants.ADD_NEW_TICKET_FAILURE,
+          payload: { error: res.data.error },
+        });
+      }
+    };
+  },
+
+  getReport: (form) => {
+    return async (dispatch) => {
+      const res = await TicketApi.getReport(form);
+
+      dispatch({ type: "GETREPORT", payload: { report: res.data } });
+    };
+  },
 };
 
-export const addTicketOfTrip = (form) => {
-  return async (dispatch) => {
-    var newForm = { idTrip: form._id, price: form.price };
-    newForm.quantity = Array(form.totalSeat).fill(false);
-    dispatch({ type: ticketConstants.ADD_NEW_TICKET_REQUEST });
-    const res = await axios.post(`ticket/create`, {
-      ...newForm,
-    });
-
-    if (res.status === 200) {
-      dispatch({
-        type: ticketConstants.ADD_NEW_TICKET_SUCCESS,
-        payload: { ticket: res.data },
-      });
-    } else {
-      dispatch({
-        type: ticketConstants.ADD_NEW_TICKET_FAILURE,
-        payload: { error: res.data.error },
-      });
-    }
-  };
-};
-
-export const getReport = (form) => {
-  return async (dispatch) => {
-    axios.defaults.timeout = 1000000;
-    const res = await axios.post(`ticket/getReport`, { ...form });
-    dispatch({ type: "GETREPORT", payload: { report: res.data } });
-  };
-};
+export default TicketAction;

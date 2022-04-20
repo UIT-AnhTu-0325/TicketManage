@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEnterprises } from "../../actions";
-import { getAllTickets, getReport } from "../../actions/ticket.actions";
-import axiosIntance from "../../helpers/axios";
+import TicketAction from "../../actions/ticket.actions";
 import { Table } from "./Table";
 
 /**
@@ -16,7 +14,7 @@ export const ReportEnterpriseTable = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const form = { month: p_month, year: p_year };
-    dispatch(getReport(form));
+    dispatch(TicketAction.getReport(form));
   }, [p_month, p_year]);
   const state_report = useSelector((state) => state.ticketR.report);
 

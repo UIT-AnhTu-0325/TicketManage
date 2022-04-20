@@ -4,7 +4,7 @@ import { getAllVehicles } from "../../actions/vehicle.actions";
 import { Layout } from "../../components/Layout";
 import { ListTripTable } from "../../components/table/ListTripTable";
 import busImg from "../../asset/img/bus.png";
-import { getAllTickets } from "../../actions/ticket.actions";
+import TicketAction from "../../actions/ticket.actions";
 import RouteAction from "../../actions/route.actions";
 /**
  * @author
@@ -38,7 +38,7 @@ export const RouteDetails = (props) => {
       },
     };
     dispatch(RouteAction.getRouteDetailssById(payload));
-    dispatch(getAllTickets());
+    dispatch(TicketAction.getAllTickets());
     //dispatch(getRouteDetailssByIdInEnterprise(payload));
   };
 

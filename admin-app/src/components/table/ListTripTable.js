@@ -1,9 +1,7 @@
 import React, { useState, useRef } from "react";
-import { Button, Fade, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addTrip, editTrip } from "../../actions/trip.actions";
-import { Input } from "../UI/Input";
+import TripAction from "../../actions/trip.actions";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
@@ -86,7 +84,7 @@ export const ListTripTable = (props) => {
     const form = { ...trip, idRoute: props.idRoute };
     if (modalFlag === "Add") {
       delete form._id;
-      dispatch(addTrip(form));
+      dispatch(TripAction.addTrip(form));
       props.reLoad();
       swal({
         title: "Thêm thành công",
@@ -174,7 +172,7 @@ export const ListTripTable = (props) => {
           icon: "success",
         });
         form.isActive = "no";
-        dispatch(editTrip(form));
+        dispatch(TripAction.editTrip(form));
         if (props.type !== "Main") {
           props.reLoad();
         }

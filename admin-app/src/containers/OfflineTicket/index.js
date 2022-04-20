@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import CityAction from "../../actions/city.actions";
 import OfflineTicketAction from "../../actions/offlineTicket.actions";
-import { getTripDetailsById } from "../../actions/trip.actions";
+import TripAction from "../../actions/trip.actions";
 import { Layout } from "../../components/Layout";
 import { InputTitleLeft } from "../../components/UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../../components/UI/select/SelectBox";
@@ -33,7 +33,7 @@ export const OfflineTicket = (props) => {
         tripId,
       },
     };
-    dispatch(getTripDetailsById(payload));
+    dispatch(TripAction.getTripDetailsById(payload));
   };
   const state_city = useSelector((state) => state.city);
 

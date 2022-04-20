@@ -1,8 +1,7 @@
-import React, { useState, useRef, forwardRef } from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addSteersman, editSteersman } from "../../actions/steersman.actions";
-import { Input } from "../UI/Input";
+import SteersmanAction from "../../actions/steersman.actions";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
 import { SelectBox } from "../UI/select/SelectBox";
 import { Table } from "./Table";
@@ -95,9 +94,9 @@ export const ListSteersmanTable = (props) => {
     const form = steersman;
     if (modalFlag === "Add") {
       delete form._id;
-      dispatch(addSteersman(form));
+      dispatch(SteersmanAction.addSteersman(form));
     } else {
-      dispatch(editSteersman(form));
+      dispatch(SteersmanAction.editSteersman(form));
     }
     setSteersman(initSteersman);
     if (props.type !== "Main") {
