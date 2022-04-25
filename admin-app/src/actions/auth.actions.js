@@ -9,7 +9,7 @@ const AuthAction = {
       dispatch({ type: authConstants.LOGIN_REQUEST });
 
       try {
-        const res = await AuthApi.login();
+        const res = await AuthApi.login(user);
 
         if (res.status === 200) {
           const { token, myUser } = res.data;
