@@ -1,15 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { enterpriseConstants } from "../actions/constants";
+import { ActionStatus } from "../helpers/AppConstants";
 
 const initState = {
   enterprises: [],
   loading: false,
   error: null,
+  status: ActionStatus.FAIL,
   enterpriseDetails: {},
 };
 
 const rebuildAddEnterprises = (enterprises, enterprise) => {
   let myEnterprises = [];
+
   for (let ent of enterprises) {
     myEnterprises.push(ent);
   }
@@ -46,12 +49,15 @@ export default (state = initState, action) => {
         enterprises: action.payload.enterprises,
       };
       break;
+
     case enterpriseConstants.ADD_NEW_ENTERPRISES_REQUEST:
       state = {
         ...state,
         loading: true,
+        status: ActionStatus.WAITING,
       };
       break;
+
     case enterpriseConstants.ADD_NEW_ENTERPRISES_SUCCESS:
       state = {
         ...state,
@@ -59,20 +65,28 @@ export default (state = initState, action) => {
           state.enterprises,
           action.payload.enterprise
         ),
+        status: ActionStatus.SUCCESS,
         loading: false,
       };
       break;
+
     case enterpriseConstants.ADD_NEW_ENTERPRISES_FAILURE:
       state = {
-        ...initState,
+        ...state,
+        error: action.payload.error,
+        status: ActionStatus.FAIL,
+        loading: false,
       };
       break;
+
     case enterpriseConstants.EDIT_ENTERPRIESE_REQUEST:
       state = {
         ...state,
         loading: true,
+        status: ActionStatus.WAITING,
       };
       break;
+
     case enterpriseConstants.EDIT_ENTERPRIESE_SUCCESS:
       state = {
         ...state,
@@ -80,20 +94,27 @@ export default (state = initState, action) => {
           state.enterprises,
           action.payload.enterprise
         ),
+        status: ActionStatus.SUCCESS,
         loading: false,
       };
       break;
+
     case enterpriseConstants.EDIT_ENTERPRIESE_FAILURE:
       state = {
-        ...initState,
+        ...state,
+        error: action.payload.error,
+        status: ActionStatus.FAIL,
+        loading: false,
       };
       break;
+
     case enterpriseConstants.DELETE_ENTERPRIESE_REQUEST:
       state = {
         ...state,
         loading: true,
       };
       break;
+
     case enterpriseConstants.DELETE_ENTERPRIESE_SUCCESS:
       state = {
         ...state,

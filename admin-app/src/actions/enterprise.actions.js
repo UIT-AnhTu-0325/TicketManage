@@ -28,17 +28,24 @@ const EnterpriseAction = {
     return async (dispatch) => {
       dispatch({ type: enterpriseConstants.ADD_NEW_ENTERPRISES_REQUEST });
 
-      const res = await EnterpriseApi.addEnterprise(form);
+      try {
+        const res = await EnterpriseApi.addEnterprise(form);
 
-      if (res.status === 200) {
-        dispatch({
-          type: enterpriseConstants.ADD_NEW_ENTERPRISES_SUCCESS,
-          payload: { enterprise: res.data },
-        });
-      } else {
+        if (res.status === 200) {
+          dispatch({
+            type: enterpriseConstants.ADD_NEW_ENTERPRISES_SUCCESS,
+            payload: { enterprise: res.data },
+          });
+        } else {
+          dispatch({
+            type: enterpriseConstants.ADD_NEW_ENTERPRISES_FAILURE,
+            payload: { error: res.data.error },
+          });
+        }
+      } catch (e) {
         dispatch({
           type: enterpriseConstants.ADD_NEW_ENTERPRISES_FAILURE,
-          payload: { error: res.data.error },
+          payload: { error: e },
         });
       }
     };
