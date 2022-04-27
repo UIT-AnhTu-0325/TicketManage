@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "./Table";
 import { InputTitleLeft } from "../UI/inputTitleLeft/InputTitleLeft";
@@ -7,7 +7,6 @@ import { SelectBox } from "../UI/select/SelectBox";
 import EnterpriseAction from "../../actions/enterprise.actions";
 import { Action, ActionStatus, Active } from "../../helpers/AppConstants";
 import { callSwal, simpleSwal } from "../../helpers/swal";
-import swal from "sweetalert";
 
 /**
  * @author Blinkcat
@@ -41,8 +40,6 @@ export const ListEnterpriseTable = (props) => {
   const [modalFlag, setModalFlag] = useState("Add");
   const [modalTitle, setModalTitle] = useState();
   const [editData, setEditData] = useState(false);
-
-  //const [searchTerm, setSearchTerm] = useState("");
 
   const checkEditData = (targetValue, object) => {
     if (enterprise.name && enterprise.address && enterprise.hotline) {
@@ -221,7 +218,6 @@ export const ListEnterpriseTable = (props) => {
 
           <div className="add-modal__footer">
             <button className="btn-cancel" onClick={handleModalClose}>
-              {" "}
               Cancel
             </button>
             <button
@@ -229,7 +225,6 @@ export const ListEnterpriseTable = (props) => {
               disabled={!editData}
               onClick={handleModalSave}
             >
-              {" "}
               Save
             </button>
           </div>
