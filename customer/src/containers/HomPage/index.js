@@ -7,6 +7,7 @@ import { MainContent } from "../../components/MainSearchComponents/MainContent";
 import { Footer } from "../../components/Footer";
 import MainPage from "../../layouts/mainPage/MainPage";
 import PopularRoute from "../../layouts/mainPage/PopularRoute";
+import Iframe from "react-iframe";
 
 /**
  * @author
@@ -27,9 +28,9 @@ export const HomePage = (props) => {
 
       <PopularRoute />
 
-      {/* <MainSearch></MainSearch>
+      <MainSearch></MainSearch>
 
-      <MainContent /> */}
+      <MainContent />
 
       <Footer />
     </div>

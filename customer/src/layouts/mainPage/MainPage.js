@@ -3,6 +3,11 @@ import PickModal from "./PickModal";
 import { ReactDom } from "react-dom";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import PickQuantityTicket from "./PickQuantityTicket";
+
+import "moment/locale/zh-cn";
+import locale from "antd/es/date-picker/locale/zh_CN";
+import { DatePicker } from "antd";
+import "antd/dist/antd.css";
 import "./mainPage.scss";
 
 const MainPage = () => {
@@ -56,7 +61,7 @@ const MainPage = () => {
                 <i class="fa-solid fa-bus text-base"></i>
                 <span className="">Bus</span>
               </div>
-              <div className="flex 2xl:gap-3 lg:gap-2 text-lg leading-7 pr-1 mr-2 opacity-40 cursor-pointer hidden">
+              <div className=" 2xl:gap-3 lg:gap-2 text-lg leading-7 pr-1 mr-2 opacity-40 cursor-pointer hidden">
                 <i class="fa-solid fa-cart-flatbed text-base"></i>
                 <span className="">Transport</span>
               </div>
@@ -98,7 +103,10 @@ const MainPage = () => {
               </div>
               <div className="pl-10 pr-16 py-2 dark:bg-[#575757] dark:text-white rounded-lg bg-gray-50 flex flex-col relative cursor-pointer">
                 <span>Time</span>
-                <span className="opacity-40">When you go?</span>
+                <DatePicker
+                  placeholder="Where you go"
+                  className=""
+                ></DatePicker>
               </div>
 
               <div className="min-w-[160px] hover:bg-blue-400 cursor-pointer text-white btn-search bg-blue-500 2xl:ml-6 lg:ml-0 rounded-lg text-center grid content-center 2xl:max-w-[100px] lg:max-w-full min-h-[40px] lg:w-full 2xl:mt-0 lg:mt-6 lg:py-3">

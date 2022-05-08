@@ -68,7 +68,7 @@ export const ModalLogin = (props) => {
   return (
     <div>
       <div
-        className="modal-auth open"
+        className=" open"
         onClick={
           (props.close,
           (e) => {
