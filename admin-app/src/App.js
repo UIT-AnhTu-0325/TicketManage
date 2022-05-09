@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { Home } from "./containers/Home";
 import { Signin } from "./containers/Signin";
@@ -9,21 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions";
 import { Routes as WayRouters } from "./containers/Routes";
 import { Enterprise } from "./containers/Enterprise";
-
 import { Analytics } from "./containers/Analytics";
-
 import { DashBoard } from "./pages/Dashboard";
 import { Customer } from "./pages/Customers";
-
 import "./asset/css/main.css";
 import { EnterpriseDetails } from "./containers/EnterpriseDetails";
 import { RouteDetails } from "./containers/RouteDetails";
 import { User } from "./containers/User";
 import { TripDetails } from "./containers/TripDetails";
 import { UserDetail } from "./components/customer/UserDetail";
-
 import { Rules } from "./pages/Rules";
-
 import { AdminBooking } from "./pages/adminbooking/AdminBooking";
 import { UserDetails } from "./containers/UserDetails";
 import { OfflineTicket } from "./containers/OfflineTicket";
@@ -31,25 +25,29 @@ import PropTypes from "prop-types";
 
 const AppRoute = () => {
   let routes = useRoutes([
-    { path: "/enterprises", element: <Enterprise /> },
+    {
+      path: "enterprises",
+      element: <Enterprise />,
+      children: [
+        {
+          path: ":enterpriseId/informations",
+          element: <EnterpriseDetails />,
+        },
+        {
+          path: ":enterpriseId/informations/:routeId/routeinfo",
+          element: <RouteDetails />,
+        },
+      ],
+    },
     { path: "/signin", element: <Signin /> },
     { path: "/booking", element: <AdminBooking /> },
     { path: "/home", element: <Home /> },
-    {
-      path: "/enterprises/:enterpriseId/informations/:routeId/routeinfo",
-      element: <RouteDetails />,
-    },
-    {
-      path: "/enterprises/:enterpriseId/informations",
-      element: <EnterpriseDetails />,
-    },
     { path: "/user/:userId/info", element: <UserDetails /> },
     { path: "/user/:userId/userdetail", element: <UserDetails /> },
     { path: "/routes/:routeId/informations", element: <RouteDetails /> },
     { path: "/trips/:tripId/informations", element: <TripDetails /> },
     { path: "/trips/:tripId/tickets", element: <OfflineTicket /> },
     { path: "/routes", element: <WayRouters /> },
-    { path: "/enterprises", element: <Enterprise /> },
     { path: "/analytics", element: <Analytics /> },
     { path: "/signin", element: <Signin /> },
     { path: "/signup", element: <Signup /> },

@@ -15,6 +15,8 @@ import EnterpriseAction from "../../actions/enterprise.actions";
  **/
 
 export const EnterpriseDetails = (props) => {
+  console.log("superrrr");
+
   const dispatch = useDispatch();
   useEffect(() => {
     loadEnterpriseDetails();
