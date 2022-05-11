@@ -9,3 +9,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.d {
+  transform: rotate(90deg);
+  transition: all 1s;
+}

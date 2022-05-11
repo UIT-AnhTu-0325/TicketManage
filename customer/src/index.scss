@@ -4,6 +4,79 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 font-body;
+    @apply font-body bg-primaryBg;
   }
+}
+
+@layer components {
+  .page-container {
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // components
+  .selected-option .ant-select .ant-select-selector {
+    border: none !important;
+    outline: none !important;
+    background: transparent;
+    box-shadow: none !important;
+  }
+  .selected-option .ant-select {
+    border: none !important;
+    outline: none !important;
+    background: transparent;
+  }
+  .selected-option .ant-select-selection-item {
+    outline: none;
+    border: none;
+  }
+
+  // ticket detail
+
+  .arrow-detail.active {
+    transform: rotate(180deg);
+  }
+  .arrow-detail {
+    transform: rotate(0deg);
+    transition: all 0.3s;
+  }
+  .payment-process .ant-steps-icon svg {
+    margin-bottom: 5px;
+  }
+  .payment-process.dark .ant-steps-item-title {
+    color: white !important;
+    opacity: 0.8 !important;
+  }
+  .method-item {
+    input {
+      display: none;
+    }
+    .icon {
+      display: none;
+    }
+    .method-inside svg {
+      display: block;
+      opacity: 0;
+      transform: translateX(30%) translateY(-30%) scale(1.5);
+      transition: all 0.5s ease;
+    }
+    input:checked + .method-inside {
+      background: rgba(244, 244, 244, 0.963);
+    }
+    input:checked + .method-inside svg {
+      transform: translateX(30%) translateY(-30%) scale(1);
+      opacity: 1;
+      display: block;
+    }
+    .method-inside {
+      border: 1px solid transparent;
+    }
+    input:checked + .method-inside {
+      border: 1px solid #2cccff;
+    }
+  }
+}
+.test {
+  background: rgba(244, 244, 244, 0.663);
 }

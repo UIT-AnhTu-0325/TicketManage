@@ -3,6 +3,7 @@ import PickModal from "./PickModal";
 import { ReactDom } from "react-dom";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import PickQuantityTicket from "./PickQuantityTicket";
+import { Link } from "react-router-dom";
 
 import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
@@ -43,7 +44,6 @@ const MainPage = () => {
     setShowQuantity(true);
     setCoords(nodeRefQuantity.current.getBoundingClientRect());
   };
-
   return (
     <div className="relative mb-[150px] !transition-colors !duration-1000">
       <div className="min-h-[200px]">
@@ -109,9 +109,12 @@ const MainPage = () => {
                 ></DatePicker>
               </div>
 
-              <div className="min-w-[160px] hover:bg-blue-400 cursor-pointer text-white btn-search bg-blue-500 2xl:ml-6 lg:ml-0 rounded-lg text-center grid content-center 2xl:max-w-[100px] lg:max-w-full min-h-[40px] lg:w-full 2xl:mt-0 lg:mt-6 lg:py-3">
+              <Link
+                to="/ticket"
+                className="min-w-[160px] hover:bg-blue-400 cursor-pointer text-white btn-search bg-blue-500 2xl:ml-6 lg:ml-0 rounded-lg text-center grid content-center 2xl:max-w-[100px] lg:max-w-full min-h-[40px] lg:w-full 2xl:mt-0 lg:mt-6 lg:py-3"
+              >
                 Search
-              </div>
+              </Link>
             </div>
           </div>
         </div>

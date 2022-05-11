@@ -8,6 +8,7 @@ import "./header.scss";
 import DartMode from "../../minusComponents/dartMode/DartMode";
 import AuthModal from "../../layouts/mainPage/AuthModal";
 import useClickOutSide from "../../hooks/useClickOutSide";
+
 /**
  * @author
  * @function HeaderCustomer
@@ -69,7 +70,7 @@ export const HeaderCustomer = ({ props }) => {
   }
   return (
     <>
-      <div className="min-h-[80px] bg-white dark:!bg-black !transition-colors !duration-500 2xl:px-16 md:px-1 w-screen flex items-center">
+      <div className="min-h-[80px] bg-white shadow-md dark:!bg-black !transition-colors !duration-500 2xl:px-16 md:px-1 w-screen flex items-center">
         <div className=" flex items-center w-screen justify-between">
           <div className="header__logo ssm:hidden  ">
             <div className="img-logo"></div>

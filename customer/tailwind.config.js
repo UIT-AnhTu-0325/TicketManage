@@ -6,12 +6,17 @@ module.exports = {
       fontFamily: {
         body: ["DM Sans", "sans-serif"],
       },
-      backgroundColor: {
-        redd: "#fff",
-      },
       colors: {
-        primary: "#ccc",
+        zprimary: "#FF0000",
         border_opacity: "#fff",
+        secondary: "#FF0000",
+        primaryBg: "#F5F5F5",
+        hong: "#000",
+
+        // color for dark mode
+        dark_primary_bg: "#121212",
+        dark_primary_pnl: "#202124",
+        dark_secondary_pnl: "#ccc",
       },
     },
     screens: {

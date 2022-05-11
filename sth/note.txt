@@ -1,1 +1,3 @@
 mongodb: usr:root pas:5ting
+
+mongodb+srv://root:5ting@ticketmanage.e4mp6.mongodb.net/Ticketmanage?retryWrites=true&w=majority 
