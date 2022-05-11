@@ -1,14 +1,21 @@
 import { Checkbox, Select } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { checkDark } from "../../ultils/darkMode";
 
 const FilterSearch = () => {
   const { Option } = Select;
+  const isDark = checkDark();
+  useEffect(() => {}, []);
   return (
-    <div className="min-w-[280px] h-fit bg-white pb-6 rounded-lg overflow-hidden">
+    <div className="min-w-[280px] h-fit bg-white dark:!bg-dark_primary_pnl dark:!text-white pb-6 rounded-lg overflow-hidden">
       <div className="mb-1 bg-gray-200 bg-opacity-80 min-h-[30px] p-3">
         <div className="text-center text-lg text-black">Filter</div>
       </div>
-      <div className="filter flex flex-col gap-2 pl-10 mt-4  ">
+      <div
+        className={`filter flex flex-col gap-2 pl-10 mt-4 ${
+          isDark ? "dark" : ""
+        }`}
+      >
         <div className="text-base mt-2">* Important Filter</div>
         <div className="flex flex-col items-start gap-3 mt-2 font-normal">
           <div>

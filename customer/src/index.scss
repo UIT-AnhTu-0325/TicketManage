@@ -76,6 +76,13 @@
       border: 1px solid #2cccff;
     }
   }
+
+  // filter search
+  .filter.dark {
+    .ant-checkbox + span {
+      color: white !important;
+    }
+  }
 }
 .test {
   background: rgba(244, 244, 244, 0.663);

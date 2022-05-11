@@ -8,7 +8,7 @@ const SearchHeader = () => {
       <div className="flex gap-4 justify-end">
         <div className="flex flex-col gap-1">
           <span className="font-sm opacity-80">From</span>
-          <div className="px-4 py-2 bg-gray-50 rounded-lg">
+          <div className="px-4 py-2 bg-gray-50   dark:!bg-dark_input  rounded-lg">
             <input
               className="bg-transparent outline-none "
               type="text"
@@ -20,7 +20,7 @@ const SearchHeader = () => {
 
         <div className="flex flex-col gap-1">
           <span className="font-sm opacity-80">To</span>
-          <div className="px-4 py-2 bg-gray-50 rounded-lg">
+          <div className="px-4 py-2 bg-gray-50 dark:!bg-dark_input rounded-lg">
             <input
               className="bg-transparent outline-none "
               type="text"
@@ -32,9 +32,9 @@ const SearchHeader = () => {
 
         <div className="flex flex-col gap-1">
           <span className="font-sm opacity-80">Time</span>
-          <div className="px-4 py-2 bg-gray-50 rounded-lg">
+          <div className="px-4 py-2 bg-gray-50  dark:!bg-dark_input  rounded-lg">
             <input
-              className="bg-transparent outline-none "
+              className="bg-transparent  outline-none "
               type="text"
               placeholder="10/5/2022"
               value="10/5/2022"
@@ -44,7 +44,7 @@ const SearchHeader = () => {
 
         <div className="flex flex-col gap-1">
           <span className="font-sm opacity-80">Khoang</span>
-          <div className="selected-option px-4 py-2 bg-gray-50 rounded-lg">
+          <div className="selected-option px-4 py-1 dark:!text-white dark:!bg-dark_input  bg-gray-50 rounded-lg">
             <Select defaultValue="lucy" style={{ width: 120 }}>
               <Option value="jack">1 seat</Option>
               <Option value="lucy">2 seat</Option>

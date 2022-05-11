@@ -17,6 +17,7 @@ module.exports = {
         dark_primary_bg: "#121212",
         dark_primary_pnl: "#202124",
         dark_secondary_pnl: "#ccc",
+        dark_input: "#282D32",
       },
     },
     screens: {

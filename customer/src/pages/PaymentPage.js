@@ -167,7 +167,7 @@ const PaymentPage = () => {
                 <div className="opacity-80 mb-2 dark:text-white">Name Card</div>
                 <input
                   type="text"
-                  className="w-full outline-none px-3 py-[10px] rounded-md bg-gray-100 border border-gray-200  dark:!bg-gray-600  dark:!border-gray-800 dark:text-white "
+                  className="w-full outline-none px-3 py-[10px] rounded-md bg-gray-100 border border-gray-200  dark:!bg-dark_input  dark:!border-gray-800 dark:text-white "
                 />
                 <div className="flex gap-4 mt-4">
                   <div className="item flex-[3]">
@@ -176,14 +176,14 @@ const PaymentPage = () => {
                     </div>
                     <input
                       type="text"
-                      className="w-full outline-none px-3 py-[10px]  rounded-md bg-gray-100 dark:!bg-gray-600 border dark:!border-gray-800 dark:text-white  border-gray-200 "
+                      className="w-full outline-none px-3 py-[10px]  rounded-md bg-gray-100 dark:!bg-dark_input border dark:!border-gray-800 dark:text-white  border-gray-200 "
                     />
                   </div>
                   <div className="item">
                     <div className="opacity-80 mb-2 dark:text-white">CCV</div>
                     <input
                       type="text"
-                      className="w-full outline-none px-3 py-[10px] rounded-md bg-gray-100 border border-gray-200 dark:!bg-gray-600  dark:!border-gray-800 dark:text-white  "
+                      className="w-full outline-none px-3 py-[10px] rounded-md bg-gray-100 border border-gray-200 dark:!bg-dark_input  dark:!border-gray-800 dark:text-white  "
                     />
                   </div>
                 </div>
@@ -214,7 +214,7 @@ const PaymentPage = () => {
           <div className="flex mt-4 justify-center dark:!text-white ">
             <div className="transport-image max-w-[280px] max-h-[280px] overflow-hidden ">
               <img
-                className="w-full h-full rounded-lg opacity-75"
+                className="w-full h-full rounded-lg dark:opacity-75"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Tile_Hill_train_727.jpg/640px-Tile_Hill_train_727.jpg"
                 alt="tau_image"
               />
