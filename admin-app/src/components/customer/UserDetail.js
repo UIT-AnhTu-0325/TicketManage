@@ -25,6 +25,12 @@ export const UserDetail = (props) => {
     setOpenBuyingModal(false);
   };
 
+  useEffect(() => {
+    if (detail === "true") {
+      setUpdatable(true);
+    }
+  }, []);
+
   if (openBuyingModal === true) {
     document.body.style.overflowY = "hidden";
     document.body.style.width = "100%";

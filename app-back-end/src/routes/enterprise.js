@@ -5,7 +5,7 @@ const {
   update,
   deleteById,
   getInforbyID,
-  getAllName
+  getAllName,
 } = require("../controller/enterprise");
 const router = require("express").Router();
 
